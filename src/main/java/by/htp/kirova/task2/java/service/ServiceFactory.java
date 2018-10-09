@@ -1,6 +1,6 @@
 package by.htp.kirova.task2.java.service;
 
-import by.htp.kirova.task2.java.service.serviceentity.FacilityServiceImpl;
+import by.htp.kirova.task2.java.service.entityservice.FacilityServiceImpl;
 
 
 /**
