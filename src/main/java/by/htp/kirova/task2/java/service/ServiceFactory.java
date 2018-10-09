@@ -1,6 +1,6 @@
 package by.htp.kirova.task2.java.service;
 
-import by.htp.kirova.task2.java.service.entityservice.FacilityServiceImpl;
+import by.htp.kirova.task2.java.service.entityservice.*;
 
 
 /**
@@ -21,14 +21,72 @@ public final class ServiceFactory {
 
 
 
+	private final GenericService authorityService = new AuthorityServiceImpl();
 
-	private final Service serviceFacility = new FacilityServiceImpl();
-
-	public Service getServiceFacility() {
-		return serviceFacility;
+	public GenericService getAuthorityService() {
+		return authorityService;
 	}
 
 
 
 
+	private final GenericService facilityService = new FacilityServiceImpl();
+
+	public GenericService getFacilityService() {
+		return facilityService;
+	}
+
+
+
+
+	private final GenericService requestService = new RequestServiceImpl();
+
+	public GenericService getRequestService() {
+		return requestService;
+	}
+
+
+
+
+	private final GenericService reservationService = new ReservationServiceImpl();
+
+	public GenericService getReservationService() {
+		return reservationService;
+	}
+
+
+
+
+	private final GenericService roomClassService = new RoomClassServiceImpl();
+
+	public GenericService getRoomClassService() {
+		return roomClassService;
+	}
+
+
+
+
+	private final GenericService roomHasFacilityService = new RoomHasFacilityServiceImpl();
+
+	public GenericService getRoomHasFacilityService() {
+		return roomHasFacilityService;
+	}
+
+
+
+
+	private final GenericService roomService = new RoomServiceImpl();
+
+	public GenericService getRoomService() {
+		return roomService;
+	}
+
+
+
+
+	private final GenericService userService = new UserServiceImpl();
+
+	public GenericService getUserService() {
+		return userService;
+	}
 }

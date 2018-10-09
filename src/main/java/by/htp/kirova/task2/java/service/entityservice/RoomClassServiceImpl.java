@@ -1,42 +1,44 @@
 package by.htp.kirova.task2.java.service.entityservice;
 
-import by.htp.kirova.task2.java.entity.Facility;
+import by.htp.kirova.task2.java.entity.RoomClass;
 import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.ServiceException;
 import org.apache.log4j.Logger;
 
 import java.util.List;
 
+
 /**
- * Contains methods which provide application logic to work with facilities.
+ * Contains methods which provide application logic to work with room class.
  *
  * @author Kseniya Kirava
  * @since Sep 24, 2018
  */
-public class FacilityServiceImpl implements GenericService<Facility> {
+public class RoomClassServiceImpl implements GenericService<RoomClass> {
 
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(FacilityServiceImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(RoomClassServiceImpl.class);
+
 
     @Override
-    public boolean create(Facility facility) throws ServiceException {
+    public boolean create(RoomClass entity) throws ServiceException {
         return false;
     }
 
 
-    public Facility findById(long id) throws ServiceException {
+    public RoomClass findById(long id) throws ServiceException {
         return null;
     }
 
     @Override
-    public List findAll(String where) throws ServiceException {
+    public List<RoomClass> findAll(String where) throws ServiceException {
         return null;
     }
 
     @Override
-    public boolean update(Facility facility) throws ServiceException {
+    public boolean update(RoomClass entity) throws ServiceException {
         return false;
     }
 
@@ -46,7 +48,7 @@ public class FacilityServiceImpl implements GenericService<Facility> {
     }
 
     @Override
-    public boolean delete(Facility facility) throws ServiceException {
+    public boolean delete(RoomClass entity) throws ServiceException {
         return false;
     }
 }

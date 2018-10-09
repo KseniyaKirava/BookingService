@@ -7,6 +7,13 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * Provides Request with an opportunity to retrieve, change and delete data from
+ * the relevant database table.
+ *
+ * @author Kseniya Kirava
+ * @since Sept 24, 2018
+ */
 public class RequestDAOImpl implements GenericDAO<Request> {
 
     /**
@@ -14,9 +21,35 @@ public class RequestDAOImpl implements GenericDAO<Request> {
      */
     private static final Logger LOGGER = Logger.getLogger(RequestDAOImpl.class);
 
+    /**
+     * Constant string which represents query to create request.
+     */
+    private static final String SQL_CREATE_REQUEST = "";
+
+    /**
+     * Constant string which represents query to select all requests.
+     */
+    private static final String SQL_SELECT_FROM_REQUESTS = "SELECT * FROM `requests` ";
+
+    /**
+     * Constant string which represents query to update request.
+     */
+    private static final String SQL_UPDATE_REQUEST = "";
+
+
+    /**
+     * Constant string which represents query to delete request.
+     */
+    private static final String SQL_DELETE_REQUEST_BY_ID = "";
+
+
     @Override
     public boolean create(Request entity) throws DAOException {
         return false;
+    }
+
+    public Request findById(long id) throws DAOException {
+        return null;
     }
 
     @Override
@@ -26,6 +59,10 @@ public class RequestDAOImpl implements GenericDAO<Request> {
 
     @Override
     public boolean update(Request entity) throws DAOException {
+        return false;
+    }
+
+    public boolean deleteById(long id) throws DAOException {
         return false;
     }
 

@@ -2,7 +2,7 @@ package by.htp.kirova.task2.java.service;
 
 
 /**
- * Custom exception used to determine exceptions in the Service Layer.
+ * Custom exception used to determine exceptions in the GenericService Layer.
  *
  * @author Kseniya Kirava
  * @since Sept 24, 2018

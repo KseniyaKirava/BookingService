@@ -1,7 +1,7 @@
 package by.htp.kirova.task2.java.dao;
 
 
-import by.htp.kirova.task2.java.dao.daoentity.FacilityDAOImpl;
+import by.htp.kirova.task2.java.dao.daoentity.*;
 
 /**
  *
@@ -21,14 +21,58 @@ public final class DAOFactory {
 
 
 
+	private final GenericDAO authorityDAO = new AuthorityDAOImpl();
 
-	private final GenericDAO daoFacility = new FacilityDAOImpl();
+	public GenericDAO getDaoAuthority() {return authorityDAO;}
 
-	public GenericDAO getDaoFacility() {
-		return daoFacility;
+
+
+
+	private final GenericDAO facilityDAO = new FacilityDAOImpl();
+
+	public GenericDAO getFacilityDAO() {
+		return facilityDAO;
 	}
 
 
 
 
+	private final GenericDAO requestDAO = new RequestDAOImpl();
+
+	public GenericDAO getAuthorityDAO() {return requestDAO;}
+
+
+
+
+	private final GenericDAO reservationDAO = new ReservationDAOImpl();
+
+	public GenericDAO getReservationDAO() {return reservationDAO;}
+
+
+
+
+	private final GenericDAO roomClassDAO = new RoomClassDAOImpl();
+
+	public GenericDAO getRoomClassDAO() {return roomClassDAO;}
+
+
+
+
+	private final GenericDAO roomDAO = new RoomDAOImpl();
+
+	public GenericDAO getRoomDAO() {return roomDAO;}
+
+
+
+
+	private final GenericDAO roomHasFacilityDAO = new RoomHasFacilityDAOImpl();
+
+	public GenericDAO getRoomHasFacilityDAO() {return roomHasFacilityDAO;}
+
+
+
+
+	private final GenericDAO userDAO = new UserDAOImpl();
+
+	public GenericDAO getUserDAO() {return userDAO;}
 }

@@ -2,6 +2,10 @@ package by.htp.kirova.task2.java.controller;
 
 import by.htp.kirova.task2.java.connectionpool.ConnectionPool;
 import by.htp.kirova.task2.java.connectionpool.ConnectionPoolException;
+import by.htp.kirova.task2.java.dao.DAOException;
+import by.htp.kirova.task2.java.dao.DAOFactory;
+import by.htp.kirova.task2.java.dao.GenericDAO;
+import by.htp.kirova.task2.java.entity.Facility;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,13 +22,19 @@ import java.io.IOException;
  */
 public class Controller{
 
-    public  static void main(String[] args){
-        ConnectionPool connectionPool;
-        try {
-            connectionPool = ConnectionPool.getInstance();
-        } catch (ConnectionPoolException e) {
-            e.printStackTrace();
-        }
+    public  static void main(String[] args) throws DAOException {
+
+//        DAOFactory instance = DAOFactory.getInstance();
+//        GenericDAO daoFacility = instance.getDaoFacility();
+//
+//        Facility facility = new Facility();
+//        facility.setId(1);
+//        facility.setName("adsdssf");
+//        boolean b = daoFacility.create(facility);
+
+
+
+
     }
 
 //    @Override

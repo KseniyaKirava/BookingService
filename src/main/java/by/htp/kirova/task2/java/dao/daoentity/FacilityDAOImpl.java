@@ -17,7 +17,7 @@ import java.util.Locale;
 
 
 /**
- * Provides Facilities with an opportunity to retrieve, change and delete data from
+ * Provides Facility with an opportunity to retrieve, change and delete data from
  * the relevant database table.
  *
  * @author Kseniya Kirava
