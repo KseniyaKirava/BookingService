@@ -2,7 +2,7 @@ package by.htp.kirova.task2.java.dao;
 
 
 /**
- * Custom exception used to determine exceptions in the DAO Layer.
+ * Custom exception used to determine exceptions in the GenericDAO Layer.
  *
  * @author Kseniya Kirava
  * @since Sept 24, 2018

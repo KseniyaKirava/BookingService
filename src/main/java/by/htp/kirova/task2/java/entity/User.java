@@ -1,5 +1,6 @@
 package by.htp.kirova.task2.java.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Objects;
  * @author Kseniya Kirava
  * @since Sept 24, 2018
  */
- public class User{
+ public class User implements Serializable {
 
     /**
      * The unique serial version identifier.

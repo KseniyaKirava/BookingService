@@ -2,7 +2,7 @@ package by.htp.kirova.task2.java.dao.daoentity;
 
 import by.htp.kirova.task2.java.connectionpool.ConnectionPool;
 import by.htp.kirova.task2.java.connectionpool.ConnectionPoolException;
-import by.htp.kirova.task2.java.dao.DAO;
+import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.dao.DAOException;
 import by.htp.kirova.task2.java.entity.Facility;
 import org.apache.log4j.Logger;
@@ -23,12 +23,12 @@ import java.util.Locale;
  * @author Kseniya Kirava
  * @since Sept 24, 2018
  */
-public class FacilityDAOImpl implements DAO<Facility> {
+public class FacilityDAOImpl implements GenericDAO<Facility> {
 
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
+    private static final Logger LOGGER = Logger.getLogger(FacilityDAOImpl.class);
 
     /**
      * Constant string which represents query to create facility.
@@ -36,14 +36,15 @@ public class FacilityDAOImpl implements DAO<Facility> {
     private static final String SQL_CREATE_FACILITY = "INSERT INTO `facilities`(`name`) VALUES ('%s')";
 
     /**
+     * Constant string which represents query to select all facilities.
+     */
+    private static final String SQL_SELECT_FROM_FACILITIES = "SELECT * FROM `facilities` ";
+
+    /**
      * Constant string which represents query to update facility.
      */
     private static final String SQL_UPDATE_FACILITY = "UPDATE `facilities` SET `name`='%s' WHERE `id` = %d";
 
-    /**
-     * Constant string which represents query to select all facilities.
-     */
-    private static final String SQL_SELECT_FROM_FACILITIES = "SELECT * FROM `facilities` ";
 
     /**
      * Constant string which represents query to delete facility.
@@ -72,7 +73,7 @@ public class FacilityDAOImpl implements DAO<Facility> {
             }
 
         } catch (ConnectionPoolException | SQLException e) {
-            rollbackConncetion(connection);
+            rollbackConnection(connection);
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
@@ -124,7 +125,7 @@ public class FacilityDAOImpl implements DAO<Facility> {
         ConnectionPool cp = null;
         Connection connection = null;
 
-        String sql = String.format(Locale.US, SQL_SELECT_FROM_FACILITIES + where);
+        String sql = SQL_SELECT_FROM_FACILITIES + where;
 
         List<Facility> list = new ArrayList<>();
 
@@ -174,7 +175,7 @@ public class FacilityDAOImpl implements DAO<Facility> {
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            rollbackConncetion(connection);
+            rollbackConnection(connection);
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
@@ -255,7 +256,7 @@ public class FacilityDAOImpl implements DAO<Facility> {
         }
     }
 
-    private void rollbackConncetion(Connection connection) {
+    private void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {
                 connection.rollback();

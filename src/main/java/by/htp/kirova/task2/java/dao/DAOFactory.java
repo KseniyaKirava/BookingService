@@ -22,9 +22,9 @@ public final class DAOFactory {
 
 
 
-	private final DAO daoFacility = new FacilityDAOImpl();
+	private final GenericDAO daoFacility = new FacilityDAOImpl();
 
-	public DAO getDaoFacility() {
+	public GenericDAO getDaoFacility() {
 		return daoFacility;
 	}
 

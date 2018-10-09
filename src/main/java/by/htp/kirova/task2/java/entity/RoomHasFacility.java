@@ -1,13 +1,15 @@
 package by.htp.kirova.task2.java.entity;
 
 
+import java.io.Serializable;
+
 /**
  * Represents a room has facilities of an application, providing access to room id, facilities id, count.
  *
  * @author Kseniya Kirava
  * @since Sept 24, 2018
  */
-public class RoomHasFacility{
+public class RoomHasFacility implements Serializable {
 
     /**
      * The unique serial version identifier.
