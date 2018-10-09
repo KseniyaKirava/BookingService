@@ -84,13 +84,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
         return false;
     }
 
-    /**
-     * Returns facility which has a specific Id.
-     *
-     * @param id parameter which specifies Id.
-     * @return facility which has a specific Id.
-     * @throws DAOException
-     */
+    @Override
     public Facility findById(long id) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
@@ -186,14 +180,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
         return result == 1;
     }
 
-
-    /**
-     * Deletes object based on its Id.
-     *
-     * @param id parameter which specifies Id.
-     * @return boolean {@code true} in case of success and {@code false} otherwise.
-     * @throws DAOException
-     */
+    @Override
     public boolean deleteById(long id) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;

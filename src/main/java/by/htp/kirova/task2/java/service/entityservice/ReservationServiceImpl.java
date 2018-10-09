@@ -26,6 +26,7 @@ public class ReservationServiceImpl implements GenericService<Reservation> {
         return false;
     }
 
+    @Override
     public Reservation findById(long id) throws ServiceException {
         return null;
     }
@@ -40,6 +41,7 @@ public class ReservationServiceImpl implements GenericService<Reservation> {
         return false;
     }
 
+    @Override
     public boolean deleteById(long id) throws ServiceException {
         return false;
     }

@@ -22,6 +22,15 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
      */
     private static final Logger LOGGER = Logger.getLogger(RoomHasFacilityDAOImpl.class);
 
+    @Override
+    public RoomHasFacility findById(long id) throws DAOException {
+        return null;
+    }
+
+    @Override
+    public boolean deleteById(long id) throws DAOException {
+        return false;
+    }
 
     @Override
     public boolean create(RoomHasFacility entity) throws DAOException {

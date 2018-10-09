@@ -19,6 +19,14 @@ public interface GenericService<T> {
      */
     boolean create(T entity) throws ServiceException;
 
+    /**
+     * Returns entity which has a specific Id.
+     *
+     * @param id parameter which specifies Id.
+     * @return entity which has a specific Id.
+     * @throws ServiceException
+     */
+    T findById(long id) throws ServiceException;
 
     /**
      * Returns all objects which match SQL search condition.
@@ -39,6 +47,14 @@ public interface GenericService<T> {
      */
     boolean update(T entity) throws ServiceException;
 
+    /**
+     * Deletes object based on its Id.
+     *
+     * @param id parameter which specifies Id.
+     * @return boolean {@code true} in case of success and {@code false} otherwise.
+     * @throws ServiceException
+     */
+    boolean deleteById(long id) throws ServiceException;
 
     /**
      * Deletes specific object based on equality with the parameter.

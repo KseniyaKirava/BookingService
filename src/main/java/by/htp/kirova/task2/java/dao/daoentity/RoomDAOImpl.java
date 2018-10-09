@@ -27,6 +27,7 @@ public class RoomDAOImpl implements GenericDAO<Room> {
         return false;
     }
 
+    @Override
     public Room findById(long id) throws DAOException {
         return null;
     }
@@ -42,6 +43,7 @@ public class RoomDAOImpl implements GenericDAO<Room> {
         return false;
     }
 
+    @Override
     public boolean deleteById(long id) throws DAOException {
         return false;
     }

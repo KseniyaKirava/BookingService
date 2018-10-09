@@ -51,7 +51,15 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
      */
     private static final String  SQL_DELETE_AUTHORITY = "DELETE FROM `authorities` WHERE `username`='%s'";
 
+    @Override
+    public Authority findById(long id) throws DAOException {
+        return null;
+    }
 
+    @Override
+    public boolean deleteById(long id) throws DAOException {
+        return false;
+    }
 
     @Override
     public boolean create(Authority authority) throws DAOException {

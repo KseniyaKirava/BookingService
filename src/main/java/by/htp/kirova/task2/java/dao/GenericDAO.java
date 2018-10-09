@@ -1,6 +1,8 @@
 package by.htp.kirova.task2.java.dao;
 
 
+import by.htp.kirova.task2.java.service.ServiceException;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
  * @author Kseniya Kirava
  * @since Sept 24, 2018
  */
-public interface GenericDAO<T extends Serializable> {
+public interface GenericDAO<T> {
 
 
     /**
@@ -22,6 +24,15 @@ public interface GenericDAO<T extends Serializable> {
      */
     boolean create(T entity) throws DAOException;
 
+
+    /**
+     * Returns entity which has a specific Id.
+     *
+     * @param id parameter which specifies Id.
+     * @return entity which has a specific Id.
+     * @throws DAOException
+     */
+    T findById(long id) throws DAOException;
 
     /**
      * Returns all objects which match SQL search condition.
@@ -42,6 +53,14 @@ public interface GenericDAO<T extends Serializable> {
      */
     boolean update(T entity) throws DAOException;
 
+    /**
+     * Deletes object based on its Id.
+     *
+     * @param id parameter which specifies Id.
+     * @return boolean {@code true} in case of success and {@code false} otherwise.
+     * @throws DAOException
+     */
+    boolean deleteById(long id) throws DAOException;
 
     /**
      * Deletes specific object based on equality with the parameter.

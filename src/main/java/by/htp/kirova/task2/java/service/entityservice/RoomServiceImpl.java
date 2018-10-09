@@ -26,6 +26,7 @@ public class RoomServiceImpl implements GenericService<Room> {
         return false;
     }
 
+    @Override
     public Room findById(long id) throws ServiceException {
         return null;
     }
@@ -40,6 +41,7 @@ public class RoomServiceImpl implements GenericService<Room> {
         return false;
     }
 
+    @Override
     public boolean deleteById(long id) throws ServiceException {
         return false;
     }

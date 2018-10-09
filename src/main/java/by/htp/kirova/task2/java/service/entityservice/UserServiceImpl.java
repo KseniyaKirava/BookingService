@@ -20,6 +20,15 @@ public class UserServiceImpl implements GenericService<User> {
      */
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
+    @Override
+    public User findById(long id) throws ServiceException {
+        return null;
+    }
+
+    @Override
+    public boolean deleteById(long id) throws ServiceException {
+        return false;
+    }
 
     @Override
     public boolean create(User entity) throws ServiceException {

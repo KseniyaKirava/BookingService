@@ -22,9 +22,14 @@ enum ValidationPattern {
     PASSWORD("[\\w]{6,15}"),
 
     /**
-     * User's full name pattern.
+     * User's name pattern.
      */
     NAME("[[A-Za-zА-Яа-яЁё]+]{2,15}"),
+
+    /**
+     * Entity name pattern.
+     */
+    ENTITY_NAME("[[A-Za-zА-Яа-яЁё\\d, -]+]{1,50}"),
 
     /**
      * E-mail pattern.

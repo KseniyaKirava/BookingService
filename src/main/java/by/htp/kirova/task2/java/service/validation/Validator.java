@@ -51,6 +51,18 @@ public final class Validator {
     }
 
     /**
+     * Checks the name against entity's name pattern.
+     *
+     * @param entityName entity name.
+     * @return {@code true} in case of success and false otherwise.
+     */
+    public static boolean checkEntityName(String entityName) {
+        boolean isValid = entityName != null && ValidationPattern.ENTITY_NAME.getPattern().matcher(entityName).matches();
+        LOGGER.info("User name is valid: " + isValid);
+        return isValid;
+    }
+
+    /**
      * Checks the e-mail against user's e-mail pattern.
      *
      * @param email user's e-mail.

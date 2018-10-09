@@ -1,10 +1,16 @@
 package by.htp.kirova.task2.java.service.entityservice;
 
+import by.htp.kirova.task2.java.dao.DAOException;
+import by.htp.kirova.task2.java.dao.DAOFactory;
+import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.Facility;
 import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.ServiceException;
+import by.htp.kirova.task2.java.service.validation.Validator;
 import org.apache.log4j.Logger;
 
+import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,16 +28,43 @@ public class FacilityServiceImpl implements GenericService<Facility> {
 
     @Override
     public boolean create(Facility facility) throws ServiceException {
-        return false;
+//        if (!Validator.checkEntityName(facility.getName())) {
+//            LOGGER.info("The entered data does not correspond to the format");
+//            return false;
+//        }
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO facilityDAO = daoFactory.getFacilityDAO();
+        boolean result;
+        try {
+            result = facilityDAO.create(facility);
+        } catch (DAOException e) {
+            LOGGER.error("ConnectionPool error: ", e);
+            throw new ServiceException("ConnectionPool error: ", e);
+        }
+        return result;
     }
 
-
+    @Override
     public Facility findById(long id) throws ServiceException {
-        return null;
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO facilityDAO = daoFactory.getFacilityDAO();
+        Facility facility = null;
+        try {
+            Object o = facilityDAO.findById(id);
+            if (o != null) {
+                facility = (Facility) o;
+            }
+        } catch (DAOException e) {
+            LOGGER.error("ConnectionPool error: ", e);
+            throw new ServiceException("ConnectionPool error: ", e);
+        }
+        return facility;
+
     }
 
     @Override
     public List findAll(String where) throws ServiceException {
+        //todo
         return null;
     }
 
@@ -40,7 +73,7 @@ public class FacilityServiceImpl implements GenericService<Facility> {
         return false;
     }
 
-
+    @Override
     public boolean deleteById(long id) throws ServiceException {
         return false;
     }

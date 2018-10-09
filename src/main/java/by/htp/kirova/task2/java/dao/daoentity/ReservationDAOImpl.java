@@ -27,6 +27,7 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
         return false;
     }
 
+    @Override
     public Reservation findById(long id) throws DAOException {
         return null;
     }
@@ -41,6 +42,7 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
         return false;
     }
 
+    @Override
     public boolean deleteById(long id) throws DAOException {
         return false;
     }

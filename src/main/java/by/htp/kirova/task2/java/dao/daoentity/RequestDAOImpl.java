@@ -48,6 +48,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
         return false;
     }
 
+    @Override
     public Request findById(long id) throws DAOException {
         return null;
     }
@@ -62,6 +63,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
         return false;
     }
 
+    @Override
     public boolean deleteById(long id) throws DAOException {
         return false;
     }

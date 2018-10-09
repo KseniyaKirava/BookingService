@@ -25,6 +25,7 @@ public class RequestServiceImpl implements GenericService<Request> {
         return false;
     }
 
+    @Override
     public Request findById(long id) throws ServiceException {
         return null;
     }
@@ -39,6 +40,7 @@ public class RequestServiceImpl implements GenericService<Request> {
         return false;
     }
 
+    @Override
     public boolean deleteById(long id) throws ServiceException {
         return false;
     }
