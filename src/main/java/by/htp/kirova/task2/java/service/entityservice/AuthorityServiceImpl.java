@@ -20,15 +20,6 @@ public class AuthorityServiceImpl implements GenericService<Authority> {
      */
     private static final Logger LOGGER = Logger.getLogger(AuthorityServiceImpl.class);
 
-    @Override
-    public Authority findById(long id) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public boolean deleteById(long id) throws ServiceException {
-        return false;
-    }
 
     @Override
     public boolean create(Authority entity) throws ServiceException {
@@ -36,7 +27,7 @@ public class AuthorityServiceImpl implements GenericService<Authority> {
     }
 
     @Override
-    public List<Authority> findAll(String where) throws ServiceException {
+    public List<Authority> read(String where) throws ServiceException {
         return null;
     }
 

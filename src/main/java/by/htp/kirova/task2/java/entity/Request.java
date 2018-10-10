@@ -39,9 +39,9 @@ public class Request implements Serializable {
     private long checkout_date;
 
     /**
-     * The unique identification number of room class.
+     * The name of room class.
      */
-    private long room_class_id;
+    private String room_class;
 
     /**
      * The unique identification name of user.
@@ -52,12 +52,13 @@ public class Request implements Serializable {
     public Request() {
     }
 
-    public Request(long id, int room_capacity, long checkin_date, long checkout_date, long room_class_id, String users_username) {
+    public Request(long id, int room_capacity, long checkin_date, long checkout_date, String room_class,
+                   String users_username) {
         this.id = id;
         this.room_capacity = room_capacity;
         this.checkin_date = checkin_date;
         this.checkout_date = checkout_date;
-        this.room_class_id = room_class_id;
+        this.room_class = room_class;
         this.users_username = users_username;
     }
 
@@ -98,12 +99,12 @@ public class Request implements Serializable {
     }
 
     /**
-     * Returns room class unique identification number.
+     * Returns room class name.
      *
-     * @return java.lang.Long room class unique identification number.
+     * @return java.lang.String room class name.
      */
-    public long getRoom_class_id() {
-        return room_class_id;
+    public String getRoom_class() {
+        return room_class;
     }
 
     /**
@@ -152,12 +153,12 @@ public class Request implements Serializable {
     }
 
     /**
-     * Sets room class unique identification number.
+     * Sets room class name.
      *
-     * @param room_class_id room class unique identification number.
+     * @param room_class room class name.
      */
-    public void setRoom_class_id(long room_class_id) {
-        this.room_class_id = room_class_id;
+    public void setRoom_class(String room_class) {
+        this.room_class = room_class;
     }
 
     /**
@@ -187,7 +188,7 @@ public class Request implements Serializable {
                 room_capacity == request.room_capacity &&
                 checkin_date == request.checkin_date &&
                 checkout_date == request.checkout_date &&
-                room_class_id == request.room_class_id &&
+                Objects.equals(room_class, request.room_class) &&
                 Objects.equals(users_username, request.users_username);
     }
 
@@ -198,7 +199,7 @@ public class Request implements Serializable {
         result = result * 31 + result * room_capacity;
         result = (int) (result * 31 + result * checkin_date);
         result = (int) (result * 31 + result * checkout_date);
-        result = (int)(result * 31 + result * room_class_id);
+        result = result * 31 + (room_class == null ? 0 : room_class.hashCode()) * result;
         result = result * 31 + (users_username == null ? 0 : users_username.hashCode()) * result;
         return result;
     }
@@ -210,7 +211,7 @@ public class Request implements Serializable {
                 ", room_capacity=" + room_capacity +
                 ", checkin_date=" + checkin_date +
                 ", checkout_date=" + checkout_date +
-                ", room_class_id=" + room_class_id +
+                ", room_class='" + room_class + '\'' +
                 ", users_username='" + users_username + '\'' +
                 '}';
     }

@@ -20,23 +20,13 @@ public interface GenericService<T> {
     boolean create(T entity) throws ServiceException;
 
     /**
-     * Returns entity which has a specific Id.
-     *
-     * @param id parameter which specifies Id.
-     * @return entity which has a specific Id.
-     * @throws ServiceException
-     */
-    T findById(long id) throws ServiceException;
-
-    /**
      * Returns all objects which match SQL search condition.
      *
      * @return java.util.List<T> All results collected in {@link java.util.List}.
      * @param where SQL search condition.
      * @throws ServiceException
      */
-    List<T> findAll(String where) throws ServiceException;
-
+    List<T> read(String where) throws ServiceException;
 
     /**
      * Updates object based on equality with the parameter.
@@ -46,15 +36,6 @@ public interface GenericService<T> {
      * @throws ServiceException
      */
     boolean update(T entity) throws ServiceException;
-
-    /**
-     * Deletes object based on its Id.
-     *
-     * @param id parameter which specifies Id.
-     * @return boolean {@code true} in case of success and {@code false} otherwise.
-     * @throws ServiceException
-     */
-    boolean deleteById(long id) throws ServiceException;
 
     /**
      * Deletes specific object based on equality with the parameter.

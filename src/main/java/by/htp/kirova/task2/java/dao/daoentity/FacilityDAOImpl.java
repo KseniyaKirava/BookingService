@@ -49,7 +49,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
     /**
      * Constant string which represents query to delete facility.
      */
-    private static final String SQL_DELETE_FACILITY_BY_ID = "DELETE FROM `facilities` WHERE `id` = %d";
+    private static final String SQL_DELETE_FACILITY = "DELETE FROM `facilities` WHERE `id` = %d";
 
 
 
@@ -85,37 +85,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
     }
 
     @Override
-    public Facility findById(long id) throws DAOException {
-        ConnectionPool cp = null;
-        Connection connection = null;
-
-        List<Facility> list;
-
-        try {
-            cp = ConnectionPool.getInstance();
-            connection = cp.extractConnection();
-
-            list = findAll("WHERE `id` =" + id);
-            if (list.size() == 1) {
-                return list.get(0);
-            }
-
-        } catch (ConnectionPoolException e) {
-            LOGGER.error("ConnectionPool error: ", e);
-            throw new DAOException("ConnectionPool error: ", e);
-
-        } finally {
-            if (connection != null) {
-                cp.returnConnection(connection);
-            }
-        }
-
-        return null;
-    }
-
-
-    @Override
-    public List<Facility> findAll(String where) throws DAOException {
+    public List<Facility> read(String where) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
 
@@ -181,11 +151,11 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
     }
 
     @Override
-    public boolean deleteById(long id) throws DAOException {
+    public boolean delete(Facility facility) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
 
-        String sql = String.format(Locale.US, SQL_DELETE_FACILITY_BY_ID, id);
+        String sql = String.format(Locale.US, SQL_DELETE_FACILITY, facility.getId());
 
         int result;
 
@@ -206,13 +176,6 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
         }
 
         return result == 1;
-    }
-
-
-    @Override
-    public boolean delete(Facility facility) throws DAOException {
-        long id = facility.getId();
-        return deleteById(id);
     }
 
 

@@ -27,22 +27,12 @@ public class ReservationServiceImpl implements GenericService<Reservation> {
     }
 
     @Override
-    public Reservation findById(long id) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public List<Reservation> findAll(String where) throws ServiceException {
+    public List<Reservation> read(String where) throws ServiceException {
         return null;
     }
 
     @Override
     public boolean update(Reservation entity) throws ServiceException {
-        return false;
-    }
-
-    @Override
-    public boolean deleteById(long id) throws ServiceException {
         return false;
     }
 

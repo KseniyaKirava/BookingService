@@ -52,15 +52,6 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
      */
     private static final String  SQL_DELETE_AUTHORITY = "DELETE FROM `authorities` WHERE `username`='%s'";
 
-    @Override
-    public Authority findById(long id) throws DAOException {
-        throw new UnsupportedOperationException("Unsupported operation");
-    }
-
-    @Override
-    public boolean deleteById(long id) throws DAOException {
-        throw new UnsupportedOperationException("Unsupported operation");
-    }
 
     @Override
     public boolean create(Authority authority) throws DAOException {
@@ -92,7 +83,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
     }
 
     @Override
-    public List<Authority> findAll(String where) throws DAOException {
+    public List<Authority> read(String where) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
 

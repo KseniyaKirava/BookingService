@@ -27,13 +27,9 @@ public class RoomClassServiceImpl implements GenericService<RoomClass> {
         return false;
     }
 
-@Override
-    public RoomClass findById(long id) throws ServiceException {
-        return null;
-    }
 
     @Override
-    public List<RoomClass> findAll(String where) throws ServiceException {
+    public List<RoomClass> read(String where) throws ServiceException {
         return null;
     }
 
@@ -42,10 +38,6 @@ public class RoomClassServiceImpl implements GenericService<RoomClass> {
         return false;
     }
 
-@Override
-    public boolean deleteById(long id) throws ServiceException {
-        return false;
-    }
 
     @Override
     public boolean delete(RoomClass entity) throws ServiceException {

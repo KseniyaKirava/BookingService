@@ -20,15 +20,6 @@ public class UserServiceImpl implements GenericService<User> {
      */
     private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
 
-    @Override
-    public User findById(long id) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public boolean deleteById(long id) throws ServiceException {
-        return false;
-    }
 
     @Override
     public boolean create(User entity) throws ServiceException {
@@ -36,7 +27,7 @@ public class UserServiceImpl implements GenericService<User> {
     }
 
     @Override
-    public List<User> findAll(String where) throws ServiceException {
+    public List<User> read(String where) throws ServiceException {
         return null;
     }
 

@@ -26,22 +26,12 @@ public class RequestServiceImpl implements GenericService<Request> {
     }
 
     @Override
-    public Request findById(long id) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public List<Request> findAll(String where) throws ServiceException {
+    public List<Request> read(String where) throws ServiceException {
         return null;
     }
 
     @Override
     public boolean update(Request entity) throws ServiceException {
-        return false;
-    }
-
-    @Override
-    public boolean deleteById(long id) throws ServiceException {
         return false;
     }
 

@@ -27,22 +27,12 @@ public class RoomServiceImpl implements GenericService<Room> {
     }
 
     @Override
-    public Room findById(long id) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public List<Room> findAll(String where) throws ServiceException {
+    public List<Room> read(String where) throws ServiceException {
         return null;
     }
 
     @Override
     public boolean update(Room entity) throws ServiceException {
-        return false;
-    }
-
-    @Override
-    public boolean deleteById(long id) throws ServiceException {
         return false;
     }
 

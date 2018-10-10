@@ -20,24 +20,13 @@ public class RoomHasFacilityServiceImpl implements GenericService<RoomHasFacilit
      */
     private static final Logger LOGGER = Logger.getLogger(RoomHasFacilityServiceImpl.class);
 
-
-    @Override
-    public RoomHasFacility findById(long id) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public boolean deleteById(long id) throws ServiceException {
-        return false;
-    }
-
     @Override
     public boolean create(RoomHasFacility entity) throws ServiceException {
         return false;
     }
 
     @Override
-    public List<RoomHasFacility> findAll(String where) throws ServiceException {
+    public List<RoomHasFacility> read(String where) throws ServiceException {
         return null;
     }
 

@@ -43,23 +43,7 @@ public class FacilityServiceImpl implements GenericService<Facility> {
     }
 
     @Override
-    public Facility findById(long id) throws ServiceException {
-        DAOFactory daoFactory = DAOFactory.getInstance();
-        GenericDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
-
-        Facility facility;
-
-        try {
-            facility = facilityDAO.findById(id);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-
-        return facility;
-    }
-
-    @Override
-    public List<Facility> findAll(String where) throws ServiceException {
+    public List<Facility> read(String where) throws ServiceException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         GenericDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
 
@@ -83,22 +67,6 @@ public class FacilityServiceImpl implements GenericService<Facility> {
 
         try {
             result = facilityDAO.update(facility);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-
-        return result;
-    }
-
-    @Override
-    public boolean deleteById(long id) throws ServiceException {
-        DAOFactory daoFactory = DAOFactory.getInstance();
-        GenericDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
-
-        boolean result;
-
-        try {
-            result = facilityDAO.deleteById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
