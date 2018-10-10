@@ -50,7 +50,7 @@ public class FacilityServiceImpl implements GenericService<Facility> {
         List<Facility> list;
 
         try {
-            list = facilityDAO.findAll(where);
+            list = facilityDAO.read(where);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

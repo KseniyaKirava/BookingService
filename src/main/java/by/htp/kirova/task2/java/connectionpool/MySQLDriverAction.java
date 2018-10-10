@@ -46,7 +46,7 @@ final class MySQLDriverAction {
     /**
      * Deregisters MySQL database drivers.
      *
-     * @return True in case of success and false otherwise.
+     * @return {@code true} in case of success and {@code false} otherwise.
      */
     static boolean deregisterDriver() {
 

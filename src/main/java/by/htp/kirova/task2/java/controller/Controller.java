@@ -6,6 +6,9 @@ import by.htp.kirova.task2.java.dao.DAOException;
 import by.htp.kirova.task2.java.dao.DAOFactory;
 import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.Facility;
+import by.htp.kirova.task2.java.service.GenericService;
+import by.htp.kirova.task2.java.service.ServiceException;
+import by.htp.kirova.task2.java.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,15 +27,19 @@ public class Controller{
 
     public  static void main(String[] args) throws DAOException {
 
-//        DAOFactory instance = DAOFactory.getInstance();
-//        GenericDAO daoFacility = instance.getDaoFacility();
-//
-//        Facility facility = new Facility();
-//        facility.setId(1);
-//        facility.setName("adsdssf");
-//        boolean b = daoFacility.create(facility);
 
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        GenericService<Facility> facilityService = serviceFactory.getFacilityService();
 
+        Facility facility = new Facility();
+        facility.setId(1);
+        facility.setName("dfjgldfjlfjg");
+
+        try {
+            facilityService.delete(facility);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
 
 
     }

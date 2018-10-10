@@ -1,5 +1,6 @@
 package by.htp.kirova.task2.java.service;
 
+import by.htp.kirova.task2.java.entity.*;
 import by.htp.kirova.task2.java.service.entityservice.*;
 
 
@@ -21,72 +22,72 @@ public final class ServiceFactory {
 
 
 
-	private final GenericService authorityService = new AuthorityServiceImpl();
+	private final GenericService<Authority> authorityService = new AuthorityServiceImpl();
 
-	public GenericService getAuthorityService() {
+	public GenericService<Authority> getAuthorityService() {
 		return authorityService;
 	}
 
 
 
 
-	private final GenericService facilityService = new FacilityServiceImpl();
+	private final GenericService<Facility> facilityService = new FacilityServiceImpl();
 
-	public GenericService getFacilityService() {
+	public GenericService<Facility> getFacilityService() {
 		return facilityService;
 	}
 
 
 
 
-	private final GenericService requestService = new RequestServiceImpl();
+	private final GenericService<Request> requestService = new RequestServiceImpl();
 
-	public GenericService getRequestService() {
+	public GenericService<Request> getRequestService() {
 		return requestService;
 	}
 
 
 
 
-	private final GenericService reservationService = new ReservationServiceImpl();
+	private final GenericService<Reservation> reservationService = new ReservationServiceImpl();
 
-	public GenericService getReservationService() {
+	public GenericService<Reservation> getReservationService() {
 		return reservationService;
 	}
 
 
 
 
-	private final GenericService roomClassService = new RoomClassServiceImpl();
+	private final GenericService<RoomClass> roomClassService = new RoomClassServiceImpl();
 
-	public GenericService getRoomClassService() {
+	public GenericService<RoomClass> getRoomClassService() {
 		return roomClassService;
 	}
 
 
 
 
-	private final GenericService roomHasFacilityService = new RoomHasFacilityServiceImpl();
+	private final GenericService<RoomHasFacility> roomHasFacilityService = new RoomHasFacilityServiceImpl();
 
-	public GenericService getRoomHasFacilityService() {
+	public GenericService<RoomHasFacility> getRoomHasFacilityService() {
 		return roomHasFacilityService;
 	}
 
 
 
 
-	private final GenericService roomService = new RoomServiceImpl();
+	private final GenericService<Room> roomService = new RoomServiceImpl();
 
-	public GenericService getRoomService() {
+	public GenericService<Room> getRoomService() {
 		return roomService;
 	}
 
 
 
 
-	private final GenericService userService = new UserServiceImpl();
+	private final GenericService<User> userService = new UserServiceImpl();
 
-	public GenericService getUserService() {
+	public GenericService<User> getUserService() {
 		return userService;
 	}
 }
