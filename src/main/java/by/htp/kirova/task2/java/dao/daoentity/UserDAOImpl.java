@@ -25,12 +25,12 @@ public class UserDAOImpl implements GenericDAO<User> {
 
     @Override
     public User findById(long id) throws DAOException {
-        return null;
+        throw new UnsupportedOperationException("Unsupported operation");
     }
 
     @Override
     public boolean deleteById(long id) throws DAOException {
-        return false;
+        throw new UnsupportedOperationException("Unsupported operation");
     }
 
     @Override

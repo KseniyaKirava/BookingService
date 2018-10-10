@@ -2,6 +2,7 @@ package by.htp.kirova.task2.java.dao;
 
 
 import by.htp.kirova.task2.java.dao.daoentity.*;
+import by.htp.kirova.task2.java.entity.*;
 
 /**
  *
@@ -21,58 +22,58 @@ public final class DAOFactory {
 
 
 
-	private final GenericDAO authorityDAO = new AuthorityDAOImpl();
+	private final GenericDAO<Authority> authorityDAO = new AuthorityDAOImpl();
 
-	public GenericDAO getDaoAuthority() {return authorityDAO;}
-
-
+	public GenericDAO<Authority> getDaoAuthority() {return authorityDAO;}
 
 
-	private final GenericDAO facilityDAO = new FacilityDAOImpl();
 
-	public GenericDAO getFacilityDAO() {
+
+	private final GenericDAO<Facility> facilityDAO = new FacilityDAOImpl();
+
+	public GenericDAO<Facility> getFacilityDAO() {
 		return facilityDAO;
 	}
 
 
 
 
-	private final GenericDAO requestDAO = new RequestDAOImpl();
+	private final GenericDAO<Request> requestDAO = new RequestDAOImpl();
 
-	public GenericDAO getAuthorityDAO() {return requestDAO;}
-
-
-
-
-	private final GenericDAO reservationDAO = new ReservationDAOImpl();
-
-	public GenericDAO getReservationDAO() {return reservationDAO;}
+	public GenericDAO<Request> getAuthorityDAO() {return requestDAO;}
 
 
 
 
-	private final GenericDAO roomClassDAO = new RoomClassDAOImpl();
+	private final GenericDAO<Reservation> reservationDAO = new ReservationDAOImpl();
 
-	public GenericDAO getRoomClassDAO() {return roomClassDAO;}
-
-
-
-
-	private final GenericDAO roomDAO = new RoomDAOImpl();
-
-	public GenericDAO getRoomDAO() {return roomDAO;}
+	public GenericDAO<Reservation> getReservationDAO() {return reservationDAO;}
 
 
 
 
-	private final GenericDAO roomHasFacilityDAO = new RoomHasFacilityDAOImpl();
+	private final GenericDAO<RoomClass> roomClassDAO = new RoomClassDAOImpl();
 
-	public GenericDAO getRoomHasFacilityDAO() {return roomHasFacilityDAO;}
-
-
+	public GenericDAO<RoomClass> getRoomClassDAO() {return roomClassDAO;}
 
 
-	private final GenericDAO userDAO = new UserDAOImpl();
 
-	public GenericDAO getUserDAO() {return userDAO;}
+
+	private final GenericDAO<Room> roomDAO = new RoomDAOImpl();
+
+	public GenericDAO<Room> getRoomDAO() {return roomDAO;}
+
+
+
+
+	private final GenericDAO<RoomHasFacility> roomHasFacilityDAO = new RoomHasFacilityDAOImpl();
+
+	public GenericDAO<RoomHasFacility> getRoomHasFacilityDAO() {return roomHasFacilityDAO;}
+
+
+
+
+	private final GenericDAO<User> userDAO = new UserDAOImpl();
+
+	public GenericDAO<User> getUserDAO() {return userDAO;}
 }

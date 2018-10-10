@@ -8,6 +8,7 @@ import by.htp.kirova.task2.java.dao.DAOException;
 import by.htp.kirova.task2.java.entity.Authority;
 import org.apache.log4j.Logger;
 
+import javax.resource.NotSupportedException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,12 +54,12 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
 
     @Override
     public Authority findById(long id) throws DAOException {
-        return null;
+        throw new UnsupportedOperationException("Unsupported operation");
     }
 
     @Override
     public boolean deleteById(long id) throws DAOException {
-        return false;
+        throw new UnsupportedOperationException("Unsupported operation");
     }
 
     @Override

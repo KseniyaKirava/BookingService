@@ -10,6 +10,7 @@ import by.htp.kirova.task2.java.service.validation.Validator;
 import org.apache.log4j.Logger;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,11 +22,6 @@ import java.util.List;
  */
 public class FacilityServiceImpl implements GenericService<Facility> {
 
-    /**
-     * Instance of {@code org.apache.log4j.Logger} is used for logging.
-     */
-    private static final Logger LOGGER = Logger.getLogger(FacilityServiceImpl.class);
-
     @Override
     public boolean create(Facility facility) throws ServiceException {
 //        if (!Validator.checkEntityName(facility.getName())) {
@@ -33,53 +29,97 @@ public class FacilityServiceImpl implements GenericService<Facility> {
 //            return false;
 //        }
         DAOFactory daoFactory = DAOFactory.getInstance();
-        GenericDAO facilityDAO = daoFactory.getFacilityDAO();
+        GenericDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
+
         boolean result;
+
         try {
             result = facilityDAO.create(facility);
         } catch (DAOException e) {
-            LOGGER.error("ConnectionPool error: ", e);
-            throw new ServiceException("ConnectionPool error: ", e);
+            throw new ServiceException(e);
         }
+
         return result;
     }
 
     @Override
     public Facility findById(long id) throws ServiceException {
         DAOFactory daoFactory = DAOFactory.getInstance();
-        GenericDAO facilityDAO = daoFactory.getFacilityDAO();
-        Facility facility = null;
-        try {
-            Object o = facilityDAO.findById(id);
-            if (o != null) {
-                facility = (Facility) o;
-            }
-        } catch (DAOException e) {
-            LOGGER.error("ConnectionPool error: ", e);
-            throw new ServiceException("ConnectionPool error: ", e);
-        }
-        return facility;
+        GenericDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
 
+        Facility facility;
+
+        try {
+            facility = facilityDAO.findById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return facility;
     }
 
     @Override
-    public List findAll(String where) throws ServiceException {
-        //todo
-        return null;
+    public List<Facility> findAll(String where) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
+
+        List<Facility> list;
+
+        try {
+            list = facilityDAO.findAll(where);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return list;
     }
 
     @Override
     public boolean update(Facility facility) throws ServiceException {
-        return false;
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
+
+        boolean result;
+
+        try {
+            result = facilityDAO.update(facility);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
     }
 
     @Override
     public boolean deleteById(long id) throws ServiceException {
-        return false;
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
+
+        boolean result;
+
+        try {
+            result = facilityDAO.deleteById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
     }
 
     @Override
     public boolean delete(Facility facility) throws ServiceException {
-        return false;
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
+
+        boolean result;
+
+        try {
+            result = facilityDAO.delete(facility);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+
     }
 }

@@ -1,9 +1,5 @@
 package by.htp.kirova.task2.java.dao;
 
-
-import by.htp.kirova.task2.java.service.ServiceException;
-
-import java.io.Serializable;
 import java.util.List;
 
 /**

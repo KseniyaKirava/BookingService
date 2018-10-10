@@ -24,12 +24,12 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
 
     @Override
     public RoomHasFacility findById(long id) throws DAOException {
-        return null;
+        throw new UnsupportedOperationException("Unsupported operation");
     }
 
     @Override
     public boolean deleteById(long id) throws DAOException {
-        return false;
+        throw new UnsupportedOperationException("Unsupported operation");
     }
 
     @Override
