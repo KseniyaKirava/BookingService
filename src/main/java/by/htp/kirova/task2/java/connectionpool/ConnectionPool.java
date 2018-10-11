@@ -73,7 +73,6 @@ public final class ConnectionPool {
 
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
 
-
         this.driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
         this.url = dbResourceManager.getValue(DBParameter.DB_URL);
         this.user = dbResourceManager.getValue(DBParameter.DB_USER);
@@ -199,6 +198,7 @@ public final class ConnectionPool {
                 connection.commit();
             }
             ((PooledConnection) connection).reallyClose();
+            MySQLDriverAction.deregisterDriver();
         }
     }
 
