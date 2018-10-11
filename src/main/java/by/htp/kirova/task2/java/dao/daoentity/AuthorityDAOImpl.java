@@ -7,8 +7,6 @@ import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.dao.DAOException;
 import by.htp.kirova.task2.java.entity.Authority;
 import org.apache.log4j.Logger;
-
-import javax.resource.NotSupportedException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,7 +65,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = executeUpdate(connection, sql, false);
+            result = executeUpdate(connection, sql);
 
         } catch (ConnectionPoolException | SQLException e) {
             rollbackConnection(connection);
@@ -130,7 +128,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = executeUpdate(connection, sql, false);
+            result = executeUpdate(connection, sql);
 
             connection.setAutoCommit(false);
             connection.commit();
@@ -160,7 +158,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = executeUpdate(connection, sql, false);
+            result = executeUpdate(connection, sql);
 
         } catch (ConnectionPoolException | SQLException e) {
             LOGGER.error("ConnectionPool error: ", e);
@@ -176,13 +174,24 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
     }
 
 
-
-    private int executeUpdate(Connection connection, String sql, boolean generateId) throws SQLException {
+    /**
+     * Executes the given SQL statement.
+     *
+     * @param connection current connection
+     * @param sql java.lang.String sql query
+     * @return value 1 if the request is successful, 0 otherwise
+     */
+    private int executeUpdate(Connection connection, String sql) throws SQLException {
         Statement statement = connection.createStatement();
         return statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
     }
 
-
+    /**
+     * Set autocommit flag is {@code true} and return connection in pool.
+     *
+     * @param cp connection pool
+     * @param connection current connection
+     */
     private void setAutoCommitTrueAndReturnConnection(ConnectionPool cp, Connection connection) {
         if (connection != null) {
             try {
@@ -195,6 +204,11 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
         }
     }
 
+    /**
+     * Rollback connection in case of unsuccessful completion of the transaction.
+     *
+     * @param connection current connection
+     */
     private void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {

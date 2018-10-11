@@ -179,6 +179,15 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
     }
 
 
+    /**
+     * Executes the given SQL statement.
+     *
+     * @param connection current connection.
+     * @param sql java.lang.String sql query.
+     * @param generateId boolean indicating the need to generate an identification number.
+     * {@code true} if it is needed, {@code false} otherwise.
+     * @return value 1 if the request is successful, 0 otherwise.
+     */
     private int executeUpdate(Connection connection, String sql, boolean generateId) throws SQLException {
         Statement statement = connection.createStatement();
         int result = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
@@ -193,7 +202,12 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
         return result;
     }
 
-
+    /**
+     * Set autocommit flag is {@code true} and return connection in pool.
+     *
+     * @param cp connection pool.
+     * @param connection current connection.
+     */
     private void setAutoCommitTrueAndReturnConnection(ConnectionPool cp, Connection connection) {
         if (connection != null) {
             try {
@@ -206,6 +220,11 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
         }
     }
 
+    /**
+     * Rollback connection in case of unsuccessful completion of the transaction.
+     *
+     * @param connection current connection
+     */
     private void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {

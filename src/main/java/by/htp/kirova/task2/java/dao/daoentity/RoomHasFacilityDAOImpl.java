@@ -2,6 +2,7 @@ package by.htp.kirova.task2.java.dao.daoentity;
 
 
 import by.htp.kirova.task2.java.connectionpool.ConnectionPool;
+import by.htp.kirova.task2.java.connectionpool.ConnectionPoolException;
 import by.htp.kirova.task2.java.dao.DAOException;
 import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.RoomHasFacility;
@@ -11,7 +12,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Provides Room Has Facility with an opportunity to retrieve, change and delete data from
@@ -30,7 +33,8 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
     /**
      * Constant string which represents query to create relations between facility and room.
      */
-    private static final String SQL_CREATE_RHF = "";
+    private static final String SQL_CREATE_RHF = "INSERT INTO `rooms_has_facilities`(`rooms_id`, `facilities_id`," +
+            " `count`) VALUES (%d, %d, %d)";
 
     /**
      * Constant string which represents query to select all relations between facility and room.
@@ -40,63 +44,178 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
     /**
      * Constant string which represents query to update relations between facility and room.
      */
-    private static final String SQL_UPDATE_RHF = "";
+    private static final String SQL_UPDATE_RHF = "UPDATE `rooms_has_facilities` SET `count`= %d " +
+            "WHERE `rooms_id`= %d AND `facilities_id`= %d";
 
     /**
      * Constant string which represents query to delete relations between facility and room.
      */
-    private static final String SQL_DELETE_RHF = "DELETE FROM `rooms_has_facilities` WHERE ";
+    private static final String SQL_DELETE_RHF = "DELETE FROM `rooms_has_facilities` WHERE `rooms_id`= %d AND" +
+            "`facilities_id`= %d";
 
 
 
     @Override
-    public boolean create(RoomHasFacility entity) throws DAOException {
-        return false;
+    public boolean create(RoomHasFacility roomHasFacility) throws DAOException {
+        ConnectionPool cp = null;
+        Connection connection = null;
+
+        String sql = String.format(Locale.US, SQL_CREATE_RHF, roomHasFacility.getRooms_id(),
+                roomHasFacility.getFacilities_id(), roomHasFacility.getCount());
+
+        int result;
+
+        try {
+            cp = ConnectionPool.getInstance();
+            connection = cp.extractConnection();
+
+            result = executeUpdate(connection, sql);
+
+        } catch (ConnectionPoolException | SQLException e) {
+            rollbackConnection(connection);
+            LOGGER.error("ConnectionPool error: ", e);
+            throw new DAOException("ConnectionPool error: ", e);
+
+        } finally {
+            setAutoCommitTrueAndReturnConnection(cp, connection);
+        }
+
+        return result == 1;
     }
 
     @Override
     public List<RoomHasFacility> read(String where) throws DAOException {
-        return null;
-    }
+        ConnectionPool cp = null;
+        Connection connection = null;
 
-    @Override
-    public boolean update(RoomHasFacility entity) throws DAOException {
-        return false;
-    }
+        String sql = SQL_SELECT_FROM_RHF + where;
 
-    @Override
-    public boolean delete(RoomHasFacility entity) throws DAOException {
-        return false;
-    }
+        List<RoomHasFacility> list = new ArrayList<>();
 
+        try {
+            cp = ConnectionPool.getInstance();
+            connection = cp.extractConnection();
 
-    private int executeUpdate(Connection connection, String sql, boolean generateId) throws SQLException {
-        Statement statement = connection.createStatement();
-        int result = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                list.add(new RoomHasFacility(
+                        resultSet.getLong("rooms_id"),
+                        resultSet.getLong("facilities_id"),
+                        resultSet.getInt("count")
+                ));
+            }
 
-        if (result > 0 && generateId) {
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                return generatedKeys.getInt(1);
+        } catch (SQLException | ConnectionPoolException e) {
+            LOGGER.error("ConnectionPool error: ", e);
+            throw new DAOException("ConnectionPool error: ", e);
+
+        } finally {
+            if (connection != null) {
+                cp.returnConnection(connection);
             }
         }
 
-        return result;
+        return list;
+    }
+
+    @Override
+    public boolean update(RoomHasFacility roomHasFacility) throws DAOException {
+        ConnectionPool cp = null;
+        Connection connection = null;
+
+        String sql = String.format(Locale.US, SQL_UPDATE_RHF, roomHasFacility.getCount(), roomHasFacility.getRooms_id(),
+                roomHasFacility.getFacilities_id());
+
+        int result;
+
+        try {
+            cp = ConnectionPool.getInstance();
+            connection = cp.extractConnection();
+
+            result = executeUpdate(connection, sql);
+
+            connection.setAutoCommit(false);
+            connection.commit();
+
+        } catch (ConnectionPoolException | SQLException e) {
+            rollbackConnection(connection);
+            LOGGER.error("ConnectionPool error: ", e);
+            throw new DAOException("ConnectionPool error: ", e);
+
+        } finally {
+            setAutoCommitTrueAndReturnConnection(cp, connection);
+        }
+
+        return result == 1;
+    }
+
+    @Override
+    public boolean delete(RoomHasFacility roomHasFacility) throws DAOException {
+        ConnectionPool cp = null;
+        Connection connection = null;
+
+        String sql = String.format(Locale.US, SQL_DELETE_RHF, roomHasFacility.getRooms_id(),
+                roomHasFacility.getFacilities_id());
+
+        int result;
+
+        try {
+            cp = ConnectionPool.getInstance();
+            connection = cp.extractConnection();
+
+            result = executeUpdate(connection, sql);
+
+        } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.error("ConnectionPool error: ", e);
+            throw new DAOException("ConnectionPool error: ", e);
+
+        } finally {
+            if (connection != null) {
+                cp.returnConnection(connection);
+            }
+        }
+
+        return result == 1;
     }
 
 
+
+    /**
+     * Executes the given SQL statement.
+     *
+     * @param connection current connection
+     * @param sql java.lang.String sql query
+     * @return value 1 if the request is successful, 0 otherwise
+     */
+    private int executeUpdate(Connection connection, String sql) throws SQLException {
+        Statement statement = connection.createStatement();
+        return statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+    }
+
+    /**
+     * Set autocommit flag is {@code true} and return connection in pool.
+     *
+     * @param cp connection pool
+     * @param connection current connection
+     */
     private void setAutoCommitTrueAndReturnConnection(ConnectionPool cp, Connection connection) {
         if (connection != null) {
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
-                LOGGER.error("Connection set autocommit \"true\" operation error: ", e);
+                LOGGER.error("Connection set autocommit  \"true\" operation error: ", e);
             }
 
             cp.returnConnection(connection);
         }
     }
 
+    /**
+     * Rollback connection in case of unsuccessful completion of the transaction.
+     *
+     * @param connection current connection
+     */
     private void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {
