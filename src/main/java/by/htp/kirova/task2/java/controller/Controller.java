@@ -1,10 +1,6 @@
 package by.htp.kirova.task2.java.controller;
 
-import by.htp.kirova.task2.java.connectionpool.ConnectionPool;
-import by.htp.kirova.task2.java.connectionpool.ConnectionPoolException;
 import by.htp.kirova.task2.java.dao.DAOException;
-import by.htp.kirova.task2.java.dao.DAOFactory;
-import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.Facility;
 import by.htp.kirova.task2.java.entity.Room;
 import by.htp.kirova.task2.java.entity.RoomClass;
@@ -12,12 +8,6 @@ import by.htp.kirova.task2.java.entity.RoomHasFacility;
 import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.ServiceException;
 import by.htp.kirova.task2.java.service.ServiceFactory;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 
 /**
