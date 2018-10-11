@@ -6,6 +6,9 @@ import by.htp.kirova.task2.java.dao.DAOException;
 import by.htp.kirova.task2.java.dao.DAOFactory;
 import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.Facility;
+import by.htp.kirova.task2.java.entity.Room;
+import by.htp.kirova.task2.java.entity.RoomClass;
+import by.htp.kirova.task2.java.entity.RoomHasFacility;
 import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.ServiceException;
 import by.htp.kirova.task2.java.service.ServiceFactory;
@@ -29,17 +32,30 @@ public class Controller{
 
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        GenericService<Facility> facilityService = serviceFactory.getFacilityService();
 
-        Facility facility = new Facility();
-        facility.setId(1);
-        facility.setName("dfjgldfjlfjg");
+        GenericService<RoomClass> roomClassService = serviceFactory.getRoomClassService();
+        RoomClass roomClass = new RoomClass(0, "люкс");
+
+
+        GenericService<Room> roomService = serviceFactory.getRoomService();
+        Room room = new Room(0, "абра кадабра", "45d", 5, 45.84,1);
+
+        GenericService<Facility> facilityService = serviceFactory.getFacilityService();
+        Facility facility = new Facility(0, "бла");
+
+
+        GenericService<RoomHasFacility> roomHasFacilityService = serviceFactory.getRoomHasFacilityService();
+        RoomHasFacility roomHasFacility = new RoomHasFacility(1, 1, 2);
 
         try {
-            facilityService.delete(facility);
+            roomClassService.create(roomClass);
+            roomService.create(room);
+            facilityService.create(facility);
+            roomHasFacilityService.create(roomHasFacility);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
+
 
 
     }

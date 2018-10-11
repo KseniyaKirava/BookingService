@@ -71,6 +71,9 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
 
             result = executeUpdate(connection, sql);
 
+            connection.setAutoCommit(false);
+            connection.commit();
+
         } catch (ConnectionPoolException | SQLException e) {
             rollbackConnection(connection);
             LOGGER.error("ConnectionPool error: ", e);
