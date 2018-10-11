@@ -6,12 +6,6 @@ import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.Facility;
 import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.ServiceException;
-import by.htp.kirova.task2.java.service.validation.Validator;
-import org.apache.log4j.Logger;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

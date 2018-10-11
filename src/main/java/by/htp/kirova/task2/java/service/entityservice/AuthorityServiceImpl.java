@@ -1,10 +1,13 @@
-package by.htp.kirova.task2.java.service.entityservice;
+package  by.htp.kirova.task2.java.service.entityservice;
 
+
+
+import by.htp.kirova.task2.java.dao.DAOException;
+import by.htp.kirova.task2.java.dao.DAOFactory;
+import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.Authority;
 import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.ServiceException;
-import org.apache.log4j.Logger;
-
 import java.util.List;
 
 /**
@@ -15,29 +18,67 @@ import java.util.List;
  */
 public class AuthorityServiceImpl implements GenericService<Authority> {
 
-    /**
-     * Instance of {@code org.apache.log4j.Logger} is used for logging.
-     */
-    private static final Logger LOGGER = Logger.getLogger(AuthorityServiceImpl.class);
-
-
     @Override
-    public boolean create(Authority entity) throws ServiceException {
-        return false;
+    public boolean create(Authority authority) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<Authority> authorityDAO = daoFactory.getAuthorityDAO();
+
+        boolean result;
+
+        try {
+            result = authorityDAO.create(authority);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
     }
 
     @Override
     public List<Authority> read(String where) throws ServiceException {
-        return null;
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<Authority> authorityDAO = daoFactory.getAuthorityDAO();
+
+        List<Authority> list;
+
+        try {
+            list = authorityDAO.read(where);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return list;
     }
 
     @Override
-    public boolean update(Authority entity) throws ServiceException {
-        return false;
+    public boolean update(Authority authority) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<Authority> authorityDAO = daoFactory.getAuthorityDAO();
+
+        boolean result;
+
+        try {
+            result = authorityDAO.update(authority);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
     }
 
     @Override
-    public boolean delete(Authority entity) throws ServiceException {
-        return false;
+    public boolean delete(Authority authority) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<Authority> authorityDAO = daoFactory.getAuthorityDAO();
+
+        boolean result;
+
+        try {
+            result = authorityDAO.delete(authority);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
     }
 }

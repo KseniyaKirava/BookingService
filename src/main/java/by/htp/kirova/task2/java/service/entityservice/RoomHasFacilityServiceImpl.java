@@ -1,10 +1,11 @@
 package by.htp.kirova.task2.java.service.entityservice;
 
+import by.htp.kirova.task2.java.dao.DAOException;
+import by.htp.kirova.task2.java.dao.DAOFactory;
+import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.RoomHasFacility;
 import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.ServiceException;
-import org.apache.log4j.Logger;
-
 import java.util.List;
 
 /**
@@ -15,28 +16,70 @@ import java.util.List;
  */
 public class RoomHasFacilityServiceImpl implements GenericService<RoomHasFacility> {
 
-    /**
-     * Instance of {@code org.apache.log4j.Logger} is used for logging.
-     */
-    private static final Logger LOGGER = Logger.getLogger(RoomHasFacilityServiceImpl.class);
 
     @Override
-    public boolean create(RoomHasFacility entity) throws ServiceException {
-        return false;
+    public boolean create(RoomHasFacility roomHasFacility) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<RoomHasFacility> roomHasFacilityDAO = daoFactory.getRoomHasFacilityDAO();
+
+        boolean result;
+
+        try {
+            result = roomHasFacilityDAO.create(roomHasFacility);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+
     }
 
     @Override
     public List<RoomHasFacility> read(String where) throws ServiceException {
-        return null;
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<RoomHasFacility> roomHasFacilityDAO = daoFactory.getRoomHasFacilityDAO();
+
+        List<RoomHasFacility> list;
+
+        try {
+            list = roomHasFacilityDAO.read(where);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return list;
+
     }
 
     @Override
-    public boolean update(RoomHasFacility entity) throws ServiceException {
-        return false;
+    public boolean update(RoomHasFacility roomHasFacility) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<RoomHasFacility> roomHasFacilityDAO = daoFactory.getRoomHasFacilityDAO();
+
+        boolean result;
+
+        try {
+            result = roomHasFacilityDAO.update(roomHasFacility);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
     }
 
     @Override
-    public boolean delete(RoomHasFacility entity) throws ServiceException {
-        return false;
+    public boolean delete(RoomHasFacility roomHasFacility) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<RoomHasFacility> roomHasFacilityDAO = daoFactory.getRoomHasFacilityDAO();
+
+        boolean result;
+
+        try {
+            result = roomHasFacilityDAO.delete(roomHasFacility);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
     }
 }

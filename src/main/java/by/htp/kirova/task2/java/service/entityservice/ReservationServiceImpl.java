@@ -1,10 +1,12 @@
 package by.htp.kirova.task2.java.service.entityservice;
 
 
+import by.htp.kirova.task2.java.dao.DAOException;
+import by.htp.kirova.task2.java.dao.DAOFactory;
+import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.Reservation;
 import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.ServiceException;
-import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -16,29 +18,72 @@ import java.util.List;
  */
 public class ReservationServiceImpl implements GenericService<Reservation> {
 
-    /**
-     * Instance of {@code org.apache.log4j.Logger} is used for logging.
-     */
-    private static final Logger LOGGER = Logger.getLogger(ReservationServiceImpl.class);
-
     @Override
-    public boolean create(Reservation entity) throws ServiceException {
-        return false;
+    public boolean create(Reservation reservation) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<Reservation> reservationDAO = daoFactory.getReservationDAO();
+
+        boolean result;
+
+        try {
+            result = reservationDAO.create(reservation);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+
     }
 
     @Override
     public List<Reservation> read(String where) throws ServiceException {
-        return null;
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<Reservation> reservationDAO = daoFactory.getReservationDAO();
+
+        List<Reservation> list;
+
+        try {
+            list = reservationDAO.read(where);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return list;
+
     }
 
     @Override
-    public boolean update(Reservation entity) throws ServiceException {
-        return false;
+    public boolean update(Reservation reservation) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<Reservation> reservationDAO = daoFactory.getReservationDAO();
+
+        boolean result;
+
+        try {
+            result = reservationDAO.update(reservation);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+
     }
 
     @Override
-    public boolean delete(Reservation entity) throws ServiceException {
-        return false;
+    public boolean delete(Reservation reservation) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<Reservation> reservationDAO = daoFactory.getReservationDAO();
+
+        boolean result;
+
+        try {
+            result = reservationDAO.delete(reservation);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+
     }
 
 }

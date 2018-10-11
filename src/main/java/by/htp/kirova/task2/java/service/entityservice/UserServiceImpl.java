@@ -1,9 +1,11 @@
 package by.htp.kirova.task2.java.service.entityservice;
 
+import by.htp.kirova.task2.java.dao.DAOException;
+import by.htp.kirova.task2.java.dao.DAOFactory;
+import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.User;
 import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.ServiceException;
-import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -15,29 +17,68 @@ import java.util.List;
  */
 public class UserServiceImpl implements GenericService<User> {
 
-    /**
-     * Instance of {@code org.apache.log4j.Logger} is used for logging.
-     */
-    private static final Logger LOGGER = Logger.getLogger(UserServiceImpl.class);
-
-
     @Override
-    public boolean create(User entity) throws ServiceException {
-        return false;
+    public boolean create(User user) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<User> userDAO = daoFactory.getUserDAO();
+
+        boolean result;
+
+        try {
+            result = userDAO.create(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+
     }
 
     @Override
     public List<User> read(String where) throws ServiceException {
-        return null;
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<User> userDAO = daoFactory.getUserDAO();
+
+        List<User> list;
+
+        try {
+            list = userDAO.read(where);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return list;
     }
 
     @Override
-    public boolean update(User entity) throws ServiceException {
-        return false;
+    public boolean update(User user) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<User> userDAO = daoFactory.getUserDAO();
+
+        boolean result;
+
+        try {
+            result = userDAO.update(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
     }
 
     @Override
-    public boolean delete(User entity) throws ServiceException {
-        return false;
+    public boolean delete(User user) throws ServiceException {
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        GenericDAO<User> userDAO = daoFactory.getUserDAO();
+
+        boolean result;
+
+        try {
+            result = userDAO.delete(user);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
     }
 }

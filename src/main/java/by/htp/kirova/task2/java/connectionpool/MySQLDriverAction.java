@@ -37,7 +37,7 @@ final class MySQLDriverAction {
         try {
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
         } catch (SQLException e) {
-            LOGGER.warn("Drivers have not been registered", e);
+            LOGGER.error("Drivers have not been registered", e);
             return false;
         }
         return true;
@@ -54,7 +54,7 @@ final class MySQLDriverAction {
             try {
                 DriverManager.deregisterDriver(s);
             } catch (SQLException e) {
-                LOGGER.warn("Drivers have not been registered", e);
+                LOGGER.error("Drivers have not been registered", e);
             }
         });
         return true;

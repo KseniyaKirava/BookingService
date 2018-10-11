@@ -70,18 +70,25 @@ public final class ConnectionPool {
 
     private ConnectionPool() throws ConnectionPoolException {
         MySQLDriverAction.registerDrivers();
+
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
+
+
         this.driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
         this.url = dbResourceManager.getValue(DBParameter.DB_URL);
         this.user = dbResourceManager.getValue(DBParameter.DB_USER);
         this.password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
+
         try {
             this.poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
+
         } catch (NumberFormatException e) {
             poolSize = 5;
+
             LOGGER.error("Unexpected error of predefined data: ", e);
             throw new ConnectionPoolException("Unexpected error of predefined data", e);
         }
+
         LOGGER.info("Connection pool constructor completed successfully");
     }
 

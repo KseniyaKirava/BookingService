@@ -10,22 +10,22 @@ import java.util.List;
  */
 public interface GenericDAO<T> {
 
-
     /**
      * Creates object which in Database.
      *
      * @param entity concrete instance which is meant to be created.
      * @return boolean {@code true} in case of success and {@code false} otherwise.
-     * @throws DAOException
+     * @throws DAOException layer
      */
     boolean create(T entity) throws DAOException;
+
 
     /**
      * Returns all objects which match SQL search condition.
      *
      * @return java.util.List<T> All results collected in {@link java.util.List}.
      * @param where SQL search condition.
-     * @throws DAOException
+     * @throws DAOException layer
      */
     List<T> read(String where) throws DAOException;
 
@@ -35,7 +35,7 @@ public interface GenericDAO<T> {
      *
      * @param entity parameter which specifies concrete object.
      * @return boolean {@code true} in case of success and {@code false} otherwise.
-     * @throws DAOException
+     * @throws DAOException layer
      */
     boolean update(T entity) throws DAOException;
 
@@ -45,7 +45,7 @@ public interface GenericDAO<T> {
      *
      * @param entity parameter which specifies concrete object.
      * @return boolean {@code true} in case of success and {@code false} otherwise.
-     * @throws DAOException
+     * @throws DAOException layer
      */
     boolean delete(T entity) throws DAOException;
 

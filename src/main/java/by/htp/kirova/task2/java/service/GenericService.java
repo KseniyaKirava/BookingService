@@ -15,7 +15,7 @@ public interface GenericService<T> {
      *
      * @param entity concrete instance which is meant to be created.
      * @return boolean {@code true} in case of success and {@code false} otherwise.
-     * @throws ServiceException
+     * @throws ServiceException layer
      */
     boolean create(T entity) throws ServiceException;
 
@@ -24,7 +24,7 @@ public interface GenericService<T> {
      *
      * @return java.util.List<T> All results collected in {@link java.util.List}.
      * @param where SQL search condition.
-     * @throws ServiceException
+     * @throws ServiceException layer
      */
     List<T> read(String where) throws ServiceException;
 
@@ -33,7 +33,7 @@ public interface GenericService<T> {
      *
      * @param entity parameter which specifies concrete object.
      * @return boolean {@code true} in case of success and {@code false} otherwise.
-     * @throws ServiceException
+     * @throws ServiceException layer
      */
     boolean update(T entity) throws ServiceException;
 
@@ -42,7 +42,7 @@ public interface GenericService<T> {
      *
      * @param entity parameter which specifies concrete object.
      * @return boolean {@code true} in case of success and {@code false} otherwise.
-     * @throws ServiceException
+     * @throws ServiceException layer
      */
     boolean delete(T entity) throws ServiceException;
 
