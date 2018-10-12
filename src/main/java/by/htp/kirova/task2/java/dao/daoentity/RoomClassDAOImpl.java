@@ -62,7 +62,7 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            int id = executeUpdate(connection, sql, true);
+            int id = cp.executeUpdate(connection, sql, true);
             if (id > 0) {
                 roomClass.setId(id);
                 connection.setAutoCommit(false);
@@ -71,12 +71,15 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
             }
 
         } catch (ConnectionPoolException | SQLException e) {
-            rollbackConnection(connection);
+            cp.rollbackConnection(connection);
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            setAutoCommitTrueAndReturnConnection(cp, connection);
+            if (cp != null && connection != null) {
+                cp.setAutoCommitTrue(connection);
+                cp.returnConnection(connection);
+            }
         }
 
         return false;
@@ -87,6 +90,8 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
     public List<RoomClass> read(String where) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
 
         String sql = SQL_SELECT_FROM_ROOM_CLASSES + where;
 
@@ -96,8 +101,8 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 list.add(new RoomClass(
                         resultSet.getLong("id"),
@@ -111,7 +116,9 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (connection != null) {
+            if (cp != null && connection != null) {
+                cp.closeResultSet(resultSet);
+                cp.closeStatement(statement);
                 cp.returnConnection(connection);
             }
         }
@@ -133,18 +140,21 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = executeUpdate(connection, sql, false);
+            result = cp.executeUpdate(connection, sql, false);
 
             connection.setAutoCommit(false);
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            rollbackConnection(connection);
+            cp.rollbackConnection(connection);
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            setAutoCommitTrueAndReturnConnection(cp, connection);
+            if (cp != null && connection != null) {
+                cp.setAutoCommitTrue(connection);
+                cp.returnConnection(connection);
+            }
         }
 
         return result == 1;
@@ -163,14 +173,14 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = executeUpdate(connection, sql, false);
+            result = cp.executeUpdate(connection, sql, false);
 
-        } catch (ConnectionPoolException | SQLException e) {
+        } catch (ConnectionPoolException e) {
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (connection != null) {
+            if (cp != null && connection != null) {
                 cp.returnConnection(connection);
             }
         }
@@ -178,61 +188,4 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
         return result == 1;
     }
 
-
-    /**
-     * Executes the given SQL statement.
-     *
-     * @param connection current connection
-     * @param sql java.lang.String sql query
-     * @param generateId boolean indicating the need to generate an identification number.
-     * {@code true} if it is needed, {@code false} otherwise
-     * @return value 1 if the request is successful, 0 otherwise
-     */
-    private int executeUpdate(Connection connection, String sql, boolean generateId) throws SQLException {
-        Statement statement = connection.createStatement();
-        int result = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-
-        if (result > 0 && generateId) {
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                return generatedKeys.getInt(1);
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Set autocommit flag is {@code true} and return connection in pool.
-     *
-     * @param cp connection pool
-     * @param connection current connection
-     */
-    private void setAutoCommitTrueAndReturnConnection(ConnectionPool cp, Connection connection) {
-        if (connection != null) {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                LOGGER.error("Connection set autocommit \"true\" operation error: ", e);
-            }
-
-            cp.returnConnection(connection);
-        }
-    }
-
-    /**
-     * Rollback connection in case of unsuccessful completion of the transaction.
-     *
-     * @param connection current connection
-     */
-    private void rollbackConnection(Connection connection) {
-        try {
-            if (connection != null) {
-                connection.setAutoCommit(false);
-                connection.rollback();
-            }
-        } catch (SQLException z) {
-            LOGGER.error("Connection rollback operation error: ", z);
-        }
-    }
 }

@@ -80,7 +80,10 @@ public class UserDAOImpl implements GenericDAO<User> {
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            setAutoCommitTrueAndReturnConnection(cp, connection);
+            if (cp != null && connection != null) {
+                setAutoCommitTrue(connection);
+                cp.returnConnection(connection);
+            }
         }
 
         return result == 1;
@@ -90,6 +93,8 @@ public class UserDAOImpl implements GenericDAO<User> {
     public List<User> read(String where) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
 
         String sql = SQL_SELECT_FROM_USERS + where;
 
@@ -99,8 +104,8 @@ public class UserDAOImpl implements GenericDAO<User> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 list.add(new User(
                         resultSet.getString("username"),
@@ -113,12 +118,14 @@ public class UserDAOImpl implements GenericDAO<User> {
                 ));
             }
 
-        } catch (SQLException | ConnectionPoolException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (connection != null) {
+            if (cp != null && connection != null) {
+                cp.closeResultSet(resultSet);
+                cp.closeStatement(statement);
                 cp.returnConnection(connection);
             }
         }
@@ -151,7 +158,10 @@ public class UserDAOImpl implements GenericDAO<User> {
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            setAutoCommitTrueAndReturnConnection(cp, connection);
+            if (cp != null && connection != null) {
+                setAutoCommitTrue(connection);
+                cp.returnConnection(connection);
+            }
         }
 
         return result == 1;
@@ -172,12 +182,12 @@ public class UserDAOImpl implements GenericDAO<User> {
 
             result = executeUpdate(connection, sql);
 
-        } catch (ConnectionPoolException | SQLException e) {
+        } catch (ConnectionPoolException e) {
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (connection != null) {
+            if (cp != null && connection != null) {
                 cp.returnConnection(connection);
             }
         }
@@ -194,26 +204,29 @@ public class UserDAOImpl implements GenericDAO<User> {
      * @param sql java.lang.String sql query
      * @return value 1 if the request is successful, 0 otherwise
      */
-    private int executeUpdate(Connection connection, String sql) throws SQLException {
-        Statement statement = connection.createStatement();
-        return statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+    private int executeUpdate(Connection connection, String sql) {
+        int result = 0;
+
+        try (Statement statement = connection.createStatement()) {
+            result = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+        } catch (SQLException e) {
+            LOGGER.error("ConnectionPool error: ", e);
+
+        }
+        return result;
     }
 
     /**
      * Set autocommit flag is {@code true} and return connection in pool.
      *
-     * @param cp connection pool
      * @param connection current connection
      */
-    private void setAutoCommitTrueAndReturnConnection(ConnectionPool cp, Connection connection) {
-        if (connection != null) {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                LOGGER.error("Connection set autocommit  \"true\" operation error: ", e);
-            }
-
-            cp.returnConnection(connection);
+    private void setAutoCommitTrue(Connection connection) {
+        try {
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            LOGGER.error("Connection set autocommit  \"true\" operation error: ", e);
         }
     }
 

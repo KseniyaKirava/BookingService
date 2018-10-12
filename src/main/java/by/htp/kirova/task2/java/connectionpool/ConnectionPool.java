@@ -114,7 +114,7 @@ public final class ConnectionPool {
      * Initializes data for the connection pool.
      *
      * @throws ConnectionPoolException if can't find database
-     * driver class or SQLException in ConnectionPool.
+     *                                 driver class or SQLException in ConnectionPool.
      */
     private void initPoolData() throws ConnectionPoolException {
         try {
@@ -122,9 +122,9 @@ public final class ConnectionPool {
             availableConnections = new LinkedBlockingQueue<>(poolSize);
             usingConnections = new LinkedBlockingQueue<>(poolSize);
             for (int i = 0; i < poolSize; i++) {
-                    Connection connection = DriverManager.getConnection(url, user, password);
-                    PooledConnection pooledConnection = new PooledConnection(connection);
-                    availableConnections.put(pooledConnection);
+                Connection connection = DriverManager.getConnection(url, user, password);
+                PooledConnection pooledConnection = new PooledConnection(connection);
+                availableConnections.put(pooledConnection);
             }
         } catch (ClassNotFoundException e) {
             LOGGER.error("Can't find database driver class: ", e);
@@ -159,7 +159,6 @@ public final class ConnectionPool {
     /**
      * Public method closing all connections in using Collections queue
      * and avaliable Collections queue.
-     *
      */
     public void clearConnectionQueue() {
         try {
@@ -188,8 +187,8 @@ public final class ConnectionPool {
      * additionally making the final commit, if the autocommit function was
      * turned off.
      *
-     * @throws SQLException
      * @param queue is queue of connections
+     * @throws SQLException
      */
     private void closeConnectionsQueue(BlockingQueue<Connection> queue) throws SQLException {
         Connection connection;
@@ -199,6 +198,104 @@ public final class ConnectionPool {
             }
             ((PooledConnection) connection).reallyClose();
             MySQLDriverAction.deregisterDriver();
+        }
+    }
+
+    public void closeResultSet(ResultSet rs) {
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                LOGGER.error("ResultSet isn't closed. ", e);
+            }
+        }
+    }
+
+    public void closeStatement(Statement st) {
+        if (st != null)
+            try {
+                st.close();
+            } catch (SQLException e) {
+                LOGGER.error("Statement  isn't closed. ", e);
+            }
+    }
+
+
+    /**
+     * Executes the given SQL statement.
+     *
+     * @param connection current connection
+     * @param sql        java.lang.String sql query
+     * @return value 1 if the request is successful, 0 otherwise
+     */
+    public int executeUpdate(Connection connection, String sql) {
+        int result = 0;
+
+        try (Statement statement = connection.createStatement()) {
+            result = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+        } catch (SQLException e) {
+            LOGGER.error("ConnectionPool error: ", e);
+
+        }
+        return result;
+    }
+
+    /**
+     * Executes the given SQL statement.
+     *
+     * @param connection current connection
+     * @param sql        java.lang.String sql query
+     * @param generateId boolean indicating the need to generate an identification number.
+     *                   {@code true} if it is needed, {@code false} otherwise
+     * @return value 1 if the request is successful, 0 otherwise
+     */
+    public int executeUpdate(Connection connection, String sql, boolean generateId) {
+        int result = 0;
+
+        try (Statement statement = connection.createStatement()) {
+            result = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+            if (result > 0 && generateId) {
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("ConnectionPool error: ", e);
+
+        }
+
+        return result;
+    }
+
+    /**
+     * Set autocommit flag is {@code true} and return connection in pool.
+     *
+     * @param connection current connection
+     */
+    public void setAutoCommitTrue(Connection connection) {
+        try {
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            LOGGER.error("Connection set autocommit  \"true\" operation error: ", e);
+        }
+    }
+
+    /**
+     * Rollback connection in case of unsuccessful completion of the transaction.
+     *
+     * @param connection current connection
+     */
+    public void rollbackConnection(Connection connection) {
+        try {
+            if (connection != null) {
+                connection.setAutoCommit(false);
+                connection.rollback();
+            }
+        } catch (SQLException z) {
+            LOGGER.error("Connection rollback operation error: ", z);
         }
     }
 
