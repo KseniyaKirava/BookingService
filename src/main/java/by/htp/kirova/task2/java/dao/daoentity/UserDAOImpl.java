@@ -225,6 +225,7 @@ public class UserDAOImpl implements GenericDAO<User> {
     private void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {
+                connection.setAutoCommit(false);
                 connection.rollback();
             }
         } catch (SQLException z) {

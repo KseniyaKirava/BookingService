@@ -33,8 +33,8 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
      * Constant string which represents query to create reservation.
      */
     private static final String SQL_CREATE_RESERVATION = "INSERT INTO `reservations`(`reservation_date`, " +
-            "`checkin_date`, `checkout_date`, `total_cost`, `requests_id`, `requests_users_username`, `rooms_id`, " +
-            "`rooms_room_classes_id`) VALUES (%d, %d, %d, %f, %d, '%s', %d, %d)";
+            "`checkin_date`, `checkout_date`, `total_cost`, `enable`, `requests_id`, `requests_users_username`, `rooms_id`, " +
+            "`rooms_room_classes_id`) VALUES (%d, %d, %d, %f, %b, %d, '%s', %d, %d)";
 
     /**
      * Constant string which represents query to select all reservations.
@@ -45,7 +45,7 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
      * Constant string which represents query to update reservation.
      */
     private static final String SQL_UPDATE_RESERVATION = "UPDATE `reservations` SET `reservation_date`= %d," +
-            "`checkin_date`= %d,`checkout_date`= %d,`total_cost`= %f,`requests_id`= %d," +
+            "`checkin_date`= %d,`checkout_date`= %d,`total_cost`= %f, `enable`= %b, `requests_id`= %d," +
             "`requests_users_username`= '%s',`rooms_id`= %d,`rooms_room_classes_id`= %d WHERE `id`= %d";
 
     /**
@@ -62,8 +62,8 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
 
         String sql = String.format(Locale.US, SQL_CREATE_RESERVATION, reservation.getReservation_date(),
                 reservation.getCheckin_date(), reservation.getCheckout_date(), reservation.getTotal_cost(),
-                reservation.getRequests_id(), reservation.getRequests_users_username(), reservation.getRooms_id(),
-                reservation.getRooms_room_classes_id());
+                reservation.isEnable(), reservation.getRequests_id(), reservation.getRequests_users_username(),
+                reservation.getRooms_id(), reservation.getRooms_room_classes_id());
 
         try {
             cp = ConnectionPool.getInstance();
@@ -111,6 +111,7 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
                         resultSet.getLong("checkin_date"),
                         resultSet.getLong("checkout_date"),
                         resultSet.getDouble("total_cost"),
+                        resultSet.getBoolean("enable"),
                         resultSet.getLong("requests_id"),
                         resultSet.getString("requests_users_username"),
                         resultSet.getLong("rooms_id"),
@@ -138,8 +139,8 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
 
         String sql = String.format(Locale.US, SQL_UPDATE_RESERVATION, reservation.getReservation_date(),
                 reservation.getCheckin_date(), reservation.getCheckout_date(), reservation.getTotal_cost(),
-                reservation.getRequests_id(), reservation.getRequests_users_username(), reservation.getRooms_id(),
-                reservation.getRooms_room_classes_id(), reservation.getId());
+                reservation.isEnable(), reservation.getRequests_id(), reservation.getRequests_users_username(),
+                reservation.getRooms_id(), reservation.getRooms_room_classes_id(), reservation.getId());
 
         int result;
 
@@ -241,6 +242,7 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
     private void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {
+                connection.setAutoCommit(false);
                 connection.rollback();
             }
         } catch (SQLException z) {

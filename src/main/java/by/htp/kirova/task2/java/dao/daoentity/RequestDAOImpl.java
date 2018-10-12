@@ -33,7 +33,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
      * Constant string which represents query to create request.
      */
     private static final String SQL_CREATE_REQUEST = "INSERT INTO `requests`(`room_capacity`, `checkin_date`," +
-            " `checkout_date`, `room_class`, `users_username`) VALUES (%d, %d, %d, '%s', '%s')";
+            " `checkout_date`, `room_class`, `enable`, `users_username`) VALUES (%d, %d, %d, '%s', %b, '%s')";
 
     /**
      * Constant string which represents query to select all requests.
@@ -44,7 +44,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
      * Constant string which represents query to update request.
      */
     private static final String SQL_UPDATE_REQUEST = "UPDATE `requests` SET `room_capacity`= %d," +
-            "`checkin_date`= %d,`checkout_date`= %d,`room_class`= '%s',`users_username`='%s' WHERE `id`= %d";
+            "`checkin_date`= %d,`checkout_date`= %d,`room_class`= '%s', `enable`= %b, `users_username`='%s' WHERE `id`= %d";
 
     /**
      * Constant string which represents query to delete request.
@@ -58,7 +58,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
         Connection connection = null;
 
         String sql = String.format(Locale.US, SQL_CREATE_REQUEST, request.getRoom_capacity(), request.getCheckin_date(),
-                request.getCheckout_date(), request.getRoom_class(), request.getUsers_username());
+                request.getCheckout_date(), request.getRoom_class(), request.isEnable(), request.getUsers_username());
 
         try {
             cp = ConnectionPool.getInstance();
@@ -106,6 +106,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
                         resultSet.getLong("checkin_date"),
                         resultSet.getLong("checkout_date"),
                         resultSet.getString("room_class"),
+                        resultSet.getBoolean("enable"),
                         resultSet.getString("users_username")
                 ));
             }
@@ -129,7 +130,8 @@ public class RequestDAOImpl implements GenericDAO<Request> {
         Connection connection = null;
 
         String sql = String.format(Locale.US, SQL_UPDATE_REQUEST, request.getRoom_capacity(), request.getCheckin_date(),
-                request.getCheckout_date(), request.getRoom_class(), request.getUsers_username(), request.getId());
+                request.getCheckout_date(), request.getRoom_class(), request.isEnable(), request.getUsers_username(),
+                request.getId());
 
         int result;
 
@@ -232,6 +234,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
     private void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {
+                connection.setAutoCommit(false);
                 connection.rollback();
             }
         } catch (SQLException z) {

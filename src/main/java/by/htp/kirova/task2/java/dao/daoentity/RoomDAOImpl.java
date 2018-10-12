@@ -33,7 +33,7 @@ public class RoomDAOImpl implements GenericDAO<Room> {
      * Constant string which represents query to create room.
      */
     private static final String SQL_CREATE_ROOM = "INSERT INTO `rooms`(`name`, `number`, `capacity`, `cost`, " +
-            "`room_classes_id`) VALUES ('%s', '%s', %d, %f, %d)";
+            "`enable`, `room_classes_id`) VALUES ('%s', '%s', %d, %f, %b, %d)";
 
     /**
      * Constant string which represents query to select all rooms.
@@ -44,7 +44,7 @@ public class RoomDAOImpl implements GenericDAO<Room> {
      * Constant string which represents query to update room.
      */
     private static final String SQL_UPDATE_ROOM = "UPDATE `rooms` SET `name`= '%s',`number`= '%s',`capacity`= %d," +
-            "`cost`= %f,`room_classes_id`= %d WHERE `id`= %d";
+            "`cost`= %f, `enable`=%b, `room_classes_id`= %d WHERE `id`= %d";
 
     /**
      * Constant string which represents query to delete room.
@@ -57,7 +57,7 @@ public class RoomDAOImpl implements GenericDAO<Room> {
         Connection connection = null;
 
         String sql = String.format(Locale.US, SQL_CREATE_ROOM, room.getName(), room.getNumber(), room.getCapacity(),
-                room.getCost(), room.getRoom_classes_id());
+                room.getCost(), room.isEnable(), room.getRoom_classes_id());
 
         try {
             cp = ConnectionPool.getInstance();
@@ -70,6 +70,7 @@ public class RoomDAOImpl implements GenericDAO<Room> {
                 connection.commit();
                 return true;
             }
+
 
         } catch (ConnectionPoolException | SQLException e) {
             rollbackConnection(connection);
@@ -105,6 +106,7 @@ public class RoomDAOImpl implements GenericDAO<Room> {
                         resultSet.getString("number"),
                         resultSet.getInt("capacity"),
                         resultSet.getDouble("cost"),
+                        resultSet.getBoolean("enable"),
                         resultSet.getLong("room_classes_id")
                         ));
             }
@@ -128,7 +130,7 @@ public class RoomDAOImpl implements GenericDAO<Room> {
         Connection connection = null;
 
         String sql = String.format(Locale.US, SQL_UPDATE_ROOM, room.getName(), room.getNumber(), room.getCapacity(),
-                room.getCost(), room.getRoom_classes_id(), room.getId());
+                room.getCost(), room.isEnable(), room.getRoom_classes_id(), room.getId());
 
         int result;
 
@@ -230,6 +232,7 @@ public class RoomDAOImpl implements GenericDAO<Room> {
     private void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {
+                connection.setAutoCommit(false);
                 connection.rollback();
             }
         } catch (SQLException z) {

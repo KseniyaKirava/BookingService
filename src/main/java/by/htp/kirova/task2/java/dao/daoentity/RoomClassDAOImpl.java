@@ -33,7 +33,7 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
     /**
      * Constant string which represents query to create room class.
      */
-    private static final String SQL_CREATE_ROOM_CLASS = "INSERT INTO `room_classes`(`name`) VALUES ('%s')";
+    private static final String SQL_CREATE_ROOM_CLASS = "INSERT INTO `room_classes`(`name`, `enable`) VALUES ('%s', %b)";
 
     /**
      * Constant string which represents query to select all room classes.
@@ -43,7 +43,7 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
     /**
      * Constant string which represents query to update room class.
      */
-    private static final String SQL_UPDATE_ROOM_CLASS = "UPDATE `room_classes` SET `name`='%s' WHERE `id`= %d";
+    private static final String SQL_UPDATE_ROOM_CLASS = "UPDATE `room_classes` SET `name`='%s', `enable`= %b WHERE `id`= %d";
 
     /**
      * Constant string which represents query to delete room class.
@@ -56,7 +56,7 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
         ConnectionPool cp = null;
         Connection connection = null;
 
-        String sql = String.format(Locale.US, SQL_CREATE_ROOM_CLASS, roomClass.getName());
+        String sql = String.format(Locale.US, SQL_CREATE_ROOM_CLASS, roomClass.getName(), roomClass.isEnable());
 
         try {
             cp = ConnectionPool.getInstance();
@@ -101,7 +101,8 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
             while (resultSet.next()) {
                 list.add(new RoomClass(
                         resultSet.getLong("id"),
-                        resultSet.getString("name")
+                        resultSet.getString("name"),
+                        resultSet.getBoolean("enable")
                 ));
             }
 
@@ -123,7 +124,8 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
         ConnectionPool cp = null;
         Connection connection = null;
 
-        String sql = String.format(Locale.US, SQL_UPDATE_ROOM_CLASS, roomClass.getName(), roomClass.getId());
+        String sql = String.format(Locale.US, SQL_UPDATE_ROOM_CLASS, roomClass.getName(), roomClass.isEnable(),
+                roomClass.getId());
 
         int result;
 
@@ -226,6 +228,7 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
     private void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {
+                connection.setAutoCommit(false);
                 connection.rollback();
             }
         } catch (SQLException z) {

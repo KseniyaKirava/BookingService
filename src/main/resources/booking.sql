@@ -37,6 +37,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `kirova`.`authorities` (
   `authority` VARCHAR(50) NOT NULL,
   `username` VARCHAR(50) NOT NULL,
+  `enable` TINYINT(1) NOT NULL,
   INDEX `fk_authorities_users1_idx` (`username` ASC),
   CONSTRAINT `fk_authorities_users1`
     FOREIGN KEY (`username`)
@@ -50,11 +51,12 @@ ENGINE = InnoDB;
 -- Table `kirova`.`requests`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kirova`.`requests` (
-  `id` LONG NOT NULL AUTO_INCREMENT,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `room_capacity` INT NOT NULL,
-  `checkin_date` LONG NOT NULL,
-  `checkout_date` LONG NOT NULL,
+  `checkin_date` BIGINT(20) NOT NULL,
+  `checkout_date` BIGINT(20) NOT NULL,
   `room_class` VARCHAR(80) NOT NULL,
+  `enable` TINYINT(1) NOT NULL,
   `users_username` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`id`, `users_username`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -71,8 +73,9 @@ ENGINE = InnoDB;
 -- Table `kirova`.`room_classes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kirova`.`room_classes` (
-  `id` LONG NOT NULL AUTO_INCREMENT,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(80) NOT NULL,
+  `enable` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
@@ -83,12 +86,13 @@ ENGINE = InnoDB;
 -- Table `kirova`.`rooms`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kirova`.`rooms` (
-  `id` LONG NOT NULL AUTO_INCREMENT,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
   `number` VARCHAR(50) NOT NULL,
   `capacity` INT NOT NULL,
   `cost` DOUBLE NOT NULL,
-  `room_classes_id` LONG NOT NULL,
+  `enable` TINYINT(1) NOT NULL,
+  `room_classes_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`id`, `room_classes_id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_rooms_room_classes1_idx` (`room_classes_id` ASC),
@@ -104,15 +108,16 @@ ENGINE = InnoDB;
 -- Table `kirova`.`reservations`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kirova`.`reservations` (
-  `id` LONG NOT NULL AUTO_INCREMENT,
-  `reservation_date` LONG NOT NULL,
-  `checkin_date` LONG NOT NULL,
-  `checkout_date` LONG NOT NULL,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `reservation_date` BIGINT(20) NOT NULL,
+  `checkin_date` BIGINT(20) NOT NULL,
+  `checkout_date` BIGINT(20) NOT NULL,
   `total_cost` DOUBLE NOT NULL,
-  `requests_id` LONG NOT NULL,
+  `enable` TINYINT(1) NOT NULL,
+  `requests_id` BIGINT(20) NOT NULL,
   `requests_users_username` VARCHAR(50) NOT NULL,
-  `rooms_id` LONG NOT NULL,
-  `rooms_room_classes_id` LONG NOT NULL,
+  `rooms_id` BIGINT(20) NOT NULL,
+  `rooms_room_classes_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`id`, `rooms_id`, `rooms_room_classes_id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_reservations_requests1_idx` (`requests_id` ASC, `requests_users_username` ASC),
@@ -134,8 +139,9 @@ ENGINE = InnoDB;
 -- Table `kirova`.`facilities`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kirova`.`facilities` (
-  `id` LONG NOT NULL AUTO_INCREMENT,
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
+  `enable` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `idtable1_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
@@ -145,9 +151,10 @@ ENGINE = InnoDB;
 -- Table `kirova`.`rooms_has_facilities`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kirova`.`rooms_has_facilities` (
-  `rooms_id` LONG NOT NULL,
-  `facilities_id` LONG NOT NULL,
+  `rooms_id` BIGINT(20) NOT NULL,
+  `facilities_id` BIGINT(20) NOT NULL,
   `count` INT NOT NULL,
+  `enable` TINYINT(1) NOT NULL,
   PRIMARY KEY (`rooms_id`, `facilities_id`),
   INDEX `fk_rooms_has_facilities_facilities1_idx` (`facilities_id` ASC),
   INDEX `fk_rooms_has_facilities_rooms1_idx` (`rooms_id` ASC),

@@ -32,8 +32,8 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
     /**
      * Constant string which represents query to create authority.
      */
-    private static final String SQL_CREATE_AUTHORITY = "INSERT INTO `authorities`(`authority`, `username`) " +
-            "VALUES ('%s','%s')";
+    private static final String SQL_CREATE_AUTHORITY = "INSERT INTO `authorities`(`authority`, `username`, `enable`) " +
+            "VALUES ('%s','%s', %b)";
 
     /**
      * Constant string which represents query to select authorities.
@@ -43,7 +43,8 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
     /**
      * Constant string which represents query to update authority.
      */
-    private static final String SQL_UPDATE_AUTHORITY = "UPDATE `authorities` SET `authority`='%s' WHERE `username`='%s'";
+    private static final String SQL_UPDATE_AUTHORITY = "UPDATE `authorities` SET `authority`='%s', `enable`= %b " +
+            "WHERE `username`='%s'";
 
     /**
      * Constant string which represents query to delete authority.
@@ -57,7 +58,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
         Connection connection = null;
 
         String sql = String.format(Locale.US, SQL_CREATE_AUTHORITY, authority.getAuthority(),
-                authority.getUsername());
+                authority.getUsername(), authority.isEnable());
 
         int result;
 
@@ -101,7 +102,8 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
             while (resultSet.next()) {
                 list.add(new Authority(
                         resultSet.getString("authority"),
-                        resultSet.getString("username")
+                        resultSet.getString("username"),
+                        resultSet.getBoolean("enable")
                 ));
             }
 
@@ -123,7 +125,8 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
         ConnectionPool cp = null;
         Connection connection = null;
 
-        String sql = String.format(Locale.US, SQL_UPDATE_AUTHORITY, authority.getAuthority(), authority.getUsername());
+        String sql = String.format(Locale.US, SQL_UPDATE_AUTHORITY, authority.getAuthority(), authority.isEnable(),
+                authority.getUsername());
 
         int result;
 
@@ -215,6 +218,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
     private void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {
+                connection.setAutoCommit(false);
                 connection.rollback();
             }
         } catch (SQLException z) {

@@ -33,7 +33,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
     /**
      * Constant string which represents query to create facility.
      */
-    private static final String SQL_CREATE_FACILITY = "INSERT INTO `facilities`(`name`) VALUES ('%s')";
+    private static final String SQL_CREATE_FACILITY = "INSERT INTO `facilities`(`name`, `enable`) VALUES ('%s', %b)";
 
     /**
      * Constant string which represents query to select all facilities.
@@ -43,7 +43,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
     /**
      * Constant string which represents query to update facility.
      */
-    private static final String SQL_UPDATE_FACILITY = "UPDATE `facilities` SET `name`='%s' WHERE `id` = %d";
+    private static final String SQL_UPDATE_FACILITY = "UPDATE `facilities` SET `name`='%s', `enable`=%b WHERE `id` = %d";
 
 
     /**
@@ -58,7 +58,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
         ConnectionPool cp = null;
         Connection connection = null;
 
-        String sql = String.format(Locale.US, SQL_CREATE_FACILITY, facility.getName());
+        String sql = String.format(Locale.US, SQL_CREATE_FACILITY, facility.getName(), facility.isEnable());
 
         try {
             cp = ConnectionPool.getInstance();
@@ -102,7 +102,8 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
             while (resultSet.next()) {
                 list.add(new Facility(
                         resultSet.getLong("id"),
-                        resultSet.getString("name")
+                        resultSet.getString("name"),
+                        resultSet.getBoolean("enable")
                 ));
             }
 
@@ -125,7 +126,8 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
         ConnectionPool cp = null;
         Connection connection = null;
 
-        String sql = String.format(Locale.US, SQL_UPDATE_FACILITY, facility.getName(), facility.getId());
+        String sql = String.format(Locale.US, SQL_UPDATE_FACILITY, facility.getName(), facility.isEnable(),
+                facility.getId());
 
         int result;
 
@@ -228,6 +230,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
     private void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {
+                connection.setAutoCommit(false);
                 connection.rollback();
             }
         } catch (SQLException z) {

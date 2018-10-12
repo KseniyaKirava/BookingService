@@ -34,7 +34,7 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
      * Constant string which represents query to create relations between facility and room.
      */
     private static final String SQL_CREATE_RHF = "INSERT INTO `rooms_has_facilities`(`rooms_id`, `facilities_id`," +
-            " `count`) VALUES (%d, %d, %d)";
+            " `count`, `enable`) VALUES (%d, %d, %d, %b)";
 
     /**
      * Constant string which represents query to select all relations between facility and room.
@@ -44,7 +44,7 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
     /**
      * Constant string which represents query to update relations between facility and room.
      */
-    private static final String SQL_UPDATE_RHF = "UPDATE `rooms_has_facilities` SET `count`= %d " +
+    private static final String SQL_UPDATE_RHF = "UPDATE `rooms_has_facilities` SET `count`= %d, `enable`= %b " +
             "WHERE `rooms_id`= %d AND `facilities_id`= %d";
 
     /**
@@ -61,7 +61,7 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
         Connection connection = null;
 
         String sql = String.format(Locale.US, SQL_CREATE_RHF, roomHasFacility.getRooms_id(),
-                roomHasFacility.getFacilities_id(), roomHasFacility.getCount());
+                roomHasFacility.getFacilities_id(), roomHasFacility.getCount(), roomHasFacility.isEnable());
 
         int result;
 
@@ -105,7 +105,8 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
                 list.add(new RoomHasFacility(
                         resultSet.getLong("rooms_id"),
                         resultSet.getLong("facilities_id"),
-                        resultSet.getInt("count")
+                        resultSet.getInt("count"),
+                        resultSet.getBoolean("enable")
                 ));
             }
 
@@ -127,8 +128,8 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
         ConnectionPool cp = null;
         Connection connection = null;
 
-        String sql = String.format(Locale.US, SQL_UPDATE_RHF, roomHasFacility.getCount(), roomHasFacility.getRooms_id(),
-                roomHasFacility.getFacilities_id());
+        String sql = String.format(Locale.US, SQL_UPDATE_RHF, roomHasFacility.getCount(), roomHasFacility.isEnable(),
+                roomHasFacility.getRooms_id(), roomHasFacility.getFacilities_id());
 
         int result;
 
@@ -222,6 +223,7 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
     private void rollbackConnection(Connection connection) {
         try {
             if (connection != null) {
+                connection.setAutoCommit(false);
                 connection.rollback();
             }
         } catch (SQLException z) {
