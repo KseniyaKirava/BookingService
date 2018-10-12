@@ -44,6 +44,11 @@ public class Request implements Serializable {
     private String room_class;
 
     /**
+     * Access to the Request: available or deleted.
+     */
+    private boolean enable;
+
+    /**
      * The unique identification name of user.
      */
     private String users_username;
@@ -52,13 +57,13 @@ public class Request implements Serializable {
     public Request() {
     }
 
-    public Request(long id, int room_capacity, long checkin_date, long checkout_date, String room_class,
-                   String users_username) {
+    public Request(long id, int room_capacity, long checkin_date, long checkout_date, String room_class, boolean enable, String users_username) {
         this.id = id;
         this.room_capacity = room_capacity;
         this.checkin_date = checkin_date;
         this.checkout_date = checkout_date;
         this.room_class = room_class;
+        this.enable = enable;
         this.users_username = users_username;
     }
 
@@ -105,6 +110,15 @@ public class Request implements Serializable {
      */
     public String getRoom_class() {
         return room_class;
+    }
+
+    /**
+     * Returns access to Request
+     *
+     * @return access to Request {@code true} if access granted, {@code false} otherwise.
+     */
+    public boolean isEnable() {
+        return enable;
     }
 
     /**
@@ -162,6 +176,15 @@ public class Request implements Serializable {
     }
 
     /**
+     * Set access to Request
+     *
+     * @param enable boolean access state.
+     */
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
+    /**
      * Sets user's unique identification name.
      *
      * @param users_username user's unique identification name.
@@ -188,6 +211,7 @@ public class Request implements Serializable {
                 room_capacity == request.room_capacity &&
                 checkin_date == request.checkin_date &&
                 checkout_date == request.checkout_date &&
+                enable == request.enable &&
                 Objects.equals(room_class, request.room_class) &&
                 Objects.equals(users_username, request.users_username);
     }

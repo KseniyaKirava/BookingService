@@ -26,12 +26,18 @@ public class Facility implements Serializable {
      */
     private String name;
 
+    /**
+     * Access to the Facility: available or deleted.
+     */
+    private boolean enable;
+
     public Facility() {
     }
 
-    public Facility(long id, String name) {
+    public Facility(long id, String name, boolean enable) {
         this.id = id;
         this.name = name;
+        this.enable = enable;
     }
 
     /**
@@ -53,6 +59,15 @@ public class Facility implements Serializable {
     }
 
     /**
+     * Returns access to Facility
+     *
+     * @return access to Facility {@code true} if access granted, {@code false} otherwise.
+     */
+    public boolean isEnable() {
+        return enable;
+    }
+
+    /**
      * Sets facility's unique identification number.
      *
      * @param id facility unique identification number.
@@ -70,6 +85,15 @@ public class Facility implements Serializable {
         this.name = name;
     }
 
+    /**
+     * Set access to Facility
+     *
+     * @param enable boolean access state.
+     */
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -81,8 +105,11 @@ public class Facility implements Serializable {
         if (this.getClass() != o.getClass()) {
             return false;
         }
+
         Facility facility = (Facility) o;
+
         return id == facility.id &&
+                enable == facility.enable &&
                 Objects.equals(name, facility.name);
     }
 
@@ -91,6 +118,7 @@ public class Facility implements Serializable {
         int result = 1;
         result = (int) (result * 31 + result * id);
         result = result * 31 + (name == null ? 0 : name.hashCode()) * result;
+        result = result * 31 + (enable ? 0 : 1) * result;
         return result;
     }
 
@@ -99,6 +127,7 @@ public class Facility implements Serializable {
         return "Facility{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", enable=" + enable +
                 '}';
     }
 }

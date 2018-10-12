@@ -48,7 +48,7 @@ import java.util.Objects;
     private String middle_name;
 
     /**
-     * Access to the User.
+     * Access to the User: available or deleted.
      */
     private boolean enable;
 
@@ -184,8 +184,6 @@ import java.util.Objects;
         this.middle_name = middle_name;
     }
 
-
-
     /**
      * Set access to User
      *
@@ -207,6 +205,7 @@ import java.util.Objects;
         if (this.getClass() != o.getClass()) {
             return false;
         }
+
         User user = (User) o;
 
         return enable == user.enable &&

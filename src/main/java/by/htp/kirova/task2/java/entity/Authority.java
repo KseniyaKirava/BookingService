@@ -27,13 +27,19 @@ public class Authority implements Serializable {
      */
     private String username;
 
+    /**
+     * Access to the Authority: available or deleted.
+     */
+    private boolean enable;
+
 
     public Authority() {
     }
 
-    public Authority(String authority, String username) {
+    public Authority(String authority, String username, boolean enable) {
         this.authority = authority;
         this.username = username;
+        this.enable = enable;
     }
 
     /**
@@ -55,6 +61,15 @@ public class Authority implements Serializable {
     }
 
     /**
+     * Returns access to Authority
+     *
+     * @return access to Authority {@code true} if access granted, {@code false} otherwise.
+     */
+    public boolean isEnable() {
+        return enable;
+    }
+
+    /**
      * Sets authority name.
      *
      * @param authority authority name.
@@ -72,6 +87,15 @@ public class Authority implements Serializable {
         this.username = username;
     }
 
+    /**
+     * Set access to Authority
+     *
+     * @param enable boolean access state.
+     */
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -84,17 +108,21 @@ public class Authority implements Serializable {
             return false;
         }
 
-        Authority that = (Authority) o;
+        Authority authority = (Authority) o;
 
-        return Objects.equals(authority, that.authority) &&
-                Objects.equals(username, that.username);
+        return enable == authority.enable &&
+                Objects.equals(authority, authority.authority) &&
+                Objects.equals(username, authority.username);
     }
 
     @Override
     public int hashCode() {
         int result = 1;
+
         result = result * 31 + (authority == null ? 0 : authority.hashCode()) * result;
         result = result * 31 + (username == null ? 0 : username.hashCode()) * result;
+        result = result * 31 + (enable ? 0 : 1) * result;
+
         return result;
     }
 
@@ -103,6 +131,7 @@ public class Authority implements Serializable {
         return "Authority{" +
                 "authority='" + authority + '\'' +
                 ", username='" + username + '\'' +
+                ", enable=" + enable +
                 '}';
     }
 }
