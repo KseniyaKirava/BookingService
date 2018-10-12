@@ -219,12 +219,15 @@ public class Request implements Serializable {
     @Override
     public int hashCode() {
         int result = 1;
+
         result = (int)(result * 31 + result * id);
         result = result * 31 + result * room_capacity;
         result = (int) (result * 31 + result * checkin_date);
         result = (int) (result * 31 + result * checkout_date);
         result = result * 31 + (room_class == null ? 0 : room_class.hashCode()) * result;
+        result = result * 31 + (enable ? 0 : 1) * result;
         result = result * 31 + (users_username == null ? 0 : users_username.hashCode()) * result;
+
         return result;
     }
 
@@ -236,7 +239,9 @@ public class Request implements Serializable {
                 ", checkin_date=" + checkin_date +
                 ", checkout_date=" + checkout_date +
                 ", room_class='" + room_class + '\'' +
+                ", enable=" + enable +
                 ", users_username='" + users_username + '\'' +
                 '}';
     }
 }
+

@@ -42,7 +42,7 @@ public interface GenericDAO<T> {
 
     /**
      * Deletes specific object based on equality with the parameter.
-     * For artifical deletion in BD, it is recommended to use the update(T entity)
+     * For artificial deletion in BD, it is recommended to use the update(T entity)
      * method with changing the enable parameter from {@code true} to {@code false}.
      *
      * @param entity parameter which specifies concrete object.

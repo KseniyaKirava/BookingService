@@ -26,15 +26,20 @@ public class RoomClass implements Serializable {
      */
     private String name;
 
+    /**
+     * Access to the Room Class: available or deleted.
+     */
+    private boolean enable;
+
     public RoomClass() {
 
     }
 
-    public RoomClass(long id, String name) {
+    public RoomClass(long id, String name, boolean enable) {
         this.id = id;
         this.name = name;
+        this.enable = enable;
     }
-
 
     /**
      * Returns room's class unique identification number.
@@ -55,6 +60,15 @@ public class RoomClass implements Serializable {
     }
 
     /**
+     * Returns access to Room Class
+     *
+     * @return access to Room Class {@code true} if access granted, {@code false} otherwise.
+     */
+    public boolean isEnable() {
+        return enable;
+    }
+
+    /**
      * Sets room's class unique identification number.
      *
      * @param id request's room's class unique identification number.
@@ -66,10 +80,19 @@ public class RoomClass implements Serializable {
     /**
      * Sets room's class name.
      *
-     * @param id request's room's class name.
+     * @param name request's room's class name.
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Set access to Room Class
+     *
+     * @param enable boolean access state.
+     */
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     @Override
@@ -87,6 +110,7 @@ public class RoomClass implements Serializable {
         RoomClass roomClass = (RoomClass) o;
 
         return id == roomClass.id &&
+                enable == roomClass.enable &&
                 Objects.equals(name, roomClass.name);
     }
 
@@ -95,6 +119,7 @@ public class RoomClass implements Serializable {
         int result = 1;
         result = (int)(result * 31 + result * id);
         result = result * 31 + (name == null ? 0 : name.hashCode()) * result;
+        result = result * 31 + (enable ? 0 : 1) * result;
         return result;
     }
 
@@ -103,6 +128,7 @@ public class RoomClass implements Serializable {
         return "RoomClass{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", enable=" + enable +
                 '}';
     }
 }

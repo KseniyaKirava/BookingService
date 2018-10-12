@@ -43,6 +43,11 @@ public class Room implements Serializable {
     private double cost;
 
     /**
+     * Access to the Room: available or deleted.
+     */
+    private boolean enable;
+
+    /**
      * The unique identification number of room class.
      */
     private long room_classes_id;
@@ -51,12 +56,13 @@ public class Room implements Serializable {
     public Room() {
     }
 
-    public Room(long id, String name, String number, int capacity, double cost, long room_classes_id) {
+    public Room(long id, String name, String number, int capacity, double cost, boolean enable, long room_classes_id) {
         this.id = id;
         this.name = name;
         this.number = number;
         this.capacity = capacity;
         this.cost = cost;
+        this.enable = enable;
         this.room_classes_id = room_classes_id;
     }
 
@@ -103,6 +109,15 @@ public class Room implements Serializable {
      */
     public double getCost() {
         return cost;
+    }
+
+    /**
+     * Returns access to Room
+     *
+     * @return access to Room {@code true} if access granted, {@code false} otherwise.
+     */
+    public boolean isEnable() {
+        return enable;
     }
 
     /**
@@ -160,6 +175,15 @@ public class Room implements Serializable {
     }
 
     /**
+     * Set access to Room
+     *
+     * @param enable boolean access state.
+     */
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
+    /**
      * Sets room's class unique identification number.
      *
      * @param room_classes_id room's class unique identification number.
@@ -185,6 +209,7 @@ public class Room implements Serializable {
         return id == room.id &&
                 capacity == room.capacity &&
                 Double.compare(room.cost, cost) == 0 &&
+                enable == room.enable &&
                 room_classes_id == room.room_classes_id &&
                 Objects.equals(name, room.name) &&
                 Objects.equals(number, room.number);
@@ -193,12 +218,15 @@ public class Room implements Serializable {
     @Override
     public int hashCode() {
         int result = 1;
+
         result = (int)(result * 31 + result * id);
         result = result * 31 + (name == null ? 0 : name.hashCode()) * result;
         result = result * 31 + (number == null ? 0 : number.hashCode()) * result;
         result = result * 31 + result * capacity;
         result = (int) (result * 31 + result * cost);
+        result = result * 31 + (enable ? 0 : 1) * result;
         result = (int)(result * 31 + result * room_classes_id);
+
         return result;
     }
 
@@ -210,6 +238,7 @@ public class Room implements Serializable {
                 ", number='" + number + '\'' +
                 ", capacity=" + capacity +
                 ", cost=" + cost +
+                ", enable=" + enable +
                 ", room_classes_id=" + room_classes_id +
                 '}';
     }
