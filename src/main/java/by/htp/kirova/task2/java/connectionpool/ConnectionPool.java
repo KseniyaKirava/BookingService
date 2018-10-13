@@ -201,74 +201,37 @@ public final class ConnectionPool {
         }
     }
 
-    public void closeResultSet(ResultSet rs) {
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                LOGGER.error("ResultSet isn't closed. ", e);
-            }
-        }
-    }
-
+    /**
+     * Close statement after use. When a Statement object is closed,
+     * its current ResultSet object, if one exists, is also closed.
+     *
+     * @param st Statement object
+     */
     public void closeStatement(Statement st) {
         if (st != null)
             try {
                 st.close();
             } catch (SQLException e) {
-                LOGGER.error("Statement  isn't closed. ", e);
+                LOGGER.error("Statement & ResultSet aren't closed. ", e);
             }
     }
 
-
     /**
-     * Executes the given SQL statement.
+     * Close prepared statement after use.  When a Prepared Statement
+     * object is closed, its current ResultSet object, if one exists,
+     * is also closed.
      *
-     * @param connection current connection
-     * @param sql        java.lang.String sql query
-     * @return value 1 if the request is successful, 0 otherwise
+     * @param ps Prepared Statement object
      */
-    public int executeUpdate(Connection connection, String sql) {
-        int result = 0;
-
-        try (Statement statement = connection.createStatement()) {
-            result = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-
-        } catch (SQLException e) {
-            LOGGER.error("ConnectionPool error: ", e);
-
-        }
-        return result;
-    }
-
-    /**
-     * Executes the given SQL statement.
-     *
-     * @param connection current connection
-     * @param sql        java.lang.String sql query
-     * @param generateId boolean indicating the need to generate an identification number.
-     *                   {@code true} if it is needed, {@code false} otherwise
-     * @return value 1 if the request is successful, 0 otherwise
-     */
-    public int executeUpdate(Connection connection, String sql, boolean generateId) {
-        int result = 0;
-
-        try (Statement statement = connection.createStatement()) {
-            result = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-
-            if (result > 0 && generateId) {
-                ResultSet generatedKeys = statement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    return generatedKeys.getInt(1);
-                }
+    public void closePreparedStatement(PreparedStatement ps) {
+        if (ps != null)
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                LOGGER.error("Prepared statement & ResultSe aren't closed. ", e);
             }
-        } catch (SQLException e) {
-            LOGGER.error("ConnectionPool error: ", e);
-
-        }
-
-        return result;
     }
+
 
     /**
      * Set autocommit flag is {@code true} and return connection in pool.

@@ -8,13 +8,9 @@ import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.User;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 /**
@@ -34,34 +30,31 @@ public class UserDAOImpl implements GenericDAO<User> {
     /**
      * Constant string which represents query to create user.
      */
-    private static final String SQL_CREATE_USER = "INSERT INTO `users`(`username`, `email`, `password`, `first_name`, " +
-            "`last_name`, `middle_name`, `enable`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %b)";
+    private static final String SQL_CREATE_USER = "INSERT INTO users(username, email, password, first_name, " +
+            "last_name, middle_name, enable) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     /**
      * Constant string which represents query to select all users.
      */
-    private static final String SQL_SELECT_FROM_USERS = "SELECT * FROM `users` ";
+    private static final String SQL_SELECT_FROM_USERS = "SELECT * FROM users ";
 
     /**
      * Constant string which represents query to update user.
      */
-    private static final String SQL_UPDATE_USER = "UPDATE `users` SET `email`= '%s',`password`= '%s',`first_name`= '%s'," +
-            "`last_name`= '%s',`middle_name`= '%s',`enable`= '%s' WHERE `username`= '%s'";
+    private static final String SQL_UPDATE_USER = "UPDATE users SET email= ?, password= ?, first_name= ?," +
+            " last_name= ?, middle_name= ?, enable= ? WHERE username= ? ";
 
     /**
      * Constant string which represents query to delete user.
      */
-    private static final String SQL_DELETE_USER = "DELETE FROM `users` WHERE `username`='%s'";
-
+    private static final String SQL_DELETE_USER = "DELETE FROM users WHERE username= ?";
 
 
     @Override
     public boolean create(User user) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_CREATE_USER, user.getUsername(), user.getEmail(), user.getPassword(),
-                user.getFirst_name(), user.getLast_name(), user.getMiddle_name(), user.isEnable());
+        PreparedStatement ps = null;
 
         int result;
 
@@ -69,19 +62,31 @@ public class UserDAOImpl implements GenericDAO<User> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = executeUpdate(connection, sql);
+            ps = connection.prepareStatement(SQL_CREATE_USER);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getFirst_name());
+            ps.setString(5, user.getLast_name());
+            ps.setString(6, user.getMiddle_name());
+            ps.setBoolean(7, user.isEnable());
+
+            result = ps.executeUpdate();
 
             connection.setAutoCommit(false);
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            rollbackConnection(connection);
+            if (cp != null) {
+                cp.rollbackConnection(connection);
+            }
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
-                setAutoCommitTrue(connection);
+            if (cp != null && connection != null && ps!= null) {
+                cp.setAutoCommitTrue(connection);
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
@@ -94,7 +99,7 @@ public class UserDAOImpl implements GenericDAO<User> {
         ConnectionPool cp = null;
         Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
 
         String sql = SQL_SELECT_FROM_USERS + where;
 
@@ -124,7 +129,6 @@ public class UserDAOImpl implements GenericDAO<User> {
 
         } finally {
             if (cp != null && connection != null) {
-                cp.closeResultSet(resultSet);
                 cp.closeStatement(statement);
                 cp.returnConnection(connection);
             }
@@ -137,9 +141,7 @@ public class UserDAOImpl implements GenericDAO<User> {
     public boolean update(User user) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_UPDATE_USER, user.getEmail(), user.getPassword(),
-                user.getFirst_name(), user.getLast_name(), user.getMiddle_name(), user.isEnable(), user.getUsername());
+        PreparedStatement ps = null;
 
         int result;
 
@@ -147,19 +149,31 @@ public class UserDAOImpl implements GenericDAO<User> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = executeUpdate(connection, sql);
+            ps = connection.prepareStatement(SQL_UPDATE_USER);
+            ps.setString(1, user.getEmail());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getFirst_name());
+            ps.setString(4, user.getLast_name());
+            ps.setString(5, user.getMiddle_name());
+            ps.setBoolean(6, user.isEnable());
+            ps.setString(7, user.getUsername());
+
+            result = ps.executeUpdate();
 
             connection.setAutoCommit(false);
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            rollbackConnection(connection);
+            if (cp != null) {
+                cp.rollbackConnection(connection);
+            }
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
-                setAutoCommitTrue(connection);
+            if (cp != null && connection != null && ps!= null) {
+                cp.setAutoCommitTrue(connection);
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
@@ -171,8 +185,7 @@ public class UserDAOImpl implements GenericDAO<User> {
     public boolean delete(User user) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_DELETE_USER, user.getUsername());
+        PreparedStatement ps = null;
 
         int result;
 
@@ -180,14 +193,17 @@ public class UserDAOImpl implements GenericDAO<User> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = executeUpdate(connection, sql);
+            ps = connection.prepareStatement(SQL_DELETE_USER);
+            ps.setString(1, user.getUsername());
 
-        } catch (ConnectionPoolException e) {
+            result = ps.executeUpdate();
+
+        } catch (ConnectionPoolException | SQLException e) {
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
-
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps!= null){
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
@@ -195,54 +211,4 @@ public class UserDAOImpl implements GenericDAO<User> {
         return result == 1;
     }
 
-
-
-    /**
-     * Executes the given SQL statement.
-     *
-     * @param connection current connection
-     * @param sql java.lang.String sql query
-     * @return value 1 if the request is successful, 0 otherwise
-     */
-    private int executeUpdate(Connection connection, String sql) {
-        int result = 0;
-
-        try (Statement statement = connection.createStatement()) {
-            result = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-
-        } catch (SQLException e) {
-            LOGGER.error("ConnectionPool error: ", e);
-
-        }
-        return result;
-    }
-
-    /**
-     * Set autocommit flag is {@code true} and return connection in pool.
-     *
-     * @param connection current connection
-     */
-    private void setAutoCommitTrue(Connection connection) {
-        try {
-            connection.setAutoCommit(true);
-        } catch (SQLException e) {
-            LOGGER.error("Connection set autocommit  \"true\" operation error: ", e);
-        }
-    }
-
-    /**
-     * Rollback connection in case of unsuccessful completion of the transaction.
-     *
-     * @param connection current connection
-     */
-    private void rollbackConnection(Connection connection) {
-        try {
-            if (connection != null) {
-                connection.setAutoCommit(false);
-                connection.rollback();
-            }
-        } catch (SQLException z) {
-            LOGGER.error("Connection rollback operation error: ", z);
-        }
-    }
 }

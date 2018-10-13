@@ -7,14 +7,10 @@ import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.dao.DAOException;
 import by.htp.kirova.task2.java.entity.Authority;
 import org.apache.log4j.Logger;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 
 /**
  * Provides Facilities with an opportunity to retrieve, change and delete data from
@@ -33,33 +29,31 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
     /**
      * Constant string which represents query to create authority.
      */
-    private static final String SQL_CREATE_AUTHORITY = "INSERT INTO `authorities`(`authority`, `username`, `enable`) " +
-            "VALUES ('%s','%s', %b)";
+    private static final String SQL_CREATE_AUTHORITY = "INSERT INTO authorities(authority, username, enable) " +
+            "VALUES (?, ?, ?)";
 
     /**
      * Constant string which represents query to select authorities.
      */
-    private static final String SQL_SELECT_FROM_AUTHORITIES = "SELECT * FROM `authorities` ";
+    private static final String SQL_SELECT_FROM_AUTHORITIES = "SELECT * FROM authorities ";
 
     /**
      * Constant string which represents query to update authority.
      */
-    private static final String SQL_UPDATE_AUTHORITY = "UPDATE `authorities` SET `authority`='%s', `enable`= %b " +
-            "WHERE `username`='%s'";
+    private static final String SQL_UPDATE_AUTHORITY = "UPDATE authorities SET authority= ? , enable= ? " +
+            "WHERE username= ?";
 
     /**
      * Constant string which represents query to delete authority.
      */
-    private static final String SQL_DELETE_AUTHORITY = "DELETE FROM `authorities` WHERE `username`='%s'";
+    private static final String SQL_DELETE_AUTHORITY = "DELETE FROM authorities WHERE username= ?";
 
 
     @Override
     public boolean create(Authority authority) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_CREATE_AUTHORITY, authority.getAuthority(),
-                authority.getUsername(), authority.isEnable());
+        PreparedStatement ps = null;
 
         int result;
 
@@ -67,19 +61,27 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = cp.executeUpdate(connection, sql);
+            ps = connection.prepareStatement(SQL_CREATE_AUTHORITY);
+            ps.setString(1, authority.getAuthority());
+            ps.setString(2, authority.getUsername());
+            ps.setBoolean(3, authority.isEnable());
+
+            result = ps.executeUpdate();
 
             connection.setAutoCommit(false);
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            cp.rollbackConnection(connection);
+            if (cp != null) {
+                cp.rollbackConnection(connection);
+            }
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps != null) {
                 cp.setAutoCommitTrue(connection);
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
@@ -93,7 +95,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
         ConnectionPool cp = null;
         Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
 
         String sql = SQL_SELECT_FROM_AUTHORITIES + where;
 
@@ -119,7 +121,6 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
 
         } finally {
             if (cp != null && connection != null) {
-                cp.closeResultSet(resultSet);
                 cp.closeStatement(statement);
                 cp.returnConnection(connection);
             }
@@ -132,9 +133,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
     public boolean update(Authority authority) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_UPDATE_AUTHORITY, authority.getAuthority(), authority.isEnable(),
-                authority.getUsername());
+        PreparedStatement ps = null;
 
         int result;
 
@@ -142,19 +141,27 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = cp.executeUpdate(connection, sql);
+            ps = connection.prepareStatement(SQL_UPDATE_AUTHORITY);
+            ps.setString(1, authority.getAuthority());
+            ps.setBoolean(2, authority.isEnable());
+            ps.setString(3, authority.getUsername());
+
+            result = ps.executeUpdate();
 
             connection.setAutoCommit(false);
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            cp.rollbackConnection(connection);
+            if (cp != null) {
+                cp.rollbackConnection(connection);
+            }
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps!= null) {
                 cp.setAutoCommitTrue(connection);
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
@@ -166,8 +173,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
     public boolean delete(Authority authority) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_DELETE_AUTHORITY, authority.getUsername());
+        PreparedStatement ps = null;
 
         int result;
 
@@ -175,14 +181,18 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = cp.executeUpdate(connection, sql);
+            ps = connection.prepareStatement(SQL_DELETE_AUTHORITY);
+            ps.setString(1, authority.getUsername());
 
-        } catch (ConnectionPoolException e) {
+            result = ps.executeUpdate();
+
+        } catch (ConnectionPoolException | SQLException e) {
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps!= null){
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }

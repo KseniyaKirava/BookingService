@@ -6,14 +6,10 @@ import by.htp.kirova.task2.java.dao.DAOException;
 import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.Room;
 import org.apache.log4j.Logger;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
 
 /**
  * Provides Room with an opportunity to retrieve, change and delete data from
@@ -32,40 +28,57 @@ public class RoomDAOImpl implements GenericDAO<Room> {
     /**
      * Constant string which represents query to create room.
      */
-    private static final String SQL_CREATE_ROOM = "INSERT INTO `rooms`(`name`, `number`, `capacity`, `cost`, " +
-            "`enable`, `room_classes_id`) VALUES ('%s', '%s', %d, %f, %b, %d)";
+    private static final String SQL_CREATE_ROOM = "INSERT INTO rooms(name, number, capacity, cost, " +
+            "enable, room_classes_id) VALUES (?, ?, ?, ?, ?, ?)";
 
     /**
      * Constant string which represents query to select all rooms.
      */
-    private static final String SQL_SELECT_FROM_ROOMS = "SELECT * FROM `rooms` ";
+    private static final String SQL_SELECT_FROM_ROOMS = "SELECT * FROM rooms ";
 
     /**
      * Constant string which represents query to update room.
      */
-    private static final String SQL_UPDATE_ROOM = "UPDATE `rooms` SET `name`= '%s',`number`= '%s',`capacity`= %d," +
-            "`cost`= %f, `enable`=%b, `room_classes_id`= %d WHERE `id`= %d";
+    private static final String SQL_UPDATE_ROOM = "UPDATE rooms SET name= ?,number= ?,capacity= ?," +
+            "cost= %f, enable=?, room_classes_id= ? WHERE id= ?";
 
     /**
      * Constant string which represents query to delete room.
      */
-    private static final String SQL_DELETE_ROOM = "DELETE FROM `rooms` WHERE `id` = %d";
+    private static final String SQL_DELETE_ROOM = "DELETE FROM rooms WHERE id = ?";
 
     @Override
     public boolean create(Room room) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
+        PreparedStatement ps = null;
 
-        String sql = String.format(Locale.US, SQL_CREATE_ROOM, room.getName(), room.getNumber(), room.getCapacity(),
-                room.getCost(), room.isEnable(), room.getRoom_classes_id());
 
         try {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            int id = cp.executeUpdate(connection, sql, true);
+            ps = connection.prepareStatement(SQL_CREATE_ROOM, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, room.getName());
+            ps.setString(2, room.getNumber());
+            ps.setInt(3, room.getCapacity());
+            ps.setDouble(4, room.getCost());
+            ps.setBoolean(5,  room.isEnable());
+            ps.setLong(6, room.getRoom_classes_id());
+
+            int result = ps.executeUpdate();
+            int id = 0;
+
+            if (result > 0) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    id = generatedKeys.getInt(1);
+                }
+            }
+
             if (id > 0) {
                 room.setId(id);
+
                 connection.setAutoCommit(false);
                 connection.commit();
                 return true;
@@ -73,13 +86,16 @@ public class RoomDAOImpl implements GenericDAO<Room> {
 
 
         } catch (ConnectionPoolException | SQLException e) {
-            cp.rollbackConnection(connection);
+            if (cp != null) {
+                cp.rollbackConnection(connection);
+            }
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps != null) {
                 cp.setAutoCommitTrue(connection);
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
@@ -92,7 +108,7 @@ public class RoomDAOImpl implements GenericDAO<Room> {
         ConnectionPool cp = null;
         Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
 
         String sql = SQL_SELECT_FROM_ROOMS + where;
 
@@ -122,7 +138,6 @@ public class RoomDAOImpl implements GenericDAO<Room> {
 
         } finally {
             if (cp != null && connection != null) {
-                cp.closeResultSet(resultSet);
                 cp.closeStatement(statement);
                 cp.returnConnection(connection);
             }
@@ -135,9 +150,7 @@ public class RoomDAOImpl implements GenericDAO<Room> {
     public boolean update(Room room) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_UPDATE_ROOM, room.getName(), room.getNumber(), room.getCapacity(),
-                room.getCost(), room.isEnable(), room.getRoom_classes_id(), room.getId());
+        PreparedStatement ps = null;
 
         int result;
 
@@ -145,19 +158,31 @@ public class RoomDAOImpl implements GenericDAO<Room> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = cp.executeUpdate(connection, sql, false);
+            ps = connection.prepareStatement(SQL_UPDATE_ROOM);
+            ps.setString(1, room.getName());
+            ps.setString(2, room.getNumber());
+            ps.setInt(3, room.getCapacity());
+            ps.setDouble(4, room.getCost());
+            ps.setBoolean(5,  room.isEnable());
+            ps.setLong(6, room.getRoom_classes_id());
+            ps.setLong(7, room.getId());
+
+            result = ps.executeUpdate();
 
             connection.setAutoCommit(false);
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            cp.rollbackConnection(connection);
+            if (cp != null) {
+                cp.rollbackConnection(connection);
+            }
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps!= null) {
                 cp.setAutoCommitTrue(connection);
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
@@ -169,8 +194,7 @@ public class RoomDAOImpl implements GenericDAO<Room> {
     public boolean delete(Room room) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_DELETE_ROOM, room.getId());
+        PreparedStatement ps = null;
 
         int result;
 
@@ -178,14 +202,18 @@ public class RoomDAOImpl implements GenericDAO<Room> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = cp.executeUpdate(connection, sql, false);
+            ps = connection.prepareStatement(SQL_DELETE_ROOM);
+            ps.setLong(1, room.getId());
 
-        } catch (ConnectionPoolException e) {
+            result = ps.executeUpdate();
+
+        } catch (ConnectionPoolException | SQLException e) {
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps!= null){
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }

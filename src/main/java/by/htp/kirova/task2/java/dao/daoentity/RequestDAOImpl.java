@@ -6,14 +6,9 @@ import by.htp.kirova.task2.java.dao.DAOException;
 import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.Request;
 import org.apache.log4j.Logger;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Provides Request with an opportunity to retrieve, change and delete data from
@@ -32,54 +27,73 @@ public class RequestDAOImpl implements GenericDAO<Request> {
     /**
      * Constant string which represents query to create request.
      */
-    private static final String SQL_CREATE_REQUEST = "INSERT INTO `requests`(`room_capacity`, `checkin_date`," +
-            " `checkout_date`, `room_class`, `enable`, `users_username`) VALUES (%d, %d, %d, '%s', %b, '%s')";
+    private static final String SQL_CREATE_REQUEST = "INSERT INTO requests(room_capacity, checkin_date," +
+            " checkout_date, room_class, enable, users_username) VALUES (?, ?, ?, ?, ?, ?)";
 
     /**
      * Constant string which represents query to select all requests.
      */
-    private static final String SQL_SELECT_FROM_REQUESTS = "SELECT * FROM `requests` ";
+    private static final String SQL_SELECT_FROM_REQUESTS = "SELECT * FROM requests ";
 
     /**
      * Constant string which represents query to update request.
      */
-    private static final String SQL_UPDATE_REQUEST = "UPDATE `requests` SET `room_capacity`= %d," +
-            "`checkin_date`= %d,`checkout_date`= %d,`room_class`= '%s', `enable`= %b, `users_username`='%s' WHERE `id`= %d";
+    private static final String SQL_UPDATE_REQUEST = "UPDATE requests SET room_capacity= ?," +
+            "checkin_date= ?,checkout_date= ?,room_class= ?, enable= ?, users_username=? WHERE id= ?";
 
     /**
      * Constant string which represents query to delete request.
      */
-    private static final String SQL_DELETE_REQUEST = "DELETE FROM `requests` WHERE `id` = %d";
+    private static final String SQL_DELETE_REQUEST = "DELETE FROM requests WHERE id = ?";
 
 
     @Override
     public boolean create(Request request) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_CREATE_REQUEST, request.getRoom_capacity(), request.getCheckin_date(),
-                request.getCheckout_date(), request.getRoom_class(), request.isEnable(), request.getUsers_username());
+        PreparedStatement ps = null;
 
         try {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            int id = cp.executeUpdate(connection, sql, true);
+            ps = connection.prepareStatement(SQL_CREATE_REQUEST, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, request.getRoom_capacity());
+            ps.setLong(2, request.getCheckin_date());
+            ps.setLong(3, request.getCheckout_date());
+            ps.setString(4, request.getRoom_class());
+            ps.setBoolean(5,request.isEnable());
+            ps.setString(6, request.getUsers_username());
+
+            int result = ps.executeUpdate();
+            int id = 0;
+
+            if (result > 0) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    id = generatedKeys.getInt(1);
+                }
+            }
+
             if (id > 0) {
                 request.setId(id);
+
                 connection.setAutoCommit(false);
                 connection.commit();
                 return true;
             }
 
         } catch (ConnectionPoolException | SQLException e) {
-            cp.rollbackConnection(connection);
+            if (cp != null) {
+                cp.rollbackConnection(connection);
+            }
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps != null) {
                 cp.setAutoCommitTrue(connection);
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
@@ -92,7 +106,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
         ConnectionPool cp = null;
         Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
 
         String sql = SQL_SELECT_FROM_REQUESTS + where;
 
@@ -122,7 +136,6 @@ public class RequestDAOImpl implements GenericDAO<Request> {
 
         } finally {
             if (cp != null && connection != null) {
-                cp.closeResultSet(resultSet);
                 cp.closeStatement(statement);
                 cp.returnConnection(connection);
             }
@@ -135,10 +148,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
     public boolean update(Request request) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_UPDATE_REQUEST, request.getRoom_capacity(), request.getCheckin_date(),
-                request.getCheckout_date(), request.getRoom_class(), request.isEnable(), request.getUsers_username(),
-                request.getId());
+        PreparedStatement ps = null;
 
         int result;
 
@@ -146,19 +156,31 @@ public class RequestDAOImpl implements GenericDAO<Request> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = cp.executeUpdate(connection, sql, false);
+            ps = connection.prepareStatement(SQL_UPDATE_REQUEST);
+            ps.setInt(1, request.getRoom_capacity());
+            ps.setLong(2, request.getCheckin_date());
+            ps.setLong(3, request.getCheckout_date());
+            ps.setString(4, request.getRoom_class());
+            ps.setBoolean(5,request.isEnable());
+            ps.setString(6, request.getUsers_username());
+            ps.setLong(7, request.getId());
+
+            result = ps.executeUpdate();
 
             connection.setAutoCommit(false);
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            cp.rollbackConnection(connection);
+            if (cp != null) {
+                cp.rollbackConnection(connection);
+            }
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps!= null) {
                 cp.setAutoCommitTrue(connection);
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
@@ -170,8 +192,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
     public boolean delete(Request request) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_DELETE_REQUEST, request.getId());
+        PreparedStatement ps = null;
 
         int result;
 
@@ -179,14 +200,18 @@ public class RequestDAOImpl implements GenericDAO<Request> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = cp.executeUpdate(connection, sql, false);
+            ps = connection.prepareStatement(SQL_DELETE_REQUEST);
+            ps.setLong(1, request.getId());
 
-        } catch (ConnectionPoolException e) {
+            result = ps.executeUpdate();
+
+        } catch (ConnectionPoolException | SQLException e) {
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps!= null){
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }

@@ -6,14 +6,9 @@ import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.dao.DAOException;
 import by.htp.kirova.task2.java.entity.Facility;
 import org.apache.log4j.Logger;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 /**
@@ -33,53 +28,68 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
     /**
      * Constant string which represents query to create facility.
      */
-    private static final String SQL_CREATE_FACILITY = "INSERT INTO `facilities`(`name`, `enable`) VALUES ('%s', %b)";
+    private static final String SQL_CREATE_FACILITY = "INSERT INTO facilities(id, name, enable) VALUES (?, ?, ?)";
 
     /**
      * Constant string which represents query to select all facilities.
      */
-    private static final String SQL_SELECT_FROM_FACILITIES = "SELECT * FROM `facilities` ";
+    private static final String SQL_SELECT_FROM_FACILITIES = "SELECT * FROM facilities ";
 
     /**
      * Constant string which represents query to update facility.
      */
-    private static final String SQL_UPDATE_FACILITY = "UPDATE `facilities` SET `name`='%s', `enable`=%b WHERE `id` = %d";
+    private static final String SQL_UPDATE_FACILITY = "UPDATE facilities SET name= ?, enable=? WHERE id = ?";
 
 
     /**
      * Constant string which represents query to delete facility.
      */
-    private static final String SQL_DELETE_FACILITY = "DELETE FROM `facilities` WHERE `id` = %d";
-
+    private static final String SQL_DELETE_FACILITY = "DELETE FROM facilities WHERE id = ?";
 
 
     @Override
     public boolean create(Facility facility) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_CREATE_FACILITY, facility.getName(), facility.isEnable());
+        PreparedStatement ps = null;
 
         try {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            int id = cp.executeUpdate(connection, sql, true);
+            ps = connection.prepareStatement(SQL_CREATE_FACILITY, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, facility.getName());
+            ps.setBoolean(2, facility.isEnable());
+
+            int result = ps.executeUpdate();
+            int id = 0;
+
+            if (result > 0) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    id = generatedKeys.getInt(1);
+                }
+            }
+
             if (id > 0) {
                 facility.setId(id);
+
                 connection.setAutoCommit(false);
                 connection.commit();
                 return true;
             }
 
         } catch (ConnectionPoolException | SQLException e) {
-            cp.rollbackConnection(connection);
+            if (cp != null) {
+                cp.rollbackConnection(connection);
+            }
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps != null) {
                 cp.setAutoCommitTrue(connection);
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
@@ -92,7 +102,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
         ConnectionPool cp = null;
         Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
 
         String sql = SQL_SELECT_FROM_FACILITIES + where;
 
@@ -118,7 +128,6 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
 
         } finally {
             if (cp != null && connection != null) {
-                cp.closeResultSet(resultSet);
                 cp.closeStatement(statement);
                 cp.returnConnection(connection);
             }
@@ -132,9 +141,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
     public boolean update(Facility facility) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_UPDATE_FACILITY, facility.getName(), facility.isEnable(),
-                facility.getId());
+        PreparedStatement ps = null;
 
         int result;
 
@@ -142,19 +149,27 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = cp.executeUpdate(connection, sql, false);
+            ps = connection.prepareStatement(SQL_UPDATE_FACILITY);
+            ps.setString(1, facility.getName());
+            ps.setBoolean(2, facility.isEnable());
+            ps.setLong(3, facility.getId());
+
+            result = ps.executeUpdate();
 
             connection.setAutoCommit(false);
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            cp.rollbackConnection(connection);
+            if (cp != null) {
+                cp.rollbackConnection(connection);
+            }
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps!= null) {
                 cp.setAutoCommitTrue(connection);
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
@@ -166,8 +181,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
     public boolean delete(Facility facility) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-
-        String sql = String.format(Locale.US, SQL_DELETE_FACILITY, facility.getId());
+        PreparedStatement ps = null;
 
         int result;
 
@@ -175,14 +189,18 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            result = cp.executeUpdate(connection, sql, false);
+            ps = connection.prepareStatement(SQL_DELETE_FACILITY);
+            ps.setLong(1, facility.getId());
 
-        } catch (ConnectionPoolException e) {
+            result = ps.executeUpdate();
+
+        } catch (ConnectionPoolException | SQLException e) {
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && connection != null && ps!= null){
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
