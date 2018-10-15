@@ -9,12 +9,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 
-
 /**
  * Provides access to Connections in the pool.
  * This class is based on Singleton pattern.
  *
  * @author Kirava Kseniya
+ * @author Olga Smolyakova
  * @since Sep 24, 2018
  */
 public final class ConnectionPool {
@@ -71,15 +71,13 @@ public final class ConnectionPool {
     private ConnectionPool() throws ConnectionPoolException {
         MySQLDriverAction.registerDrivers();
 
-        DBResourceManager dbResourceManager = DBResourceManager.getInstance();
-
-        this.driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
-        this.url = dbResourceManager.getValue(DBParameter.DB_URL);
-        this.user = dbResourceManager.getValue(DBParameter.DB_USER);
-        this.password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
+        this.driverName = DBResourceManager.getParameter(DBParameter.DB_DRIVER);
+        this.url = DBResourceManager.getParameter(DBParameter.DB_URL);
+        this.user =DBResourceManager.getParameter(DBParameter.DB_USER);
+        this.password = DBResourceManager.getParameter(DBParameter.DB_PASSWORD);
 
         try {
-            this.poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
+            this.poolSize = Integer.parseInt(DBResourceManager.getParameter(DBParameter.DB_POOL_SIZE));
 
         } catch (NumberFormatException e) {
             poolSize = 5;

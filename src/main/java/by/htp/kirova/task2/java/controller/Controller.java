@@ -1,11 +1,18 @@
 package by.htp.kirova.task2.java.controller;
 
-import by.htp.kirova.task2.java.dao.DAOException;
-import by.htp.kirova.task2.java.entity.*;
-import by.htp.kirova.task2.java.service.GenericService;
-import by.htp.kirova.task2.java.service.ServiceException;
-import by.htp.kirova.task2.java.service.ServiceFactory;
 
+import by.htp.kirova.task2.java.controller.action.ActionCommand;
+import by.htp.kirova.task2.java.controller.action.ActionFactory;
+import org.apache.log4j.Logger;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 
 /**
  * Main servlet of web application.
@@ -13,81 +20,83 @@ import by.htp.kirova.task2.java.service.ServiceFactory;
  * @author Kseniya Kirava
  * @since Sept 24, 2018
  */
-public class Controller {
-
-    public static void main(String[] args) throws DAOException {
-
-
-
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-
-        GenericService<User> userService = serviceFactory.getUserService();
-        User user = new User("username", "A@gmail.com", "passwodffrd", "Имя",
-                "Фамилия", "yuiyuihhh", true);
-//
-//        User user2 = new User("USER", "ASDER@gmail.com", "password", "Имя",
-//                "Фамилия", "", true);
-
-//        GenericService<Authority> authorityService = serviceFactory.getAuthorityService();
-//        Authority authority = new Authority("admin", "username", true);
-//
-//        GenericService<RoomClass> roomClassService = serviceFactory.getRoomClassService();
-//        RoomClass roomClass = new RoomClass(1, "люкс", true);
-//
-//        GenericService<Room> roomService = serviceFactory.getRoomService();
-//        Room room = new Room(0, "комната с терассой", "45d", 5, 45.84, true, 1);
-//
-//        GenericService<Request> requestService = serviceFactory.getRequestService();
-//        Request request = new Request(1, 5, 1539365610550L, 1539365610550L,
-//                "люкс", true, "username");
-//
-//        GenericService<Reservation> reservationService = serviceFactory.getReservationService();
-//        Reservation reservation = new Reservation(1, 1539365610550L, 1539365610550L,
-//                1539464400000L, 137.52, true, 1, "username",
-//                1, 1);
-//
-//        GenericService<Facility> facilityService = serviceFactory.getFacilityService();
-//        Facility facility = new Facility(3, "кровать", true);
-////
-//
-//        GenericService<RoomHasFacility> roomHasFacilityService = serviceFactory.getRoomHasFacilityService();
-//        RoomHasFacility roomHasFacility = new RoomHasFacility(1, 1, 2, true);
-
-        try {
-            userService.create(user);
-//            userService.read("WHERE username = 'username'");
-//            userService.update(user);
-//            userService.delete(user);
-//            authorityService.create(authority);
-//            roomClassService.create(roomClass);
-//            roomService.create(room);
-//            requestService.create(request);
-//            reservationService.create(reservation);
-
-//            facilityService.create(facility);
-//            facilityService.read("WHERE id = 1");
-
-//            facilityService.delete(facility);
-//            roomHasFacilityService.create(roomHasFacility);
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
+@WebServlet("/do")
+public class Controller extends HttpServlet {
+    /**
+     * Instance of {@code org.apache.log4j.Logger} is used for logging.
+     */
+    private static final Logger LOGGER = Logger.getLogger(Controller.class);
+    /**
+     * The unique serial version identifier.
+     */
+    private static final long serialVersionUID = 1L;
 
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
-//    @Override
-//    public void init() throws ServletException {
-//        super.init();
-//    }
-//
-//    @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        super.doGet(req, resp);
-//    }
-//
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        super.doPost(req, resp);
-//    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Main method which is executed implicitly in
+     * {@link #doPost(HttpServletRequest, HttpServletResponse)} and
+     * {@link #doGet(HttpServletRequest, HttpServletResponse)} methods.
+     * Processes {@link javax.servlet.http.HttpServletRequest} and
+     * creates {@link javax.servlet.http.HttpServletResponse}.
+     *
+     * @param request  Initial {@link javax.servlet.http.HttpServletRequest} object.
+     * @param response Initial {@link javax.servlet.http.HttpServletResponse} object
+     */
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String page = null;
+        ActionFactory actionFactory = new ActionFactory();
+
+        ActionCommand command = actionFactory.defineCommand(request);
+        page = command.execute(request);
+
+        if (page != null) {
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+            dispatcher.forward(request, response);
+        } else {
+            page = ConfigurationManager.getParameter("path.page.index");
+            request.getSession().setAttribute("nullPage", MessageManager.getParameter("message.nullpage"));
+            response.sendRedirect(request.getContextPath() + page);
+        }
+    }
 }
+
+//        RequestContent requestContent = new RequestContent(request);
+//        String commandName = requestContent.getRequestParameter(COMMAND);
+//        LOGGER.info("Command name: " + commandName);
+//        try {
+//            Command command = CommandFactory.defineCommand(commandName);
+//            CommandResult commandResult = command.execute(requestContent);
+//            requestContent.insertAttributes(request);
+//            requestContent.getCookies().forEach(response::addCookie);
+//            if (FORWARD.equals(commandResult.getResponseType())) {
+//                LOGGER.info("Forward to" + commandResult.getPage());
+//                RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(commandResult.getPage());
+//                requestDispatcher.forward(request, response);
+//            } else {
+//                LOGGER.info("Redirect to" + commandResult.getPage());
+//                response.sendRedirect(request.getContextPath() + commandResult.getPage());
+//            }
+//        } catch (CommandException e) {
+//            throw new ServletException(e);
+//        }
+
+
+
+
+
+
+
