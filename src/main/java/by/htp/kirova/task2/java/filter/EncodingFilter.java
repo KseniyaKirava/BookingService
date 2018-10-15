@@ -3,7 +3,12 @@ package by.htp.kirova.task2.java.filter;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
+
+@WebFilter(initParams = {@WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param")},
+        urlPatterns = {"/*"})
 
 /**
  * This filter sets encoding parameters for this application.
@@ -27,18 +32,14 @@ public class EncodingFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         LOGGER.info("Encoding filter has been initialized");
         encoding = filterConfig.getInitParameter("encoding");
+        if (encoding == null)
+            encoding = "utf-8";
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        String encoding = request.getCharacterEncoding();
-        if (encoding == null || !encoding.equalsIgnoreCase(encoding))
-            request.setCharacterEncoding(encoding);
-
-        encoding = response.getCharacterEncoding();
-        if (encoding == null || !encoding.equalsIgnoreCase(encoding))
-            response.setCharacterEncoding(encoding);
-
+        request.setCharacterEncoding(encoding);
+        response.setCharacterEncoding(encoding);
         filterChain.doFilter(request, response);
     }
 
