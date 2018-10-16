@@ -1,18 +1,16 @@
 package by.htp.kirova.task2.java.controller;
 
 
-import by.htp.kirova.task2.java.controller.action.ActionCommand;
 import by.htp.kirova.task2.java.controller.action.ActionFactory;
-import by.htp.kirova.task2.java.controller.action.CommandException;
+import by.htp.kirova.task2.java.controller.action.Command;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 
 /**
  * Main servlet of web application.
@@ -31,6 +29,13 @@ public class Controller extends HttpServlet {
      */
     private static final long serialVersionUID = 1L;
 
+    private ActionFactory actionFactory;
+
+    @Override
+    public void init() throws ServletException {
+        actionFactory = new ActionFactory();
+    }
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -44,6 +49,7 @@ public class Controller extends HttpServlet {
         processRequest(request, response);
     }
 
+
     /**
      * Main method which is executed implicitly in
      * {@link #doPost(HttpServletRequest, HttpServletResponse)} and
@@ -56,24 +62,19 @@ public class Controller extends HttpServlet {
      */
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String page = null;
-        ActionFactory actionFactory = new ActionFactory();
-
-        ActionCommand command = actionFactory.defineCommand(request);
+        String viewPage;
         try {
-            page = command.execute(request);
-        } catch (CommandException e) {
-            e.printStackTrace();
-        }
+            Command command = actionFactory.defineCommand(request);
+            Command next = command.execute(request, response);
+            if (next == null) {
+                viewPage = command.getJsp();
+                getServletContext().getRequestDispatcher(viewPage).forward(request, response);
+            } else {
+                response.sendRedirect("do?command=" + next.toString());
+            }
+        } catch (Exception e) {
+            getServletContext().getRequestDispatcher(CommandType.ERROR.command.getJsp()).forward(request, response);
 
-        if (page != null) {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-            dispatcher.forward(request, response);
-        } else {
-            page = ConfigurationManager.getParameter("path.page.index");
-            request.getSession().setAttribute("nullPage", MessageManager.getParameter("message.nullpage"));
-            response.sendRedirect(request.getContextPath() + page);
         }
     }
 }

@@ -1,6 +1,6 @@
 package by.htp.kirova.task2.java.controller;
 
-import by.htp.kirova.task2.java.controller.action.ActionCommand;
+import by.htp.kirova.task2.java.controller.action.Command;
 import by.htp.kirova.task2.java.controller.action.LoginCommand;
 import by.htp.kirova.task2.java.controller.action.ProfileCommand;
 
@@ -89,9 +89,9 @@ public enum CommandType {
         }
     };
 
-    ActionCommand command;
+    public Command command;
 
-    public ActionCommand getCurrentCommand() {
+    public Command getCurrentCommand() {
         return command;
     }
 
