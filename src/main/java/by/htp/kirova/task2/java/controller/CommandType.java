@@ -1,6 +1,8 @@
 package by.htp.kirova.task2.java.controller;
 
 import by.htp.kirova.task2.java.controller.action.ActionCommand;
+import by.htp.kirova.task2.java.controller.action.LoginCommand;
+import by.htp.kirova.task2.java.controller.action.ProfileCommand;
 
 /**
  * Enum.
@@ -23,7 +25,7 @@ public enum CommandType {
      */
     LOGIN {
         {
-//            this.command = new LoginCommand();
+            this.command = new LoginCommand();
 
         }
     },
@@ -57,9 +59,9 @@ public enum CommandType {
     /**
      * Command to show user's account info.
      */
-    MYACCOUNT {
+    PROFILE {
         {
-//            this.command = new MyAccountCommand();
+            this.command = new ProfileCommand();
         }
     },
     /**
@@ -87,10 +89,10 @@ public enum CommandType {
         }
     };
 
-    private ActionCommand actionCommand;
+    ActionCommand command;
 
-    public ActionCommand getCurrentCommand(){
-        return actionCommand;
+    public ActionCommand getCurrentCommand() {
+        return command;
     }
 
 }

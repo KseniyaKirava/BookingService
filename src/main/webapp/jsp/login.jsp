@@ -16,10 +16,10 @@
       <!-- Text input-->
       <div class="form-group">
 
-        <label class="col-md-4 control-label" for="email">Email</label>
+        <label class="col-md-4 control-label" for="username">Login</label>
         <div class="col-md-4">
 
-          <input id="email" value="testemail@gmail.ru" name="email" type="text" placeholder="e-mail"
+          <input id="username" value="testusername@gmail.ru" name="username" type="text" placeholder="e-mail"
                  class="form-control input-md" required="">
         </div>
       </div>

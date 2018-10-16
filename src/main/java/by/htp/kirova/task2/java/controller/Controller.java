@@ -3,13 +3,13 @@ package by.htp.kirova.task2.java.controller;
 
 import by.htp.kirova.task2.java.controller.action.ActionCommand;
 import by.htp.kirova.task2.java.controller.action.ActionFactory;
+import by.htp.kirova.task2.java.controller.action.CommandException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -61,7 +61,11 @@ public class Controller extends HttpServlet {
         ActionFactory actionFactory = new ActionFactory();
 
         ActionCommand command = actionFactory.defineCommand(request);
-        page = command.execute(request);
+        try {
+            page = command.execute(request);
+        } catch (CommandException e) {
+            e.printStackTrace();
+        }
 
         if (page != null) {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
