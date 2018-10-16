@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <%@ include file="../include/head.htm" %>
@@ -5,25 +6,28 @@
 <div class="container">
     <%@ include file="../include/menu.htm" %>
 
+    <fmt:setBundle basename="message"/>
 
     <form class="form-horizontal" method="post" command="do?command=Profile">
-        <fieldset>
-            <!-- Form Name -->
 
+        <fieldset>
 
             <div class="row justify-content-left align-items-start">
                 <div class="col-md-2">
                     <ul class="nav navbar-nav nav-pills nav-stacked">
                         <li class="active nav-item">
-                            <a class="nav-link" style="font-size: 14pt; color: #949494;" href="do?command=Profile">Edit my profile</a>
+                            <a class="nav-link" style="font-size: 14pt; color: #949494;"
+                               href="do?command=Profile"><fmt:message key="message.editMyProfile"/></a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 14pt; color: #949494;" href="do?command=Requests">My requests</a>
+                            <a class="nav-link" style="font-size: 14pt; color: #949494;" href="do?command=Requests">My
+                                requests</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 14pt; color: #949494;" href="do?command=Reservations">My reservations</a>
+                            <a class="nav-link" style="font-size: 14pt; color: #949494;" href="do?command=Reservations">My
+                                reservations</a>
                         </li>
 
                     </ul>

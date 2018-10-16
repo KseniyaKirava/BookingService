@@ -46,16 +46,18 @@ public class ProfileCommand extends Command {
                     String first_name = request.getParameter("first_name");
                     String last_name = request.getParameter("last_name");
                     String middle_name = request.getParameter("middle_name");
-                    if (!password.equals(currentPassword) && !Validator.checkPassword(password)) {
+                    boolean passwordIsUpdated = !password.equals(currentPassword);
+                    if (passwordIsUpdated && !Validator.checkPassword(password)) {
                         return null;
                     }
                     if (!Validator.checkEmail(email) || !Validator.checkName(first_name) ||
                             !Validator.checkName(last_name) || !Validator.checkMiddleName(middle_name)) {
                         return null;
                     }
-                    String hashPassword = UserLogic.getHashPassword(password);
+                    if (passwordIsUpdated) {
+                        user.setPassword(UserLogic.getHashPassword(password));
+                    }
                     user.setEmail(email);
-                    user.setPassword(hashPassword);
                     user.setFirst_name(first_name);
                     user.setLast_name(last_name);
                     user.setMiddle_name(middle_name);
