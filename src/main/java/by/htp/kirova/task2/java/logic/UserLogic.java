@@ -19,7 +19,7 @@ public class UserLogic {
 
     public static User checkLogin(String username, String password) throws CommandException {
         String hashPassword = getHashPassword(password);
-        String where = String.format("WHERE email='%s' AND password='%s' LIMIT 0,1", username, hashPassword);
+        String where = String.format("WHERE username='%s' AND password='%s' LIMIT 0,1", username, hashPassword);
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         User user = null;
