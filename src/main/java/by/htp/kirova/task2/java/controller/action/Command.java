@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public abstract class Command {
-    public abstract Command execute(HttpServletRequest req, HttpServletResponse resp);
+    public abstract Command execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException;
 
     @Override
     public String toString() {

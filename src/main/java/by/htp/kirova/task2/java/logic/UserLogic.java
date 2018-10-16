@@ -11,7 +11,7 @@ import java.util.List;
 public class UserLogic {
 
 //    public static void main(String[] args) {
-//        String pass = getHashPassword("125df56dff");
+//        String pass = getHashPassword("123456");
 //        System.out.println(pass);
 //
 //    }
@@ -19,7 +19,7 @@ public class UserLogic {
 
     public static User checkLogin(String username, String password) throws CommandException {
         String hashPassword = getHashPassword(password);
-        String where = String.format("WHERE username='%s' AND password='%s' LIMIT 0,1", username, hashPassword);
+        String where = String.format("WHERE username='%s' AND password='%s' AND enable=true LIMIT 0,1", username, hashPassword);
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         User user = null;
@@ -36,7 +36,7 @@ public class UserLogic {
         return user;
     }
 
-    private static String getHashPassword(String password) {
+    public static String getHashPassword(String password) {
         String salt = "rand"; // генерация разной соли в классе SaltRandom
         String hashpass = DigestUtils.sha256Hex(password + salt);
         return hashpass;

@@ -19,12 +19,17 @@ enum ValidationPattern {
     /**
      * User's password pattern.
      */
-    PASSWORD("[\\w]{6,15}"),
+    PASSWORD("[\\w\\d]{6,15}"),
 
     /**
-     * User's name pattern.
+     * User's first name/last name pattern.
      */
-    NAME("[[A-Za-zА-Яа-яЁё]+]{2,15}"),
+    NAME("[[A-Za-zА-Яа-яЁё-]+]{2,15}"),
+
+    /**
+     * User's middle name pattern.
+     */
+    MIDDLE_NAME("[[A-Za-zА-Яа-яЁё.-]+]{1,15}"),
 
     /**
      * Entity name pattern.

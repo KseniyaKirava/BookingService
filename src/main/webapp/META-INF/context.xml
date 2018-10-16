@@ -2,7 +2,7 @@
 
 <Context>
 
-    <Resource name="jdbc/my_sql_kirova"
+    <Resource name="jdbc/kirova"
               auth="Container"
               type="javax.sql.DataSource"
               testWhileIdle="false"
@@ -21,8 +21,8 @@
               minEvictableIdleTimeMillis="3000"
               jmxEnabled="true"
               username="root"
-              password=""
+              password="root"
               driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:2016/kirova?useUnicode=true&amp;characterEncoding=UTF-8"/>
+              url="jdbc:mysql://localhost:3306/kirova?useUnicode=true&amp;characterEncoding=UTF-8"/>
 
 </Context>

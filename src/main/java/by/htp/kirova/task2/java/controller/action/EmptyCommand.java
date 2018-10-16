@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public class EmptyCommand extends Command{
 
     @Override
-    public Command execute(HttpServletRequest request, HttpServletResponse response) {
-        Command command = CommandType.LOGIN.command;
-        return command;
+    public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+        return CommandType.LOGIN.command;
     }
 }

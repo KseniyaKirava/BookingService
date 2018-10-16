@@ -16,7 +16,7 @@ public class LoginCommand extends Command {
     private final static String PASSWORD = "password";
 
     @Override
-    public Command execute(HttpServletRequest request, HttpServletResponse response) {
+    public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException{
         if (request.getMethod().equalsIgnoreCase("post")) {
             if (request.getParameter("loginbutton") != null) {
                 String username = request.getParameter(USERNAME);

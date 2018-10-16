@@ -39,13 +39,26 @@ public final class Validator {
     }
 
     /**
-     * Checks the first name/last name/middle name against user's name pattern.
+     * Checks the first name/last name against user's name pattern.
      *
-     * @param name user's first name/last name/middle name.
+     * @param name user's first name/last name.
      * @return {@code true} in case of success and false otherwise.
      */
     public static boolean checkName(String name) {
         boolean isValid = name != null && ValidationPattern.NAME.getPattern().matcher(name).matches();
+        LOGGER.info("User name is valid: " + isValid);
+        return isValid;
+    }
+
+    /**
+     * Checks the middle name against user's name pattern.
+     *
+     * @param middleName user's middle name.
+     * @return {@code true} in case of success and false otherwise.
+     */
+    public static boolean checkMiddleName(String middleName) {
+        boolean isValid = middleName == null || middleName.equals("") || ValidationPattern.MIDDLE_NAME.getPattern().
+                matcher(middleName).matches();
         LOGGER.info("User name is valid: " + isValid);
         return isValid;
     }

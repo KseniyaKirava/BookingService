@@ -5,7 +5,7 @@
 <div class="container">
   <%@ include file="../include/menu.htm" %>
 
-  <form class="form-horizontal" method="post" command="do?command=login">
+  <form class="form-horizontal" method="post" command="do?command=Login">
     <fieldset>
 
       <!-- Form Name -->
@@ -19,7 +19,7 @@
         <label class="col-md-4 control-label" for="username">Login</label>
         <div class="col-md-4">
 
-          <input id="username" value="testusername@gmail.ru" name="username" type="text" placeholder="e-mail"
+          <input id="username" value="vasia" name="username" type="text" placeholder="e-mail"
                  class="form-control input-md" required="">
         </div>
       </div>
@@ -28,7 +28,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="password">Password</label>
         <div class="col-md-4">
-          <input id="password" value="testPassword" name="password" type="password" placeholder="password"
+          <input id="password" value="125df56dff" name="password" type="password" placeholder="password"
                  class="form-control input-md" required="">
           <span class="help-block">* a-zA-Z0-9 (min 6 symbols)</span>
         </div>

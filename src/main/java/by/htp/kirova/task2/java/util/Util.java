@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class Util {
-    static User getUserFromSession(HttpServletRequest request) {
+    public static User getUserFromSession(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Object objUser = session.getAttribute("user");
         if (objUser != null) {

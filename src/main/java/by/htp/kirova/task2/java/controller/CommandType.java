@@ -1,8 +1,6 @@
 package by.htp.kirova.task2.java.controller;
 
-import by.htp.kirova.task2.java.controller.action.Command;
-import by.htp.kirova.task2.java.controller.action.LoginCommand;
-import by.htp.kirova.task2.java.controller.action.ProfileCommand;
+import by.htp.kirova.task2.java.controller.action.*;
 
 /**
  * Enum.
@@ -30,20 +28,11 @@ public enum CommandType {
         }
     },
     /**
-     * Command for the user to log out.
-     */
-    LOGOUT {
-        {
-//            this.command = new LogoutCommand();
-
-        }
-    },
-    /**
      * Command for the user to Sign up.
      */
     SIGNUP {
         {
-//            this.command = new SignupCommand();
+           this.command = new SignupCommand();
 
         }
     },
@@ -52,7 +41,7 @@ public enum CommandType {
      */
     ERROR {
         {
-//            this.command = new ErrorCommand();
+          this.command = new ErrorCommand();
 
         }
     },
