@@ -1,10 +1,10 @@
 package by.htp.kirova.task2.java.controller;
 
 
-import by.htp.kirova.task2.java.controller.action.ActionFactory;
-import by.htp.kirova.task2.java.controller.action.Command;
+import by.htp.kirova.task2.java.controller.command.ActionFactory;
+import by.htp.kirova.task2.java.controller.command.Command;
+import by.htp.kirova.task2.java.controller.command.CommandType;
 import org.apache.log4j.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -58,7 +58,7 @@ public class Controller extends HttpServlet {
      * creates {@link javax.servlet.http.HttpServletResponse}.
      *
      * @param request  Initial {@link javax.servlet.http.HttpServletRequest} object.
-     * @param response Initial {@link javax.servlet.http.HttpServletResponse} object
+     * @param response Initial {@link javax.servlet.http.HttpServletResponse} object.
      */
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -68,36 +68,20 @@ public class Controller extends HttpServlet {
             Command next = command.execute(request, response);
             if (next == null) {
                 viewPage = command.getJsp();
+                LOGGER.info("Forward to " + viewPage);
                 getServletContext().getRequestDispatcher(viewPage).forward(request, response);
             } else {
+                LOGGER.info("Send redirect to " + next.toString() + " page");
                 response.sendRedirect("do?command=" + next.toString());
             }
         } catch (Exception e) {
+            LOGGER.error("Process request failed", e);
             getServletContext().getRequestDispatcher(CommandType.ERROR.command.getJsp()).forward(request, response);
 
         }
     }
 }
 
-//        RequestContent requestContent = new RequestContent(request);
-//        String commandName = requestContent.getRequestParameter(COMMAND);
-//        LOGGER.info("Command name: " + commandName);
-//        try {
-//            Command command = CommandFactory.defineCommand(commandName);
-//            CommandResult commandResult = command.execute(requestContent);
-//            requestContent.insertAttributes(request);
-//            requestContent.getCookies().forEach(response::addCookie);
-//            if (FORWARD.equals(commandResult.getResponseType())) {
-//                LOGGER.info("Forward to" + commandResult.getPage());
-//                RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(commandResult.getPage());
-//                requestDispatcher.forward(request, response);
-//            } else {
-//                LOGGER.info("Redirect to" + commandResult.getPage());
-//                response.sendRedirect(request.getContextPath() + commandResult.getPage());
-//            }
-//        } catch (CommandException e) {
-//            throw new ServletException(e);
-//        }
 
 
 

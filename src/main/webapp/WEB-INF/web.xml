@@ -61,6 +61,15 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>SessionLocaleFilter</filter-name>
+        <filter-class>by.htp.kirova.task2.java.filter.SessionLocaleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SessionLocaleFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <description>MySQL my_sql_kirova</description>
     <resource-ref>

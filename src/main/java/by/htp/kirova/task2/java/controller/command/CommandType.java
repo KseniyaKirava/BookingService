@@ -1,22 +1,12 @@
-package by.htp.kirova.task2.java.controller;
-
-import by.htp.kirova.task2.java.controller.action.*;
+package by.htp.kirova.task2.java.controller.command;
 
 /**
- * Enum.
+ * Enum of commands.
  *
  * @author Kseniya Kirava
  * @since Oct 10, 2018
  */
 public enum CommandType {
-    /**
-     * Command to show index page.
-     */
-    INDEX {
-        {
-//            this.command = new IndexCommand();
-        }
-    },
 
     /**
      * Command for the user to log in.
@@ -78,8 +68,14 @@ public enum CommandType {
         }
     };
 
+
     public Command command;
 
+    /**
+     * Gets current command object.
+     *
+     * @return current command object.
+     */
     public Command getCurrentCommand() {
         return command;
     }

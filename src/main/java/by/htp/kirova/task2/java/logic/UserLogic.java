@@ -1,6 +1,6 @@
 package by.htp.kirova.task2.java.logic;
 
-import by.htp.kirova.task2.java.controller.action.CommandException;
+import by.htp.kirova.task2.java.controller.command.CommandException;
 import by.htp.kirova.task2.java.entity.User;
 import by.htp.kirova.task2.java.service.ServiceException;
 import by.htp.kirova.task2.java.service.ServiceFactory;

@@ -1,18 +1,36 @@
-package by.htp.kirova.task2.java.controller.action;
+package by.htp.kirova.task2.java.controller.command;
 
-import by.htp.kirova.task2.java.controller.CommandType;
 import by.htp.kirova.task2.java.entity.User;
 import by.htp.kirova.task2.java.logic.UserLogic;
 import by.htp.kirova.task2.java.service.validation.Validator;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+/**
+ * Abstract class implementation for a
+ * particular command type - Login.
+ *
+ * @author Kseniya Kirava
+ * @since Oct 14, 2018
+ */
 public class LoginCommand extends Command {
 
+    /**
+     * Instance of {@code org.apache.log4j.Logger} is used for logging.
+     */
+    private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
+
+    /**
+     * The unique identification name constant.
+     */
     private final static String USERNAME = "username";
+
+    /**
+     * The user's password constant.
+     */
     private final static String PASSWORD = "password";
 
     @Override
@@ -24,18 +42,20 @@ public class LoginCommand extends Command {
                 if (!Validator.checkUsername(username) || !Validator.checkPassword(password)) {
                     return null;
                 }
+                LOGGER.info("Validation by username & password passed");
 
                 User user = null;
                 try {
                     user = UserLogic.checkLogin(username, password);
                 } catch (CommandException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Check login error", e);
                 }
 
                 if (user != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("user", user);
                     session.setMaxInactiveInterval(60);
+                    LOGGER.info("Session for user " + username + " successfully created");
                     return CommandType.PROFILE.command;
                 }
             }

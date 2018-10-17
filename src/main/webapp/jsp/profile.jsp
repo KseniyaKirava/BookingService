@@ -1,12 +1,10 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <%@ include file="../include/head.htm" %>
 <body>
 <div class="container">
     <%@ include file="../include/menu.htm" %>
-
-    <fmt:setBundle basename="message"/>
 
     <form class="form-horizontal" method="post" command="do?command=Profile">
 
@@ -16,18 +14,18 @@
                 <div class="col-md-2">
                     <ul class="nav navbar-nav nav-pills nav-stacked">
                         <li class="active nav-item">
-                            <a class="nav-link" style="font-size: 14pt; color: #949494;"
+                            <a class="nav-link" style="font-size: 12pt; color: #949494;"
                                href="do?command=Profile"><fmt:message key="message.editMyProfile"/></a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 14pt; color: #949494;" href="do?command=Requests">My
-                                requests</a>
+                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Requests">
+                                <fmt:message key="message.myRequests"/></a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 14pt; color: #949494;" href="do?command=Reservations">My
-                                reservations</a>
+                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reservations">
+                                <fmt:message key="message.myReservations"/></a>
                         </li>
 
                     </ul>
@@ -40,8 +38,8 @@
                     <div class="row">
                         <div class="col-md-6 text-left">
                             <div class="form-group">
-                                <div class="col-md-auto">
-                                    <legend>My profile - Edit my profile</legend>
+                                <div class="col-md-auto" style="font-size: 10pt;">
+                                    <legend><fmt:message key="message.myProfileLegend"/></legend>
                                 </div>
                             </div>
                         </div>
@@ -50,9 +48,11 @@
                         <div class="col-md-6 text-right">
                             <div class="form-group">
                                 <div class="col-md-auto">
-                                    <button id="logout" name="logout" class="btn btn-white">LOG OUT</button>
-                                    <button id="deletemyaccount" name="deletemyaccount" class="btn btn-primary">DELETE
-                                        MY ACCOUNT
+                                    <button id="logout" name="logout" class="btn btn-white" style="font-size: 10pt;">
+                                        <fmt:message key="message.logout"/>
+                                    </button>
+                                    <button id="deletemyaccount" name="deletemyaccount" class="btn btn-primary" style="font-size: 10pt;">
+                                        <fmt:message key="message.deleteAccount"/>
                                     </button>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="username">Login</label>
+                                <label class="col-md-auto control-label" for="username"> <fmt:message key="message.login"/></label>
                                 <div class="col-md-auto">
                                     <input id="username" value="${username}" name="username"
                                            type="text" class="form-control input-md"
@@ -77,7 +77,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="email">Email</label>
+                                <label class="col-md-auto control-label" for="email"><fmt:message key="message.email"/></label>
                                 <div class="col-md-auto">
                                     <input id="email" value="${email}" name="email" type="text" placeholder="e-mail"
                                            class="form-control input-md" required="">
@@ -91,7 +91,7 @@
                         <!-- Password input-->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="password">Password</label>
+                                <label class="col-md-auto control-label" for="password"><fmt:message key="message.password"/></label>
                                 <div class="col-md-auto">
                                     <input id="password" value="${password}" name="password" type="password"
                                            placeholder="password" class="form-control input-md" required="">
@@ -105,7 +105,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="first_name">First name</label>
+                                <label class="col-md-auto control-label" for="first_name"><fmt:message key="message.firstName"/></label>
                                 <div class="col-md-auto">
                                     <input id="first_name" value="${first_name}" name="first_name" type="text"
                                            placeholder="first name" class="form-control input-md" required="">
@@ -119,7 +119,7 @@
                         <!-- Text input-->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="last_name">Last name</label>
+                                <label class="col-md-auto control-label" for="last_name"><fmt:message key="message.lastName"/></label>
                                 <div class="col-md-auto">
                                     <input id="last_name" value="${last_name}" name="last_name" type="text"
                                            placeholder="last name" class="form-control input-md" required="">
@@ -133,7 +133,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="middle_name">Middle name</label>
+                                <label class="col-md-auto control-label" for="middle_name"><fmt:message key="message.middleName"/></label>
                                 <div class="col-md-auto">
                                     <input id="middle_name" value="${middle_name}" name="middle_name" type="text"
                                            placeholder="middle name" class="form-control input-md">
@@ -147,7 +147,7 @@
                     <!-- Button (Double) -->
                     <div class="form-group">
                         <div class="col-md-auto text-right">
-                            <button id="saveinfo" name="saveinfo" class="btn btn-primary">SAVE INFO</button>
+                            <button id="saveinfo" name="saveinfo" class="btn btn-primary" style="font-size: 10pt;"><fmt:message key="message.save"/></button>
                         </div>
                     </div>
                 </div>

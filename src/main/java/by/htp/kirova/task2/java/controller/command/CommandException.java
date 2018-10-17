@@ -1,4 +1,4 @@
-package by.htp.kirova.task2.java.controller.action;
+package by.htp.kirova.task2.java.controller.command;
 
 /**
  * Custom exception used to determine exceptions in the Command Layer.

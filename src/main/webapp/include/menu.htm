@@ -1,26 +1,62 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ffffff;"
-     xmlns:c="http://java.sun.com/jsf/core">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+     xmlns:c="http://java.sun.com/jsf/core" xmlns:fmt="http://java.sun.com/jsf/composite">
+    <a class="navbar-brand" style="font-weight: bold; font-size: 20pt;" href="do?command=Profile">BOOKING.</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
+    <fmt:requestEncoding value = "UTF-8" />
+    <c:set var="lang" value="${not empty lang ? lang : pageContext.request.locale}"
+           scope="session"/>
+    <fmt:setLocale value="${lang}"/>
+    <fmt:setBundle basename="message"/>
+
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
             <c:choose>
                 <c:when test="${user==null}">
-            <li class="nav-item">
-                <a class="nav-link" style="font-size: 14pt;" href="do?command=Login">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" style="font-size: 14pt;" href="do?command=SignUp">Sign up</a>
-            </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" style="font-size: 12pt;" href="?sessionLocale=en-Us">
+                            <fmt:message key="message.lang.en"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="font-size: 12pt;" href="?sessionLocale=ru-Ru">
+                            <fmt:message key="message.lang.ru"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="font-size: 12pt;" href="do?command=Login">
+                            <fmt:message key="message.loginPage"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="font-size: 12pt;" href="do?command=SignUp">
+                            <fmt:message key="message.signup"/>
+                        </a>
+                    </li>
                 </c:when>
                 <c:otherwise>
-            <li class="nav-item">
-                <a class="nav-link" style="font-size: 14pt;" href="do?command=Profile">You logged as: ${username}</a>
-            </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="font-size: 12pt;" href="?sessionLocale=en-Us">
+                            <fmt:message key="message.lang.en"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="font-size: 12pt;" href="?sessionLocale=ru-Ru">
+                            <fmt:message key="message.lang.ru"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="font-size: 12pt;" href="do?command=Profile">
+                            <fmt:message key="message.loggedAs"/> ${username}
+                        </a>
+                    </li>
                 </c:otherwise>
             </c:choose>
         </ul>
