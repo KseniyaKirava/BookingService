@@ -31,7 +31,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reservation">
+                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Profile">
                                 <fmt:message key="message.myBills"/></a>
                         </li>
 
@@ -46,7 +46,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="col-md-auto">
-                                    <legend><fmt:message key="message.myBills"/></legend>
+                                    <legend><fmt:message key="message.resultQuery"/></legend>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                             </div>
                         </div>
 
-                        <div class="row justify-content-left align-items-start">
+                        <div class="col-md-12">
                             <!-- Password input-->
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -113,7 +113,7 @@
                             </div>
                         </div>
 
-                        <div class="row justify-content-left align-items-start">
+                        <div class="col-md-12">
                             <!-- Text input-->
                             <div class="col-md-6">
                                 <div class="form-group">

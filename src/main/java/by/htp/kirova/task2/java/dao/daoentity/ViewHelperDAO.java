@@ -29,9 +29,9 @@ public class ViewHelperDAO implements HelperDAO {
     /**
      * Constant string which represents query to create request.
      */
-    private static final String SQL_SHOW_AVIALIABLE_ROOM = "SELECT req.room_capacity, req.checkin_date," +
-            " req.checkout_date, req.room_class, rooms.id, rooms.name, rooms.number, rooms.cost FROM rooms " +
-            "JOIN requests as req " +
+    private static final String SQL_SHOW_AVIALIABLE_ROOM = "SELECT req.room_capacity, req.checkin_date, " +
+            "req.checkout_date, req.room_class, rooms.id, rooms.name, rooms.number, rooms.cost, rooms.room_classes_id " +
+            "FROM rooms JOIN requests as req " +
             "JOIN room_classes as rc WHERE req.id = ? AND rooms.capacity = req.room_capacity " +
             "AND rc.name like req.room_class AND rooms.id = rc.id AND rooms.id NOT IN (SELECT res.rooms_id " +
             "FROM reservations as res WHERE req.checkin_date >= res.checkin_date OR " +
@@ -65,6 +65,7 @@ public class ViewHelperDAO implements HelperDAO {
                 list.add(resultSet.getString("rooms.name"));
                 list.add(resultSet.getString("rooms.number"));
                 list.add(String.valueOf(resultSet.getDouble("rooms.cost")));
+                list.add(String.valueOf(resultSet.getLong("rooms.room_classes_id")));
                 rooms.add(list);
             }
 

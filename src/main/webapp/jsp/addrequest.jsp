@@ -29,7 +29,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reservation">
+                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Profile">
                                 <fmt:message key="message.myBills"/></a>
                         </li>
 

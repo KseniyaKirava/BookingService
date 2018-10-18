@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -57,16 +58,28 @@ public class ReservationCommand extends Command {
             }
             if (!room.isEmpty()) {
                 long reservation_date = DateConverter.getCurrentDateInMiliseconds();
-                long checkin_date = (long) (room.get(1));
-                long checkout_date = (long) (room.get(2));
-                double cost = (double) room.get(7);
+                long checkin_date;
+                long checkout_date;
+                double cost;
+                int capacity;
+                int rooms_id;
+                int room_class;
+                try {
+                    checkin_date = DateConverter.convertDateToMiliseconds((String) room.get(1));
+                    checkout_date = DateConverter.convertDateToMiliseconds((String) room.get(2));
+                    cost = Double.valueOf((String) room.get(7));
+                    capacity = Integer.parseInt((String) room.get(0));
+                    rooms_id = Integer.parseInt((String) room.get(4));
+                    room_class = Integer.parseInt((String) room.get(8));
+                } catch (ParseException e) {
+                    LOGGER.error("Parsing data error", e);
+                    throw new CommandException("Parsing data error", e);
+                }
                 double total_cost = Util.getTotalCost(checkin_date, checkout_date, cost);
-                int rooms_id = (int) room.get(4);
-                int room_class = (int) room.get(3);
                 Reservation reservation = new Reservation(0, reservation_date, checkin_date, checkout_date,
                         total_cost, true, requests_Id, username, rooms_id, room_class);
 
-                boolean isCreated;
+                boolean isCreated = false;
                 try {
                     isCreated = reservationService.create(reservation);
                 } catch (ServiceException e) {
@@ -80,7 +93,7 @@ public class ReservationCommand extends Command {
 
                 String room_name = (String) room.get(5);
                 String room_number = (String) room.get(6);
-                int capacity = (int) room.get(0);
+
 
                 request.setAttribute("room_name", room_name);
                 request.setAttribute("room_number", room_number);

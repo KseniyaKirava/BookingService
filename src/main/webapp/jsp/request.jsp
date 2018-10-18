@@ -33,7 +33,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reservation">
+                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Profile">
                                 <fmt:message key="message.myBills"/></a>
                         </li>
 
@@ -75,7 +75,7 @@
 
                                             <div class="form-group mb-2">
                                                 <label class="col-md-auto control-label" style="font-size:10pt;"
-                                                       for="room_capacity">Capacity</label>
+                                                       for="room_capacity">  <fmt:message key="message.capacity"/></label>
                                                 <div class="col-md-auto">
                                                     <input id="room_capacity" style="font-size:10pt;" readonly
                                                            name="room_capacity" class="form-control input-md"
@@ -84,8 +84,7 @@
                                             </div>
 
                                             <div class="form-group mb-2">
-                                                <label class="col-md-auto control-label" for="checkin_date">Check-In
-                                                    Date</label>
+                                                <label class="col-md-auto control-label" for="checkin_date">  <fmt:message key="message.checkinDate"/></label>
                                                 <div class="col-md-auto">
                                                     <jsp:useBean id="checkInDate" class="java.util.Date"/>
                                                     <jsp:setProperty name="checkInDate" property="time"
@@ -99,8 +98,7 @@
                                             </div>
 
                                             <div class="form-group mb-2">
-                                                <label class="col-md-auto control-label" for="checkout_date">Check-Out
-                                                    Date</label>
+                                                <label class="col-md-auto control-label" for="checkout_date">  <fmt:message key="message.checkoutDate"/></label>
                                                 <div class="col-md-auto">
                                                     <jsp:useBean id="checkOutDate" class="java.util.Date"/>
                                                     <jsp:setProperty name="checkOutDate" property="time"
@@ -115,8 +113,7 @@
 
 
                                             <div class="form-group mb-2">
-                                                <label class="col-md-auto control-label" for="room_class">Room
-                                                    class</label>
+                                                <label class="col-md-auto control-label" for="room_class">  <fmt:message key="message.roomClass"/></label>
                                                 <div class="col-md-auto">
                                                     <input id="room_class" style="font-size:10pt;" readonly
                                                            name="room_class" class="form-control input-md"
