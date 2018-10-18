@@ -3,12 +3,13 @@ package by.htp.kirova.task2.java.dao.daoentity;
 import by.htp.kirova.task2.java.connectionpool.ConnectionPool;
 import by.htp.kirova.task2.java.connectionpool.ConnectionPoolException;
 import by.htp.kirova.task2.java.dao.DAOException;
-import by.htp.kirova.task2.java.dao.DateConverter;
+import by.htp.kirova.task2.java.util.DateConverter;
 import by.htp.kirova.task2.java.dao.HelperDAO;
-import by.htp.kirova.task2.java.entity.User;
 import org.apache.log4j.Logger;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

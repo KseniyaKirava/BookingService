@@ -1,6 +1,6 @@
 package by.htp.kirova.task2.java.controller;
 
-import by.htp.kirova.task2.java.dao.PropertyCreator;
+import by.htp.kirova.task2.java.util.PropertyCreator;
 
 import java.util.Properties;
 

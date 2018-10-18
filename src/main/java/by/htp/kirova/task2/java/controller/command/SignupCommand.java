@@ -85,6 +85,7 @@ public class SignupCommand extends Command {
                     throw new CommandException("Creating user failed", e);
                 }
                 if (isCreateUser && isCreateAuthority) {
+                    LOGGER.info("User and authority successfully created");
                     return CommandType.LOGIN.command;
                 }
             }

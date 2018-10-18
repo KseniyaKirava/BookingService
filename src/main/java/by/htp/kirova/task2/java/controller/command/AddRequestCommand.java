@@ -1,10 +1,9 @@
 package by.htp.kirova.task2.java.controller.command;
 
 
-import by.htp.kirova.task2.java.dao.DateConverter;
+import by.htp.kirova.task2.java.util.DateConverter;
 import by.htp.kirova.task2.java.entity.Request;
 import by.htp.kirova.task2.java.entity.User;
-import by.htp.kirova.task2.java.logic.UserLogic;
 import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.ServiceException;
 import by.htp.kirova.task2.java.service.ServiceFactory;
@@ -15,7 +14,6 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 
 /**
@@ -99,14 +97,18 @@ public class AddRequestCommand extends Command {
                         LOGGER.error("Creating requests is failed", e);
                         throw new CommandException("Creating requests is failed", e);
                     }
+                    if (isCreate) {
+                        long id = requestEntity.getId();
+                        request.getSession().setAttribute("requestId", id);
 
+                        return CommandType.RESERVATION.command;
+                    }
                 }
-                return CommandType.RESERVATION.command;
+
             }
+            return null;
 
         }
-        return null;
-
     }
 }
 

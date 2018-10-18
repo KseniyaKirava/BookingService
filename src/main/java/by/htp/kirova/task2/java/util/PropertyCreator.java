@@ -1,4 +1,4 @@
-package by.htp.kirova.task2.java.dao;
+package by.htp.kirova.task2.java.util;
 
 import org.apache.log4j.Logger;
 

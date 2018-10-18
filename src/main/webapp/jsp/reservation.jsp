@@ -57,96 +57,97 @@
                         <div class="col-md-12">
 
 
-                            <c:forEach items="${reservation}" var="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-auto control-label" for="room_name"> <fmt:message
+                                            key="message.roomName"/></label>
+                                    <div class="col-md-auto">
+                                        <input id="room_name" value="${room_name}" name="room_name"
+                                               type="text" class="form-control input-md"
+                                               required="" readonly>
 
-                                <hr/>
-                                <form class="form-inline" method=POST>
-                                    <div class="row justify-content-left align-items-start">
-                                        <div class="col-md-12">
-
-                                            <div class="row justify-content-left align-items-start">
-                                                <div class="col-md-3">
-                                                    <div class="form-group mb-2">
-                                                        <label class="col-md-auto control-label" for="reservation_date">Reservation
-                                                            Date</label>
-                                                        <div class="col-md-auto">
-                                                            <input id="reservation_date" style="font-size:10pt;"
-                                                                   readonly name="reservation_date"
-                                                                   class="form-control input-md" value="${row[0]}"
-                                                                   title=""/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row justify-content-left align-items-start">
-                                                <div class="col-md-3">
-                                                    <div class="form-group mb-2">
-                                                        <label class="col-md-auto control-label" style="font-size:10pt;"
-                                                               for="room_name">Room name</label>
-                                                        <div class="col-md-auto">
-                                                            <input id="room_name" style="font-size:10pt;" readonly
-                                                                   name="room_name" class="form-control input-md"
-                                                                   value="${row[1]}" title=""/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3">
-                                                    <div class="form-group mb-2">
-                                                        <label class="col-md-auto control-label" for="check_in_date">Check-In
-                                                            Date</label>
-                                                        <div class="col-md-auto">
-                                                            <input id="check_in_date" style="font-size:10pt;" readonly
-                                                                   name="check_in_date" class="form-control input-md"
-                                                                   value="${row[2]}" title=""/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3">
-                                                    <div class="form-group mb-2">
-                                                        <label class="col-md-auto control-label" for="check_out_date">Check-Out
-                                                            Date</label>
-                                                        <div class="col-md-auto">
-                                                            <input id="check_out_date" style="font-size:10pt;" readonly
-                                                                   name="check_out_date" class="form-control input-md"
-                                                                   value="${row[3]}" title=""/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-3">
-                                                    <div class="form-group mb-2">
-                                                        <label class="col-md-auto control-label" for="total_cost">Total
-                                                            cost</label>
-                                                        <div class="col-md-auto">
-                                                            <input id="total_cost" style="font-size:10pt;" readonly
-                                                                   name="total_cost" class="form-control input-md"
-                                                                   value="${row[4]}" title=""/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
                                     </div>
+                                </div>
+                            </div>
 
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-auto control-label" for="room_number"><fmt:message
+                                            key="message.roomNumber"/></label>
+                                    <div class="col-md-auto">
+                                        <input id="room_number" value="${room_number}" name="room_number" type="text"
+                                               placeholder=""
+                                               class="form-control input-md" required="" readonly>
 
-                                </form>
-
-
-                            </c:forEach>
-
-
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="row justify-content-left align-items-start">
+                            <!-- Password input-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-auto control-label" for="capacity"><fmt:message
+                                            key="message.capacity"/></label>
+                                    <div class="col-md-auto">
+                                        <input id="capacity" value="${capacity}" name="capacity" type="text"
+                                               placeholder="" class="form-control input-md" required="" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Text input-->
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-auto control-label" for="check_in"><fmt:message
+                                            key="message.checkinDate"/></label>
+                                    <div class="col-md-auto">
+                                        <input id="check_in" value="${check_in}" name="check_in" type="text"
+                                               placeholder="" class="form-control input-md" required="" readonly>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-left align-items-start">
+                            <!-- Text input-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-auto control-label" for="check_out"><fmt:message
+                                            key="message.checkoutDate"/></label>
+                                    <div class="col-md-auto">
+                                        <input id="check_out" value="${check_out}" name="check_out" type="text"
+                                               placeholder="" class="form-control input-md" required="" readonly>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Text input-->
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-auto control-label" for="total_cost"><fmt:message
+                                            key="message.totalCost"/></label>
+                                    <div class="col-md-auto">
+                                        <input id="total_cost" value="${total_cost}" name="total_cost" type="text"
+                                               placeholder="" class="form-control input-md" readonly>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
-
                 </div>
+
             </div>
-
-
         </fieldset>
     </form>
 </div>

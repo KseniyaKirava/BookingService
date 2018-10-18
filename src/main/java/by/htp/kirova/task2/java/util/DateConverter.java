@@ -1,4 +1,4 @@
-package by.htp.kirova.task2.java.dao;
+package by.htp.kirova.task2.java.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,6 +40,16 @@ public class DateConverter {
         SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         Date date = new Date(miliseconds);
         return df.format(date);
+    }
+
+    /**
+     * Create current Date in milliseconds.
+
+     * @return date in date in miliseconds.
+     */
+    public static Long getCurrentDateInMiliseconds(){
+        Date date = new Date();
+        return date.getTime();
     }
 
 }
