@@ -25,7 +25,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reservation">
-                                <fmt:message key="message.myReservation"/></a>
+                                <fmt:message key="message.myBills"/></a>
                         </li>
 
                     </ul>
@@ -147,7 +147,9 @@
                     <!-- Button (Double) -->
                     <div class="form-group">
                         <div class="col-md-auto text-right">
-                            <button id="saveinfo" name="saveinfo" class="btn btn-primary" style="font-size: 10pt;"><fmt:message key="message.save"/></button>
+                            <button id="saveinfo" name="saveinfo" class="btn btn-primary" style="font-size: 10pt;">
+                                <fmt:message key="message.save"/>
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -66,11 +66,6 @@ public enum CommandType {
         {
             this.command = new AdminCommand();
         }
-    },
-    USER {
-        {
-            this.command = new UserCommand();
-        }
     };
 
 

@@ -33,8 +33,6 @@
 
             <c:choose>
                 <c:when test="${user==null}">
-
-
                     <li class="nav-item">
                         <a class="nav-link" style="font-size: 12pt;" href="do?command=Login">
                             <fmt:message key="message.loginPage"/>
@@ -46,24 +44,22 @@
                         </a>
                     </li>
                 </c:when>
-                <c:otherwise>
-                    <li class="nav-item">
-                        <a class="nav-link" style="font-size: 12pt;" href="do?command=Profile">
-                            <fmt:message key="message.loggedAs"/>
-                            ${username}
-                        </a>
-                    </li>
-                </c:otherwise>
             </c:choose>
             <c:choose>
-                <c:when test="${not empty user and users.username eq 'admin'}">
+                <c:when test="${user!=null and username eq 'admin'}">
                     <li class="nav-item">
                         <a class="nav-link" style="font-size: 12pt;" href="do?command=Admin">
-                            <fmt:message key="message.loggedAsAdmin"/>
                             ${username}
                         </a>
                     </li>
                 </c:when>
+                <c:otherwise>
+                    <li class="nav-item">
+                        <a class="nav-link" style="font-size: 12pt;" href="do?command=Profile">
+                            ${username}
+                        </a>
+                    </li>
+                </c:otherwise>
             </c:choose>
         </ul>
     </div>
