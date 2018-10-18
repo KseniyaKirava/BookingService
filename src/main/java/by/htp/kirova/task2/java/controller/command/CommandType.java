@@ -22,7 +22,7 @@ public enum CommandType {
      */
     SIGNUP {
         {
-           this.command = new SignupCommand();
+            this.command = new SignupCommand();
 
         }
     },
@@ -31,7 +31,7 @@ public enum CommandType {
      */
     ERROR {
         {
-          this.command = new ErrorCommand();
+            this.command = new ErrorCommand();
 
         }
     },
@@ -46,17 +46,17 @@ public enum CommandType {
     /**
      * Command to show user's reservations.
      */
-    MYRESERVATIONS {
+    RESERVATION {
         {
-//            this.command = new MyReservationCommand();
+            this.command = new ReservationCommand();
         }
     },
     /**
      * Command to search info by query.
      */
-    SEARCH {
+    REQUEST {
         {
-//            this.command = new SearchCommand();
+            this.command = new RequestCommand();
         }
     },
     /**
@@ -64,7 +64,12 @@ public enum CommandType {
      */
     ADMIN {
         {
-//            this.command = new AdminCommand();
+            this.command = new AdminCommand();
+        }
+    },
+    USER {
+        {
+            this.command = new UserCommand();
         }
     };
 

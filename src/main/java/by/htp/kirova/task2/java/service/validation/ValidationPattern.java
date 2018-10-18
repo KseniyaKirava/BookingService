@@ -19,7 +19,7 @@ enum ValidationPattern {
     /**
      * User's password pattern.
      */
-    PASSWORD("[\\w\\d]{6,15}"),
+    PASSWORD("[\\w\\d]{5,15}"),
 
     /**
      * User's first name/last name pattern.

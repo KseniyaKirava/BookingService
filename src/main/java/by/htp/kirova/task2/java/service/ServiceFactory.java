@@ -99,4 +99,12 @@ public final class ServiceFactory {
 	public GenericService<User> getUserService() {
 		return userService;
 	}
+
+
+	/**
+	 * Implementation of View Helper Service.
+	 */
+	private final HelperService helperService = new ViewHelperService();
+
+	public HelperService getHelperService(){ return helperService; }
 }

@@ -62,7 +62,6 @@ public class ProfileCommand extends Command {
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = Util.getUserFromSession(request);
-
         if (user == null) {
             return CommandType.LOGIN.command;
         } else {

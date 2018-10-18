@@ -11,7 +11,7 @@ import java.util.List;
 public class UserLogic {
 
 //    public static void main(String[] args) {
-//        String pass = getHashPassword("123456");
+//        String pass = getHashPassword("admin");
 //        System.out.println(pass);
 //
 //    }

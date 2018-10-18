@@ -19,13 +19,13 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Requests">
-                                <fmt:message key="message.myRequests"/></a>
+                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Request">
+                                <fmt:message key="message.myRequest"/></a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reservations">
-                                <fmt:message key="message.myReservations"/></a>
+                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reservation">
+                                <fmt:message key="message.myReservation"/></a>
                         </li>
 
                     </ul>

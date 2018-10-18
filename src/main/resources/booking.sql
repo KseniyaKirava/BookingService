@@ -170,7 +170,151 @@ CREATE TABLE IF NOT EXISTS `kirova`.`rooms_has_facilities` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+USE `kirova` ;
+
+-- -----------------------------------------------------
+-- Placeholder table for view `kirova`.`view1`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `kirova`.`view1` (`id` INT);
+
+-- -----------------------------------------------------
+-- View `kirova`.`view1`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `kirova`.`view1`;
+USE `kirova`;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `kirova`.`users`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `kirova`;
+INSERT INTO `kirova`.`users` (`username`, `email`, `password`, `first_name`, `last_name`, `middle_name`, `enable`) VALUES ('vasia', 'vasia@gmail.com', '923c9d8ac13b5c8c71089e1d321ed605ee36d68df3b12095def054fa48189e4e', 'Василий', 'Каримов', 'Петрович', true);
+INSERT INTO `kirova`.`users` (`username`, `email`, `password`, `first_name`, `last_name`, `middle_name`, `enable`) VALUES ('gromov', 'k.gromov@tut.by', 'b8c0435e852a909d4273cb94361407aef4f545dc6bdfd07fbfa81a398f0df00d', 'Константин', 'Громов', 'Леонидович', true);
+INSERT INTO `kirova`.`users` (`username`, `email`, `password`, `first_name`, `last_name`, `middle_name`, `enable`) VALUES ('jsmith', 'j.smith@outlook.com', '3e4f201d4e20fcf7dc29d977339dfbb54a93b43d9f11e7e526034b0681ec6bf6', 'John', 'Smith', 'K.', true);
+INSERT INTO `kirova`.`users` (`username`, `email`, `password`, `first_name`, `last_name`, `middle_name`, `enable`) VALUES ('jdoe', 'j.doe@gmail.com', '4f1aea101019e2bee28bd5cb8a71dc47e2a033f908f36d5728978ec4d681d6d1', 'Jane', 'Doe', NULL, true);
+INSERT INTO `kirova`.`users` (`username`, `email`, `password`, `first_name`, `last_name`, `middle_name`, `enable`) VALUES ('admin', 'admin@admin.com', '85ba22d78544c72b1c0c6c31d4cb414f0667414db42379e831be7fdba7e4adcc', 'Admin', 'Admin', NULL, true);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `kirova`.`authorities`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `kirova`;
+INSERT INTO `kirova`.`authorities` (`authority`, `username`, `enable`) VALUES ('admin', 'admin', true);
+INSERT INTO `kirova`.`authorities` (`authority`, `username`, `enable`) VALUES ('user', 'vasia', true);
+INSERT INTO `kirova`.`authorities` (`authority`, `username`, `enable`) VALUES ('user', 'gromov', true);
+INSERT INTO `kirova`.`authorities` (`authority`, `username`, `enable`) VALUES ('user', 'jsmith', true);
+INSERT INTO `kirova`.`authorities` (`authority`, `username`, `enable`) VALUES ('user', 'jdoe', true);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `kirova`.`requests`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `kirova`;
+INSERT INTO `kirova`.`requests` (`id`, `room_capacity`, `checkin_date`, `checkout_date`, `room_class`, `enable`, `users_username`) VALUES (1, 8, 1539118800000, 1539550800000, 'president', true, 'vasia');
+INSERT INTO `kirova`.`requests` (`id`, `room_capacity`, `checkin_date`, `checkout_date`, `room_class`, `enable`, `users_username`) VALUES (2, 2, 1539118800000, 1539550800000, 'luxe', true, 'jdoe');
+INSERT INTO `kirova`.`requests` (`id`, `room_capacity`, `checkin_date`, `checkout_date`, `room_class`, `enable`, `users_username`) VALUES (3, 1, 1539723600000, 1540155600000, 'luxe', true, 'vasia');
+INSERT INTO `kirova`.`requests` (`id`, `room_capacity`, `checkin_date`, `checkout_date`, `room_class`, `enable`, `users_username`) VALUES (4, 2, 1540069200000, 1540674000000, 'normal', true, 'jsmith');
+INSERT INTO `kirova`.`requests` (`id`, `room_capacity`, `checkin_date`, `checkout_date`, `room_class`, `enable`, `users_username`) VALUES (5, 3, 1539550800000, 1539723600000, 'luxe', true, 'jsmith');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `kirova`.`room_classes`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `kirova`;
+INSERT INTO `kirova`.`room_classes` (`id`, `name`, `enable`) VALUES (1, 'luxe', true);
+INSERT INTO `kirova`.`room_classes` (`id`, `name`, `enable`) VALUES (2, 'normal', true);
+INSERT INTO `kirova`.`room_classes` (`id`, `name`, `enable`) VALUES (3, 'president', true);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `kirova`.`rooms`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `kirova`;
+INSERT INTO `kirova`.`rooms` (`id`, `name`, `number`, `capacity`, `cost`, `enable`, `room_classes_id`) VALUES (1, 'двуместный номер с терассой', '202', 2, 100.0, true, 1);
+INSERT INTO `kirova`.`rooms` (`id`, `name`, `number`, `capacity`, `cost`, `enable`, `room_classes_id`) VALUES (2, 'двуместный номер с видом на океан', '201', 2, 120.0, true, 1);
+INSERT INTO `kirova`.`rooms` (`id`, `name`, `number`, `capacity`, `cost`, `enable`, `room_classes_id`) VALUES (3, 'одноместный номер', '101', 1, 50.0, true, 2);
+INSERT INTO `kirova`.`rooms` (`id`, `name`, `number`, `capacity`, `cost`, `enable`, `room_classes_id`) VALUES (4, 'двуместный номер с 2 кроватями', '102', 2, 70.0, true, 2);
+INSERT INTO `kirova`.`rooms` (`id`, `name`, `number`, `capacity`, `cost`, `enable`, `room_classes_id`) VALUES (5, 'четырехместный номер', '301', 4, 110.0, true, 2);
+INSERT INTO `kirova`.`rooms` (`id`, `name`, `number`, `capacity`, `cost`, `enable`, `room_classes_id`) VALUES (6, 'двуместный номер с диваном', '203', 3, 85.00, true, 1);
+INSERT INTO `kirova`.`rooms` (`id`, `name`, `number`, `capacity`, `cost`, `enable`, `room_classes_id`) VALUES (7, 'одноместный номер', '302', 1, 60.0, true, 1);
+INSERT INTO `kirova`.`rooms` (`id`, `name`, `number`, `capacity`, `cost`, `enable`, `room_classes_id`) VALUES (8, 'президентский номер с видом на океан', '401', 5, 200.0, true, 3);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `kirova`.`reservations`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `kirova`;
+INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enable`, `requests_id`, `requests_users_username`, `rooms_id`, `rooms_room_classes_id`) VALUES (1, 1539118800000, 1539118800000, 1539550800000, 500.00, true, 2, 'jdoe', 1, 1);
+INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enable`, `requests_id`, `requests_users_username`, `rooms_id`, `rooms_room_classes_id`) VALUES (2, 1539723600000, 1539723600000, 1540155600000, 300.00, true, 3, 'vasia', 7, 1);
+INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enable`, `requests_id`, `requests_users_username`, `rooms_id`, `rooms_room_classes_id`) VALUES (3, 1540069200000, 1540069200000, 1540674000000, 490.00, true, 4, 'jsmith', 4, 2);
+INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enable`, `requests_id`, `requests_users_username`, `rooms_id`, `rooms_room_classes_id`) VALUES (4, 1539550800000, 1539550800000, 1539723600000, 130.00, true, 5, 'jsmith', 6, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `kirova`.`facilities`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `kirova`;
+INSERT INTO `kirova`.`facilities` (`id`, `name`, `enable`) VALUES (1, 'двуспальная кровать', true);
+INSERT INTO `kirova`.`facilities` (`id`, `name`, `enable`) VALUES (2, 'односпальная кровать', true);
+INSERT INTO `kirova`.`facilities` (`id`, `name`, `enable`) VALUES (3, 'фен', true);
+INSERT INTO `kirova`.`facilities` (`id`, `name`, `enable`) VALUES (4, 'утюг', true);
+INSERT INTO `kirova`.`facilities` (`id`, `name`, `enable`) VALUES (5, 'диван', true);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `kirova`.`rooms_has_facilities`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `kirova`;
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (1, 1, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (1, 3, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (1, 4, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (2, 1, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (2, 3, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (2, 4, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (3, 2, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (3, 3, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (4, 2, 2, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (4, 3, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (5, 1, 2, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (5, 2, 2, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (5, 3, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (6, 1, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (6, 3, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (6, 4, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (6, 5, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (7, 2, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (7, 3, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (7, 4, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (8, 1, 2, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (8, 3, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (8, 4, 1, true);
+INSERT INTO `kirova`.`rooms_has_facilities` (`rooms_id`, `facilities_id`, `count`, `enable`) VALUES (8, 5, 1, true);
+
+COMMIT;
+

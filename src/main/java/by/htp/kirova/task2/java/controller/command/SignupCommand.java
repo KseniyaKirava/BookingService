@@ -1,5 +1,6 @@
 package by.htp.kirova.task2.java.controller.command;
 
+import by.htp.kirova.task2.java.entity.Authority;
 import by.htp.kirova.task2.java.entity.User;
 import by.htp.kirova.task2.java.logic.UserLogic;
 import by.htp.kirova.task2.java.service.ServiceException;
@@ -72,15 +73,18 @@ public class SignupCommand extends Command {
             } else {
                 String hashPassword = UserLogic.getHashPassword(password);
                 User user = new User(username, email, hashPassword, first_name, last_name, middle_name, true);
+                Authority authority = new Authority("user", username, true);
                 ServiceFactory serviceFactory = ServiceFactory.getInstance();
-                boolean isCreate = false;
+                boolean isCreateUser = false;
+                boolean isCreateAuthority = false;
                 try {
-                    isCreate = serviceFactory.getUserService().create(user);
+                    isCreateUser = serviceFactory.getUserService().create(user);
+                    isCreateAuthority = serviceFactory.getAuthorityService().create(authority);
                 } catch (ServiceException e) {
                     LOGGER.info("Creating user failed", e);
                     throw new CommandException("Creating user failed", e);
                 }
-                if (isCreate) {
+                if (isCreateUser && isCreateAuthority) {
                     return CommandType.LOGIN.command;
                 }
             }

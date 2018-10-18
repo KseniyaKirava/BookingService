@@ -85,4 +85,12 @@ public final class DAOFactory {
 	private final GenericDAO<User> userDAO = new UserDAOImpl();
 
 	public GenericDAO<User> getUserDAO() {return userDAO;}
+
+
+	/**
+	 * Implementation of View Helper DAO.
+	 */
+	private final HelperDAO helperDAO = new ViewHelperDAO();
+
+	public HelperDAO getHelperDAO(){ return helperDAO; }
 }
