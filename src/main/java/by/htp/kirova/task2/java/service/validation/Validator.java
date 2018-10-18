@@ -111,6 +111,13 @@ public final class Validator {
         return isValid;
     }
 
+
+    public static boolean checkCapacity(int capacity){
+        boolean isValid = capacity > 0 && capacity < 6;
+            LOGGER.info("Capacity is valid: " + isValid);
+        return isValid;
+    }
+
 }
 
 

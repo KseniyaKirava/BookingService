@@ -60,6 +60,14 @@ public enum CommandType {
         }
     },
     /**
+     * Command to add query.
+     */
+    ADDREQUEST {
+        {
+            this.command = new AddRequestCommand();
+        }
+    },
+    /**
      * Command to show admin page.
      */
     ADMIN {

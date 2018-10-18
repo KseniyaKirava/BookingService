@@ -1,6 +1,5 @@
 package by.htp.kirova.task2.java.service;
 
-import by.htp.kirova.task2.java.entity.User;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +14,9 @@ public interface HelperService {
     /**
      * Show user's requests info.
      *
-     * @param user user.
-     * @return List of ArrayList requests info.
+     * @param id unique identifical number of request.
+     * @return List of ArrayList avaliable rooms.
      * @throws ServiceException Layer
      */
-    List<ArrayList> showRequestsByUser(User user) throws ServiceException;
+    ArrayList showAvialiableRooms(Long id) throws ServiceException;
 }

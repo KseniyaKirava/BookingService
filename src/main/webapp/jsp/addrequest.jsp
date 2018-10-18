@@ -6,7 +6,7 @@
 <div class="container">
     <%@ include file="../include/menu.htm" %>
 
-    <form class="form-horizontal" method="post" command="do?command=Profile">
+    <form class="form-horizontal" method="post" command="do?command=Addrequest">
 
         <fieldset>
 
@@ -44,21 +44,7 @@
                         <div class="col-md-6 text-left">
                             <div class="form-group">
                                 <div class="col-md-auto" style="font-size: 10pt;">
-                                    <legend><fmt:message key="message.myProfileLegend"/></legend>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-6 text-right">
-                            <div class="form-group">
-                                <div class="col-md-auto">
-                                    <button id="logout" name="logout" class="btn btn-white" style="font-size: 10pt;">
-                                        <fmt:message key="message.logout"/>
-                                    </button>
-                                    <button id="deletemyaccount" name="deletemyaccount" class="btn btn-primary" style="font-size: 10pt;">
-                                        <fmt:message key="message.deleteAccount"/>
-                                    </button>
+                                    <legend><fmt:message key="message.addrequest"/></legend>
                                 </div>
                             </div>
                         </div>
@@ -70,11 +56,11 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="username"> <fmt:message key="message.login"/></label>
+                                <label class="col-md-auto control-label" for="room_capacity"> <fmt:message key="message.roomcapacity"/></label>
                                 <div class="col-md-auto">
-                                    <input id="username" value="${username}" name="username"
+                                    <input id="room_capacity" value="${room_capacity}" name="room_capacity"
                                            type="text" class="form-control input-md"
-                                           required="" readonly>
+                                           required="">
 
                                 </div>
                             </div>
@@ -82,10 +68,11 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="email"><fmt:message key="message.email"/></label>
+                                <label class="col-md-auto control-label" for="checkin_date"><fmt:message key="message.checkinDate"/></label>
                                 <div class="col-md-auto">
-                                    <input id="email" value="${email}" name="email" type="text" placeholder="e-mail"
+                                    <input id="checkin_date" value="${checkin_date}" name="checkin_date" type="text" placeholder=""
                                            class="form-control input-md" required="">
+                                    <span class="help-block">* 01.01.2018</span>
 
                                 </div>
                             </div>
@@ -96,11 +83,11 @@
                         <!-- Password input-->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="password"><fmt:message key="message.password"/></label>
+                                <label class="col-md-auto control-label" for="checkout_date"><fmt:message key="message.checkoutDate"/></label>
                                 <div class="col-md-auto">
-                                    <input id="password" value="${password}" name="password" type="password"
-                                           placeholder="password" class="form-control input-md" required="">
-                                    <span class="help-block">*min 6 symbols</span>
+                                    <input id="checkout_date" value="${checkout_date}" name="checkout_date" type="text"
+                                           placeholder="" class="form-control input-md" required="">
+                                    <span class="help-block">* 05.01.2018</span>
                                 </div>
                             </div>
                         </div>
@@ -110,39 +97,11 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="first_name"><fmt:message key="message.firstName"/></label>
+                                <label class="col-md-auto control-label" for="room_class"><fmt:message key="message.roomClass"/></label>
                                 <div class="col-md-auto">
-                                    <input id="first_name" value="${first_name}" name="first_name" type="text"
-                                           placeholder="first name" class="form-control input-md" required="">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-left align-items-start">
-                        <!-- Text input-->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-md-auto control-label" for="last_name"><fmt:message key="message.lastName"/></label>
-                                <div class="col-md-auto">
-                                    <input id="last_name" value="${last_name}" name="last_name" type="text"
-                                           placeholder="last name" class="form-control input-md" required="">
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!-- Text input-->
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-md-auto control-label" for="middle_name"><fmt:message key="message.middleName"/></label>
-                                <div class="col-md-auto">
-                                    <input id="middle_name" value="${middle_name}" name="middle_name" type="text"
-                                           placeholder="" class="form-control input-md">
-
+                                    <input id="room_class" value="${room_class}" name="room_class" type="text"
+                                           placeholder="" class="form-control input-md" required="">
+                                    <span class="help-block">normal / luxe / president</span>
                                 </div>
                             </div>
                         </div>
@@ -153,7 +112,7 @@
                     <div class="form-group">
                         <div class="col-md-auto text-right">
                             <button id="saveinfo" name="saveinfo" class="btn btn-primary" style="font-size: 10pt;">
-                                <fmt:message key="message.save"/>
+                                <fmt:message key="message.send"/>
                             </button>
                         </div>
                     </div>

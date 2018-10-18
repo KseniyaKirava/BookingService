@@ -45,22 +45,7 @@
                     </li>
                 </c:when>
             </c:choose>
-            <c:choose>
-                <c:when test="${user!=null and username eq 'admin'}">
-                    <li class="nav-item">
-                        <a class="nav-link" style="font-size: 12pt;" href="do?command=Admin">
-                            ${username}
-                        </a>
-                    </li>
-                </c:when>
-                <c:otherwise>
-                    <li class="nav-item">
-                        <a class="nav-link" style="font-size: 12pt;" href="do?command=Profile">
-                            ${username}
-                        </a>
-                    </li>
-                </c:otherwise>
-            </c:choose>
+
         </ul>
     </div>
 </nav>

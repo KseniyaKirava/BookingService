@@ -1,6 +1,5 @@
 package by.htp.kirova.task2.java.dao;
 
-import by.htp.kirova.task2.java.entity.User;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +14,9 @@ public interface HelperDAO {
     /**
      * Show user's requests info.
      *
-     * @param user user.
-     * @return List of ArrayList requests info.
+     * @param id unique identifical number of request.
+     * @return List of ArrayList avaliable rooms.
      * @throws DAOException Layer
      */
-    List<ArrayList> showRequestsByUser(User user) throws DAOException;
+    ArrayList showAvialiableRooms(Long id) throws DAOException;
 }

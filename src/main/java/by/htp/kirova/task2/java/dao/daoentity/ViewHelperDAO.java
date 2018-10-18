@@ -8,10 +8,7 @@ import by.htp.kirova.task2.java.dao.HelperDAO;
 import by.htp.kirova.task2.java.entity.User;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,58 +28,61 @@ public class ViewHelperDAO implements HelperDAO {
     /**
      * Constant string which represents query to create request.
      */
-    private static final String SQL_SHOW_REQUESTS = "SELECT q.id, q.room_capacity, q.checkin_date, " +
-            "q.checkout_date, q.room_class, r.id FROM requests q LEFT OUTER JOIN reservations r " +
-            "ON q.id=r.requests_id WHERE r.users_username = ?";
+    private static final String SQL_SHOW_AVIALIABLE_ROOM = "SELECT req.room_capacity, req.checkin_date," +
+            " req.checkout_date, req.room_class, rooms.id, rooms.name, rooms.number, rooms.cost FROM rooms " +
+            "JOIN requests as req " +
+            "JOIN room_classes as rc WHERE req.id = ? AND rooms.capacity = req.room_capacity " +
+            "AND rc.name like req.room_class AND rooms.id = rc.id AND rooms.id NOT IN (SELECT res.rooms_id " +
+            "FROM reservations as res WHERE req.checkin_date >= res.checkin_date OR " +
+            "req.checkout_date <= res.checkout_date)";
 
     @Override
-    public List<ArrayList> showRequestsByUser(User user) throws DAOException {
+    public ArrayList showAvialiableRooms(Long id) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-        Statement statement = null;
+        PreparedStatement ps = null;
         ResultSet resultSet;
 
-        String sql = SQL_SHOW_REQUESTS + user.getUsername();
-
-        List<ArrayList> result = new ArrayList<>();
+        List<ArrayList> rooms = new ArrayList<>();
+        ArrayList room = new ArrayList();
 
         try {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
+            ps = connection.prepareStatement(SQL_SHOW_AVIALIABLE_ROOM);
+            ps.setLong(1, id);
+
+            resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 ArrayList<String> list = new ArrayList<>();
-                list.add(String.valueOf(resultSet.getLong("q.id")));
-                list.add(String.valueOf(resultSet.getInt("q.room_capacity")));
-                list.add(DateConverter.convertDateToString(resultSet.getLong("q.checkin_date")));
-                list.add(DateConverter.convertDateToString(resultSet.getLong("q.checkout_date")));
-                list.add(resultSet.getString("q.room_class"));
-
-                String s;
-                s = String.valueOf(resultSet.getLong("r.id"));
-                if (s == null || s.isEmpty()) {
-                    list.add("");
-                }
-                result.add(list);
+                list.add(String.valueOf(resultSet.getInt("req.room_capacity")));
+                list.add(DateConverter.convertDateToString(resultSet.getLong("req.checkin_date")));
+                list.add(DateConverter.convertDateToString(resultSet.getLong("req.checkout_date")));
+                list.add(resultSet.getString("req.room_class"));
+                list.add(String.valueOf(resultSet.getInt("rooms.id")));
+                list.add(resultSet.getString("rooms.name"));
+                list.add(resultSet.getString("rooms.number"));
+                list.add(String.valueOf(resultSet.getDouble("rooms.cost")));
+                rooms.add(list);
             }
 
-        } catch (SQLException e) {
-            LOGGER.error("SQL error: ", e);
+            if (!rooms.isEmpty()) {
+                room = rooms.get(0);
+            }
 
-        } catch (ConnectionPoolException e) {
+        } catch (ConnectionPoolException | SQLException e) {
             LOGGER.error("ConnectionPool error: ", e);
             throw new DAOException("ConnectionPool error: ", e);
 
         } finally {
             if (cp != null && connection != null) {
-                cp.closeStatement(statement);
+                cp.closePreparedStatement(ps);
                 cp.returnConnection(connection);
             }
         }
 
-        return result;
+        return room;
     }
 
 }

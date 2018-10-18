@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Abstract class implementation for a
@@ -65,18 +66,16 @@ public class ProfileCommand extends Command {
         if (user == null) {
             return CommandType.LOGIN.command;
         } else {
-            LOGGER.info("User successfully extracted from session");
-
-            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-            GenericService<User> userService = serviceFactory.getUserService();
-
             String username = user.getUsername();
             String currentPassword = user.getPassword();
             Cookie cookie = new Cookie(username, currentPassword);
             cookie.setMaxAge(60);
             response.addCookie(cookie);
+            LOGGER.info("Cookie successfully added");
 
-            LOGGER.info("Coockie successfully added");
+            ServiceFactory serviceFactory = ServiceFactory.getInstance();
+            GenericService<User> userService = serviceFactory.getUserService();
+
 
             request.setAttribute(USERNAME, user.getUsername());
             request.setAttribute(EMAIL, user.getEmail());
@@ -133,7 +132,7 @@ public class ProfileCommand extends Command {
                         throw new CommandException("Deleting user failed", e);
                     }
                     request.getSession().invalidate();
-                    LOGGER.info("User duccessfully deleted");
+                    LOGGER.info("User successfully deleted");
                     return CommandType.LOGIN.command;
                 }
 
