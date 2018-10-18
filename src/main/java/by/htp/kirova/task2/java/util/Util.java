@@ -1,6 +1,7 @@
 package by.htp.kirova.task2.java.util;
 
 import by.htp.kirova.task2.java.entity.User;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 

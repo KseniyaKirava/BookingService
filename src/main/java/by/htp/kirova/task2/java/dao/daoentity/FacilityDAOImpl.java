@@ -2,10 +2,11 @@ package by.htp.kirova.task2.java.dao.daoentity;
 
 import by.htp.kirova.task2.java.connectionpool.ConnectionPool;
 import by.htp.kirova.task2.java.connectionpool.ConnectionPoolException;
-import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.dao.DAOException;
+import by.htp.kirova.task2.java.dao.GenericDAO;
 import by.htp.kirova.task2.java.entity.Facility;
 import org.apache.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

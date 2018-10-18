@@ -1,7 +1,6 @@
 package by.htp.kirova.task2.java.service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Provides methods for correct View layer.
