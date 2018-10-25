@@ -29,70 +29,51 @@ public class RoomClass implements Serializable {
     /**
      * Access to the Room Class: available or deleted.
      */
-    private boolean enable;
+    private boolean enabled;
 
+    /**
+     * Empty constructor for RoomClass entity class.
+     */
     public RoomClass() {
 
     }
 
-    public RoomClass(long id, String name, boolean enable) {
+    /**
+     * Constructor with all fields of the RoomClass class
+     * as parameters.
+     */
+    public RoomClass(long id, String name, boolean enabled) {
         this.id = id;
         this.name = name;
-        this.enable = enable;
+        this.enabled = enabled;
     }
 
-    /**
-     * Returns room's class unique identification number.
-     *
-     * @return java.lang.Long room's class unique identification number.
-     */
+
     public long getId() {
         return id;
     }
 
-    /**
-     * Returns room's class name.
-     *
-     * @return java.lang.String room's class name.
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Returns access to Room Class
-     *
-     * @return access to Room Class {@code true} if access granted, {@code false} otherwise.
-     */
-    public boolean isEnable() {
-        return enable;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    /**
-     * Sets room's class unique identification number.
-     *
-     * @param id request's room's class unique identification number.
-     */
+
+
+
     public void setId(long id) {
         this.id = id;
     }
 
-    /**
-     * Sets room's class name.
-     *
-     * @param name request's room's class name.
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * Set access to Room Class
-     *
-     * @param enable boolean access state.
-     */
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
@@ -110,7 +91,7 @@ public class RoomClass implements Serializable {
         RoomClass roomClass = (RoomClass) o;
 
         return id == roomClass.id &&
-                enable == roomClass.enable &&
+                enabled == roomClass.enabled &&
                 Objects.equals(name, roomClass.name);
     }
 
@@ -119,7 +100,7 @@ public class RoomClass implements Serializable {
         int result = 1;
         result = (int)(result * 31 + result * id);
         result = result * 31 + (name == null ? 0 : name.hashCode()) * result;
-        result = result * 31 + (enable ? 0 : 1) * result;
+        result = result * 31 + (enabled ? 0 : 1) * result;
         return result;
     }
 
@@ -128,7 +109,7 @@ public class RoomClass implements Serializable {
         return "RoomClass{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", enable=" + enable +
+                ", enabled=" + enabled +
                 '}';
     }
 }

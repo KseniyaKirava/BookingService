@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Abstract class implementation for a
@@ -35,7 +36,7 @@ public class ReservationCommand extends Command {
         User user = Util.getUserFromSession(request);
 
         if (user == null) {
-            return CommandType.LOGIN.command;
+            return CommandType.LOGIN.getCurrentCommand();
         } else {
             String username = user.getUsername();
             String currentPassword = user.getPassword();
@@ -48,7 +49,7 @@ public class ReservationCommand extends Command {
             GenericService<Reservation> reservationService = serviceFactory.getReservationService();
 
             long requests_Id = (long) (request.getSession().getAttribute("requestId"));
-            ArrayList room = new ArrayList();
+            List room = new ArrayList();
             try {
                 room = serviceFactory.getHelperService().showAvialiableRooms(requests_Id);
             } catch (ServiceException e) {

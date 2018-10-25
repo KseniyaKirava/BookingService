@@ -1,6 +1,6 @@
 package by.htp.kirova.task2.java.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides methods for correct View layer.
@@ -17,5 +17,5 @@ public interface HelperService {
      * @return List of ArrayList avaliable rooms.
      * @throws ServiceException Layer
      */
-    ArrayList showAvialiableRooms(Long id) throws ServiceException;
+    List showAvialiableRooms(Long id) throws ServiceException;
 }

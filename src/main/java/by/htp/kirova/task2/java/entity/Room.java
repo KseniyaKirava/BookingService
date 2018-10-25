@@ -45,7 +45,7 @@ public class Room implements Serializable {
     /**
      * Access to the Room: available or deleted.
      */
-    private boolean enable;
+    private boolean enabled;
 
     /**
      * The unique identification number of room class.
@@ -53,141 +53,83 @@ public class Room implements Serializable {
     private long room_classes_id;
 
 
+    /**
+     * Empty constructor for Room entity class.
+     */
     public Room() {
     }
 
-    public Room(long id, String name, String number, int capacity, double cost, boolean enable, long room_classes_id) {
+
+    /**
+     * Constructor with all fields of the Room class
+     * as parameters.
+     */
+
+    public Room(long id, String name, String number, int capacity, double cost, boolean enabled, long room_classes_id) {
         this.id = id;
         this.name = name;
         this.number = number;
         this.capacity = capacity;
         this.cost = cost;
-        this.enable = enable;
+        this.enabled = enabled;
         this.room_classes_id = room_classes_id;
     }
 
-    /**
-     * Returns room unique identification number.
-     *
-     * @return java.lang.Long room unique identification number.
-     */
+
     public long getId() {
         return id;
     }
 
-    /**
-     * Returns room name.
-     *
-     * @return java.lang.String room unique identification name.
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Returns physical number of room.
-     *
-     * @return java.lang.String physical number of room.
-     */
     public String getNumber() {
         return number;
     }
 
-    /**
-     * Returns the room capacity (person).
-     *
-     * @return room capacity (person).
-     */
     public int getCapacity() {
         return capacity;
     }
 
-    /**
-     *  Returns cost of stay per day.
-     *
-     * @return java.lang.Double cost of stay per day.
-     */
     public double getCost() {
         return cost;
     }
 
-    /**
-     * Returns access to Room
-     *
-     * @return access to Room {@code true} if access granted, {@code false} otherwise.
-     */
-    public boolean isEnable() {
-        return enable;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    /**
-     * Returns room's class unique identification number.
-     *
-     * @return java.lang.Long room's class unique identification number.
-     */
     public long getRoom_classes_id() {
         return room_classes_id;
     }
 
-    /**
-     * Sets room's unique identification number.
-     *
-     * @param id room's unique identification number.
-     */
+
+
     public void setId(long id) {
         this.id = id;
     }
 
-    /**
-     * Sets room's name.
-     *
-     * @param name room's name.
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * Sets physical number of room.
-     *
-     * @param number physical number of room.
-     */
     public void setNumber(String number) {
         this.number = number;
     }
 
-    /**
-     * Sets the room capacity (person).
-     *
-     * @param capacity the room capacity (person).
-     */
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
-    /**
-     * Sets cost of stay per day.
-     *
-     * @param cost cost of stay per day.
-     */
     public void setCost(double cost) {
         this.cost = cost;
     }
 
-    /**
-     * Set access to Room
-     *
-     * @param enable boolean access state.
-     */
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    /**
-     * Sets room's class unique identification number.
-     *
-     * @param room_classes_id room's class unique identification number.
-     */
     public void setRoom_classes_id(long room_classes_id) {
         this.room_classes_id = room_classes_id;
     }
@@ -209,7 +151,7 @@ public class Room implements Serializable {
         return id == room.id &&
                 capacity == room.capacity &&
                 Double.compare(room.cost, cost) == 0 &&
-                enable == room.enable &&
+                enabled == room.enabled &&
                 room_classes_id == room.room_classes_id &&
                 Objects.equals(name, room.name) &&
                 Objects.equals(number, room.number);
@@ -224,7 +166,7 @@ public class Room implements Serializable {
         result = result * 31 + (number == null ? 0 : number.hashCode()) * result;
         result = result * 31 + result * capacity;
         result = (int) (result * 31 + result * cost);
-        result = result * 31 + (enable ? 0 : 1) * result;
+        result = result * 31 + (enabled ? 0 : 1) * result;
         result = (int)(result * 31 + result * room_classes_id);
 
         return result;
@@ -238,7 +180,7 @@ public class Room implements Serializable {
                 ", number='" + number + '\'' +
                 ", capacity=" + capacity +
                 ", cost=" + cost +
-                ", enable=" + enable +
+                ", enabled=" + enabled +
                 ", room_classes_id=" + room_classes_id +
                 '}';
     }

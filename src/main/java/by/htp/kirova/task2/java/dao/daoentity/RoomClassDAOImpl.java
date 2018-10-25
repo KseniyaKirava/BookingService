@@ -29,7 +29,7 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
     /**
      * Constant string which represents query to create room class.
      */
-    private static final String SQL_CREATE_ROOM_CLASS = "INSERT INTO room_classes(name, enable) VALUES (?, ?)";
+    private static final String SQL_CREATE_ROOM_CLASS = "INSERT INTO room_classes(name, enabled) VALUES (?, ?)";
 
     /**
      * Constant string which represents query to select all room classes.
@@ -39,7 +39,7 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
     /**
      * Constant string which represents query to update room class.
      */
-    private static final String SQL_UPDATE_ROOM_CLASS = "UPDATE room_classes SET name=?, enable= ? WHERE id= ?";
+    private static final String SQL_UPDATE_ROOM_CLASS = "UPDATE room_classes SET name=?, enabled= ? WHERE id= ?";
 
     /**
      * Constant string which represents query to delete room class.
@@ -59,7 +59,7 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
 
             ps = connection.prepareStatement(SQL_CREATE_ROOM_CLASS, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, roomClass.getName());
-            ps.setBoolean(2, roomClass.isEnable());
+            ps.setBoolean(2, roomClass.isEnabled());
 
             int result = ps.executeUpdate();
             int id = 0;
@@ -119,7 +119,7 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
                 list.add(new RoomClass(
                         resultSet.getLong("id"),
                         resultSet.getString("name"),
-                        resultSet.getBoolean("enable")
+                        resultSet.getBoolean("enabled")
                 ));
             }
 
@@ -151,7 +151,7 @@ public class RoomClassDAOImpl implements GenericDAO<RoomClass> {
 
             ps = connection.prepareStatement(SQL_UPDATE_ROOM_CLASS);
             ps.setString(1, roomClass.getName());
-            ps.setBoolean(2, roomClass.isEnable());
+            ps.setBoolean(2, roomClass.isEnabled());
             ps.setLong(3, roomClass.getId());
 
             result = ps.executeUpdate();

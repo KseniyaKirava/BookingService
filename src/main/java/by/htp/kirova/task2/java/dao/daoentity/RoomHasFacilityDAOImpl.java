@@ -31,7 +31,7 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
      * Constant string which represents query to create relations between facility and room.
      */
     private static final String SQL_CREATE_RHF = "INSERT INTO rooms_has_facilities(rooms_id, facilities_id," +
-            " count, enable) VALUES (?, ?, ?, ?)";
+            " count, enabled) VALUES (?, ?, ?, ?)";
 
     /**
      * Constant string which represents query to select all relations between facility and room.
@@ -41,7 +41,7 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
     /**
      * Constant string which represents query to update relations between facility and room.
      */
-    private static final String SQL_UPDATE_RHF = "UPDATE rooms_has_facilities SET count= ?, enable= ? " +
+    private static final String SQL_UPDATE_RHF = "UPDATE rooms_has_facilities SET count= ?, enabled= ? " +
             "WHERE rooms_id= ? AND facilities_id= ?";
 
     /**
@@ -67,7 +67,7 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
             ps.setLong(1, roomHasFacility.getRooms_id());
             ps.setLong(2, roomHasFacility.getFacilities_id());
             ps.setInt(3, roomHasFacility.getCount());
-            ps.setBoolean(4, roomHasFacility.isEnable());
+            ps.setBoolean(4, roomHasFacility.isEnabled());
 
             result = ps.executeUpdate();
 
@@ -114,7 +114,7 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
                         resultSet.getLong("rooms_id"),
                         resultSet.getLong("facilities_id"),
                         resultSet.getInt("count"),
-                        resultSet.getBoolean("enable")
+                        resultSet.getBoolean("enabled")
                 ));
             }
 
@@ -146,7 +146,7 @@ public class RoomHasFacilityDAOImpl implements GenericDAO<RoomHasFacility> {
 
             ps = connection.prepareStatement(SQL_UPDATE_RHF);
             ps.setInt(1, roomHasFacility.getCount());
-            ps.setBoolean(2, roomHasFacility.isEnable());
+            ps.setBoolean(2, roomHasFacility.isEnabled());
             ps.setLong(3, roomHasFacility.getRooms_id());
             ps.setLong(4, roomHasFacility.getFacilities_id());
 

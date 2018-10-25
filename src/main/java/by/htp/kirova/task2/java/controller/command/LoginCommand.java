@@ -57,9 +57,9 @@ public class LoginCommand extends Command {
                     session.setMaxInactiveInterval(60);
                     LOGGER.info("Session for user " + username + " successfully created");
                     if (username.equals("admin")) {
-                        return CommandType.ADMIN.command;
+                        return CommandType.ADMIN.getCurrentCommand();
                     }
-                    return CommandType.PROFILE.command;
+                    return CommandType.PROFILE.getCurrentCommand();
                 }
             }
 

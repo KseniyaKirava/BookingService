@@ -1,6 +1,6 @@
 package by.htp.kirova.task2.java.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Provides DAO methods for correct View layer.
@@ -17,5 +17,5 @@ public interface HelperDAO {
      * @return List of ArrayList avaliable rooms.
      * @throws DAOException Layer
      */
-    ArrayList showAvialiableRooms(Long id) throws DAOException;
+    List showAvialiableRooms(Long id) throws DAOException;
 }

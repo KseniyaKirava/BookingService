@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
 
 /**
  * Abstract class implementation for a
@@ -63,7 +64,7 @@ public class ProfileCommand extends Command {
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = Util.getUserFromSession(request);
         if (user == null) {
-            return CommandType.LOGIN.command;
+            return CommandType.LOGIN.getCurrentCommand();
         } else {
             String username = user.getUsername();
             String currentPassword = user.getPassword();
@@ -116,23 +117,24 @@ public class ProfileCommand extends Command {
                     if (isUpdate) {
                         LOGGER.info("Data from form successfully saved");
                     }
-                    return CommandType.PROFILE.command;
+                    return CommandType.PROFILE.getCurrentCommand();
                 }
                 if (request.getParameter("logout") != null) {
                     request.getSession().invalidate();
-                    return CommandType.LOGIN.command;
+                    return CommandType.LOGIN.getCurrentCommand();
                 }
                 if (request.getParameter("deletemyaccount") != null) {
-                    user.setEnable(false);
-                    try {
-                        userService.update(user);
-                    } catch (ServiceException e) {
-                        LOGGER.info("Deleting user failed", e);
-                        throw new CommandException("Deleting user failed", e);
-                    }
-                    request.getSession().invalidate();
-                    LOGGER.info("User successfully deleted");
-                    return CommandType.LOGIN.command;
+                        user.setEnabled(false);
+                        try {
+                            userService.update(user);
+                        } catch (ServiceException e) {
+                            LOGGER.info("Deleting user failed", e);
+                            throw new CommandException("Deleting user failed", e);
+                        }
+                        request.getSession().invalidate();
+                        LOGGER.info("User successfully deleted");
+                        return CommandType.LOGIN.getCurrentCommand();
+
                 }
 
             }

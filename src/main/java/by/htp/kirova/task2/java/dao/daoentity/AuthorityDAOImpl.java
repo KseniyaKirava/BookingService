@@ -30,7 +30,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
     /**
      * Constant string which represents query to create authority.
      */
-    private static final String SQL_CREATE_AUTHORITY = "INSERT INTO authorities(authority, username, enable) " +
+    private static final String SQL_CREATE_AUTHORITY = "INSERT INTO authorities(authority, username, enabled) " +
             "VALUES (?, ?, ?)";
 
     /**
@@ -41,7 +41,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
     /**
      * Constant string which represents query to update authority.
      */
-    private static final String SQL_UPDATE_AUTHORITY = "UPDATE authorities SET authority= ? , enable= ? " +
+    private static final String SQL_UPDATE_AUTHORITY = "UPDATE authorities SET authority= ? , enabled= ? " +
             "WHERE username= ?";
 
     /**
@@ -65,7 +65,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
             ps = connection.prepareStatement(SQL_CREATE_AUTHORITY);
             ps.setString(1, authority.getAuthority());
             ps.setString(2, authority.getUsername());
-            ps.setBoolean(3, authority.isEnable());
+            ps.setBoolean(3, authority.isEnabled());
 
             result = ps.executeUpdate();
 
@@ -112,7 +112,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
                 list.add(new Authority(
                         resultSet.getString("authority"),
                         resultSet.getString("username"),
-                        resultSet.getBoolean("enable")
+                        resultSet.getBoolean("enabled")
                 ));
             }
 
@@ -144,7 +144,7 @@ public class AuthorityDAOImpl implements GenericDAO<Authority> {
 
             ps = connection.prepareStatement(SQL_UPDATE_AUTHORITY);
             ps.setString(1, authority.getAuthority());
-            ps.setBoolean(2, authority.isEnable());
+            ps.setBoolean(2, authority.isEnabled());
             ps.setString(3, authority.getUsername());
 
             result = ps.executeUpdate();

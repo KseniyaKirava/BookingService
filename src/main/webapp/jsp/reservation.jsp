@@ -105,7 +105,12 @@
                                     <label class="col-md-auto control-label" for="check_in"><fmt:message
                                             key="message.checkinDate"/></label>
                                     <div class="col-md-auto">
-                                        <input id="check_in" value="${check_in}" name="check_in" type="text"
+                                        <jsp:useBean id="checkIn" class="java.util.Date"/>
+                                        <jsp:setProperty name="checkIn" property="time"
+                                                         value="${check_in}"/>
+                                        <fmt:formatDate var="formatted_check_in"
+                                                        pattern="dd.MM.YYYY" value="${checkIn}"/>
+                                        <input id="check_in" value="${formatted_check_in}" name="check_in" type="text"
                                                placeholder="" class="form-control input-md" required="" readonly>
 
                                     </div>
@@ -120,7 +125,12 @@
                                     <label class="col-md-auto control-label" for="check_out"><fmt:message
                                             key="message.checkoutDate"/></label>
                                     <div class="col-md-auto">
-                                        <input id="check_out" value="${check_out}" name="check_out" type="text"
+                                        <jsp:useBean id="checkOut" class="java.util.Date"/>
+                                        <jsp:setProperty name="checkOut" property="time"
+                                                         value="${check_out}"/>
+                                        <fmt:formatDate var="formatted_check_out"
+                                                        pattern="dd.MM.YYYY" value="${checkOut}"/>
+                                        <input id="check_out" value="${formatted_check_out}" name="check_out" type="text"
                                                placeholder="" class="form-control input-md" required="" readonly>
 
                                     </div>

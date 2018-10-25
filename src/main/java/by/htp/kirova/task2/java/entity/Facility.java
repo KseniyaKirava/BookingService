@@ -29,69 +29,49 @@ public class Facility implements Serializable {
     /**
      * Access to the Facility: available or deleted.
      */
-    private boolean enable;
+    private boolean enabled;
 
+    /**
+     * Empty constructor for Facility entity class.
+     */
     public Facility() {
     }
 
-    public Facility(long id, String name, boolean enable) {
+    /**
+     * Constructor with all fields of the Facility class
+     * as parameters.
+     */
+    public Facility(long id, String name, boolean enabled) {
         this.id = id;
         this.name = name;
-        this.enable = enable;
+        this.enabled = enabled;
     }
 
-    /**
-     * Returns facility unique identification number.
-     *
-     * @return java.lang.Long facility unique identification number.
-     */
+
     public long getId() {
         return id;
     }
 
-    /**
-     * Returns facilities name.
-     *
-     * @return java.lang.String facilities name.
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Returns access to Facility
-     *
-     * @return access to Facility {@code true} if access granted, {@code false} otherwise.
-     */
-    public boolean isEnable() {
-        return enable;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    /**
-     * Sets facility's unique identification number.
-     *
-     * @param id facility unique identification number.
-     */
+
+
     public void setId(long id) {
         this.id = id;
     }
 
-    /**
-     * Sets facility'sname.
-     *
-     * @param name facility name.
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * Set access to Facility
-     *
-     * @param enable boolean access state.
-     */
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
@@ -109,7 +89,7 @@ public class Facility implements Serializable {
         Facility facility = (Facility) o;
 
         return id == facility.id &&
-                enable == facility.enable &&
+                enabled == facility.enabled &&
                 Objects.equals(name, facility.name);
     }
 
@@ -118,7 +98,7 @@ public class Facility implements Serializable {
         int result = 1;
         result = (int) (result * 31 + result * id);
         result = result * 31 + (name == null ? 0 : name.hashCode()) * result;
-        result = result * 31 + (enable ? 0 : 1) * result;
+        result = result * 31 + (enabled ? 0 : 1) * result;
         return result;
     }
 
@@ -127,7 +107,7 @@ public class Facility implements Serializable {
         return "Facility{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", enable=" + enable +
+                ", enabled=" + enabled +
                 '}';
     }
 }

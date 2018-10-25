@@ -25,11 +25,11 @@ public class ViewHelperService implements HelperService {
 
 
     @Override
-    public ArrayList showAvialiableRooms(Long id) throws ServiceException {
+    public List showAvialiableRooms(Long id) throws ServiceException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         HelperDAO helperDAO = daoFactory.getHelperDAO();
 
-        ArrayList result = null;
+        List result = null;
 
         try {
             result = helperDAO.showAvialiableRooms(id);

@@ -29,7 +29,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
     /**
      * Constant string which represents query to create facility.
      */
-    private static final String SQL_CREATE_FACILITY = "INSERT INTO facilities(id, name, enable) VALUES (?, ?, ?)";
+    private static final String SQL_CREATE_FACILITY = "INSERT INTO facilities(id, name, enabled) VALUES (?, ?, ?)";
 
     /**
      * Constant string which represents query to select all facilities.
@@ -39,7 +39,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
     /**
      * Constant string which represents query to update facility.
      */
-    private static final String SQL_UPDATE_FACILITY = "UPDATE facilities SET name= ?, enable=? WHERE id = ?";
+    private static final String SQL_UPDATE_FACILITY = "UPDATE facilities SET name= ?, enabled=? WHERE id = ?";
 
 
     /**
@@ -60,7 +60,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
 
             ps = connection.prepareStatement(SQL_CREATE_FACILITY, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, facility.getName());
-            ps.setBoolean(2, facility.isEnable());
+            ps.setBoolean(2, facility.isEnabled());
 
             int result = ps.executeUpdate();
             int id = 0;
@@ -119,7 +119,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
                 list.add(new Facility(
                         resultSet.getLong("id"),
                         resultSet.getString("name"),
-                        resultSet.getBoolean("enable")
+                        resultSet.getBoolean("enabled")
                 ));
             }
 
@@ -152,7 +152,7 @@ public class FacilityDAOImpl implements GenericDAO<Facility> {
 
             ps = connection.prepareStatement(SQL_UPDATE_FACILITY);
             ps.setString(1, facility.getName());
-            ps.setBoolean(2, facility.isEnable());
+            ps.setBoolean(2, facility.isEnabled());
             ps.setLong(3, facility.getId());
 
             result = ps.executeUpdate();

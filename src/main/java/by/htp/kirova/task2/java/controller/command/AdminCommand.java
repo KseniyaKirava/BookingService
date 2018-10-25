@@ -54,9 +54,9 @@ public class AdminCommand extends Command {
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = Util.getUserFromSession(request);
         if (user == null) {
-            return CommandType.LOGIN.command;
+            return CommandType.LOGIN.getCurrentCommand();
         } else if (!user.getUsername().equals("admin")) {
-            return CommandType.PROFILE.command;
+            return CommandType.PROFILE.getCurrentCommand();
         }
         if (request.getMethod().equalsIgnoreCase("post")) {
             String username = user.getUsername();
@@ -108,7 +108,7 @@ public class AdminCommand extends Command {
         GenericService<User> userService = serviceFactory.getUserService();
 
         try {
-            request.setAttribute("users", userService.read("WHERE enable = true"));
+            request.setAttribute("users", userService.read("WHERE enabled = true"));
         } catch (ServiceException e) {
             LOGGER.error("Reading user's data oe role failed");
             throw new CommandException(e);

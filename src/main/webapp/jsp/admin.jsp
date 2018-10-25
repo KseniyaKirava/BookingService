@@ -89,8 +89,8 @@
                                            value="${users.middle_name}" title=""/>
                                 </div>
                                 <div class="form-group mb-2">
-                                    <input id="residence_country" class="form-control input-md" name="enable"
-                                           value="${users.enable}" title=""/>
+                                    <input id="residence_country" class="form-control input-md" name="enabled"
+                                           value="${users.enabled}" title=""/>
                                 </div>
 
 

@@ -29,7 +29,7 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
      * Constant string which represents query to create reservation.
      */
     private static final String SQL_CREATE_RESERVATION = "INSERT INTO reservations(reservation_date, " +
-            "checkin_date, checkout_date, total_cost, enable, requests_id, requests_users_username, rooms_id, " +
+            "checkin_date, checkout_date, total_cost, enabled, requests_id, requests_users_username, rooms_id, " +
             "rooms_room_classes_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     /**
@@ -41,7 +41,7 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
      * Constant string which represents query to update reservation.
      */
     private static final String SQL_UPDATE_RESERVATION = "UPDATE reservations SET reservation_date= ?," +
-            "checkin_date= ?,checkout_date= ?,total_cost= ?, enable= ?, requests_id= ?," +
+            "checkin_date= ?,checkout_date= ?,total_cost= ?, enabled= ?, requests_id= ?," +
             "requests_users_username= ?,rooms_id= ?,rooms_room_classes_id= ? WHERE id= ?";
 
     /**
@@ -65,7 +65,7 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
             ps.setLong(2, reservation.getCheckin_date());
             ps.setLong(3, reservation.getCheckout_date());
             ps.setDouble(4, reservation.getTotal_cost());
-            ps.setBoolean(5, reservation.isEnable());
+            ps.setBoolean(5, reservation.isEnabled());
             ps.setLong(6,  reservation.getRequests_id());
             ps.setString(7, reservation.getRequests_users_username());
             ps.setLong(8,  reservation.getRooms_id());
@@ -131,7 +131,7 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
                         resultSet.getLong("checkin_date"),
                         resultSet.getLong("checkout_date"),
                         resultSet.getDouble("total_cost"),
-                        resultSet.getBoolean("enable"),
+                        resultSet.getBoolean("enabled"),
                         resultSet.getLong("requests_id"),
                         resultSet.getString("requests_users_username"),
                         resultSet.getLong("rooms_id"),
@@ -170,7 +170,7 @@ public class ReservationDAOImpl implements GenericDAO<Reservation> {
             ps.setLong(2, reservation.getCheckin_date());
             ps.setLong(3, reservation.getCheckout_date());
             ps.setDouble(4, reservation.getTotal_cost());
-            ps.setBoolean(5, reservation.isEnable());
+            ps.setBoolean(5, reservation.isEnabled());
             ps.setLong(6,  reservation.getRequests_id());
             ps.setString(7, reservation.getRequests_users_username());
             ps.setLong(8,  reservation.getRooms_id());

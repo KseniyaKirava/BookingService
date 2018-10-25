@@ -90,7 +90,7 @@
                                                     <jsp:setProperty name="checkInDate" property="time"
                                                                      value="${row.checkin_date}"/>
                                                     <fmt:formatDate var="formattedCheckInDate"
-                                                                    pattern="yyyy-MM-dd" value="${checkInDate}"/>
+                                                                    pattern="dd.MM.YYYY" value="${checkInDate}"/>
                                                     <input id="checkin_date" style="font-size:10pt;" readonly
                                                            name="checkin_date" class="form-control input-md"
                                                            value="${formattedCheckInDate}" title=""/>
@@ -104,7 +104,7 @@
                                                     <jsp:setProperty name="checkOutDate" property="time"
                                                                      value="${row.checkout_date}"/>
                                                     <fmt:formatDate var="formattedCheckOutDate"
-                                                                    pattern="yyyy-MM-dd" value="${checkOutDate}"/>
+                                                                    pattern="dd.MM.YYYY" value="${checkOutDate}"/>
                                                     <input id="checkout_date" style="font-size:10pt;" readonly
                                                            name="checkout_date" class="form-control input-md"
                                                            title="" value="${formattedCheckOutDate}"/>
@@ -122,11 +122,11 @@
                                             </div>
 
                                             <div class="form-group mb-2">
-                                                <label class="col-md-auto control-label" for="enable"></label>
+                                                <label class="col-md-auto control-label" for="enabled"></label>
                                                 <div class="col-md-auto">
-                                                    <input id="enable" style="font-size:10pt;" readonly type="hidden"
-                                                           name="enable" class="form-control input-md"
-                                                           value="${row.enable}" title=""/>
+                                                    <input id="enabled" style="font-size:10pt;" readonly type="hidden"
+                                                           name="enabled" class="form-control input-md"
+                                                           value="${row.enabled}" title=""/>
                                                 </div>
                                             </div>
 

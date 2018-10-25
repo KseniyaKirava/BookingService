@@ -47,7 +47,7 @@ public class Reservation implements Serializable {
     /**
      * Access to the Reservation: available or deleted.
      */
-    private boolean enable;
+    private boolean enabled;
 
     /**
      * The unique identification number of requests.
@@ -69,200 +69,113 @@ public class Reservation implements Serializable {
      */
     private long rooms_room_classes_id;
 
+
+    /**
+     * Empty constructor for Reservation entity class.
+     */
     public Reservation() {
     }
 
+
+    /**
+     * Constructor with all fields of the Reservation class
+     * as parameters.
+     */
     public Reservation(long id, long reservation_date, long checkin_date, long checkout_date,
-                       double total_cost, boolean enable, long requests_id, String requests_users_username,
+                       double total_cost, boolean enabled, long requests_id, String requests_users_username,
                        long rooms_id, long rooms_room_classes_id) {
         this.id = id;
         this.reservation_date = reservation_date;
         this.checkin_date = checkin_date;
         this.checkout_date = checkout_date;
         this.total_cost = total_cost;
-        this.enable = enable;
+        this.enabled = enabled;
         this.requests_id = requests_id;
         this.requests_users_username = requests_users_username;
         this.rooms_id = rooms_id;
         this.rooms_room_classes_id = rooms_room_classes_id;
     }
 
-    /**
-     * Returns reservation unique identification number.
-     *
-     * @return java.lang.Long reservation unique identification number.
-     */
+
     public long getId() {
         return id;
     }
 
-    /**
-     * Returns date of reservation.
-     *
-     * @return java.lang.Long date of reservation.
-     */
     public long getReservation_date() {
         return reservation_date;
     }
 
-    /**
-     * Returns date of check in.
-     *
-     * @return java.lang.Long date of check in.
-     */
     public long getCheckin_date() {
         return checkin_date;
     }
 
-    /**
-     * Returns date of check out.
-     *
-     * @return java.lang.Long date of check out.
-     */
     public long getCheckout_date() {
         return checkout_date;
     }
 
-    /**
-     *  Returns total cost of stay.
-     *
-     * @return java.lang.Double total cost of stay.
-     */
     public double getTotal_cost() {
         return total_cost;
     }
 
-    /**
-     * Returns access to Reservation
-     *
-     * @return access to Reservation {@code true} if access granted, {@code false} otherwise.
-     */
-    public boolean isEnable() {
-        return enable;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    /**
-     * Returns request unique identification number.
-     *
-     * @return java.lang.Long request unique identification number.
-     */
     public long getRequests_id() {
         return requests_id;
     }
 
-    /**
-     * Returns user unique identification name.
-     *
-     * @return java.lang.String user unique identification name.
-     */
     public String getRequests_users_username() {
         return requests_users_username;
     }
 
-    /**
-     * Returns room unique identification number.
-     *
-     * @return java.lang.Long room unique identification number.
-     */
     public long getRooms_id() {
         return rooms_id;
     }
 
-    /**
-     * Returns room class unique identification number.
-     *
-     * @return java.lang.Long room class unique identification number.
-     */
     public long getRooms_room_classes_id() {
         return rooms_room_classes_id;
     }
 
-    /**
-     * Sets reservation's unique identification number.
-     *
-     * @param id reservation's unique identification number.
-     */
+
+
+
     public void setId(long id) {
         this.id = id;
     }
 
-    /**
-     * Sets date of reservation.
-     *
-     * @param reservation_date date of reservation.
-     */
     public void setReservation_date(long reservation_date) {
         this.reservation_date = reservation_date;
     }
 
-    /**
-     * Sets date of check in.
-     *
-     * @param checkin_date date of check in.
-     */
     public void setCheckin_date(long checkin_date) {
         this.checkin_date = checkin_date;
     }
 
-    /**
-     * Sets date of check out.
-     *
-     * @param checkout_date date of check out.
-     */
     public void setCheckout_date(long checkout_date) {
         this.checkout_date = checkout_date;
     }
 
-    /**
-     * Sets total cost of stay.
-     *
-     * @param total_cost total cost of stay.
-     */
     public void setTotal_cost(double total_cost) {
         this.total_cost = total_cost;
     }
 
-    /**
-     * Set access to Resrvation
-     *
-     * @param enable boolean access state.
-     */
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    /**
-     * Sets request's unique identification number.
-     *
-     * @param requests_id request's unique identification number.
-     */
     public void setRequests_id(long requests_id) {
         this.requests_id = requests_id;
     }
 
-    /**
-     * Sets user's unique identification name.
-     *
-     * @param requests_users_username user's unique identification name.
-     */
     public void setRequests_users_username(String requests_users_username) {
         this.requests_users_username = requests_users_username;
     }
 
-    /**
-     * Sets room's unique identification number.
-     *
-     * @param rooms_id room's unique identification number.
-     */
     public void setRooms_id(long rooms_id) {
         this.rooms_id = rooms_id;
     }
 
-    /**
-     * Sets room class unique identification number.
-     *
-     * @param rooms_room_classes_id room class unique identification number.
-     */
     public void setRooms_room_classes_id(long rooms_room_classes_id) {
         this.rooms_room_classes_id = rooms_room_classes_id;
     }
@@ -286,7 +199,7 @@ public class Reservation implements Serializable {
                 checkin_date == that.checkin_date &&
                 checkout_date == that.checkout_date &&
                 Double.compare(that.total_cost, total_cost) == 0 &&
-                enable == that.enable &&
+                enabled == that.enabled &&
                 requests_id == that.requests_id &&
                 rooms_id == that.rooms_id &&
                 rooms_room_classes_id == that.rooms_room_classes_id &&
@@ -302,7 +215,7 @@ public class Reservation implements Serializable {
         result = (int) (result * 31 + result * checkin_date);
         result = (int) (result * 31 + result * checkout_date);
         result = (int) (result * 31 + result * total_cost);
-        result = result * 31 + (enable ? 0 : 1) * result;
+        result = result * 31 + (enabled ? 0 : 1) * result;
         result = (int) (result * 31 + result * requests_id);
         result = result * 31 + (requests_users_username == null ? 0 : requests_users_username.hashCode()) * result;
         result = (int) (result * 31 + result * rooms_id);
@@ -319,7 +232,7 @@ public class Reservation implements Serializable {
                 ", checkin_date=" + checkin_date +
                 ", checkout_date=" + checkout_date +
                 ", total_cost=" + total_cost +
-                ", enable=" + enable +
+                ", enabled=" + enabled +
                 ", requests_id=" + requests_id +
                 ", requests_users_username='" + requests_users_username + '\'' +
                 ", rooms_id=" + rooms_id +

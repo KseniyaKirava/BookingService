@@ -30,70 +30,50 @@ public class Authority implements Serializable {
     /**
      * Access to the Authority: available or deleted.
      */
-    private boolean enable;
+    private boolean enabled;
 
-
+    /**
+     * Empty constructor for Authority entity class.
+     */
     public Authority() {
     }
 
-    public Authority(String authority, String username, boolean enable) {
+    /**
+     * Constructor with all fields of the Authority class
+     * as parameters.
+     */
+    public Authority(String authority, String username, boolean enabled) {
         this.authority = authority;
         this.username = username;
-        this.enable = enable;
+        this.enabled = enabled;
     }
 
-    /**
-     * Returns authority name.
-     *
-     * @return java.lang.String authority name.
-     */
+
     public String getAuthority() {
         return authority;
     }
 
-    /**
-     * Returns user's unique identification name.
-     *
-     * @return java.lang.String user's unique identification name.
-     */
     public String getUsername() {
         return username;
     }
 
-    /**
-     * Returns access to Authority
-     *
-     * @return access to Authority {@code true} if access granted, {@code false} otherwise.
-     */
-    public boolean isEnable() {
-        return enable;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    /**
-     * Sets authority name.
-     *
-     * @param authority authority name.
-     */
+
+
+
     public void setAuthority(String authority) {
         this.authority = authority;
     }
 
-    /**
-     * Sets user's unique identification name.
-     *
-     * @param username user's unique identification name.
-     */
     public void setUsername(String username) {
         this.username = username;
     }
 
-    /**
-     * Set access to Authority
-     *
-     * @param enable boolean access state.
-     */
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
@@ -110,7 +90,7 @@ public class Authority implements Serializable {
 
         Authority authority = (Authority) o;
 
-        return enable == authority.enable &&
+        return enabled == authority.enabled &&
                 Objects.equals(authority, authority.authority) &&
                 Objects.equals(username, authority.username);
     }
@@ -121,7 +101,7 @@ public class Authority implements Serializable {
 
         result = result * 31 + (authority == null ? 0 : authority.hashCode()) * result;
         result = result * 31 + (username == null ? 0 : username.hashCode()) * result;
-        result = result * 31 + (enable ? 0 : 1) * result;
+        result = result * 31 + (enabled ? 0 : 1) * result;
 
         return result;
     }
@@ -131,7 +111,7 @@ public class Authority implements Serializable {
         return "Authority{" +
                 "authority='" + authority + '\'' +
                 ", username='" + username + '\'' +
-                ", enable=" + enable +
+                ", enabled=" + enabled +
                 '}';
     }
 }

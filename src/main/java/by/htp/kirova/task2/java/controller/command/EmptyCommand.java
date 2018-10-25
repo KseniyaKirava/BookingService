@@ -15,6 +15,6 @@ public class EmptyCommand extends Command{
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        return CommandType.LOGIN.command;
+        return CommandType.LOGIN.getCurrentCommand();
     }
 }

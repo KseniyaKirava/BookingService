@@ -46,149 +46,89 @@ public class Request implements Serializable {
     /**
      * Access to the Request: available or deleted.
      */
-    private boolean enable;
+    private boolean enabled;
 
     /**
      * The unique identification name of user.
      */
     private String users_username;
 
-
+    /**
+     * Empty constructor for Request entity class.
+     */
     public Request() {
     }
 
-    public Request(long id, int room_capacity, long checkin_date, long checkout_date, String room_class, boolean enable, String users_username) {
+    /**
+     * Constructor with all fields of the Request class
+     * as parameters.
+     */
+    public Request(long id, int room_capacity, long checkin_date, long checkout_date, String room_class, boolean enabled, String users_username) {
         this.id = id;
         this.room_capacity = room_capacity;
         this.checkin_date = checkin_date;
         this.checkout_date = checkout_date;
         this.room_class = room_class;
-        this.enable = enable;
+        this.enabled = enabled;
         this.users_username = users_username;
     }
 
-    /**
-     * Returns request unique identification number.
-     *
-     * @return java.lang.Long request unique identification number.
-     */
+
     public long getId() {
         return id;
     }
 
-    /**
-     * Returns the room capacity (person).
-     *
-     * @return room capacity (person).
-     */
     public int getRoom_capacity() {
         return room_capacity;
     }
 
-    /**
-     * Returns date of check in.
-     *
-     * @return java.lang.Long date of check in.
-     */
     public long getCheckin_date() {
         return checkin_date;
     }
 
-    /**
-     * Returns date of check out.
-     *
-     * @return java.lang.Long date of check out.
-     */
     public long getCheckout_date() {
         return checkout_date;
     }
 
-    /**
-     * Returns room class name.
-     *
-     * @return java.lang.String room class name.
-     */
     public String getRoom_class() {
         return room_class;
     }
 
-    /**
-     * Returns access to Request
-     *
-     * @return access to Request {@code true} if access granted, {@code false} otherwise.
-     */
-    public boolean isEnable() {
-        return enable;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    /**
-     * Returns user unique identification name.
-     *
-     * @return java.lang.String user unique identification name.
-     */
     public String getUsers_username() {
         return users_username;
     }
 
-    /**
-     * Sets request's unique identification number.
-     *
-     * @param id request's unique identification number.
-     */
+
+
+
     public void setId(long id) {
         this.id = id;
     }
 
-    /**
-     * Sets the room capacity (person).
-     *
-     * @param room_capacity the room capacity (person).
-     */
     public void setRoom_capacity(int room_capacity) {
         this.room_capacity = room_capacity;
     }
 
-    /**
-     * Sets date of check in.
-     *
-     * @param checkin_date date of check in.
-     */
     public void setCheckin_date(long checkin_date) {
         this.checkin_date = checkin_date;
     }
 
-    /**
-     * Sets date of check out.
-     *
-     * @param checkout_date date of check out.
-     */
     public void setCheckout_date(long checkout_date) {
         this.checkout_date = checkout_date;
     }
 
-    /**
-     * Sets room class name.
-     *
-     * @param room_class room class name.
-     */
     public void setRoom_class(String room_class) {
         this.room_class = room_class;
     }
 
-    /**
-     * Set access to Request
-     *
-     * @param enable boolean access state.
-     */
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    /**
-     * Sets user's unique identification name.
-     *
-     * @param users_username user's unique identification name.
-     */
     public void setUsers_username(String users_username) {
         this.users_username = users_username;
     }
@@ -211,7 +151,7 @@ public class Request implements Serializable {
                 room_capacity == request.room_capacity &&
                 checkin_date == request.checkin_date &&
                 checkout_date == request.checkout_date &&
-                enable == request.enable &&
+                enabled == request.enabled &&
                 Objects.equals(room_class, request.room_class) &&
                 Objects.equals(users_username, request.users_username);
     }
@@ -225,7 +165,7 @@ public class Request implements Serializable {
         result = (int) (result * 31 + result * checkin_date);
         result = (int) (result * 31 + result * checkout_date);
         result = result * 31 + (room_class == null ? 0 : room_class.hashCode()) * result;
-        result = result * 31 + (enable ? 0 : 1) * result;
+        result = result * 31 + (enabled ? 0 : 1) * result;
         result = result * 31 + (users_username == null ? 0 : users_username.hashCode()) * result;
 
         return result;
@@ -239,7 +179,7 @@ public class Request implements Serializable {
                 ", checkin_date=" + checkin_date +
                 ", checkout_date=" + checkout_date +
                 ", room_class='" + room_class + '\'' +
-                ", enable=" + enable +
+                ", enabled=" + enabled +
                 ", users_username='" + users_username + '\'' +
                 '}';
     }

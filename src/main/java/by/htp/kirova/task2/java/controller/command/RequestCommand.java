@@ -33,7 +33,7 @@ public class RequestCommand extends Command {
         User user = Util.getUserFromSession(request);
 
         if (user == null) {
-            return CommandType.LOGIN.command;
+            return CommandType.LOGIN.getCurrentCommand();
         } else {
 
             String username = user.getUsername();
@@ -48,7 +48,7 @@ public class RequestCommand extends Command {
             List<Request> requests;
 
             try {
-                requests = requestService.read("WHERE users_username like '" + username + "' AND enable = true");
+                requests = requestService.read("WHERE users_username like '" + username + "' AND enabled = true");
                 request.getSession().setAttribute("requests", requests);
             } catch (ServiceException e) {
                 throw new CommandException(e);

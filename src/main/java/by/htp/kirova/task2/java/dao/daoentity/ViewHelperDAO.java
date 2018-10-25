@@ -6,7 +6,6 @@ import by.htp.kirova.task2.java.dao.DAOException;
 import by.htp.kirova.task2.java.dao.HelperDAO;
 import by.htp.kirova.task2.java.util.DateConverter;
 import org.apache.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,21 +31,25 @@ public class ViewHelperDAO implements HelperDAO {
      */
     private static final String SQL_SHOW_AVIALIABLE_ROOM = "SELECT req.room_capacity, req.checkin_date, " +
             "req.checkout_date, req.room_class, rooms.id, rooms.name, rooms.number, rooms.cost, rooms.room_classes_id " +
-            "FROM rooms JOIN requests as req " +
-            "JOIN room_classes as rc WHERE req.id = ? AND rooms.capacity = req.room_capacity " +
-            "AND rc.name like req.room_class AND rooms.id = rc.id AND rooms.id NOT IN (SELECT res.rooms_id " +
-            "FROM reservations as res WHERE req.checkin_date >= res.checkin_date OR " +
-            "req.checkout_date <= res.checkout_date)";
+            "FROM rooms " +
+            "JOIN requests as req " +
+            "JOIN room_classes as rc " +
+            "WHERE req.id = ? AND rooms.capacity = req.room_capacity AND rc.name like req.room_class " +
+            "AND rooms.id = rc.id AND rooms.id " +
+            "NOT IN " +
+            "(SELECT res.rooms_id " +
+            "FROM reservations as res " +
+            "WHERE req.checkin_date >= res.checkin_date OR req.checkout_date <= res.checkout_date)";
 
     @Override
-    public ArrayList showAvialiableRooms(Long id) throws DAOException {
+    public List showAvialiableRooms(Long id) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet resultSet;
 
         List<ArrayList> rooms = new ArrayList<>();
-        ArrayList room = new ArrayList();
+        List room = new ArrayList();
 
         try {
             cp = ConnectionPool.getInstance();

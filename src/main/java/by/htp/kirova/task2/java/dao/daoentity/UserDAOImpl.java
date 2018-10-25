@@ -31,7 +31,7 @@ public class UserDAOImpl implements GenericDAO<User> {
      * Constant string which represents query to create user.
      */
     private static final String SQL_CREATE_USER = "INSERT INTO users(username, email, password, first_name, " +
-            "last_name, middle_name, enable) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            "last_name, middle_name, enabled) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     /**
      * Constant string which represents query to select all users.
@@ -42,7 +42,7 @@ public class UserDAOImpl implements GenericDAO<User> {
      * Constant string which represents query to update user.
      */
     private static final String SQL_UPDATE_USER = "UPDATE users SET email= ?, password= ?, first_name= ?," +
-            " last_name= ?, middle_name= ?, enable= ? WHERE username= ? ";
+            " last_name= ?, middle_name= ?, enabled= ? WHERE username= ? ";
 
     /**
      * Constant string which represents query to delete user.
@@ -69,7 +69,7 @@ public class UserDAOImpl implements GenericDAO<User> {
             ps.setString(4, user.getFirst_name());
             ps.setString(5, user.getLast_name());
             ps.setString(6, user.getMiddle_name());
-            ps.setBoolean(7, user.isEnable());
+            ps.setBoolean(7, user.isEnabled());
 
             result = ps.executeUpdate();
 
@@ -119,7 +119,7 @@ public class UserDAOImpl implements GenericDAO<User> {
                         resultSet.getString("first_name"),
                         resultSet.getString("last_name"),
                         resultSet.getString("middle_name"),
-                        resultSet.getBoolean("enable")
+                        resultSet.getBoolean("enabled")
                 ));
             }
 
@@ -155,7 +155,7 @@ public class UserDAOImpl implements GenericDAO<User> {
             ps.setString(3, user.getFirst_name());
             ps.setString(4, user.getLast_name());
             ps.setString(5, user.getMiddle_name());
-            ps.setBoolean(6, user.isEnable());
+            ps.setBoolean(6, user.isEnabled());
             ps.setString(7, user.getUsername());
 
             result = ps.executeUpdate();

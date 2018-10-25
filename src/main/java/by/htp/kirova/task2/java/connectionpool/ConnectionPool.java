@@ -34,12 +34,12 @@ public final class ConnectionPool {
     /**
      * Queue of available connections.
      */
-    private LinkedBlockingQueue<Connection> availableConnections;
+    private BlockingQueue<Connection> availableConnections;
 
     /**
      * Queue of using connections.
      */
-    private LinkedBlockingQueue<Connection> usingConnections;
+    private BlockingQueue<Connection> usingConnections;
 
 
     /**

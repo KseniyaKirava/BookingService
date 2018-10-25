@@ -28,7 +28,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
      * Constant string which represents query to create request.
      */
     private static final String SQL_CREATE_REQUEST = "INSERT INTO requests(room_capacity, checkin_date," +
-            " checkout_date, room_class, enable, users_username) VALUES (?, ?, ?, ?, ?, ?)";
+            " checkout_date, room_class, enabled, users_username) VALUES (?, ?, ?, ?, ?, ?)";
 
     /**
      * Constant string which represents query to select all requests.
@@ -39,7 +39,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
      * Constant string which represents query to update request.
      */
     private static final String SQL_UPDATE_REQUEST = "UPDATE requests SET room_capacity= ?," +
-            "checkin_date= ?,checkout_date= ?,room_class= ?, enable= ?, users_username=? WHERE id= ?";
+            "checkin_date= ?,checkout_date= ?,room_class= ?, enabled= ?, users_username=? WHERE id= ?";
 
     /**
      * Constant string which represents query to delete request.
@@ -62,7 +62,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
             ps.setLong(2, request.getCheckin_date());
             ps.setLong(3, request.getCheckout_date());
             ps.setString(4, request.getRoom_class());
-            ps.setBoolean(5,request.isEnable());
+            ps.setBoolean(5,request.isEnabled());
             ps.setString(6, request.getUsers_username());
 
             int result = ps.executeUpdate();
@@ -125,7 +125,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
                         resultSet.getLong("checkin_date"),
                         resultSet.getLong("checkout_date"),
                         resultSet.getString("room_class"),
-                        resultSet.getBoolean("enable"),
+                        resultSet.getBoolean("enabled"),
                         resultSet.getString("users_username")
                 ));
             }
@@ -161,7 +161,7 @@ public class RequestDAOImpl implements GenericDAO<Request> {
             ps.setLong(2, request.getCheckin_date());
             ps.setLong(3, request.getCheckout_date());
             ps.setString(4, request.getRoom_class());
-            ps.setBoolean(5,request.isEnable());
+            ps.setBoolean(5,request.isEnabled());
             ps.setString(6, request.getUsers_username());
             ps.setLong(7, request.getId());
 

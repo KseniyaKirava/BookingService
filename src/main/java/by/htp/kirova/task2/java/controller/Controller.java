@@ -24,11 +24,15 @@ public class Controller extends HttpServlet {
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
     private static final Logger LOGGER = Logger.getLogger(Controller.class);
+
     /**
      * The unique serial version identifier.
      */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Object of action factory class.
+     */
     private ActionFactory actionFactory;
 
     @Override
