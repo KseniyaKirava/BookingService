@@ -6,7 +6,7 @@
 <div class="container">
     <%@ include file="../include/menu.htm" %>
 
-    <form class="form-horizontal" method="post" command="do?command=Addrequest">
+    <form class="form-horizontal" method="post" command="do?command=AddRequest">
 
         <fieldset>
 
@@ -59,7 +59,7 @@
                                 <label class="col-md-auto control-label" for="room_capacity"> <fmt:message key="message.roomcapacity"/></label>
                                 <div class="col-md-auto">
                                     <input id="room_capacity" value="${room_capacity}" name="room_capacity"
-                                           type="text" class="form-control input-md"
+                                           type="number" min="1" max="5" class="form-control input-md"
                                            required="">
 
                                 </div>
@@ -71,7 +71,8 @@
                                 <label class="col-md-auto control-label" for="checkin_date"><fmt:message key="message.checkinDate"/></label>
                                 <div class="col-md-auto">
                                     <input id="checkin_date" value="${checkin_date}" name="checkin_date" type="text" placeholder=""
-                                           class="form-control input-md" required="">
+                                           pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})"
+                                           class="form-control input-md" required="" minlength="10" maxlength="10">
                                     <span class="help-block">* 01.01.2018</span>
 
                                 </div>
@@ -86,7 +87,8 @@
                                 <label class="col-md-auto control-label" for="checkout_date"><fmt:message key="message.checkoutDate"/></label>
                                 <div class="col-md-auto">
                                     <input id="checkout_date" value="${checkout_date}" name="checkout_date" type="text"
-                                           placeholder="" class="form-control input-md" required="">
+                                           pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})"
+                                           placeholder="" class="form-control input-md" required="" minlength="10" maxlength="10">
                                     <span class="help-block">* 05.01.2018</span>
                                 </div>
                             </div>
@@ -100,6 +102,7 @@
                                 <label class="col-md-auto control-label" for="room_class"><fmt:message key="message.roomClass"/></label>
                                 <div class="col-md-auto">
                                     <input id="room_class" value="${room_class}" name="room_class" type="text"
+                                           minlength="4" maxlength="10" pattern="[[A-Za-zА-Яа-яЁё\d, -]+]{4,10}"
                                            placeholder="" class="form-control input-md" required="">
                                     <span class="help-block">normal / luxe / president</span>
                                 </div>

@@ -21,7 +21,8 @@
                     <div class="form-group">
                         <label class="col-md-auto control-label" for="username"><fmt:message key="message.login"/></label>
                         <div class="col-md-auto">
-                            <input id="username" value="" name="username" type="text"
+                            <input id="username" value="" name="username" type="text" minlength="4" maxlength="15"
+                                   pattern="[[A-Za-z._-]+]{4,15}"
                                    placeholder="login" class="form-control input-md" required="">
                         </div>
                     </div>
@@ -32,7 +33,8 @@
                     <div class="form-group">
                         <label class="col-md-auto control-label" for="email"><fmt:message key="message.email"/></label>
                         <div class="col-md-auto">
-                            <input id="email" value="" name="email" type="text" placeholder="e-mail"
+                            <input id="email" value="" name="email" type="email" placeholder="e-mail" minlength="6"
+                                   maxlength="50" pattern="([\w\.\w]+)@(\w+\.)([a-z]{2,4})"
                                    class="form-control input-md" required="">
 
                         </div>
@@ -46,9 +48,10 @@
                     <div class="form-group">
                         <label class="col-md-auto control-label" for="password"><fmt:message key="message.password"/></label>
                         <div class="col-md-auto">
-                            <input id="password" value="" name="password" type="password"
+                            <input id="password" value="" name="password" type="password"  minlength="5" maxlength="15"
+                                   pattern="[\w\d]{5,15}"
                                    placeholder="password" class="form-control input-md" required="">
-                            <span class="help-block">* a-zA-Z0-9 (min 6 symbols)</span>
+                            <span class="help-block">* a-zA-Z0-9 (min 5 symbols)</span>
                         </div>
                     </div>
                 </div>
@@ -58,6 +61,7 @@
                         <label class="col-md-auto control-label" for="first_name"><fmt:message key="message.firstName"/></label>
                         <div class="col-md-auto">
                             <input id="first_name" value="" name="first_name" type="text" placeholder="first name"
+                                   minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
                                    class="form-control input-md" required="">
 
                         </div>
@@ -72,6 +76,7 @@
                         <label class="col-md-auto control-label" for="last_name"><fmt:message key="message.lastName"/></label>
                         <div class="col-md-auto">
                             <input id="last_name" value="" name="last_name" type="text" placeholder="last name"
+                                   minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
                                    class="form-control input-md" required="">
 
                         </div>
@@ -82,7 +87,8 @@
                     <div class="form-group">
                         <label class="col-md-auto control-label" for="middle_name"><fmt:message key="message.middleName"/></label>
                         <div class="col-md-auto">
-                            <input id="middle_name" value="" name="middle_name" type="text"
+                            <input id="middle_name" value="" name="middle_name" type="text" maxlength="15"
+                                   pattern="[[A-Za-zА-Яа-яЁё.-]+]{0,15}"
                                    placeholder="middle name" class="form-control input-md">
 
                         </div>

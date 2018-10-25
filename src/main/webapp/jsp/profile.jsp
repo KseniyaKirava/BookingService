@@ -56,7 +56,8 @@
                                     <button id="logout" name="logout" class="btn btn-white" style="font-size: 10pt;">
                                         <fmt:message key="message.logout"/>
                                     </button>
-                                    <button id="deletemyaccount" name="deletemyaccount" class="btn btn-primary" style="font-size: 10pt;">
+                                    <button onclick="myFunction()" id="deletemyaccount" name="deletemyaccount"
+                                            class="btn btn-primary" style="font-size: 10pt;">
                                         <fmt:message key="message.deleteAccount"/>
                                     </button>
                                 </div>
@@ -70,9 +71,11 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="username"> <fmt:message key="message.login"/></label>
+                                <label class="col-md-auto control-label" for="username"> <fmt:message
+                                        key="message.login"/></label>
                                 <div class="col-md-auto">
                                     <input id="username" value="${username}" name="username"
+                                           minlength="4" maxlength="15" pattern="[[A-Za-z._-]+]{4,15}"
                                            type="text" class="form-control input-md"
                                            required="" readonly>
 
@@ -82,9 +85,11 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="email"><fmt:message key="message.email"/></label>
+                                <label class="col-md-auto control-label" for="email"><fmt:message
+                                        key="message.email"/></label>
                                 <div class="col-md-auto">
                                     <input id="email" value="${email}" name="email" type="text" placeholder="e-mail"
+                                           minlength="6" maxlength="50" pattern="([\w\.\w]+)@(\w+\.)([a-z]{2,4})"
                                            class="form-control input-md" required="">
 
                                 </div>
@@ -96,9 +101,11 @@
                         <!-- Password input-->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="password"><fmt:message key="message.password"/></label>
+                                <label class="col-md-auto control-label" for="password"><fmt:message
+                                        key="message.password"/></label>
                                 <div class="col-md-auto">
                                     <input id="password" value="${password}" name="password" type="password"
+                                           minlength="5" maxlength="15" pattern="[\w\d]{5,15}"
                                            placeholder="password" class="form-control input-md" required="">
                                     <span class="help-block">*min 6 symbols</span>
                                 </div>
@@ -110,9 +117,11 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="first_name"><fmt:message key="message.firstName"/></label>
+                                <label class="col-md-auto control-label" for="first_name"><fmt:message
+                                        key="message.firstName"/></label>
                                 <div class="col-md-auto">
                                     <input id="first_name" value="${first_name}" name="first_name" type="text"
+                                           minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
                                            placeholder="first name" class="form-control input-md" required="">
 
                                 </div>
@@ -124,9 +133,11 @@
                         <!-- Text input-->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="last_name"><fmt:message key="message.lastName"/></label>
+                                <label class="col-md-auto control-label" for="last_name"><fmt:message
+                                        key="message.lastName"/></label>
                                 <div class="col-md-auto">
                                     <input id="last_name" value="${last_name}" name="last_name" type="text"
+                                           minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
                                            placeholder="last name" class="form-control input-md" required="">
 
                                 </div>
@@ -138,9 +149,11 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="middle_name"><fmt:message key="message.middleName"/></label>
+                                <label class="col-md-auto control-label" for="middle_name"><fmt:message
+                                        key="message.middleName"/></label>
                                 <div class="col-md-auto">
                                     <input id="middle_name" value="${middle_name}" name="middle_name" type="text"
+                                           maxlength="15" pattern="[[A-Za-zА-Яа-яЁё.-]+]{0,15}"
                                            placeholder="" class="form-control input-md">
 
                                 </div>
@@ -158,6 +171,9 @@
                         </div>
                     </div>
                 </div>
+
+
+
 
             </div>
         </fieldset>

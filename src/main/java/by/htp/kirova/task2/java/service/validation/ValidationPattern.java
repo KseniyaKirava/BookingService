@@ -14,7 +14,7 @@ enum ValidationPattern {
     /**
      * User's full name pattern.
      */
-    USERNAME("[[A-Za-z._-]+]{2,15}"),
+    USERNAME("[[A-Za-z._-]+]{4,15}"),
 
     /**
      * User's password pattern.

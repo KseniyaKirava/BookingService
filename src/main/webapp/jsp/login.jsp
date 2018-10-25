@@ -19,6 +19,7 @@
                 <div class="col-md-4">
 
                     <input id="username" value="vasia" name="username" type="text" placeholder="login"
+                           minlength="4" maxlength="15" pattern="[[A-Za-z._-]+]{4,15}"
                            class="form-control input-md" required="">
                 </div>
             </div>
@@ -28,6 +29,7 @@
                 <label class="col-md-4 control-label" for="password"><fmt:message key="message.password"/></label>
                 <div class="col-md-4">
                     <input id="password" value="123456" name="password" type="password" placeholder="password"
+                           minlength="5" maxlength="15" pattern="[\w\d]{5,15}"
                            class="form-control input-md" required="">
                     <span class="help-block"><fmt:message key="message.passwordDescription"/></span>
                 </div>

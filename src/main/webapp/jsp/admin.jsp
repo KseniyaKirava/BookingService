@@ -63,34 +63,40 @@
 
                                 <div class="form-group mb-2">
                                     <input id="username" class="form-control input-md" readonly name="username"
-                                           value="${users.username}" title=""/>
+                                           minlength="4" maxlength="15" pattern="[[A-Za-z._-]+]{4,15}"
+                                           value="${users.username}" title="" />
                                 </div>
                                 <div class="form-group mb-2">
-                                    <input id="email" class="form-control input-md" name="email"
-                                           value="${users.email}" title=""/>
+                                    <input id="email" class="form-control input-md" name="email" maxlength="50"
+                                           pattern="([\w\.\w]+)@(\w+\.)([a-z]{2,4})" minlength="6"
+                                           value="${users.email}" title="" required=""/>
                                 </div>
                                 <div class="form-group mb-2">
                                     <input id="password" class="form-control input-md" name="password"
-                                           value="${users.password}" title=""/>
+                                           minlength="5" maxlength="15" pattern="[\w\d]{5,15}"
+                                           value="${users.password}" title="" required=""/>
                                 </div>
 
                                 <div class="form-group mb-2">
                                     <input id="first_name" class="form-control input-md" name="first_name"
-                                           value="${users.first_name}" title=""/>
+                                           minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
+                                           value="${users.first_name}" title="" required=""/>
                                 </div>
 
                                 <div class="form-group mb-2">
                                     <input id="last_name" class="form-control input-md" name="last_name"
-                                           value="${users.last_name}" title=""/>
+                                           minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
+                                           value="${users.last_name}" title="" required=""/>
                                 </div>
 
                                 <div class="form-group mb-2">
                                     <input id="middle_name" class="form-control input-md" name="middle_name"
+                                           maxlength="15" pattern="[[A-Za-zА-Яа-яЁё.-]+]{0,15}"
                                            value="${users.middle_name}" title=""/>
                                 </div>
                                 <div class="form-group mb-2">
                                     <input id="residence_country" class="form-control input-md" name="enabled"
-                                           value="${users.enabled}" title=""/>
+                                           value="${users.enabled}" title="" required=""/>
                                 </div>
 
 
