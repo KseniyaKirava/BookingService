@@ -77,7 +77,7 @@
                                     <input id="username" value="${username}" name="username"
                                            minlength="4" maxlength="15" pattern="[[A-Za-z._-]+]{4,15}"
                                            type="text" class="form-control input-md"
-                                           required="" readonly>
+                                           required="" readonly/>
 
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                                 <div class="col-md-auto">
                                     <input id="email" value="${email}" name="email" type="text" placeholder="e-mail"
                                            minlength="6" maxlength="50" pattern="([\w\.\w]+)@(\w+\.)([a-z]{2,4})"
-                                           class="form-control input-md" required="">
+                                           class="form-control input-md" required=""/>
 
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                                 <div class="col-md-auto">
                                     <input id="password" value="${password}" name="password" type="password"
                                            minlength="5" maxlength="15" pattern="[\w\d]{5,15}"
-                                           placeholder="password" class="form-control input-md" required="">
+                                           placeholder="password" class="form-control input-md" required=""/>
                                     <span class="help-block">*min 6 symbols</span>
                                 </div>
                             </div>
@@ -122,7 +122,7 @@
                                 <div class="col-md-auto">
                                     <input id="first_name" value="${first_name}" name="first_name" type="text"
                                            minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
-                                           placeholder="first name" class="form-control input-md" required="">
+                                           placeholder="first name" class="form-control input-md" required=""/>
 
                                 </div>
                             </div>
@@ -138,7 +138,7 @@
                                 <div class="col-md-auto">
                                     <input id="last_name" value="${last_name}" name="last_name" type="text"
                                            minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
-                                           placeholder="last name" class="form-control input-md" required="">
+                                           placeholder="last name" class="form-control input-md" required=""/>
 
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
                                 <div class="col-md-auto">
                                     <input id="middle_name" value="${middle_name}" name="middle_name" type="text"
                                            maxlength="15" pattern="[[A-Za-zА-Яа-яЁё.-]+]{0,15}"
-                                           placeholder="" class="form-control input-md">
+                                           placeholder="" class="form-control input-md"/>
 
                                 </div>
                             </div>

@@ -54,9 +54,9 @@ public class AdminCommand extends Command {
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = Util.getUserFromSession(request);
         if (user == null) {
-            return CommandType.LOGIN.getCurrentCommand();
+            return CommandType.LOGIN.command;
         } else if (!user.getUsername().equals("admin")) {
-            return CommandType.PROFILE.getCurrentCommand();
+            return CommandType.PROFILE.command;
         }
         if (request.getMethod().equalsIgnoreCase("post")) {
             String username = user.getUsername();

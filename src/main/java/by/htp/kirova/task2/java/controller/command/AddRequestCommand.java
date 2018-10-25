@@ -15,6 +15,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
+import java.util.Date;
 
 /**
  * Abstract class implementation for a
@@ -54,7 +55,7 @@ public class AddRequestCommand extends Command {
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = Util.getUserFromSession(request);
         if (user == null) {
-            return CommandType.LOGIN.getCurrentCommand();
+            return CommandType.LOGIN.command;
         } else {
 
             String username = user.getUsername();
@@ -88,20 +89,23 @@ public class AddRequestCommand extends Command {
                         LOGGER.error("Date parse with error");
                     }
 
-                    Request requestEntity = new Request(0, room_capacity, checkin, checkout, room_class,
-                            true, user.getUsername());
-                    boolean isCreate;
-                    try {
-                        isCreate = requestService.create(requestEntity);
-                    } catch (ServiceException e) {
-                        LOGGER.error("Creating requests is failed", e);
-                        throw new CommandException("Creating requests is failed", e);
-                    }
-                    if (isCreate) {
-                        long id = requestEntity.getId();
-                        request.getSession().setAttribute("requestId", id);
+                    Date currentDate = new Date();
+                    if (currentDate.getTime() - checkin <=0) {
+                        Request requestEntity = new Request(0, room_capacity, checkin, checkout, room_class,
+                                true, user.getUsername());
+                        boolean isCreate;
+                        try {
+                            isCreate = requestService.create(requestEntity);
+                        } catch (ServiceException e) {
+                            LOGGER.error("Creating requests is failed", e);
+                            throw new CommandException("Creating requests is failed", e);
+                        }
+                        if (isCreate) {
+                            long id = requestEntity.getId();
+                            request.getSession().setAttribute("requestId", id);
 
-                        return CommandType.RESERVATION.getCurrentCommand();
+                            return CommandType.RESERVATION.command;
+                        }
                     }
                 }
 

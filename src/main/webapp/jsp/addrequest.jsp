@@ -101,9 +101,12 @@
                             <div class="form-group">
                                 <label class="col-md-auto control-label" for="room_class"><fmt:message key="message.roomClass"/></label>
                                 <div class="col-md-auto">
-                                    <input id="room_class" value="${room_class}" name="room_class" type="text"
-                                           minlength="4" maxlength="10" pattern="[[A-Za-zА-Яа-яЁё\d, -]+]{4,10}"
-                                           placeholder="" class="form-control input-md" required="">
+                                    <select data-style="btn-primary" id="room_class" name="room_class" type="text"  class="form-control input-md">
+                                        <option selected value="normal"><fmt:message key="message.roomNormal"/></option>
+                                        <option value="luxe"><fmt:message key="message.roomLuxe"/></option>
+                                        <option value="president"><fmt:message key="message.roomPresident"/></option>
+                                    </select>
+
                                     <span class="help-block">normal / luxe / president</span>
                                 </div>
                             </div>

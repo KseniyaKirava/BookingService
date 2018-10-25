@@ -64,7 +64,7 @@ public class ProfileCommand extends Command {
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = Util.getUserFromSession(request);
         if (user == null) {
-            return CommandType.LOGIN.getCurrentCommand();
+            return CommandType.LOGIN.command;
         } else {
             String username = user.getUsername();
             String currentPassword = user.getPassword();
@@ -117,11 +117,11 @@ public class ProfileCommand extends Command {
                     if (isUpdate) {
                         LOGGER.info("Data from form successfully saved");
                     }
-                    return CommandType.PROFILE.getCurrentCommand();
+                    return CommandType.PROFILE.command;
                 }
                 if (request.getParameter("logout") != null) {
                     request.getSession().invalidate();
-                    return CommandType.LOGIN.getCurrentCommand();
+                    return CommandType.LOGIN.command;
                 }
                 if (request.getParameter("deletemyaccount") != null) {
                         user.setEnabled(false);
@@ -133,7 +133,7 @@ public class ProfileCommand extends Command {
                         }
                         request.getSession().invalidate();
                         LOGGER.info("User successfully deleted");
-                        return CommandType.LOGIN.getCurrentCommand();
+                        return CommandType.LOGIN.command;
 
                 }
 

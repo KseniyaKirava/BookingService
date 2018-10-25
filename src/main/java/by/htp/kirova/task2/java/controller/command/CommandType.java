@@ -79,13 +79,4 @@ public enum CommandType {
 
     public Command command;
 
-    /**
-     * Gets current command object.
-     *
-     * @return current command object.
-     */
-    public Command getCurrentCommand() {
-        return command;
-    }
-
 }

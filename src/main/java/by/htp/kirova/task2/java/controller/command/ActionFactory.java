@@ -24,7 +24,7 @@ public class ActionFactory {
         Command current = new EmptyCommand();
         if (commandName != null && !commandName.isEmpty()) {
             try {
-                current = CommandType.valueOf(commandName.toUpperCase()).getCurrentCommand();
+                current = CommandType.valueOf(commandName.toUpperCase()).command;
             }
             catch (IllegalArgumentException e) {
                 throw new CommandException("Command not found");
