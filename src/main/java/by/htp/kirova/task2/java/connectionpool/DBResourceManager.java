@@ -1,8 +1,6 @@
 package by.htp.kirova.task2.java.connectionpool;
 
-import by.htp.kirova.task2.java.util.PropertyCreator;
-
-import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * Database resource manager for properties.
@@ -12,10 +10,11 @@ import java.util.Properties;
  */
 public class DBResourceManager {
 
+
     /**
-     * DB resources properties.
+     * Resource bundle constant for DataBase.
      */
-    private static final Properties DB_PROPERTIES = PropertyCreator.createProperties("db.properties");
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("db");
 
     /**
      * The private constructor by default because this class is not intended
@@ -26,11 +25,13 @@ public class DBResourceManager {
 
     /**
      * Returns a key value from a db.properties file
+     *
      * @param key by which the value is searched
      * @return java.lang.String value by key on db.properties file
      */
-    public static String getParameter(String key) {
-        return DB_PROPERTIES.getProperty(key);
+    public static String getProperty(String key) {
+        return resourceBundle.getString(key);
     }
 
 }
+

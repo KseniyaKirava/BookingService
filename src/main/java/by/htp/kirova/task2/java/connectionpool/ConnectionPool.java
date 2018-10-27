@@ -71,13 +71,13 @@ public final class ConnectionPool {
     private ConnectionPool() throws ConnectionPoolException {
         MySQLDriverAction.registerDrivers();
 
-        this.driverName = DBResourceManager.getParameter(DBParameter.DB_DRIVER);
-        this.url = DBResourceManager.getParameter(DBParameter.DB_URL);
-        this.user =DBResourceManager.getParameter(DBParameter.DB_USER);
-        this.password = DBResourceManager.getParameter(DBParameter.DB_PASSWORD);
+        this.driverName = DBResourceManager.getProperty(DBParameter.DB_DRIVER);
+        this.url = DBResourceManager.getProperty(DBParameter.DB_URL);
+        this.user =DBResourceManager.getProperty(DBParameter.DB_USER);
+        this.password = DBResourceManager.getProperty(DBParameter.DB_PASSWORD);
 
         try {
-            this.poolSize = Integer.parseInt(DBResourceManager.getParameter(DBParameter.DB_POOL_SIZE));
+            this.poolSize = Integer.parseInt(DBResourceManager.getProperty(DBParameter.DB_POOL_SIZE));
         } catch (NumberFormatException e) {
             poolSize = 5;
 
