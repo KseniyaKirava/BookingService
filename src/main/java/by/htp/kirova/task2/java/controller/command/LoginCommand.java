@@ -1,5 +1,6 @@
 package by.htp.kirova.task2.java.controller.command;
 
+import by.htp.kirova.task2.java.controller.MessageManager;
 import by.htp.kirova.task2.java.entity.User;
 import by.htp.kirova.task2.java.logic.UserLogic;
 import by.htp.kirova.task2.java.service.validation.Validator;
@@ -34,7 +35,7 @@ public class LoginCommand extends Command {
     private final static String PASSWORD = "password";
 
     @Override
-    public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException{
+    public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         if (request.getMethod().equalsIgnoreCase("post")) {
             if (request.getParameter("loginbutton") != null) {
                 String username = request.getParameter(USERNAME);
@@ -57,9 +58,12 @@ public class LoginCommand extends Command {
                     session.setMaxInactiveInterval(60);
                     LOGGER.info("Session for user " + username + " successfully created");
                     if (username.equals("admin")) {
-                        return CommandType.ADMIN.command;
+                        return CommandType.ADMIN.getCurrentCommand();
                     }
-                    return CommandType.PROFILE.command;
+                    return CommandType.PROFILE.getCurrentCommand();
+                } else {
+                    request.getSession().setAttribute("errorLoginCommand", MessageManager.getProperty("message.loginerror"));
+                    return CommandType.LOGIN.getCurrentCommand();
                 }
             }
 

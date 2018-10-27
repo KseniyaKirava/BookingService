@@ -3,30 +3,30 @@ package by.htp.kirova.task2.java.controller;
 import java.util.ResourceBundle;
 
 /**
- * Configuration manager for properties.
+ * Message manager for messages.
  *
  * @author Kirava Kseniya
  * @since Oct 12, 2018
  */
-public class ConfigurationManager {
+public class MessageManager {
 
     /**
-     * Resource bundle constant for config.properties.
+     * Resource bundle constant for message.properties.
      */
-    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("message");
 
     /**
      * The private constructor by default because this class is not intended
      * to create an instance of the class or inheritance.
      */
-    private ConfigurationManager() {
+    private MessageManager() {
     }
 
     /**
-     * Returns a key value from a config.properties file
+     * Returns a key value from a message.properties file
      *
      * @param key by which the value is searched
-     * @return java.lang.String value by key on config.properties file
+     * @return java.lang.String value by key on message.properties file
      */
     public static String getProperty(String key) {
         return resourceBundle.getString(key);

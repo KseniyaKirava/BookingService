@@ -76,7 +76,10 @@ public enum CommandType {
         }
     };
 
+    Command command;
 
-    public Command command;
+    public Command getCurrentCommand(){
+        return command;
+    }
 
 }

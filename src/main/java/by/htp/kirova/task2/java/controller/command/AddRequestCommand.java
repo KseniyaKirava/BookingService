@@ -55,7 +55,7 @@ public class AddRequestCommand extends Command {
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = Util.getUserFromSession(request);
         if (user == null) {
-            return CommandType.LOGIN.command;
+            return CommandType.LOGIN.getCurrentCommand();
         } else {
 
             String username = user.getUsername();
@@ -104,7 +104,7 @@ public class AddRequestCommand extends Command {
                             long id = requestEntity.getId();
                             request.getSession().setAttribute("requestId", id);
 
-                            return CommandType.RESERVATION.command;
+                            return CommandType.RESERVATION.getCurrentCommand();
                         }
                     }
                 }

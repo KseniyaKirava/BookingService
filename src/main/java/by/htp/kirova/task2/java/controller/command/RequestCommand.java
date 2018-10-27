@@ -33,7 +33,7 @@ public class RequestCommand extends Command {
         User user = Util.getUserFromSession(request);
 
         if (user == null) {
-            return CommandType.LOGIN.command;
+            return CommandType.LOGIN.getCurrentCommand();
         } else {
 
             String username = user.getUsername();

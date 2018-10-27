@@ -43,8 +43,10 @@
                     <div class="row">
                         <div class="col-md-6 text-left">
                             <div class="form-group">
-                                <div class="col-md-auto" style="font-size: 10pt;">
-                                    <legend><fmt:message key="message.addrequest"/></legend>
+                                <div class="col-md-auto">
+                                    <legend style="font-size: 14pt;">
+                                        <fmt:message key="message.addrequest"/>
+                                    </legend>
                                 </div>
                             </div>
                         </div>
@@ -56,11 +58,13 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="room_capacity"> <fmt:message key="message.roomcapacity"/></label>
+                                <label class="col-md-auto control-label" for="room_capacity" style="font-size: 11pt;">
+                                    <fmt:message key="message.roomcapacity"/>
+                                </label>
                                 <div class="col-md-auto">
                                     <input id="room_capacity" value="${room_capacity}" name="room_capacity"
                                            type="number" min="1" max="5" class="form-control input-md"
-                                           required="">
+                                           required="" style="font-size: 11pt;"/>
 
                                 </div>
                             </div>
@@ -68,13 +72,15 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="checkin_date"><fmt:message key="message.checkinDate"/></label>
+                                <label class="col-md-auto control-label" for="checkin_date" style="font-size: 11pt;">
+                                    <fmt:message key="message.checkinDate"/>
+                                </label>
                                 <div class="col-md-auto">
-                                    <input id="checkin_date" value="${checkin_date}" name="checkin_date" type="text" placeholder=""
-                                           pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})"
-                                           class="form-control input-md" required="" minlength="10" maxlength="10">
-                                    <span class="help-block">* 01.01.2018</span>
-
+                                    <input id="checkin_date" value="${checkin_date}" name="checkin_date" type="text"
+                                           placeholder="" pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})"
+                                           class="form-control input-md" required="" minlength="10" maxlength="10"
+                                           style="font-size: 11pt;"/>
+                                    <span class="help-block" style="font-size: 9pt;">* 01.01.2018</span>
                                 </div>
                             </div>
                         </div>
@@ -84,12 +90,15 @@
                         <!-- Password input-->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="checkout_date"><fmt:message key="message.checkoutDate"/></label>
+                                <label class="col-md-auto control-label" for="checkout_date" style="font-size: 11pt;">
+                                    <fmt:message key="message.checkoutDate"/>
+                                </label>
                                 <div class="col-md-auto">
                                     <input id="checkout_date" value="${checkout_date}" name="checkout_date" type="text"
-                                           pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})"
-                                           placeholder="" class="form-control input-md" required="" minlength="10" maxlength="10">
-                                    <span class="help-block">* 05.01.2018</span>
+                                           pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})" style="font-size: 11pt;"
+                                           placeholder="" class="form-control input-md" required="" minlength="10"
+                                           maxlength="10"/>
+                                    <span class="help-block" style="font-size: 9pt;">* 05.01.2018</span>
                                 </div>
                             </div>
                         </div>
@@ -99,15 +108,22 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="room_class"><fmt:message key="message.roomClass"/></label>
+                                <label class="col-md-auto control-label" for="room_class" style="font-size: 11pt;">
+                                    <fmt:message key="message.roomClass"/>
+                                </label>
                                 <div class="col-md-auto">
-                                    <select data-style="btn-primary" id="room_class" name="room_class" type="text"  class="form-control input-md">
-                                        <option selected value="normal"><fmt:message key="message.roomNormal"/></option>
-                                        <option value="luxe"><fmt:message key="message.roomLuxe"/></option>
-                                        <option value="president"><fmt:message key="message.roomPresident"/></option>
+                                    <select data-style="btn-primary" id="room_class" name="room_class" type="text"
+                                            class="form-control input-md">
+                                        <option selected value="standard" style="font-size: 11pt;">
+                                            <fmt:message key="message.roomStandard"/>
+                                        </option>
+                                        <option value="luxe" style="font-size: 11pt;">
+                                            <fmt:message key="message.roomLuxe"/>
+                                        </option>
+                                        <option value="president" style="font-size: 11pt;">
+                                            <fmt:message key="message.roomPresident"/>
+                                        </option>
                                     </select>
-
-                                    <span class="help-block">normal / luxe / president</span>
                                 </div>
                             </div>
                         </div>

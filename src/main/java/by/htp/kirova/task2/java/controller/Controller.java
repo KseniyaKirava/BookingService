@@ -80,10 +80,17 @@ public class Controller extends HttpServlet {
             }
         } catch (Exception e) {
             LOGGER.error("Process request failed", e);
-            getServletContext().getRequestDispatcher(CommandType.ERROR.command.getJsp()).forward(request, response);
+            getServletContext().getRequestDispatcher(CommandType.ERROR.getCurrentCommand().getJsp()).forward(request, response);
 
         }
     }
+
+//    @Override
+//    public void destroy() {
+//
+//    }
+
+
 }
 
 

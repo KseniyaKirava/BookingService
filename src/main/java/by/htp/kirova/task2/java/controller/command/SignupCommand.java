@@ -69,7 +69,7 @@ public class SignupCommand extends Command {
                     !Validator.checkPassword(password) || !Validator.checkPassword(password) ||
                     !Validator.checkName(first_name) || !Validator.checkName(last_name) ||
                     !Validator.checkMiddleName(middle_name)) {
-                return CommandType.SIGNUP.command;
+                return CommandType.SIGNUP.getCurrentCommand();
             } else {
                 String hashPassword = UserLogic.getHashPassword(password);
                 User user = new User(username, email, hashPassword, first_name, last_name, middle_name, true);
@@ -86,7 +86,7 @@ public class SignupCommand extends Command {
                 }
                 if (isCreateUser && isCreateAuthority) {
                     LOGGER.info("User and authority successfully created");
-                    return CommandType.LOGIN.command;
+                    return CommandType.LOGIN.getCurrentCommand();
                 }
             }
 

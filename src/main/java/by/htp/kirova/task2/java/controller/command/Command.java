@@ -35,6 +35,6 @@ public abstract class Command {
      * @return name of jsp.
      */
     public String getJsp() {
-        return ConfigurationManager.getParameter("path.page." + this.toString().toLowerCase());
+        return ConfigurationManager.getProperty("path.page." + this.toString().toLowerCase());
     }
 }

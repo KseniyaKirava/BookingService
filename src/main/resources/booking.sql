@@ -236,7 +236,7 @@ COMMIT;
 START TRANSACTION;
 USE `kirova`;
 INSERT INTO `kirova`.`room_classes` (`id`, `name`, `enabled`) VALUES (1, 'luxe', true);
-INSERT INTO `kirova`.`room_classes` (`id`, `name`, `enabled`) VALUES (2, 'normal', true);
+INSERT INTO `kirova`.`room_classes` (`id`, `name`, `enabled`) VALUES (2, 'standard', true);
 INSERT INTO `kirova`.`room_classes` (`id`, `name`, `enabled`) VALUES (3, 'president', true);
 
 COMMIT;

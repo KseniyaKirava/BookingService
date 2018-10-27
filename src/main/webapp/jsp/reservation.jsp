@@ -46,7 +46,9 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="col-md-auto">
-                                    <legend><fmt:message key="message.resultQuery"/></legend>
+                                    <legend style="font-size: 14pt;">
+                                        <fmt:message key="message.resultQuery"/>
+                                    </legend>
                                 </div>
                             </div>
                         </div>
@@ -59,12 +61,13 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-auto control-label" for="room_name"> <fmt:message
-                                            key="message.roomName"/></label>
+                                    <label class="col-md-auto control-label" for="room_name"  style="font-size: 11pt;">
+                                        <fmt:message key="message.roomName"/>
+                                    </label>
                                     <div class="col-md-auto">
                                         <input id="room_name" value="${room_name}" name="room_name"
-                                               type="text" class="form-control input-md"
-                                               required="" readonly>
+                                               type="text" class="form-control input-md"  style="font-size: 11pt;"
+                                               required="" readonly/>
 
                                     </div>
                                 </div>
@@ -72,12 +75,13 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-auto control-label" for="room_number"><fmt:message
-                                            key="message.roomNumber"/></label>
+                                    <label class="col-md-auto control-label" for="room_number" style="font-size: 11pt;">
+                                        <fmt:message key="message.roomNumber"/>
+                                    </label>
                                     <div class="col-md-auto">
                                         <input id="room_number" value="${room_number}" name="room_number" type="text"
-                                               placeholder=""
-                                               class="form-control input-md" required="" readonly>
+                                               placeholder="" style="font-size: 11pt;"
+                                               class="form-control input-md" required="" readonly/>
 
                                     </div>
                                 </div>
@@ -88,11 +92,13 @@
                             <!-- Password input-->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-auto control-label" for="capacity"><fmt:message
-                                            key="message.capacity"/></label>
+                                    <label class="col-md-auto control-label" for="capacity" style="font-size: 11pt;">
+                                        <fmt:message key="message.capacity"/>
+                                    </label>
                                     <div class="col-md-auto">
                                         <input id="capacity" value="${capacity}" name="capacity" type="text"
-                                               placeholder="" class="form-control input-md" required="" readonly>
+                                               placeholder="" class="form-control input-md" required=""
+                                               style="font-size: 11pt;" readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -102,16 +108,18 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-auto control-label" for="check_in"><fmt:message
-                                            key="message.checkinDate"/></label>
+                                    <label class="col-md-auto control-label" for="check_in" style="font-size: 11pt;">
+                                        <fmt:message key="message.checkinDate"/>
+                                    </label>
                                     <div class="col-md-auto">
                                         <jsp:useBean id="checkIn" class="java.util.Date"/>
                                         <jsp:setProperty name="checkIn" property="time"
                                                          value="${check_in}"/>
                                         <fmt:formatDate var="formatted_check_in"
                                                         pattern="dd.MM.YYYY" value="${checkIn}"/>
-                                        <input id="check_in" value="${formatted_check_in}" name="check_in" type="text"
-                                               placeholder="" class="form-control input-md" required="" readonly>
+                                        <input id="check_in" value="${formatted_check_in}" style="font-size: 11pt;"
+                                               name="check_in" type="text" placeholder="" class="form-control input-md"
+                                               required="" readonly/>
 
                                     </div>
                                 </div>
@@ -122,8 +130,9 @@
                             <!-- Text input-->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-auto control-label" for="check_out"><fmt:message
-                                            key="message.checkoutDate"/></label>
+                                    <label class="col-md-auto control-label" for="check_out" style="font-size: 11pt;">
+                                        <fmt:message key="message.checkoutDate"/>
+                                    </label>
                                     <div class="col-md-auto">
                                         <jsp:useBean id="checkOut" class="java.util.Date"/>
                                         <jsp:setProperty name="checkOut" property="time"
@@ -131,7 +140,8 @@
                                         <fmt:formatDate var="formatted_check_out"
                                                         pattern="dd.MM.YYYY" value="${checkOut}"/>
                                         <input id="check_out" value="${formatted_check_out}" name="check_out" type="text"
-                                               placeholder="" class="form-control input-md" required="" readonly>
+                                               placeholder="" class="form-control input-md" required="" style="font-size: 11pt;"
+                                               readonly/>
 
                                     </div>
                                 </div>
@@ -142,11 +152,13 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-md-auto control-label" for="total_cost"><fmt:message
-                                            key="message.totalCost"/></label>
+                                    <label class="col-md-auto control-label" for="total_cost" style="font-size: 11pt;">
+                                        <fmt:message key="message.totalCost"/>
+                                    </label>
                                     <div class="col-md-auto">
                                         <input id="total_cost" value="${total_cost}" name="total_cost" type="text"
-                                               placeholder="" class="form-control input-md" readonly>
+                                               placeholder="" class="form-control input-md" style="font-size: 11pt;"
+                                               readonly/>
 
                                     </div>
                                 </div>
