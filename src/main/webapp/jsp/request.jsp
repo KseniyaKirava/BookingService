@@ -56,124 +56,56 @@
                         </div>
                     </div>
 
+
                     <div class="row justify-content-left align-items-start">
                         <div class="col-md-12">
-
                             <form class="form-inline" method="get">
-                                <c:forEach items="${requests}" var="row">
-                                    <hr/>
-                                    <div class="row justify-content-left align-items-start">
-                                        <div class="col-md-2">
-                                            <div class="form-group mb-2">
-                                                <label class="col-md-auto control-label" style="font-size:11pt;"
-                                                       for="id">ID</label>
-                                                <div class="col-md-auto">
-                                                    <input id="id" style="font-size:11pt;" readonly name="id"
-                                                           class="form-control input-md" value="${row.id}"
-                                                           title=""/>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="col-md-2">
-                                            <div class="form-group mb-2">
-                                                <label class="col-md-auto control-label" style="font-size:11pt;" for="room_capacity">
-                                                    <fmt:message key="message.capacity"/>
-                                                </label>
-                                                <div class="col-md-auto">
-                                                    <input id="room_capacity" style="font-size:11pt;" readonly
-                                                           name="room_capacity" class="form-control input-md"
-                                                           value="${row.room_capacity}" title=""/>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <table class="table">
+                                    <thead class="thead-default">
+                                    <tr>
+                                        <th style="font-size:11pt;">№</th>
+                                        <th style="font-size:11pt;"><fmt:message key="message.capacity"/></th>
+                                        <th style="font-size:11pt;"><fmt:message key="message.checkinDateTable"/></th>
+                                        <th style="font-size:11pt;"><fmt:message key="message.checkoutDateTable"/></th>
+                                        <th style="font-size:11pt;"> <fmt:message key="message.roomClassTable"/></th>
+                                    </tr>
+                                    </thead>
+                                    <c:forEach items="${requests}" var="row">
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row" style="font-size:11pt;">${row.id}</th>
+                                            <td style="font-size:11pt;">${row.room_capacity}</td>
 
-                                        <div class="col-md-2">
-                                            <div class="form-group mb-2">
-                                                <label class="col-md-auto control-label" style="font-size:11pt;" for="checkin_date">
-                                                    <fmt:message key="message.checkinDate"/>
-                                                </label>
-                                                <div class="col-md-auto">
-                                                    <jsp:useBean id="checkInDate" class="java.util.Date"/>
-                                                    <jsp:setProperty name="checkInDate" property="time"
-                                                                     value="${row.checkin_date}"/>
-                                                    <fmt:formatDate var="formattedCheckInDate"
-                                                                    pattern="dd.MM.YYYY" value="${checkInDate}"/>
-                                                    <input id="checkin_date" style="font-size:11pt;" readonly
-                                                           name="checkin_date" class="form-control input-md"
-                                                           value="${formattedCheckInDate}" title=""/>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            <jsp:useBean id="checkInDate" class="java.util.Date"/>
+                                            <jsp:setProperty name="checkInDate" property="time"
+                                                             value="${row.checkin_date}"/>
+                                            <fmt:formatDate var="formattedCheckInDate"
+                                                            pattern="dd.MM.YYYY" value="${checkInDate}"/>
+                                            <td style="font-size:11pt;">${formattedCheckInDate}</td>
 
-                                        <div class="col-md-2">
-                                            <div class="form-group mb-2">
-                                                <label class="col-md-auto control-label" style="font-size:11pt;"
-                                                       for="checkout_date">
-                                                    <fmt:message key="message.checkoutDate"/>
-                                                </label>
-                                                <div class="col-md-auto">
-                                                    <jsp:useBean id="checkOutDate" class="java.util.Date"/>
-                                                    <jsp:setProperty name="checkOutDate" property="time"
-                                                                     value="${row.checkout_date}"/>
-                                                    <fmt:formatDate var="formattedCheckOutDate"
-                                                                    pattern="dd.MM.YYYY" value="${checkOutDate}"/>
-                                                    <input id="checkout_date" style="font-size:11pt;" readonly
-                                                           name="checkout_date" class="form-control input-md"
-                                                           title="" value="${formattedCheckOutDate}"/>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            <jsp:useBean id="checkOutDate" class="java.util.Date"/>
+                                            <jsp:setProperty name="checkOutDate" property="time"
+                                                             value="${row.checkout_date}"/>
+                                            <fmt:formatDate var="formattedCheckOutDate"
+                                                            pattern="dd.MM.YYYY" value="${checkOutDate}"/>
+                                            <td style="font-size:11pt;">${formattedCheckOutDate}</td>
 
-                                        <div class="col-md-3">
-                                            <div class="form-group mb-2">
-                                                <label class="col-md-auto control-label" style="font-size:11pt;" for="room_class">
-                                                    <fmt:message key="message.roomClass"/>
-                                                </label>
-                                                <div class="col-md-auto">
-                                                    <input id="room_class" style="font-size:11pt;" readonly
-                                                           name="room_class" class="form-control input-md"
-                                                           value="${row.room_class}" title=""/>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            <td style="font-size:11pt;">${row.room_class}</td>
+                                            <td style="font-size:11pt;" hidden>${row.enabled}</td>
+                                            <td style="font-size:11pt;" hidden>${row.users_username}</td>
 
-                                        <div class="col-md-4">
-                                            <div class="form-group mb-2">
-                                                <label class="col-md-auto control-label" style="font-size:11pt;"
-                                                       for="enabled"></label>
-                                                <div class="col-md-auto">
-                                                    <input id="enabled" style="font-size:11pt;" readonly type="hidden"
-                                                           name="enabled" class="form-control input-md"
-                                                           value="${row.enabled}" title=""/>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </tr>
+                                        </tbody>
+                                    </c:forEach>
 
-                                        <div class="col-md-4">
-                                            <div class="form-group mb-2">
-                                                <label class="col-md-auto control-label" style="font-size:11pt;"
-                                                       for="users_username"></label>
-                                                <div class="col-md-auto">
-                                                    <input id="users_username" style="font-size:11pt;" readonly
-                                                           name="users_username" type="hidden"
-                                                           class="form-control input-md"
-                                                           value="${row.users_username}" title=""/>
-                                                </div>
-                                            </div>
-                                        </div>
+                                </table>
 
-                                    </div>
-
-
-                                </c:forEach>
                             </form>
                         </div>
-
-
                     </div>
-                </div>
 
+                </div>
             </div>
         </fieldset>
     </form>

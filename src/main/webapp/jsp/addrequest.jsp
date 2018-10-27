@@ -80,7 +80,7 @@
                                            placeholder="" pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})"
                                            class="form-control input-md" required="" minlength="10" maxlength="10"
                                            style="font-size: 11pt;"/>
-                                    <span class="help-block" style="font-size: 9pt;">* 01.01.2018</span>
+                                    <span class="help-block" style="font-size: 9pt; color: #949494;">* 01.01.2018</span>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                                            pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})" style="font-size: 11pt;"
                                            placeholder="" class="form-control input-md" required="" minlength="10"
                                            maxlength="10"/>
-                                    <span class="help-block" style="font-size: 9pt;">* 05.01.2018</span>
+                                    <span class="help-block" style="font-size: 9pt; color: #949494;">* 05.01.2018</span>
                                 </div>
                             </div>
                         </div>

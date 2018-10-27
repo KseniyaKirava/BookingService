@@ -13,7 +13,6 @@
     <form class="form-horizontal" method="post" command="do?command=Login">
         <fieldset>
 
-
             <div class="form-group">
                 <label class="col-md-4 control-label" style="color: red; font-size: 12pt;">
                     ${errorLoginCommand}
@@ -41,7 +40,7 @@
                     <input id="password" value="123456" name="password" type="password" placeholder="password"
                            minlength="5" maxlength="15" pattern="[\w\d]{5,15}"
                            class="form-control input-md" required="" style="font-size: 11pt;">
-                    <span class="help-block" style="font-size: 9pt;">
+                    <span class="help-block" style="font-size: 9pt; color: #949494;">
                         <fmt:message key="message.passwordDescription"/>
                     </span>
                 </div>

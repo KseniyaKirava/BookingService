@@ -57,7 +57,7 @@
                             <input id="password" value="" name="password" type="password"  minlength="5" maxlength="15"
                                    pattern="[\w\d]{5,15}" style="font-size: 11pt;"
                                    placeholder="password" class="form-control input-md" required=""/>
-                            <span class="help-block" style="font-size: 9pt;">
+                            <span class="help-block" style="font-size: 9pt; color: #949494;">
                                 <fmt:message key="message.passwordDescription"/> (A-Za-z0-9)
                             </span>
                         </div>
