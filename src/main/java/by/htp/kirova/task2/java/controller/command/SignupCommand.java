@@ -1,5 +1,6 @@
 package by.htp.kirova.task2.java.controller.command;
 
+import by.htp.kirova.task2.java.controller.MessageManager;
 import by.htp.kirova.task2.java.entity.Authority;
 import by.htp.kirova.task2.java.entity.User;
 import by.htp.kirova.task2.java.logic.UserLogic;
@@ -65,6 +66,8 @@ public class SignupCommand extends Command {
             }
             return CommandType.PROFILE.getCurrentCommand();
         }
+
+
         if (request.getMethod().equalsIgnoreCase("post")) {
             String username = request.getParameter(USERNAME);
             String email = request.getParameter(EMAIL);
@@ -77,27 +80,47 @@ public class SignupCommand extends Command {
                     !Validator.checkPassword(password) || !Validator.checkPassword(password) ||
                     !Validator.checkName(first_name) || !Validator.checkName(last_name) ||
                     !Validator.checkMiddleName(middle_name)) {
-                return CommandType.SIGNUP.getCurrentCommand();
+                request.getSession().setAttribute("username", "");
+                request.getSession().setAttribute("email", email);
+                request.getSession().setAttribute("password", "");
+                request.getSession().setAttribute("first_name", first_name);
+                request.getSession().setAttribute("last_name", last_name);
+                request.getSession().setAttribute("middle_name", middle_name);
+                request.getSession().setAttribute("errorSignUpCommand", MessageManager.getProperty("message.errorSignUp"));
+                return null;
             } else {
-                String hashPassword = UserLogic.getHashPassword(password);
-                user = new User(username, email, hashPassword, first_name, last_name, middle_name, true);
-                Authority authority = new Authority("user", username, true);
-                ServiceFactory serviceFactory = ServiceFactory.getInstance();
-                boolean isCreateUser = false;
-                boolean isCreateAuthority = false;
-                try {
-                    isCreateUser = serviceFactory.getUserService().create(user);
-                    isCreateAuthority = serviceFactory.getAuthorityService().create(authority);
-                } catch (ServiceException e) {
-                    LOGGER.info("Creating user failed", e);
-                    throw new CommandException("Creating user failed", e);
+                if (UserLogic.isUsernameUnique(username)) {
+                    String hashPassword = UserLogic.getHashPassword(password);
+                    user = new User(username, email, hashPassword, first_name, last_name, middle_name, true);
+                    Authority authority = new Authority("user", username, true);
+                    ServiceFactory serviceFactory = ServiceFactory.getInstance();
+                    boolean isCreateUser = false;
+                    boolean isCreateAuthority = false;
+                    try {
+                        isCreateUser = serviceFactory.getUserService().create(user);
+                        isCreateAuthority = serviceFactory.getAuthorityService().create(authority);
+                    } catch (ServiceException e) {
+                        LOGGER.info("Creating user failed", e);
+                        throw new CommandException("Creating user failed", e);
+                    }
+                    if (isCreateUser && isCreateAuthority) {
+                        LOGGER.info("User and authority successfully created");
+                        return CommandType.LOGIN.getCurrentCommand();
+                    }
+
                 }
-                if (isCreateUser && isCreateAuthority) {
-                    LOGGER.info("User and authority successfully created");
-                    return CommandType.LOGIN.getCurrentCommand();
-                }
+                request.getSession().setAttribute("username", "");
+                request.getSession().setAttribute("email", email);
+                request.getSession().setAttribute("password", "");
+                request.getSession().setAttribute("first_name", first_name);
+                request.getSession().setAttribute("last_name", last_name);
+                request.getSession().setAttribute("middle_name", middle_name);
+                request.getSession().setAttribute("errorUsernameDuplicate", MessageManager.getProperty("message.usernameDuplicate"));
             }
+
         }
+
         return null;
+
     }
 }

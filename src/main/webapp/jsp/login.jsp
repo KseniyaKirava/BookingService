@@ -14,7 +14,7 @@
         <fieldset>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" style="color: red; font-size: 12pt;">
+                <label class="col-md-12 control-label" style="color: red; font-size: 12pt;">
                     ${errorLoginCommand}
                 </label>
             </div>

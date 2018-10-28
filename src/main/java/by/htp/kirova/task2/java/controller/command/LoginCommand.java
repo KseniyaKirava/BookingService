@@ -4,6 +4,7 @@ import by.htp.kirova.task2.java.controller.MessageManager;
 import by.htp.kirova.task2.java.entity.User;
 import by.htp.kirova.task2.java.logic.UserLogic;
 import by.htp.kirova.task2.java.service.validation.Validator;
+import by.htp.kirova.task2.java.util.Util;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,13 @@ public class LoginCommand extends Command {
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+        User user = Util.getUserFromSession(request);
+        if (user != null) {
+            if (user.getUsername().equals("admin")) {
+                return CommandType.ADMIN.getCurrentCommand();
+            }
+            return CommandType.PROFILE.getCurrentCommand();
+        }
         if (request.getMethod().equalsIgnoreCase("post")) {
             if (request.getParameter("loginbutton") != null) {
                 String username = request.getParameter(USERNAME);
@@ -45,7 +53,7 @@ public class LoginCommand extends Command {
                 }
                 LOGGER.info("Validation by username & password passed");
 
-                User user = null;
+                user = null;
                 try {
                     user = UserLogic.checkLogin(username, password);
                 } catch (CommandException e) {

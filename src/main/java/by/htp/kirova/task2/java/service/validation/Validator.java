@@ -1,6 +1,9 @@
 package by.htp.kirova.task2.java.service.validation;
 
 
+import by.htp.kirova.task2.java.entity.User;
+import by.htp.kirova.task2.java.service.GenericService;
+import by.htp.kirova.task2.java.service.ServiceFactory;
 import org.apache.log4j.Logger;
 
 /**

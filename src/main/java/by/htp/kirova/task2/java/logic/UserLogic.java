@@ -2,6 +2,7 @@ package by.htp.kirova.task2.java.logic;
 
 import by.htp.kirova.task2.java.controller.command.CommandException;
 import by.htp.kirova.task2.java.entity.User;
+import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.ServiceException;
 import by.htp.kirova.task2.java.service.ServiceFactory;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -40,5 +41,17 @@ public class UserLogic {
         String salt = "rand"; // генерация разной соли в классе SaltRandom
         String hashpass = DigestUtils.sha256Hex(password + salt);
         return hashpass;
+    }
+
+    public static boolean isUsernameUnique(String username){
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        GenericService<User> userService = serviceFactory.getUserService();
+        List<User> list = null;
+        try {
+            list = userService.read("WHERE username like '" + username + "'");
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        return list.isEmpty() || list == null;
     }
 }
