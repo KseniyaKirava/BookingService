@@ -90,7 +90,9 @@ public class AddRequestCommand extends Command {
                     }
 
                     Date currentDate = new Date();
-                    if (currentDate.getTime() - checkin <=0) {
+                    int currentDays = currentDate.getDay();
+                    int checkInDays = (int)(checkin / (1000 * 24 * 60 * 60));
+                    if ((checkInDays - currentDays >= 0) && (checkout - checkin > 0)) {
                         Request requestEntity = new Request(0, room_capacity, checkin, checkout, room_class,
                                 true, user.getUsername());
                         boolean isCreate;

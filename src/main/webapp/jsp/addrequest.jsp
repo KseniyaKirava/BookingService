@@ -77,14 +77,25 @@
                                 </label>
                                 <div class="col-md-auto">
                                     <input id="checkin_date" value="${checkin_date}" name="checkin_date" type="text"
-                                           placeholder="" pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})"
-                                           class="form-control input-md" required="" minlength="10" maxlength="10"
-                                           style="font-size: 11pt;"/>
-                                    <span class="help-block" style="font-size: 9pt; color: #949494;">* 01.01.2018</span>
+                                           class="form-control input-md" required="" style="font-size: 11pt;"
+                                           pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})"/>
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <script>
+                        $(function () {
+                            $( "#checkin_date" ).daterangepicker({
+                                singleDatePicker: true,
+                                minDate: new Date(),
+                                locale: {
+                                    format: 'DD.MM.YYYY'
+                                }
+                            });
+                        });
+                    </script>
 
                     <div class="row justify-content-left align-items-start">
                         <!-- Password input-->
@@ -95,13 +106,23 @@
                                 </label>
                                 <div class="col-md-auto">
                                     <input id="checkout_date" value="${checkout_date}" name="checkout_date" type="text"
-                                           pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})" style="font-size: 11pt;"
-                                           placeholder="" class="form-control input-md" required="" minlength="10"
-                                           maxlength="10"/>
-                                    <span class="help-block" style="font-size: 9pt; color: #949494;">* 05.01.2018</span>
+                                           style="font-size: 11pt;" placeholder="" class="form-control input-md"
+                                           required="" pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})"/>
                                 </div>
                             </div>
                         </div>
+
+                        <script>
+                            $(function () {
+                                $( "#checkout_date" ).daterangepicker({
+                                    singleDatePicker: true,
+                                    minDate: new Date(),
+                                    locale: {
+                                        format: 'DD.MM.YYYY'
+                                    }
+                                });
+                            });
+                        </script>
 
 
                         <!-- Text input-->
