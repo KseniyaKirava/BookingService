@@ -13,7 +13,7 @@
         <fieldset>
 
             <!-- Form Name -->
-            <legend style="font-size: 14pt;"><fmt:message key="message.signup"/></legend>
+            <legend style="font-size: 14pt;"><fmt:message key="message.signupPage"/></legend>
 
             <div class="row justify-content-left align-items-start">
 

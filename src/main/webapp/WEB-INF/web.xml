@@ -7,12 +7,6 @@
          metadata-complete="true">
 
     <display-name>Servlet kirova</display-name>
-    <!--
-    Для любого сервлета нужно определить два тега servlet и servlet-mapping.
-    Важно чтобы внутри каждого из этих тегов были теги servlet-name
-    и имя сервлета в них было одинаковым!!! Здесь это имя HelloWorld
-    -->
-
     <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>by.htp.kirova.task2.java.controller.Controller</servlet-class>
@@ -30,6 +24,10 @@
         <!--<location>/jsp/error.jsp</location>-->
     <!--</error-page>-->
     <jsp-config>
+        <!--<taglib>-->
+            <!--<taglib-uri>customtags</taglib-uri>-->
+            <!--<taglib-location>/WEB-INF/tld/custom.tld</taglib-location>-->
+        <!--</taglib>-->
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
             <page-encoding>UTF-8</page-encoding>

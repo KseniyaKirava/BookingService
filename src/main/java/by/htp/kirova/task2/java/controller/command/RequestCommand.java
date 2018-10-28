@@ -49,7 +49,16 @@ public class RequestCommand extends Command {
 
             try {
                 requests = requestService.read("WHERE users_username like '" + username + "' AND enabled = true");
+                request.getSession().setAttribute("size", requests.size());
+                String strStart = request.getParameter("start");
+                int startReq = 0;
+                if (strStart != null) {
+                    startReq = Integer.parseInt(strStart);
+                }
+                String where = String.format(" LIMIT %d, 2", startReq);
+                requests = requestService.read("WHERE users_username like '" + username + "' AND enabled = true " + where);
                 request.getSession().setAttribute("requests", requests);
+         //       request.getSession().setAttribute("user", username);
             } catch (ServiceException e) {
                 throw new CommandException(e);
             }

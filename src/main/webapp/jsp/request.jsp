@@ -1,5 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <%@ include file="../include/head.htm" %>
@@ -100,6 +102,11 @@
                                     </c:forEach>
 
                                 </table>
+
+                                <hr>
+                                <div class="row">
+                                    <mytag:paginator count="${size}" step="2" urlprefix="?command=Request&start="/>
+                                </div>
 
                             </form>
                         </div>

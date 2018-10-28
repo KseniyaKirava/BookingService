@@ -6,6 +6,7 @@ import by.htp.kirova.task2.java.logic.UserLogic;
 import by.htp.kirova.task2.java.service.ServiceException;
 import by.htp.kirova.task2.java.service.ServiceFactory;
 import by.htp.kirova.task2.java.service.validation.Validator;
+import by.htp.kirova.task2.java.util.Util;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,14 +57,21 @@ public class SignupCommand extends Command {
     private final static String MIDDLE_NAME = "middle_name";
 
     @Override
-    public Command execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
-        if (req.getMethod().equalsIgnoreCase("post")) {
-            String username = req.getParameter(USERNAME);
-            String email = req.getParameter(EMAIL);
-            String password = req.getParameter(PASSWORD);
-            String first_name = req.getParameter(FIRST_NAME);
-            String last_name = req.getParameter(LAST_NAME);
-            String middle_name = req.getParameter(MIDDLE_NAME);
+    public Command execute(HttpServletRequest request, HttpServletResponse resp) throws CommandException {
+        User user = Util.getUserFromSession(request);
+        if (user != null) {
+            if (user.getUsername().equals("admin")) {
+                return CommandType.ADMIN.getCurrentCommand();
+            }
+            return CommandType.PROFILE.getCurrentCommand();
+        }
+        if (request.getMethod().equalsIgnoreCase("post")) {
+            String username = request.getParameter(USERNAME);
+            String email = request.getParameter(EMAIL);
+            String password = request.getParameter(PASSWORD);
+            String first_name = request.getParameter(FIRST_NAME);
+            String last_name = request.getParameter(LAST_NAME);
+            String middle_name = request.getParameter(MIDDLE_NAME);
 
             if (!Validator.checkUsername(username) || !Validator.checkEmail(email) ||
                     !Validator.checkPassword(password) || !Validator.checkPassword(password) ||
@@ -72,7 +80,7 @@ public class SignupCommand extends Command {
                 return CommandType.SIGNUP.getCurrentCommand();
             } else {
                 String hashPassword = UserLogic.getHashPassword(password);
-                User user = new User(username, email, hashPassword, first_name, last_name, middle_name, true);
+                user = new User(username, email, hashPassword, first_name, last_name, middle_name, true);
                 Authority authority = new Authority("user", username, true);
                 ServiceFactory serviceFactory = ServiceFactory.getInstance();
                 boolean isCreateUser = false;
@@ -89,7 +97,6 @@ public class SignupCommand extends Command {
                     return CommandType.LOGIN.getCurrentCommand();
                 }
             }
-
         }
         return null;
     }
