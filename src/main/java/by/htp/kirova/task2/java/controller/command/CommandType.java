@@ -74,6 +74,22 @@ public enum CommandType {
         {
             this.command = new AdminCommand();
         }
+    },
+    /**
+     * Command to show user's reserve room page.
+     */
+    RESERVE {
+        {
+            this.command = new ReserveCommand();
+        }
+    },
+    /**
+     * Command to show user's reservation payment page.
+     */
+    PAYMENT {
+        {
+            this.command = new PaymentCommand();
+        }
     };
 
     Command command;

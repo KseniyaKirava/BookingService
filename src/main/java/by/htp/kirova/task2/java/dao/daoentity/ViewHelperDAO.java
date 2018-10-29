@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,17 +30,16 @@ public class ViewHelperDAO implements HelperDAO {
     /**
      * Constant string which represents query to create request.
      */
-    private static final String SQL_SHOW_AVIALIABLE_ROOM = "SELECT req.room_capacity, req.checkin_date, " +
-            "req.checkout_date, req.room_class, rooms.id, rooms.name, rooms.number, rooms.cost, rooms.room_classes_id " +
-            "FROM rooms " +
-            "JOIN requests as req " +
+    private static final String SQL_SHOW_AVIALIABLE_ROOM = "SELECT req.room_capacity, req.checkin_date, req.checkout_date, " +
+            "req.room_class, rooms.id, rooms.name, rooms.number, rooms.cost, rooms.room_classes_id " +
+            "FROM rooms JOIN requests as req " +
             "JOIN room_classes as rc " +
-            "WHERE req.id = ? AND rooms.capacity = req.room_capacity AND rc.name like req.room_class " +
-            "AND rooms.id = rc.id AND rooms.id " +
-            "NOT IN " +
-            "(SELECT res.rooms_id " +
-            "FROM reservations as res " +
-            "WHERE req.checkin_date >= res.checkin_date OR req.checkout_date <= res.checkout_date)";
+            "WHERE req.id = ? AND rooms.capacity >= req.room_capacity AND rc.name like req.room_class " +
+            "AND rooms.room_classes_id = rc.id " +
+            "AND rooms.id NOT IN " +
+            "(SELECT res.rooms_id FROM reservations as res " +
+            "WHERE (req.checkout_date >= res.checkin_date AND res.checkout_date >= req.checkin_date) " +
+            "AND res.enabled = true)";
 
     @Override
     public List showAvialiableRooms(Long id) throws DAOException {
@@ -48,8 +48,7 @@ public class ViewHelperDAO implements HelperDAO {
         PreparedStatement ps = null;
         ResultSet resultSet;
 
-        List<ArrayList> rooms = new ArrayList<>();
-        List room = new ArrayList();
+        List<String> room = new ArrayList<>();
 
         try {
             cp = ConnectionPool.getInstance();
@@ -58,23 +57,23 @@ public class ViewHelperDAO implements HelperDAO {
             ps = connection.prepareStatement(SQL_SHOW_AVIALIABLE_ROOM);
             ps.setLong(1, id);
 
+            double minCost = Double.MAX_VALUE;
             resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                ArrayList<String> list = new ArrayList<>();
-                list.add(String.valueOf(resultSet.getInt("req.room_capacity")));
-                list.add(DateConverter.convertDateToString(resultSet.getLong("req.checkin_date")));
-                list.add(DateConverter.convertDateToString(resultSet.getLong("req.checkout_date")));
-                list.add(resultSet.getString("req.room_class"));
-                list.add(String.valueOf(resultSet.getInt("rooms.id")));
-                list.add(resultSet.getString("rooms.name"));
-                list.add(resultSet.getString("rooms.number"));
-                list.add(String.valueOf(resultSet.getDouble("rooms.cost")));
-                list.add(String.valueOf(resultSet.getLong("rooms.room_classes_id")));
-                rooms.add(list);
-            }
-
-            if (!rooms.isEmpty()) {
-                room = rooms.get(0);
+                double currentCost = resultSet.getDouble("rooms.cost");
+                if(currentCost < minCost){
+                    room = new ArrayList<>();
+                    room.add(String.valueOf(resultSet.getInt("req.room_capacity")));
+                    room.add(DateConverter.convertDateToString(resultSet.getLong("req.checkin_date")));
+                    room.add(DateConverter.convertDateToString(resultSet.getLong("req.checkout_date")));
+                    room.add(resultSet.getString("req.room_class"));
+                    room.add(String.valueOf(resultSet.getInt("rooms.id")));
+                    room.add(resultSet.getString("rooms.name"));
+                    room.add(resultSet.getString("rooms.number"));
+                    room.add(String.valueOf(currentCost));
+                    room.add(String.valueOf(resultSet.getLong("rooms.room_classes_id")));
+                    minCost = currentCost;
+                }
             }
 
         } catch (ConnectionPoolException | SQLException e) {

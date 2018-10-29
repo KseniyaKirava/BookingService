@@ -66,11 +66,11 @@
                                 <table class="table">
                                     <thead class="thead-default">
                                     <tr>
-                                        <th style="font-size:11pt;">№</th>
+                                        <th style="font-size:11pt;">ID</th>
                                         <th style="font-size:11pt;"><fmt:message key="message.capacity"/></th>
                                         <th style="font-size:11pt;"><fmt:message key="message.checkinDateTable"/></th>
                                         <th style="font-size:11pt;"><fmt:message key="message.checkoutDateTable"/></th>
-                                        <th style="font-size:11pt;"> <fmt:message key="message.roomClassTable"/></th>
+                                        <th style="font-size:11pt;"><fmt:message key="message.roomClassTable"/></th>
                                     </tr>
                                     </thead>
                                     <c:forEach items="${requests}" var="row">
@@ -105,9 +105,8 @@
 
                                 <hr>
                                 <div class="row">
-                                    <mytag:paginator count="${size}" step="2" urlprefix="?command=Request&start="/>
+                                        <mytag:paginator count="${size}" step="10" urlprefix="?command=Request&start="/>
                                 </div>
-
                             </form>
                         </div>
                     </div>

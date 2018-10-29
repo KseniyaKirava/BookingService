@@ -224,8 +224,9 @@ USE `kirova`;
 INSERT INTO `kirova`.`requests` (`id`, `room_capacity`, `checkin_date`, `checkout_date`, `room_class`, `enabled`, `users_username`) VALUES (1, 8, 1539118800000, 1539550800000, 'president', true, 'vasia');
 INSERT INTO `kirova`.`requests` (`id`, `room_capacity`, `checkin_date`, `checkout_date`, `room_class`, `enabled`, `users_username`) VALUES (2, 2, 1539118800000, 1539550800000, 'luxe', true, 'jdoe');
 INSERT INTO `kirova`.`requests` (`id`, `room_capacity`, `checkin_date`, `checkout_date`, `room_class`, `enabled`, `users_username`) VALUES (3, 1, 1539723600000, 1540155600000, 'luxe', true, 'vasia');
-INSERT INTO `kirova`.`requests` (`id`, `room_capacity`, `checkin_date`, `checkout_date`, `room_class`, `enabled`, `users_username`) VALUES (4, 2, 1540069200000, 1540674000000, 'normal', true, 'jsmith');
+INSERT INTO `kirova`.`requests` (`id`, `room_capacity`, `checkin_date`, `checkout_date`, `room_class`, `enabled`, `users_username`) VALUES (4, 2, 1540069200000, 1540674000000, 'standard', true, 'jsmith');
 INSERT INTO `kirova`.`requests` (`id`, `room_capacity`, `checkin_date`, `checkout_date`, `room_class`, `enabled`, `users_username`) VALUES (5, 3, 1539550800000, 1539723600000, 'luxe', true, 'jsmith');
+INSERT INTO `kirova`.`requests` (`id`, `room_capacity`, `checkin_date`, `checkout_date`, `room_class`, `enabled`, `users_username`) VALUES (6, 2, 1543611600000, 1544648400000, 'luxe', true, 'vasia');
 
 COMMIT;
 

@@ -8,11 +8,8 @@
     <%@ include file="../include/menu.htm" %>
 
 
-    <form class="form-horizontal" method="get" command="do?command=Reservation">
+    <form class="form-horizontal" method="post" command="do?command=Reservation">
         <fieldset>
-            <!-- Form Name -->
-
-
             <div class="row justify-content-left align-items-start">
                 <div class="col-md-2">
                     <ul class="nav navbar-nav nav-pills nav-stacked">
@@ -57,119 +54,71 @@
 
                     <div class="row justify-content-left align-items-start">
                         <div class="col-md-12">
+                            <form class="form-inline" method="get">
+
+                                <table class="table">
+                                    <thead class="thead-default">
+                                    <tr>
+                                        <th style="font-size:11pt;"><fmt:message key="message.roomName"/></th>
+                                        <th style="font-size:11pt;"><fmt:message key="message.roomNumber"/></th>
+                                        <th style="font-size:11pt;"><fmt:message key="message.capacity"/></th>
+                                        <th style="font-size:11pt;"><fmt:message key="message.checkinDate"/></th>
+                                        <th style="font-size:11pt;"><fmt:message key="message.checkoutDate"/></th>
+                                        <th style="font-size:11pt;"><fmt:message key="message.totalCost"/>, <fmt:message key="message.currency"/></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td style="font-size:11pt;">${room_name}</td>
+                                        <td style="font-size:11pt;">${room_number}</td>
+                                        <td style="font-size:11pt;">${capacity}</td>
 
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-md-auto control-label" for="room_name"  style="font-size: 11pt;">
-                                        <fmt:message key="message.roomName"/>
-                                    </label>
-                                    <div class="col-md-auto">
-                                        <input id="room_name" value="${room_name}" name="room_name"
-                                               type="text" class="form-control input-md"  style="font-size: 11pt;"
-                                               required="" readonly/>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-md-auto control-label" for="room_number" style="font-size: 11pt;">
-                                        <fmt:message key="message.roomNumber"/>
-                                    </label>
-                                    <div class="col-md-auto">
-                                        <input id="room_number" value="${room_number}" name="room_number" type="text"
-                                               placeholder="" style="font-size: 11pt;"
-                                               class="form-control input-md" required="" readonly/>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <!-- Password input-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-md-auto control-label" for="capacity" style="font-size: 11pt;">
-                                        <fmt:message key="message.capacity"/>
-                                    </label>
-                                    <div class="col-md-auto">
-                                        <input id="capacity" value="${capacity}" name="capacity" type="text"
-                                               placeholder="" class="form-control input-md" required=""
-                                               style="font-size: 11pt;" readonly/>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <!-- Text input-->
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-md-auto control-label" for="check_in" style="font-size: 11pt;">
-                                        <fmt:message key="message.checkinDate"/>
-                                    </label>
-                                    <div class="col-md-auto">
                                         <jsp:useBean id="checkIn" class="java.util.Date"/>
                                         <jsp:setProperty name="checkIn" property="time"
                                                          value="${check_in}"/>
                                         <fmt:formatDate var="formatted_check_in"
                                                         pattern="dd.MM.YYYY" value="${checkIn}"/>
-                                        <input id="check_in" value="${formatted_check_in}" style="font-size: 11pt;"
-                                               name="check_in" type="text" placeholder="" class="form-control input-md"
-                                               required="" readonly/>
+                                        <td style="font-size:11pt;">${formatted_check_in}</td>
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-md-12">
-                            <!-- Text input-->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-md-auto control-label" for="check_out" style="font-size: 11pt;">
-                                        <fmt:message key="message.checkoutDate"/>
-                                    </label>
-                                    <div class="col-md-auto">
                                         <jsp:useBean id="checkOut" class="java.util.Date"/>
                                         <jsp:setProperty name="checkOut" property="time"
                                                          value="${check_out}"/>
                                         <fmt:formatDate var="formatted_check_out"
                                                         pattern="dd.MM.YYYY" value="${checkOut}"/>
-                                        <input id="check_out" value="${formatted_check_out}" name="check_out" type="text"
-                                               placeholder="" class="form-control input-md" required="" style="font-size: 11pt;"
-                                               readonly/>
+                                        <td style="font-size:11pt;">${formatted_check_out}</td>
 
-                                    </div>
-                                </div>
-                            </div>
+                                        <th scope="row" style="font-size:11pt;">${total_cost}</th>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </form>
+                        </div>
+                    </div>
 
 
-                            <!-- Text input-->
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="col-md-auto control-label" for="total_cost" style="font-size: 11pt;">
-                                        <fmt:message key="message.totalCost"/>
-                                    </label>
-                                    <div class="col-md-auto">
-                                        <input id="total_cost" value="${total_cost}" name="total_cost" type="text"
-                                               placeholder="" class="form-control input-md" style="font-size: 11pt;"
-                                               readonly/>
-
-                                    </div>
-                                </div>
+                    <div class="col-md-12 text-left">
+                        <div class="form-group">
+                            <div class="col-md-auto">
+                                <button id="pay" name="pay" class="btn btn-white" style="font-size: 10pt;">
+                                    <fmt:message key="message.pay"/>
+                                </button>
+                                <button id="cancel" name="cancel" class="btn btn-primary" style="font-size: 10pt;">
+                                    <fmt:message key="message.cancel"/>
+                                </button>
                             </div>
                         </div>
-
-
                     </div>
-                </div>
 
+
+
+
+                </div>
             </div>
+
         </fieldset>
     </form>
 </div>

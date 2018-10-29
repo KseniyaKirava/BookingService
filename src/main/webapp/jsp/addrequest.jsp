@@ -56,6 +56,14 @@
                     <!-- Text input-->
                     <div class="row justify-content-left align-items-start">
 
+                        <div class="form-group">
+                            <label class="col-md-12 control-label" style="color: red; font-size: 12pt;">
+                                ${messageReservationNotFound}${incorrectData}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-left align-items-start">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-md-auto control-label" for="room_capacity" style="font-size: 11pt;">
@@ -85,9 +93,10 @@
                         </div>
                     </div>
 
+
                     <script>
                         $(function () {
-                            $( "#checkin_date" ).daterangepicker({
+                            $("#checkin_date").daterangepicker({
                                 singleDatePicker: true,
                                 minDate: new Date(),
                                 locale: {
@@ -97,8 +106,8 @@
                         });
                     </script>
 
+
                     <div class="row justify-content-left align-items-start">
-                        <!-- Password input-->
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-md-auto control-label" for="checkout_date" style="font-size: 11pt;">
@@ -114,7 +123,7 @@
 
                         <script>
                             $(function () {
-                                $( "#checkout_date" ).daterangepicker({
+                                $("#checkout_date").daterangepicker({
                                     singleDatePicker: true,
                                     minDate: new Date(),
                                     locale: {

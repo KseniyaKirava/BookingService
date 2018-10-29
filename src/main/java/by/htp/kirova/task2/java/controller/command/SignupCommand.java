@@ -86,7 +86,7 @@ public class SignupCommand extends Command {
                 request.getSession().setAttribute("first_name", first_name);
                 request.getSession().setAttribute("last_name", last_name);
                 request.getSession().setAttribute("middle_name", middle_name);
-                request.getSession().setAttribute("errorSignUpCommand", MessageManager.getProperty("message.errorSignUp"));
+                request.getSession().setAttribute("errorSignUpCommand", MessageManager.getProperty("message.incorrectData"));
                 return null;
             } else {
                 if (UserLogic.isUsernameUnique(username)) {

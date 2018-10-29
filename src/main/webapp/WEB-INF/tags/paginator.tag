@@ -10,10 +10,10 @@
 
 <div class="form-group">
     <div class="col-md-auto text-right">
-        <button class="btn btn-light" style="font-size: 10pt; color: black">
+        <button class="btn btn-light">
             <%
                 for (int i = 0; i <= (count - 1) / step; i++) {
-                    out.println(String.format("\t&nbsp<a href='%s%d'>%d</a>", urlprefix, i * step, i + 1));
+                    out.println(String.format("\t&nbsp<a href='%s%d' style=\"font-size: 10pt; color: black; font-weight: bold\"> %d </a>", urlprefix, i * step, i + 1));
                 }
             %>
         </button>
