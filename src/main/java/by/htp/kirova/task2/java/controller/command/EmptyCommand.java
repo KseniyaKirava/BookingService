@@ -1,6 +1,5 @@
 package by.htp.kirova.task2.java.controller.command;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class EmptyCommand extends Command{
 
     @Override
-    public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+    public Command execute(HttpServletRequest request, HttpServletResponse response) {
         return CommandType.LOGIN.getCurrentCommand();
     }
 }

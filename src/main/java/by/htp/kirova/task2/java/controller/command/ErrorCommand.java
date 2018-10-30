@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ErrorCommand extends Command {
 
     @Override
-    public Command execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
+    public Command execute(HttpServletRequest req, HttpServletResponse resp) {
         return null;
     }
 }

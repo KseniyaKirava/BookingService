@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PaymentCommand extends Command {
 
     @Override
-    public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+    public Command execute(HttpServletRequest request, HttpServletResponse response) {
         User user = Util.getUserFromSession(request);
         if (user == null) {
             return CommandType.LOGIN.getCurrentCommand();

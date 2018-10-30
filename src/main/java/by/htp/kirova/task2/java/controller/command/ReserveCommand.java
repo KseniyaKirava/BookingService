@@ -1,8 +1,6 @@
 package by.htp.kirova.task2.java.controller.command;
 
-import by.htp.kirova.task2.java.entity.Reservation;
 import by.htp.kirova.task2.java.entity.User;
-import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.HelperService;
 import by.htp.kirova.task2.java.service.ServiceException;
 import by.htp.kirova.task2.java.service.ServiceFactory;

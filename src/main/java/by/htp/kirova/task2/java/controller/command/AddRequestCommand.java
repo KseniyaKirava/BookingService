@@ -12,12 +12,9 @@ import by.htp.kirova.task2.java.service.validation.Validator;
 import by.htp.kirova.task2.java.util.DateConverter;
 import by.htp.kirova.task2.java.util.Util;
 import org.apache.log4j.Logger;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -69,7 +66,6 @@ public class AddRequestCommand extends Command {
             ServiceFactory serviceFactory = ServiceFactory.getInstance();
             GenericService<Request> requestService = serviceFactory.getRequestService();
             GenericService<Reservation> reservationService = serviceFactory.getReservationService();
-            Reservation reservation = null;
 
 
             if (request.getMethod().equalsIgnoreCase("post")) {
@@ -109,7 +105,7 @@ public class AddRequestCommand extends Command {
                         }
                         if (isCreate) {
                             long requests_Id = requestEntity.getId();
-                            List rooms = new ArrayList();
+                            List rooms;
                             try {
                                 rooms = serviceFactory.getHelperService().showAvialiableRooms(requests_Id);
                             } catch (ServiceException e) {
@@ -140,7 +136,7 @@ public class AddRequestCommand extends Command {
                                     throw new CommandException("Parsing data error", e);
                                 }
                                 double total_cost = Util.getTotalCost(checkin_date, checkout_date, cost);
-                                reservation = new Reservation(0, reservation_date, checkin_date, checkout_date,
+                                Reservation reservation = new Reservation(0, reservation_date, checkin_date, checkout_date,
                                         total_cost, true, requests_Id, username, rooms_id, room_class);
 
                                 boolean isCreated = false;

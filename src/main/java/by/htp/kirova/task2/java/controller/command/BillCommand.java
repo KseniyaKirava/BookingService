@@ -9,8 +9,6 @@ import by.htp.kirova.task2.java.service.ServiceException;
 import by.htp.kirova.task2.java.service.ServiceFactory;
 import by.htp.kirova.task2.java.util.Util;
 import org.apache.log4j.Logger;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

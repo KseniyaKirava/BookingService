@@ -36,7 +36,7 @@ public class LoginCommand extends Command {
     private final static String PASSWORD = "password";
 
     @Override
-    public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+    public Command execute(HttpServletRequest request, HttpServletResponse response) {
         User user = Util.getUserFromSession(request);
         if (user != null) {
             if (user.getUsername().equals("admin")) {

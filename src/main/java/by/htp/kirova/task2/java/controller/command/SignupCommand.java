@@ -94,8 +94,8 @@ public class SignupCommand extends Command {
                     user = new User(username, email, hashPassword, first_name, last_name, middle_name, true);
                     Authority authority = new Authority("user", username, true);
                     ServiceFactory serviceFactory = ServiceFactory.getInstance();
-                    boolean isCreateUser = false;
-                    boolean isCreateAuthority = false;
+                    boolean isCreateUser;
+                    boolean isCreateAuthority;
                     try {
                         isCreateUser = serviceFactory.getUserService().create(user);
                         isCreateAuthority = serviceFactory.getAuthorityService().create(authority);

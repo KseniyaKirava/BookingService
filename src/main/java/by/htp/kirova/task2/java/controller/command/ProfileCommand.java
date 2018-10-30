@@ -10,7 +10,6 @@ import by.htp.kirova.task2.java.service.validation.Validator;
 import by.htp.kirova.task2.java.util.Util;
 import org.apache.log4j.Logger;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -102,7 +101,7 @@ public class ProfileCommand extends Command {
                     user.setLast_name(last_name);
                     user.setMiddle_name(middle_name);
 
-                    boolean isUpdate = false;
+                    boolean isUpdate;
                     try {
                         isUpdate = userService.update(user);
                     } catch (ServiceException e) {
