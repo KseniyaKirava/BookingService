@@ -65,11 +65,6 @@ public class AddRequestCommand extends Command {
             request.getSession().setAttribute("messageReservationNotFound", request.getSession().getAttribute("messageReservationNotFound"));
 
             String username = user.getUsername();
-            String currentPassword = user.getPassword();
-            Cookie cookie = new Cookie(username, currentPassword);
-            cookie.setMaxAge(60);
-            response.addCookie(cookie);
-            LOGGER.info("Cookie successfully added");
 
             ServiceFactory serviceFactory = ServiceFactory.getInstance();
             GenericService<Request> requestService = serviceFactory.getRequestService();
@@ -167,7 +162,7 @@ public class AddRequestCommand extends Command {
                                     request.getSession().setAttribute("total_cost", total_cost);
                                     request.getSession().setAttribute("reservation", reservation);
 
-                                    return CommandType.RESERVATION.getCurrentCommand();
+                                    return CommandType.BILL.getCurrentCommand();
                                 }
                             }
 

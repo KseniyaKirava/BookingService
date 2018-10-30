@@ -7,30 +7,26 @@ import by.htp.kirova.task2.java.entity.User;
 import by.htp.kirova.task2.java.service.GenericService;
 import by.htp.kirova.task2.java.service.ServiceException;
 import by.htp.kirova.task2.java.service.ServiceFactory;
-import by.htp.kirova.task2.java.util.DateConverter;
 import by.htp.kirova.task2.java.util.Util;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Abstract class implementation for a
- * particular command type - Reservation.
+ * particular command type - Bill.
  *
  * @author Kseniya Kirava
  * @since Oct 14, 2018
  */
-public class ReservationCommand extends Command {
+public class BillCommand extends Command {
 
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(ReservationCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(BillCommand.class);
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

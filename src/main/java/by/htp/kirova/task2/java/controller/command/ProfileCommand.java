@@ -65,12 +65,8 @@ public class ProfileCommand extends Command {
         if (user == null) {
             return CommandType.LOGIN.getCurrentCommand();
         } else {
-            String username = user.getUsername();
+
             String currentPassword = user.getPassword();
-            Cookie cookie = new Cookie(username, currentPassword);
-            cookie.setMaxAge(60);
-            response.addCookie(cookie);
-            LOGGER.info("Cookie successfully added");
 
             ServiceFactory serviceFactory = ServiceFactory.getInstance();
             GenericService<User> userService = serviceFactory.getUserService();

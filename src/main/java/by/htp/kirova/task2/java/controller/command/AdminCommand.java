@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class AdminCommand extends Command {
 
@@ -108,9 +109,18 @@ public class AdminCommand extends Command {
         GenericService<User> userService = serviceFactory.getUserService();
 
         try {
-            request.setAttribute("users", userService.read("WHERE enabled = true"));
+            List<User> users = userService.read("WHERE enabled = true");
+            request.getSession().setAttribute("size", users.size());
+            String strStart = request.getParameter("start");
+            int startReq = 0;
+            if (strStart != null) {
+                startReq = Integer.parseInt(strStart);
+            }
+            String where = String.format(" LIMIT %d, 5", startReq);
+            users = userService.read("WHERE enabled = true" + where);
+            request.getSession().setAttribute("users", users);
         } catch (ServiceException e) {
-            LOGGER.error("Reading user's data oe role failed");
+            LOGGER.error("Reading user's data failed");
             throw new CommandException(e);
         }
 

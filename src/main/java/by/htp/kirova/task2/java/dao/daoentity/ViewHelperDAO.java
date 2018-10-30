@@ -6,12 +6,12 @@ import by.htp.kirova.task2.java.dao.DAOException;
 import by.htp.kirova.task2.java.dao.HelperDAO;
 import by.htp.kirova.task2.java.util.DateConverter;
 import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,6 +30,14 @@ public class ViewHelperDAO implements HelperDAO {
     /**
      * Constant string which represents query to create request.
      */
+    private static final String SQL_SHOW_ALL_RESERVATIONS = "SELECT res.id, res.reservation_date, res.checkin_date, " +
+            "res.checkout_date, rooms.name, rooms.number, rooms.capacity, rc.name, res.total_cost " +
+            "FROM reservations as res JOIN rooms " +
+            "JOIN room_classes as rc " +
+            "WHERE res.rooms_id = rooms.id AND rooms.room_classes_id = rc.id AND res.enabled = true " +
+            "AND res.requests_users_username like '?'";
+
+
     private static final String SQL_SHOW_AVIALIABLE_ROOM = "SELECT req.room_capacity, req.checkin_date, req.checkout_date, " +
             "req.room_class, rooms.id, rooms.name, rooms.number, rooms.cost, rooms.room_classes_id " +
             "FROM rooms JOIN requests as req " +
@@ -42,7 +50,7 @@ public class ViewHelperDAO implements HelperDAO {
             "AND res.enabled = true)";
 
     @Override
-    public List showAvialiableRooms(Long id) throws DAOException {
+    public List<String> showAvialiableRooms(Long id) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
@@ -58,10 +66,11 @@ public class ViewHelperDAO implements HelperDAO {
             ps.setLong(1, id);
 
             double minCost = Double.MAX_VALUE;
+
             resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 double currentCost = resultSet.getDouble("rooms.cost");
-                if(currentCost < minCost){
+                if (currentCost < minCost) {
                     room = new ArrayList<>();
                     room.add(String.valueOf(resultSet.getInt("req.room_capacity")));
                     room.add(DateConverter.convertDateToString(resultSet.getLong("req.checkin_date")));
@@ -90,4 +99,51 @@ public class ViewHelperDAO implements HelperDAO {
         return room;
     }
 
+
+    @Override
+    public List<ArrayList<String>> showAllReservations(String username) throws DAOException {
+        ConnectionPool cp = null;
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet;
+
+        List<ArrayList<String>> reservations = new ArrayList<>();
+
+        try {
+            cp = ConnectionPool.getInstance();
+            connection = cp.extractConnection();
+
+            ps = connection.prepareStatement(SQL_SHOW_AVIALIABLE_ROOM);
+            ps.setString(1, username);
+
+            resultSet = ps.executeQuery();
+
+            while (resultSet.next()){
+                ArrayList<String> reservation = new ArrayList<>();
+                reservation.add(String.valueOf(resultSet.getInt("res.id")));
+                reservation.add(DateConverter.convertDateToString(resultSet.getLong("res.reservation_date")));
+                reservation.add(DateConverter.convertDateToString(resultSet.getLong("res.checkin_date")));
+                reservation.add(DateConverter.convertDateToString(resultSet.getLong("res.checkout_date")));
+                reservation.add(resultSet.getString("rooms.name"));
+                reservation.add(resultSet.getString("rooms.number"));
+                reservation.add(String.valueOf(resultSet.getInt("rooms.capacity")));
+                reservation.add(resultSet.getString("rc.name"));
+                reservation.add(String.valueOf(resultSet.getDouble("res.total_cost")));
+                reservations.add(reservation);
+            }
+
+        } catch (ConnectionPoolException | SQLException e) {
+            LOGGER.error("ConnectionPool error: ", e);
+            throw new DAOException("ConnectionPool error: ", e);
+
+        } finally {
+            if (cp != null && connection != null) {
+                cp.closePreparedStatement(ps);
+                cp.returnConnection(connection);
+            }
+        }
+
+
+        return reservations;
+    }
 }

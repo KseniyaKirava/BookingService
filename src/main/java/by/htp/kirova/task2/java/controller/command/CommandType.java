@@ -46,9 +46,9 @@ public enum CommandType {
     /**
      * Command to show user's reservations.
      */
-    RESERVATION {
+    BILL {
         {
-            this.command = new ReservationCommand();
+            this.command = new BillCommand();
         }
     },
     /**

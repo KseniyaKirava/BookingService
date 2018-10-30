@@ -35,13 +35,7 @@ public class RequestCommand extends Command {
         if (user == null) {
             return CommandType.LOGIN.getCurrentCommand();
         } else {
-
             String username = user.getUsername();
-            String currentPassword = user.getPassword();
-            Cookie cookie = new Cookie(username, currentPassword);
-            cookie.setMaxAge(60);
-            response.addCookie(cookie);
-            LOGGER.info("Cookie successfully added");
 
             ServiceFactory serviceFactory = ServiceFactory.getInstance();
             GenericService<Request> requestService = serviceFactory.getRequestService();
@@ -59,6 +53,7 @@ public class RequestCommand extends Command {
                 requests = requestService.read("WHERE users_username like '" + username + "' AND enabled = true " + where);
                 request.getSession().setAttribute("requests", requests);
             } catch (ServiceException e) {
+                LOGGER.error("Request read error");
                 throw new CommandException(e);
             }
 

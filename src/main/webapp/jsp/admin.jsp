@@ -1,5 +1,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <%@ include file="../include/head.htm" %>
@@ -7,7 +8,7 @@
 <div class="container">
     <%@ include file="../include/menu.htm" %>
 
-    <form class="form-horizontal" method="post" command="do?command=Profile">
+    <form class="form-horizontal" method="post" command="do?command=Admin">
 
         <fieldset>
 
@@ -20,25 +21,15 @@
                                 <fmt:message key="message.users"/></a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">
-                                <fmt:message key="message.requests"/></a>
-                        </li>
+                        <%--<li class="nav-item">--%>
+                            <%--<a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">--%>
+                                <%--<fmt:message key="message.requests"/></a>--%>
+                        <%--</li>--%>
 
-                        <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">
-                                <fmt:message key="message.rooms"/></a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">
-                                <fmt:message key="message.reservations"/></a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">
-                                <fmt:message key="message.facilities"/></a>
-                        </li>
+                        <%--<li class="nav-item">--%>
+                            <%--<a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">--%>
+                                <%--<fmt:message key="message.reservations"/></a>--%>
+                        <%--</li>--%>
 
 
                     </ul>
@@ -76,7 +67,7 @@
                                 <div class="form-group mb-2">
                                     <input id="password" class="form-control input-md" name="password"
                                            minlength="5" maxlength="200" pattern="[\w\d]{5,200}"
-                                           value="${users.password}" title="" required="" style="font-size: 11pt;"/>
+                                           value="${users.password}" type="password" required="" style="font-size: 11pt;"/>
                                 </div>
 
                                 <div class="form-group mb-2">
@@ -114,11 +105,16 @@
                                     </button>
                                 </div>
 
-
                             </form>
                         </div>
 
+
                     </c:forEach>
+
+                    <hr>
+                    <div class="row">
+                        <mytag:paginator count="${size}" step="5" urlprefix="?command=Admin&start="/>
+                    </div>
 
                 </div>
 

@@ -35,7 +35,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Profile">
+                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reserve">
                                 <fmt:message key="message.myBills"/></a>
                         </li>
 

@@ -8,7 +8,7 @@
     <%@ include file="../include/menu.htm" %>
 
 
-    <form class="form-horizontal" method="post" command="do?command=Reservation">
+    <form class="form-horizontal" method="post" command="do?command=Bill">
         <fieldset>
             <div class="row justify-content-left align-items-start">
                 <div class="col-md-2">
@@ -28,7 +28,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Profile">
+                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reserve">
                                 <fmt:message key="message.myBills"/></a>
                         </li>
 
