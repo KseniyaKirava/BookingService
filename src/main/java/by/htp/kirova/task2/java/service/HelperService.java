@@ -27,5 +27,5 @@ public interface HelperService {
      * @return List of Arraylist user's reservations.
      * @throws ServiceException Layer
      */
-    List<ArrayList<String>> showAllReservations(String username) throws ServiceException;
+    List<ArrayList<Object>> showAllReservations(String where) throws ServiceException;
 }

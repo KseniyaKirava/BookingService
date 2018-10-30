@@ -64,7 +64,8 @@
                                         <th style="font-size:11pt;"><fmt:message key="message.capacity"/></th>
                                         <th style="font-size:11pt;"><fmt:message key="message.checkinDate"/></th>
                                         <th style="font-size:11pt;"><fmt:message key="message.checkoutDate"/></th>
-                                        <th style="font-size:11pt;"><fmt:message key="message.totalCost"/>, <fmt:message key="message.currency"/></th>
+                                        <th style="font-size:11pt;"><fmt:message key="message.totalCost"/>,
+                                            <fmt:message key="message.currency"/></th>
                                     </tr>
                                     </thead>
                                     <tbody>

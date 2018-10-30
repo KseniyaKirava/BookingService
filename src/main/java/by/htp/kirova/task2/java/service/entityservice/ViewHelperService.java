@@ -42,14 +42,14 @@ public class ViewHelperService implements HelperService {
 
 
     @Override
-    public List<ArrayList<String>> showAllReservations(String username) throws ServiceException {
+    public List<ArrayList<Object>> showAllReservations(String where) throws ServiceException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         HelperDAO helperDAO = daoFactory.getHelperDAO();
 
-        List<ArrayList<String>> result = null;
+        List<ArrayList<Object>> result = null;
 
         try {
-            result = helperDAO.showAllReservations(username);
+            result = helperDAO.showAllReservations(where);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

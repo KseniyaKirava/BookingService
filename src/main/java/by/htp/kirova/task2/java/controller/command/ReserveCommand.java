@@ -3,6 +3,7 @@ package by.htp.kirova.task2.java.controller.command;
 import by.htp.kirova.task2.java.entity.Reservation;
 import by.htp.kirova.task2.java.entity.User;
 import by.htp.kirova.task2.java.service.GenericService;
+import by.htp.kirova.task2.java.service.HelperService;
 import by.htp.kirova.task2.java.service.ServiceException;
 import by.htp.kirova.task2.java.service.ServiceFactory;
 import by.htp.kirova.task2.java.util.Util;
@@ -10,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,11 +38,11 @@ public class ReserveCommand extends Command{
                 String username = user.getUsername();
 
                 ServiceFactory serviceFactory = ServiceFactory.getInstance();
-                GenericService<Reservation> reservationService = serviceFactory.getReservationService();
-                List<Reservation> reservations;
+                HelperService helperService = serviceFactory.getHelperService();
+                List<ArrayList<Object>> reservations;
 
                 try {
-                    reservations = reservationService.read("WHERE users_username like '" + username + "' AND enabled = true");
+                    reservations = helperService.showAllReservations("\'" + username + "\' ORDER BY res.reservation_date");
                     request.getSession().setAttribute("size", reservations.size());
                     String strStart = request.getParameter("start");
                     int startReq = 0;
@@ -48,7 +50,7 @@ public class ReserveCommand extends Command{
                         startReq = Integer.parseInt(strStart);
                     }
                     String where = String.format(" LIMIT %d, 10", startReq);
-                    reservations = reservationService.read("WHERE users_username like '" + username + "' AND enabled = true " + where);
+                    reservations = helperService.showAllReservations("\'" + username + "\' ORDER BY res.reservation_date" + where);
                     request.getSession().setAttribute("reservations", reservations);
                 } catch (ServiceException e) {
                     LOGGER.error("Reservations read error");

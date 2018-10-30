@@ -27,5 +27,5 @@ public interface HelperDAO {
      * @return List of Arraylist user's reservations.
      * @throws DAOException Layer
      */
-    List<ArrayList<String>> showAllReservations(String username) throws DAOException;
+    List<ArrayList<Object>> showAllReservations(String username) throws DAOException;
 }

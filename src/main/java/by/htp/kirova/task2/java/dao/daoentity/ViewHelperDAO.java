@@ -7,10 +7,7 @@ import by.htp.kirova.task2.java.dao.HelperDAO;
 import by.htp.kirova.task2.java.util.DateConverter;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +32,7 @@ public class ViewHelperDAO implements HelperDAO {
             "FROM reservations as res JOIN rooms " +
             "JOIN room_classes as rc " +
             "WHERE res.rooms_id = rooms.id AND rooms.room_classes_id = rc.id AND res.enabled = true " +
-            "AND res.requests_users_username like '?'";
+            "AND res.requests_users_username like ";
 
 
     private static final String SQL_SHOW_AVIALIABLE_ROOM = "SELECT req.room_capacity, req.checkin_date, req.checkout_date, " +
@@ -101,34 +98,34 @@ public class ViewHelperDAO implements HelperDAO {
 
 
     @Override
-    public List<ArrayList<String>> showAllReservations(String username) throws DAOException {
+    public List<ArrayList<Object>> showAllReservations(String where) throws DAOException {
         ConnectionPool cp = null;
         Connection connection = null;
-        PreparedStatement ps = null;
+        Statement statement = null;
         ResultSet resultSet;
 
-        List<ArrayList<String>> reservations = new ArrayList<>();
+        String sql = SQL_SHOW_ALL_RESERVATIONS + where;
+
+        List<ArrayList<Object>> reservations = new ArrayList<>();
 
         try {
             cp = ConnectionPool.getInstance();
             connection = cp.extractConnection();
 
-            ps = connection.prepareStatement(SQL_SHOW_AVIALIABLE_ROOM);
-            ps.setString(1, username);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
 
-            resultSet = ps.executeQuery();
-
-            while (resultSet.next()){
-                ArrayList<String> reservation = new ArrayList<>();
-                reservation.add(String.valueOf(resultSet.getInt("res.id")));
-                reservation.add(DateConverter.convertDateToString(resultSet.getLong("res.reservation_date")));
-                reservation.add(DateConverter.convertDateToString(resultSet.getLong("res.checkin_date")));
-                reservation.add(DateConverter.convertDateToString(resultSet.getLong("res.checkout_date")));
+            while (resultSet.next()) {
+                ArrayList<Object> reservation = new ArrayList<>();
+                reservation.add(resultSet.getInt("res.id"));
+                reservation.add(resultSet.getLong("res.reservation_date"));
+                reservation.add(resultSet.getLong("res.checkin_date"));
+                reservation.add(resultSet.getLong("res.checkout_date"));
                 reservation.add(resultSet.getString("rooms.name"));
                 reservation.add(resultSet.getString("rooms.number"));
-                reservation.add(String.valueOf(resultSet.getInt("rooms.capacity")));
+                reservation.add(resultSet.getInt("rooms.capacity"));
                 reservation.add(resultSet.getString("rc.name"));
-                reservation.add(String.valueOf(resultSet.getDouble("res.total_cost")));
+                reservation.add(resultSet.getDouble("res.total_cost"));
                 reservations.add(reservation);
             }
 
@@ -138,7 +135,7 @@ public class ViewHelperDAO implements HelperDAO {
 
         } finally {
             if (cp != null && connection != null) {
-                cp.closePreparedStatement(ps);
+                cp.closeStatement(statement);
                 cp.returnConnection(connection);
             }
         }

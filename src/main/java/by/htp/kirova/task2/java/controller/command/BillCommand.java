@@ -39,15 +39,6 @@ public class BillCommand extends Command {
             ServiceFactory serviceFactory = ServiceFactory.getInstance();
             GenericService<Reservation> reservationService = serviceFactory.getReservationService();
 
-            if (!request.getMethod().equalsIgnoreCase("post")) {
-                String username = user.getUsername();
-                String currentPassword = user.getPassword();
-                Cookie cookie = new Cookie(username, currentPassword);
-                cookie.setMaxAge(60);
-                response.addCookie(cookie);
-                LOGGER.info("Cookie successfully added");
-
-            }
             if (request.getParameter("cancel") != null) {
                 reservation.setEnabled(false);
                 try {
