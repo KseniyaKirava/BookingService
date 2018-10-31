@@ -3,10 +3,10 @@
 <%@ taglib prefix="mytag" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
-<%@ include file="../include/head.htm" %>
+<%@ include file="../include/head.jspf" %>
 <body>
 <div class="container">
-    <%@ include file="../include/menu.htm" %>
+    <%@ include file="../include/menu.jspf" %>
 
     <form class="form-horizontal" method="post" command="do?command=Admin">
 
@@ -71,21 +71,21 @@
                                 </div>
 
                                 <div class="form-group mb-2">
-                                    <input id="first_name" class="form-control input-md" name="first_name"
+                                    <input id="firstName" class="form-control input-md" name="firstName"
                                            minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
-                                           value="${users.first_name}" title="" required="" style="font-size: 11pt;"/>
+                                           value="${users.firstName}" title="" required="" style="font-size: 11pt;"/>
                                 </div>
 
                                 <div class="form-group mb-2">
-                                    <input id="last_name" class="form-control input-md" name="last_name"
+                                    <input id="lastName" class="form-control input-md" name="lastName"
                                            minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
-                                           value="${users.last_name}" title="" required="" style="font-size: 11pt;"/>
+                                           value="${users.lastName}" title="" required="" style="font-size: 11pt;"/>
                                 </div>
 
                                 <div class="form-group mb-2">
-                                    <input id="middle_name" class="form-control input-md" name="middle_name"
+                                    <input id="middleName" class="form-control input-md" name="middleName"
                                            maxlength="15" pattern="[[A-Za-zА-Яа-яЁё.-]+]{0,15}"
-                                           value="${users.middle_name}" title="" style="font-size: 11pt;"/>
+                                           value="${users.middleName}" title="" style="font-size: 11pt;"/>
                                 </div>
                                 <div class="form-group mb-2">
                                     <input id="residence_country" class="form-control input-md" name="enabled"

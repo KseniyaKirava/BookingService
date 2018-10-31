@@ -4,10 +4,10 @@
 
 
 <html>
-<%@ include file="../include/head.htm" %>
+<%@ include file="../include/head.jspf" %>
 <body>
 <div class="container">
-    <%@ include file="../include/menu.htm" %>
+    <%@ include file="../include/menu.jspf" %>
 
 
     <form class="form-horizontal" method="post" command="do?command=Login">

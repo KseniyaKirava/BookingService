@@ -1,10 +1,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
-<%@ include file="../include/head.htm" %>
+<%@ include file="../include/head.jspf" %>
 <body>
 <div class="container">
-    <%@ include file="../include/menu.htm" %>
+    <%@ include file="../include/menu.jspf" %>
 
     <form class="form-horizontal" method="post" command="do?command=AddRequest">
 
@@ -66,11 +66,11 @@
                     <div class="row justify-content-left align-items-start">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="room_capacity" style="font-size: 11pt;">
+                                <label class="col-md-auto control-label" for="roomCapacity" style="font-size: 11pt;">
                                     <fmt:message key="message.roomcapacity"/>
                                 </label>
                                 <div class="col-md-auto">
-                                    <input id="room_capacity" value="${room_capacity}" name="room_capacity"
+                                    <input id="roomCapacity" value="${roomCapacity}" name="roomCapacity"
                                            type="number" min="1" max="5" class="form-control input-md"
                                            required="" style="font-size: 11pt;"/>
 
@@ -80,11 +80,11 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="checkin_date" style="font-size: 11pt;">
+                                <label class="col-md-auto control-label" for="checkinDate" style="font-size: 11pt;">
                                     <fmt:message key="message.checkinDate"/>
                                 </label>
                                 <div class="col-md-auto">
-                                    <input id="checkin_date" value="${checkin_date}" name="checkin_date" type="text"
+                                    <input id="checkinDate" value="${checkinDate}" name="checkinDate" type="text"
                                            class="form-control input-md" required="" style="font-size: 11pt;"
                                            pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})"/>
 
@@ -96,7 +96,7 @@
 
                     <script>
                         $(function () {
-                            $("#checkin_date").daterangepicker({
+                            $("#checkinDate").daterangepicker({
                                 singleDatePicker: true,
                                 minDate: new Date(),
                                 locale: {
@@ -110,11 +110,11 @@
                     <div class="row justify-content-left align-items-start">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="checkout_date" style="font-size: 11pt;">
+                                <label class="col-md-auto control-label" for="checkoutDate" style="font-size: 11pt;">
                                     <fmt:message key="message.checkoutDate"/>
                                 </label>
                                 <div class="col-md-auto">
-                                    <input id="checkout_date" value="${checkout_date}" name="checkout_date" type="text"
+                                    <input id="checkoutDate" value="${checkoutDate}" name="checkoutDate" type="text"
                                            style="font-size: 11pt;" placeholder="" class="form-control input-md"
                                            required="" pattern="([0-9]{2})([\.])([0-9]{2})([\.])([0-9]{4})"/>
                                 </div>
@@ -123,7 +123,7 @@
 
                         <script>
                             $(function () {
-                                $("#checkout_date").daterangepicker({
+                                $("#checkoutDate").daterangepicker({
                                     singleDatePicker: true,
                                     minDate: new Date(),
                                     locale: {
@@ -138,11 +138,11 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="room_class" style="font-size: 11pt;">
+                                <label class="col-md-auto control-label" for="roomClass" style="font-size: 11pt;">
                                     <fmt:message key="message.roomClass"/>
                                 </label>
                                 <div class="col-md-auto">
-                                    <select data-style="btn-primary" id="room_class" name="room_class" type="text"
+                                    <select data-style="btn-primary" id="roomClass" name="roomClass" type="text"
                                             class="form-control input-md">
                                         <option selected value="standard" style="font-size: 11pt;">
                                             <fmt:message key="message.roomStandard"/>

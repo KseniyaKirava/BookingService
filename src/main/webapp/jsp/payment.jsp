@@ -6,7 +6,7 @@
 <%--<script src="http://bootstraptema.ru/snippets/form/2017/script.js"></script>--%>
 
 <html>
-<%@ include file="../include/head.htm" %>
+<%@ include file="../include/head.jspf" %>
 <body>
 <fmt:setBundle basename="message"/>
 <form class="form-horizontal" method="post" command="do?command=Payment">
@@ -68,6 +68,10 @@
                             <button type="submit" class="btn btn-primary" id="confirm-purchase"
                                     style="font-size: 11pt;">
                                 <fmt:message key="message.confirm"/>
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="cancel-purchase"
+                                    style="font-size: 11pt;">
+                                <fmt:message key="message.cancel"/>
                             </button>
                         </div>
                     </form>

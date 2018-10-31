@@ -9,7 +9,7 @@
     <display-name>Servlet kirova</display-name>
     <servlet>
         <servlet-name>Controller</servlet-name>
-        <servlet-class>by.htp.kirova.task2.java.controller.Controller</servlet-class>
+        <servlet-class>by.htp.kirova.task2.controller.Controller</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
@@ -39,7 +39,7 @@
 
     <filter>
         <filter-name>EncodingFilter</filter-name>
-        <filter-class>by.htp.kirova.task2.java.filter.EncodingFilter</filter-class>
+        <filter-class>by.htp.kirova.task2.filter.EncodingFilter</filter-class>
         <init-param>
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
@@ -52,7 +52,7 @@
 
     <filter>
         <filter-name>CacheControl</filter-name>
-        <filter-class>by.htp.kirova.task2.java.filter.CacheControlFilter</filter-class>
+        <filter-class>by.htp.kirova.task2.filter.CacheControlFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>CacheControl</filter-name>
@@ -61,7 +61,7 @@
 
     <filter>
         <filter-name>SessionLocaleFilter</filter-name>
-        <filter-class>by.htp.kirova.task2.java.filter.SessionLocaleFilter</filter-class>
+        <filter-class>by.htp.kirova.task2.filter.SessionLocaleFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SessionLocaleFilter</filter-name>

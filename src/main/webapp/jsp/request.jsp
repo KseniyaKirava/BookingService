@@ -4,10 +4,10 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
-<%@ include file="../include/head.htm" %>
+<%@ include file="../include/head.jspf" %>
 <body>
 <div class="container">
-    <%@ include file="../include/menu.htm" %>
+    <%@ include file="../include/menu.jspf" %>
 
 
     <form class="form-horizontal" method="get" command="do?command=Request">
@@ -77,25 +77,25 @@
                                         <tbody>
                                         <tr>
                                             <th scope="row" style="font-size:11pt;">${row.id}</th>
-                                            <td style="font-size:11pt;">${row.room_capacity}</td>
+                                            <td style="font-size:11pt;">${row.roomCapacity}</td>
 
                                             <jsp:useBean id="checkInDate" class="java.util.Date"/>
                                             <jsp:setProperty name="checkInDate" property="time"
-                                                             value="${row.checkin_date}"/>
+                                                             value="${row.checkinDate}"/>
                                             <fmt:formatDate var="formattedCheckInDate"
                                                             pattern="dd.MM.YYYY" value="${checkInDate}"/>
                                             <td style="font-size:11pt;">${formattedCheckInDate}</td>
 
                                             <jsp:useBean id="checkOutDate" class="java.util.Date"/>
                                             <jsp:setProperty name="checkOutDate" property="time"
-                                                             value="${row.checkout_date}"/>
+                                                             value="${row.checkoutDate}"/>
                                             <fmt:formatDate var="formattedCheckOutDate"
                                                             pattern="dd.MM.YYYY" value="${checkOutDate}"/>
                                             <td style="font-size:11pt;">${formattedCheckOutDate}</td>
 
-                                            <td style="font-size:11pt;">${row.room_class}</td>
+                                            <td style="font-size:11pt;">${row.roomClass}</td>
                                             <td style="font-size:11pt;" hidden>${row.enabled}</td>
-                                            <td style="font-size:11pt;" hidden>${row.users_username}</td>
+                                            <td style="font-size:11pt;" hidden>${row.usersUsername}</td>
 
                                         </tr>
                                         </tbody>

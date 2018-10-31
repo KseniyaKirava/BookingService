@@ -1,10 +1,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
-<%@ include file="../include/head.htm" %>
+<%@ include file="../include/head.jspf" %>
 <body>
 <div class="container">
-    <%@ include file="../include/menu.htm" %>
+    <%@ include file="../include/menu.jspf" %>
 
     <form class="form-horizontal" method="post" command="do?command=Profile">
 
@@ -58,7 +58,7 @@
                                     <button id="logout" name="logout" class="btn btn-white" style="font-size: 10pt;">
                                         <fmt:message key="message.logout"/>
                                     </button>
-                                    <button onclick="myFunction()" id="deletemyaccount" name="deletemyaccount"
+                                    <button id="deletemyaccount" name="deletemyaccount"
                                             class="btn btn-primary" style="font-size: 10pt;">
                                         <fmt:message key="message.deleteAccount"/>
                                     </button>
@@ -124,11 +124,11 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="first_name" style="font-size: 11pt;">
+                                <label class="col-md-auto control-label" for="firstName" style="font-size: 11pt;">
                                     <fmt:message key="message.firstName"/>
                                 </label>
                                 <div class="col-md-auto">
-                                    <input id="first_name" value="${first_name}" name="first_name" type="text"
+                                    <input id="firstName" value="${firstName}" name="firstName" type="text"
                                            minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
                                            placeholder="first name" class="form-control input-md" required=""
                                            style="font-size: 11pt;"/>
@@ -142,11 +142,11 @@
                         <!-- Text input-->
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="last_name" style="font-size: 11pt;">
+                                <label class="col-md-auto control-label" for="lastName" style="font-size: 11pt;">
                                     <fmt:message key="message.lastName"/>
                                 </label>
                                 <div class="col-md-auto">
-                                    <input id="last_name" value="${last_name}" name="last_name" type="text"
+                                    <input id="lastName" value="${lastName}" name="lastName" type="text"
                                            minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
                                            placeholder="last name" class="form-control input-md" required=""
                                            style="font-size: 11pt;"/>
@@ -160,11 +160,11 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-md-auto control-label" for="middle_name" style="font-size: 11pt;">
+                                <label class="col-md-auto control-label" for="middleName" style="font-size: 11pt;">
                                     <fmt:message key="message.middleName"/>
                                 </label>
                                 <div class="col-md-auto">
-                                    <input id="middle_name" value="${middle_name}" name="middle_name" type="text"
+                                    <input id="middleName" value="${middleName}" name="middleName" type="text"
                                            maxlength="15" pattern="[[A-Za-zА-Яа-яЁё.-]+]{0,15}"
                                            placeholder="" class="form-control input-md" style="font-size: 11pt;"/>
 
