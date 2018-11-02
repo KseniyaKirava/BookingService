@@ -6,6 +6,8 @@ import by.htp.kirova.task2.dao.DAOFactory;
 import by.htp.kirova.task2.entity.Facility;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
+import by.htp.kirova.task2.service.validation.Validator;
+
 import java.util.List;
 
 /**
@@ -18,19 +20,21 @@ public class FacilityServiceImpl implements BookingService<Facility> {
 
     @Override
     public boolean create(Facility facility) throws ServiceException {
-//        if (!Validator.checkEntityName(facility.getName())) {
-//            LOGGER.info("The entered data does not correspond to the format");
-//            return false;
-//        }
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
+        Validator validator = Validator.getInstance();
+
+        if (!validator.checkEntityName(facility.getName()) ||
+                !facility.isEnabled()) {
+            return false;
+        }
 
         boolean result;
 
         try {
             result = facilityDAO.create(facility);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the create request correctly: ", e);
         }
 
         return result;
@@ -41,12 +45,14 @@ public class FacilityServiceImpl implements BookingService<Facility> {
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
 
+        //no validation for internal queries
+
         List<Facility> list;
 
         try {
             list = facilityDAO.read(where);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the read request correctly: ", e);
         }
 
         return list;
@@ -57,12 +63,18 @@ public class FacilityServiceImpl implements BookingService<Facility> {
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
 
+        Validator validator = Validator.getInstance();
+
+        if (!validator.checkEntityName(facility.getName())) {
+            return false;
+        }
+
         boolean result;
 
         try {
             result = facilityDAO.update(facility);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the update request correctly: ", e);
         }
 
         return result;
@@ -70,6 +82,10 @@ public class FacilityServiceImpl implements BookingService<Facility> {
 
     @Override
     public boolean delete(Facility facility) throws ServiceException {
+
+        // Method is not used.
+        // UPDATE is used to remove objects from the database with flag enabled = false.
+
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
 
@@ -78,7 +94,7 @@ public class FacilityServiceImpl implements BookingService<Facility> {
         try {
             result = facilityDAO.delete(facility);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the delete request correctly: ", e);
         }
 
         return result;

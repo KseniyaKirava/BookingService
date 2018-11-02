@@ -15,14 +15,14 @@
         <servlet-name>Controller</servlet-name>
         <url-pattern>/do</url-pattern>
     </servlet-mapping>
-    <!--<error-page>-->
-        <!--<error-code>404</error-code>-->
-        <!--<location>/jsp/error.jsp</location>-->
-    <!--</error-page>-->
-    <!--<error-page>-->
-        <!--<exception-type>java.lang.RuntimeException</exception-type>-->
-        <!--<location>/jsp/error.jsp</location>-->
-    <!--</error-page>-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/jsp/error.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/jsp/error.jsp</location>
+    </error-page>
     <jsp-config>
         <!--<taglib>-->
             <!--<taglib-uri>customtags</taglib-uri>-->

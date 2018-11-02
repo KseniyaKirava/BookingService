@@ -2,7 +2,7 @@ package by.htp.kirova.task2.controller.command;
 
 
 import by.htp.kirova.task2.entity.User;
-import by.htp.kirova.task2.logic.UserLogic;
+import by.htp.kirova.task2.service.logic.UserLogic;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.ServiceFactory;
@@ -86,11 +86,13 @@ public class ProfileCommand extends Command {
                     String last_name = request.getParameter(LAST_NAME);
                     String middle_name = request.getParameter(MIDDLE_NAME);
                     boolean passwordIsUpdated = !password.equals(currentPassword);
-                    if (passwordIsUpdated && !Validator.checkPassword(password)) {
+
+                    Validator validator = Validator.getInstance();
+                    if (passwordIsUpdated && !validator.checkPassword(password)) {
                         return null;
                     }
-                    if (!Validator.checkEmail(email) || !Validator.checkName(first_name) ||
-                            !Validator.checkName(last_name) || !Validator.checkMiddleName(middle_name)) {
+                    if (!validator.checkEmail(email) || !validator.checkName(first_name) ||
+                            !validator.checkName(last_name) || !validator.checkMiddleName(middle_name)) {
                         return null;
                     }
                     if (passwordIsUpdated) {

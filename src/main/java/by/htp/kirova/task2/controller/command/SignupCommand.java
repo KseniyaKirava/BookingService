@@ -3,7 +3,7 @@ package by.htp.kirova.task2.controller.command;
 import by.htp.kirova.task2.controller.MessageManager;
 import by.htp.kirova.task2.entity.Authority;
 import by.htp.kirova.task2.entity.User;
-import by.htp.kirova.task2.logic.UserLogic;
+import by.htp.kirova.task2.service.logic.UserLogic;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.ServiceFactory;
 import by.htp.kirova.task2.service.validation.Validator;
@@ -76,10 +76,11 @@ public class SignupCommand extends Command {
             String last_name = request.getParameter(LAST_NAME);
             String middle_name = request.getParameter(MIDDLE_NAME);
 
-            if (!Validator.checkUsername(username) || !Validator.checkEmail(email) ||
-                    !Validator.checkPassword(password) || !Validator.checkPassword(password) ||
-                    !Validator.checkName(first_name) || !Validator.checkName(last_name) ||
-                    !Validator.checkMiddleName(middle_name)) {
+            Validator validator = Validator.getInstance();
+            if (!validator.checkUsername(username) || !validator.checkEmail(email) ||
+                    !validator.checkPassword(password) || !validator.checkPassword(password) ||
+                    !validator.checkName(first_name) || !validator.checkName(last_name) ||
+                    !validator.checkMiddleName(middle_name)) {
                 request.getSession().setAttribute("username", "");
                 request.getSession().setAttribute("email", email);
                 request.getSession().setAttribute("password", "");

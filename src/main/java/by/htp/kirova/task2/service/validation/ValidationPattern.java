@@ -19,7 +19,7 @@ enum ValidationPattern {
     /**
      * User's password pattern.
      */
-    PASSWORD("[\\w\\d]{5,15}"),
+    PASSWORD("[\\w]{5,15}"),
 
     /**
      * User's first name/last name pattern.
@@ -34,7 +34,7 @@ enum ValidationPattern {
     /**
      * Entity name pattern.
      */
-    ENTITY_NAME("[[A-Za-zА-Яа-яЁё\\d, -]+]{1,50}"),
+    ENTITY_NAME("[[A-Za-zА-Яа-яЁё\\d -]+]{1,50}"),
 
     /**
      * E-mail pattern.
@@ -44,7 +44,12 @@ enum ValidationPattern {
     /**
      * Date pattern.
      */
-    DATE("([0-9]{2})([\\.])([0-9]{2})([\\.])([0-9]{4})");
+    DATE("([0-9]{2})([\\.])([0-9]{2})([\\.])([0-9]{4})"),
+
+    /**
+     * Authority pattern.
+     */
+    AUTHORITY ("[A-Za-z]{4,10}");
 
 
 

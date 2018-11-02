@@ -1,11 +1,13 @@
 package by.htp.kirova.task2.dao.daoentity;
 
 import by.htp.kirova.task2.dao.BookingDAO;
+import by.htp.kirova.task2.dao.ConnectionPool;
+import by.htp.kirova.task2.dao.DAOException;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolException;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolImpl;
 import by.htp.kirova.task2.entity.Reservation;
-import by.htp.kirova.task2.dao.DAOException;
 import org.apache.log4j.Logger;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +25,60 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(ReservationDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(ReservationDAOImpl.class);
+
+    /**
+     * The unique identification number constant.
+     */
+    private final static String ID = "id";
+
+    /**
+     * The reservation date constant.
+     */
+    private final static String RESERVATION_DATE= "reservation_date";
+
+    /**
+     * The check in date constant.
+     */
+    private final static String CHECKIN_DATE= "checkin_date";
+
+    /**
+     * The check out date constant.
+     */
+    private final static String CHECKOUT_DATE= "checkout_date";
+
+    /**
+     * The total cost constant.
+     */
+    private final static String TOTAL_COST= "total_cost";
+
+    /**
+     * The unique username constant.
+     */
+    private final static String USERNAME = "users_username";
+
+    /**
+     * The enabled state constant.
+     */
+    private final static String ENABLED = "enabled";
+
+    /**
+     * The enabled state constant.
+     */
+    private final static String ROOMS_ID = "rooms_id";
+
+    /**
+     * The enabled state constant.
+     */
+    private final static String ROOM_CLASS_ID = "rooms_room_classes_id";
+
 
     /**
      * Constant string which represents query to create reservation.
      */
     private static final String SQL_CREATE_RESERVATION = "INSERT INTO reservations(reservation_date, " +
-            "checkin_date, checkout_date, total_cost, enabled, requests_id, requests_users_username, rooms_id, " +
-            "rooms_room_classes_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "checkin_date, checkout_date, total_cost, enabled, users_username, rooms_id, " +
+            "rooms_room_classes_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     /**
      * Constant string which represents query to select all reservations.
@@ -41,8 +89,8 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
      * Constant string which represents query to update reservation.
      */
     private static final String SQL_UPDATE_RESERVATION = "UPDATE reservations SET reservation_date= ?," +
-            "checkin_date= ?,checkout_date= ?,total_cost= ?, enabled= ?, requests_id= ?," +
-            "requests_users_username= ?,rooms_id= ?,rooms_room_classes_id= ? WHERE id= ?";
+            "checkin_date= ?,checkout_date= ?,total_cost= ?, enabled= ?, users_username= ?, " +
+            "rooms_id= ?, rooms_room_classes_id= ?  WHERE id= ?";
 
     /**
      * Constant string which represents query to delete reservation.
@@ -52,64 +100,64 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
 
     @Override
     public boolean create(Reservation reservation) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
 
+        int result;
+
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
+            connection.setAutoCommit(false);
 
             ps = connection.prepareStatement(SQL_CREATE_RESERVATION, Statement.RETURN_GENERATED_KEYS);
             ps.setLong(1, reservation.getReservationDate());
             ps.setLong(2, reservation.getCheckinDate());
             ps.setLong(3, reservation.getCheckoutDate());
-            ps.setDouble(4, reservation.getTotal_cost());
+            ps.setDouble(4, reservation.getTotalCost());
             ps.setBoolean(5, reservation.isEnabled());
-            ps.setLong(6,  reservation.getRequestsId());
-            ps.setString(7, reservation.getRequestsUsersUsername());
-            ps.setLong(8,  reservation.getRoomsId());
-            ps.setLong(9, reservation.getRoomsRoomClassesId());
+            ps.setString(6, reservation.getUsersUsername());
+            ps.setLong(7, reservation.getRoomsId());
+            ps.setLong(8, reservation.getRoomsRoomClassesId());
 
-            int result = ps.executeUpdate();
-            int id = 0;
 
-            if (result > 0) {
-                ResultSet generatedKeys = ps.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    id = generatedKeys.getInt(1);
-                }
+            result = ps.executeUpdate();
+
+            if (result <= 0) {
+                return false;
             }
 
-            if (id > 0) {
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int id = generatedKeys.getInt(1);
                 reservation.setId(id);
-
-                connection.setAutoCommit(false);
-                connection.commit();
-                return true;
             }
+
+            connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            if (cp != null) {
+            if (cp != null && connection != null) {
                 cp.rollbackConnection(connection);
             }
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null && ps != null) {
-                cp.setAutoCommitTrue(connection);
+            if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+            }
+            if (cp != null && connection != null) {
+                cp.setAutoCommitTrue(connection);
+                cp.releaseConnection(connection);
             }
         }
 
-        return false;
+        return true;
     }
 
     @Override
     public List<Reservation> read(String where) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet;
@@ -120,33 +168,34 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
+
             while (resultSet.next()) {
                 list.add(new Reservation(
-                        resultSet.getLong("id"),
-                        resultSet.getLong("reservation_date"),
-                        resultSet.getLong("checkin_date"),
-                        resultSet.getLong("checkout_date"),
-                        resultSet.getDouble("total_cost"),
-                        resultSet.getBoolean("enabled"),
-                        resultSet.getLong("requests_id"),
-                        resultSet.getString("requests_users_username"),
-                        resultSet.getLong("rooms_id"),
-                        resultSet.getLong("rooms_room_classes_id")
+                        resultSet.getLong(ID),
+                        resultSet.getLong(RESERVATION_DATE),
+                        resultSet.getLong(CHECKIN_DATE),
+                        resultSet.getLong(CHECKOUT_DATE),
+                        resultSet.getDouble(TOTAL_COST),
+                        resultSet.getBoolean(ENABLED),
+                        resultSet.getString(USERNAME),
+                        resultSet.getLong(ROOMS_ID),
+                        resultSet.getLong(ROOM_CLASS_ID)
                 ));
             }
 
         } catch (ConnectionPoolException | SQLException e) {
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && statement != null) {
                 cp.closeStatement(statement);
-                cp.returnConnection(connection);
+            }
+            if (cp != null && connection != null) {
+                cp.releaseConnection(connection);
             }
         }
 
@@ -155,7 +204,7 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
 
     @Override
     public boolean update(Reservation reservation) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
 
@@ -163,37 +212,37 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
+            connection.setAutoCommit(false);
 
             ps = connection.prepareStatement(SQL_UPDATE_RESERVATION);
             ps.setLong(1, reservation.getReservationDate());
             ps.setLong(2, reservation.getCheckinDate());
             ps.setLong(3, reservation.getCheckoutDate());
-            ps.setDouble(4, reservation.getTotal_cost());
+            ps.setDouble(4, reservation.getTotalCost());
             ps.setBoolean(5, reservation.isEnabled());
-            ps.setLong(6,  reservation.getRequestsId());
-            ps.setString(7, reservation.getRequestsUsersUsername());
-            ps.setLong(8,  reservation.getRoomsId());
-            ps.setLong(9, reservation.getRoomsRoomClassesId());
-            ps.setLong(10, reservation.getId());
+            ps.setString(6, reservation.getUsersUsername());
+            ps.setLong(7, reservation.getRoomsId());
+            ps.setLong(8, reservation.getRoomsRoomClassesId());
+            ps.setLong(9, reservation.getId());
 
             result = ps.executeUpdate();
 
-            connection.setAutoCommit(false);
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            if (cp != null) {
+            if (cp != null && connection != null) {
                 cp.rollbackConnection(connection);
             }
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null && ps!= null) {
-                cp.setAutoCommitTrue(connection);
+            if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+            }
+            if (cp != null && connection != null) {
+                cp.setAutoCommitTrue(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -202,7 +251,7 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
 
     @Override
     public boolean delete(Reservation reservation) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
 
@@ -210,7 +259,7 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             ps = connection.prepareStatement(SQL_DELETE_RESERVATION);
             ps.setLong(1, reservation.getId());
@@ -218,13 +267,14 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
             result = ps.executeUpdate();
 
         } catch (ConnectionPoolException | SQLException e) {
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null && ps!= null){
+            if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+            }
+            if (cp != null && connection != null) {
+                cp.releaseConnection(connection);
             }
         }
 

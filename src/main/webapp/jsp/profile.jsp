@@ -19,16 +19,6 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Addrequest">
-                                <fmt:message key="message.addrequest"/></a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Request">
-                                <fmt:message key="message.myRequest"/></a>
-                        </li>
-
-                        <li class="nav-item">
                             <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reserve">
                                 <fmt:message key="message.myBills"/></a>
                         </li>
@@ -110,7 +100,7 @@
                                 </label>
                                 <div class="col-md-auto">
                                     <input id="password" value="${password}" name="password" type="password"
-                                           minlength="5" pattern="[\w\d]{5,200}" placeholder="password"
+                                           minlength="5" pattern="[\w]{5,200}" placeholder="password"
                                            class="form-control input-md" required="" style="font-size: 11pt;"/>
                                     <span class="help-block" style="font-size: 9pt; color: #949494;">
                                         <fmt:message key="message.passwordDescription"/>

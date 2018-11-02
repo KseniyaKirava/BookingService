@@ -41,8 +41,7 @@ public class Reservation implements Serializable {
     /**
      * Total cost of stay.
      */
-    private double total_cost;
-
+    private double totalCost;
 
     /**
      * Access to the Reservation: available or deleted.
@@ -50,14 +49,9 @@ public class Reservation implements Serializable {
     private boolean enabled;
 
     /**
-     * The unique identification number of requests.
-     */
-    private long requestsId;
-
-    /**
      * The unique identification name of user.
      */
-    private String requestsUsersUsername;
+    private String usersUsername;
 
     /**
      * The unique identification number of room.
@@ -76,22 +70,19 @@ public class Reservation implements Serializable {
     public Reservation() {
     }
 
-
     /**
      * Constructor with all fields of the Reservation class
      * as parameters.
      */
-    public Reservation(long id, long reservationDate, long checkinDate, long checkoutDate,
-                       double total_cost, boolean enabled, long requestsId, String requestsUsersUsername,
-                       long roomsId, long roomsRoomClassesId) {
+    public Reservation(long id, long reservationDate, long checkinDate, long checkoutDate, double totalCost,
+                       boolean enabled, String usersUsername, long roomsId, long roomsRoomClassesId) {
         this.id = id;
         this.reservationDate = reservationDate;
         this.checkinDate = checkinDate;
         this.checkoutDate = checkoutDate;
-        this.total_cost = total_cost;
+        this.totalCost = totalCost;
         this.enabled = enabled;
-        this.requestsId = requestsId;
-        this.requestsUsersUsername = requestsUsersUsername;
+        this.usersUsername = usersUsername;
         this.roomsId = roomsId;
         this.roomsRoomClassesId = roomsRoomClassesId;
     }
@@ -113,20 +104,16 @@ public class Reservation implements Serializable {
         return checkoutDate;
     }
 
-    public double getTotal_cost() {
-        return total_cost;
+    public double getTotalCost() {
+        return totalCost;
     }
 
     public boolean isEnabled() {
         return enabled;
     }
 
-    public long getRequestsId() {
-        return requestsId;
-    }
-
-    public String getRequestsUsersUsername() {
-        return requestsUsersUsername;
+    public String getUsersUsername() {
+        return usersUsername;
     }
 
     public long getRoomsId() {
@@ -156,20 +143,16 @@ public class Reservation implements Serializable {
         this.checkoutDate = checkoutDate;
     }
 
-    public void setTotal_cost(double total_cost) {
-        this.total_cost = total_cost;
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
-    public void setRequestsId(long requestsId) {
-        this.requestsId = requestsId;
-    }
-
-    public void setRequestsUsersUsername(String requestsUsersUsername) {
-        this.requestsUsersUsername = requestsUsersUsername;
+    public void setUsersUsername(String usersUsername) {
+        this.usersUsername = usersUsername;
     }
 
     public void setRoomsId(long roomsId) {
@@ -198,12 +181,11 @@ public class Reservation implements Serializable {
                 reservationDate == that.reservationDate &&
                 checkinDate == that.checkinDate &&
                 checkoutDate == that.checkoutDate &&
-                Double.compare(that.total_cost, total_cost) == 0 &&
+                Double.compare(that.totalCost, totalCost) == 0 &&
                 enabled == that.enabled &&
-                requestsId == that.requestsId &&
                 roomsId == that.roomsId &&
                 roomsRoomClassesId == that.roomsRoomClassesId &&
-                Objects.equals(requestsUsersUsername, that.requestsUsersUsername);
+                Objects.equals(usersUsername, that.usersUsername);
     }
 
     @Override
@@ -214,10 +196,9 @@ public class Reservation implements Serializable {
         result = (int) (result * 31 + result * reservationDate);
         result = (int) (result * 31 + result * checkinDate);
         result = (int) (result * 31 + result * checkoutDate);
-        result = (int) (result * 31 + result * total_cost);
+        result = (int) (result * 31 + result * totalCost);
         result = result * 31 + (enabled ? 0 : 1) * result;
-        result = (int) (result * 31 + result * requestsId);
-        result = result * 31 + (requestsUsersUsername == null ? 0 : requestsUsersUsername.hashCode()) * result;
+        result = result * 31 + (usersUsername == null ? 0 : usersUsername.hashCode()) * result;
         result = (int) (result * 31 + result * roomsId);
         result = (int) (result * 31 + result * roomsRoomClassesId);
 
@@ -231,10 +212,9 @@ public class Reservation implements Serializable {
                 ", reservationDate=" + reservationDate +
                 ", checkinDate=" + checkinDate +
                 ", checkoutDate=" + checkoutDate +
-                ", total_cost=" + total_cost +
+                ", totalCost=" + totalCost +
                 ", enabled=" + enabled +
-                ", requestsId=" + requestsId +
-                ", requestsUsersUsername='" + requestsUsersUsername + '\'' +
+                ", usersUsername='" + usersUsername + '\'' +
                 ", roomsId=" + roomsId +
                 ", roomsRoomClassesId=" + roomsRoomClassesId +
                 '}';

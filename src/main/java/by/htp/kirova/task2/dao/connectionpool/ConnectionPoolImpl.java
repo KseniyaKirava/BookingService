@@ -69,19 +69,17 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     private int poolSize;
 
 
-    private ConnectionPoolImpl() throws ConnectionPoolException {
+    public ConnectionPoolImpl() {
         this.driverName = DBResourceManager.getProperty(DBParameter.DB_DRIVER);
         this.url = DBResourceManager.getProperty(DBParameter.DB_URL);
-        this.user =DBResourceManager.getProperty(DBParameter.DB_USER);
+        this.user = DBResourceManager.getProperty(DBParameter.DB_USER);
         this.password = DBResourceManager.getProperty(DBParameter.DB_PASSWORD);
 
         try {
             this.poolSize = Integer.parseInt(DBResourceManager.getProperty(DBParameter.DB_POOL_SIZE));
         } catch (NumberFormatException e) {
             poolSize = 5;
-
-           //LOGGER.error("Unexpected error of predefined data: ", e);
-            throw new ConnectionPoolException("Unexpected error of predefined data", e);
+            LOGGER.error("Unexpected error of predefined data: ", e);
         }
 
         LOGGER.info("Connection pool constructor completed successfully");
@@ -106,8 +104,13 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     }
 
 
-   @Override
-    public void initPoolData() throws ConnectionPoolException {
+    /**
+     * Initializes data for the connection pool.
+     *
+     * @throws ConnectionPoolException if can't find database
+     *                                 driver class or SQLException in ConnectionPoolImpl.
+     */
+    private void initPoolData() throws ConnectionPoolException {
         try {
             Class.forName(driverName);
             availableConnections = new LinkedBlockingQueue<>(poolSize);
@@ -128,9 +131,8 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     }
 
 
-
     @Override
-    public Connection extractConnection() throws ConnectionPoolException {
+    public Connection getConnection() throws ConnectionPoolException {
         Connection connection = null;
         try {
             connection = availableConnections.take();
@@ -142,22 +144,18 @@ public final class ConnectionPoolImpl implements ConnectionPool {
         return connection;
     }
 
-
-    /**
-     * Public method closing all connections in using Collections queue
-     * and avaliable Collections queue.
-     */
-    public void clearConnectionQueue() {
+    @Override
+    public void closeConnectionPool() {
         try {
             closeConnectionsQueue(usingConnections);
             closeConnectionsQueue(availableConnections);
         } catch (SQLException e) {
-            LOGGER.error("Error closing the connection.", e);
+            LOGGER.error("Error closing the connections.", e);
         }
     }
 
-   @Override
-    public void returnConnection(Connection connection) {
+    @Override
+    public void releaseConnection(Connection connection) {
         try {
             connection.close();
         } catch (SQLException e) {
@@ -185,36 +183,24 @@ public final class ConnectionPoolImpl implements ConnectionPool {
 
     @Override
     public void closeStatement(Statement st) {
-        if (st != null)
-            try {
-                st.close();
-            } catch (SQLException e) {
-                LOGGER.error("Statement & ResultSet aren't closed. ", e);
-            }
+        try {
+            st.close();
+        } catch (SQLException e) {
+            LOGGER.error("Statement & ResultSe aren't closed. ", e);
+        }
     }
 
-    /**
-     * Close prepared statement after use.  When a Prepared Statement
-     * object is closed, its current ResultSet object, if one exists,
-     * is also closed.
-     *
-     * @param ps Prepared Statement object
-     */
+    @Override
     public void closePreparedStatement(PreparedStatement ps) {
-        if (ps != null)
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                LOGGER.error("Prepared statement & ResultSe aren't closed. ", e);
-            }
+        try {
+            ps.close();
+        } catch (SQLException e) {
+            LOGGER.error("Prepared statement & ResultSe aren't closed. ", e);
+        }
     }
 
 
-    /**
-     * Set autocommit flag is {@code true} and return connection in pool.
-     *
-     * @param connection current connection
-     */
+    @Override
     public void setAutoCommitTrue(Connection connection) {
         try {
             connection.setAutoCommit(true);
@@ -223,17 +209,11 @@ public final class ConnectionPoolImpl implements ConnectionPool {
         }
     }
 
-    /**
-     * Rollback connection in case of unsuccessful completion of the transaction.
-     *
-     * @param connection current connection
-     */
+    @Override
     public void rollbackConnection(Connection connection) {
         try {
-            if (connection != null) {
-                connection.setAutoCommit(false);
-                connection.rollback();
-            }
+            connection.setAutoCommit(false);
+            connection.rollback();
         } catch (SQLException z) {
             LOGGER.error("Connection rollback operation error: ", z);
         }

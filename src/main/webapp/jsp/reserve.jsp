@@ -24,17 +24,6 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Addrequest">
-                                <fmt:message key="message.addrequest"/></a>
-                        </li>
-
-
-                        <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Request">
-                                <fmt:message key="message.myRequest"/></a>
-                        </li>
-
-                        <li class="nav-item">
                             <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reserve">
                                 <fmt:message key="message.myBills"/></a>
                         </li>

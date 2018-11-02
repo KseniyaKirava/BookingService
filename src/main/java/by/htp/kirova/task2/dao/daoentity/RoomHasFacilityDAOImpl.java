@@ -61,7 +61,7 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             ps = connection.prepareStatement(SQL_CREATE_RHF);
             ps.setLong(1, roomHasFacility.getRoomsId());
@@ -85,7 +85,7 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
             if (cp != null && connection != null && ps != null) {
                 cp.setAutoCommitTrue(connection);
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -105,7 +105,7 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
@@ -125,7 +125,7 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
         } finally {
             if (cp != null && connection != null) {
                 cp.closeStatement(statement);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -142,7 +142,7 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             ps = connection.prepareStatement(SQL_UPDATE_RHF);
             ps.setInt(1, roomHasFacility.getCount());
@@ -166,7 +166,7 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
             if (cp != null && connection != null && ps != null) {
                 cp.setAutoCommitTrue(connection);
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -183,7 +183,7 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             ps = connection.prepareStatement(SQL_DELETE_RHF);
             ps.setLong(1, roomHasFacility.getRoomsId());
@@ -198,7 +198,7 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
         } finally {
             if (cp != null && connection != null && ps != null) {
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 

@@ -52,19 +52,11 @@ public enum CommandType {
         }
     },
     /**
-     * Command to search info by query.
-     */
-    REQUEST {
-        {
-            this.command = new RequestCommand();
-        }
-    },
-    /**
      * Command to add query.
      */
-    ADDREQUEST {
+    MAIN {
         {
-            this.command = new AddRequestCommand();
+            this.command = new MainCommand();
         }
     },
     /**

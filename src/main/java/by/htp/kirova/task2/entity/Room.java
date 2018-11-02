@@ -1,6 +1,7 @@
 package by.htp.kirova.task2.entity;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -43,6 +44,11 @@ public class Room implements Serializable {
     private double cost;
 
     /**
+     * Cost of stay per day.
+     */
+    private byte[] photo;
+
+    /**
      * Access to the Room: available or deleted.
      */
     private boolean enabled;
@@ -64,17 +70,16 @@ public class Room implements Serializable {
      * Constructor with all fields of the Room class
      * as parameters.
      */
-
-    public Room(long id, String name, String number, int capacity, double cost, boolean enabled, long roomClassesId) {
+    public Room(long id, String name, String number, int capacity, double cost, byte[] photo, boolean enabled, long roomClassesId) {
         this.id = id;
         this.name = name;
         this.number = number;
         this.capacity = capacity;
         this.cost = cost;
+        this.photo = photo;
         this.enabled = enabled;
         this.roomClassesId = roomClassesId;
     }
-
 
     public long getId() {
         return id;
@@ -96,6 +101,10 @@ public class Room implements Serializable {
         return cost;
     }
 
+    public byte[] getPhoto() {
+        return photo;
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -103,7 +112,6 @@ public class Room implements Serializable {
     public long getRoomClassesId() {
         return roomClassesId;
     }
-
 
 
     public void setId(long id) {
@@ -126,6 +134,10 @@ public class Room implements Serializable {
         this.cost = cost;
     }
 
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
@@ -133,6 +145,7 @@ public class Room implements Serializable {
     public void setRoomClassesId(long roomClassesId) {
         this.roomClassesId = roomClassesId;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -145,7 +158,6 @@ public class Room implements Serializable {
         if (this.getClass() != o.getClass()) {
             return false;
         }
-
         Room room = (Room) o;
 
         return id == room.id &&
@@ -154,21 +166,22 @@ public class Room implements Serializable {
                 enabled == room.enabled &&
                 roomClassesId == room.roomClassesId &&
                 Objects.equals(name, room.name) &&
-                Objects.equals(number, room.number);
+                Objects.equals(number, room.number) &&
+                Arrays.equals(photo, room.photo);
     }
 
     @Override
     public int hashCode() {
         int result = 1;
 
-        result = (int)(result * 31 + result * id);
+        result = (int) (result * 31 + result * id);
         result = result * 31 + (name == null ? 0 : name.hashCode()) * result;
         result = result * 31 + (number == null ? 0 : number.hashCode()) * result;
         result = result * 31 + result * capacity;
         result = (int) (result * 31 + result * cost);
+        result = 31 * result + Arrays.hashCode(photo);
         result = result * 31 + (enabled ? 0 : 1) * result;
-        result = (int)(result * 31 + result * roomClassesId);
-
+        result = (int) (result * 31 + result * roomClassesId);
         return result;
     }
 
@@ -180,6 +193,7 @@ public class Room implements Serializable {
                 ", number='" + number + '\'' +
                 ", capacity=" + capacity +
                 ", cost=" + cost +
+                ", photo=" + Arrays.toString(photo) +
                 ", enabled=" + enabled +
                 ", roomClassesId=" + roomClassesId +
                 '}';

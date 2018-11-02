@@ -38,7 +38,7 @@
                 </label>
                 <div class="col-md-4">
                     <input id="password" value="123456" name="password" type="password" placeholder="password"
-                           minlength="5" maxlength="15" pattern="[\w\d]{5,15}"
+                           minlength="5" maxlength="15" pattern="[\w]{5,15}"
                            class="form-control input-md" required="" style="font-size: 11pt;">
                     <span class="help-block" style="font-size: 9pt; color: #949494;">
                         <fmt:message key="message.passwordDescription"/>

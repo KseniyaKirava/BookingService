@@ -6,6 +6,7 @@ import by.htp.kirova.task2.dao.DAOFactory;
 import by.htp.kirova.task2.entity.RoomClass;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
+import by.htp.kirova.task2.service.validation.Validator;
 
 import java.util.List;
 
@@ -23,6 +24,9 @@ public class RoomClassServiceImpl implements BookingService<RoomClass> {
     public boolean create(RoomClass roomClass) throws ServiceException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<RoomClass> roomClassDAO = daoFactory.getRoomClassDAO();
+        Validator validator = Validator.getInstance();
+
+//        if (!validator.)
 
         boolean result;
 

@@ -2,7 +2,7 @@ package by.htp.kirova.task2.controller.command;
 
 import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.controller.MessageManager;
-import by.htp.kirova.task2.logic.UserLogic;
+import by.htp.kirova.task2.service.logic.UserLogic;
 import by.htp.kirova.task2.service.validation.Validator;
 import by.htp.kirova.task2.util.Util;
 import org.apache.log4j.Logger;
@@ -48,7 +48,9 @@ public class LoginCommand extends Command {
             if (request.getParameter("loginbutton") != null) {
                 String username = request.getParameter(USERNAME);
                 String password = request.getParameter(PASSWORD);
-                if (!Validator.checkUsername(username) || !Validator.checkPassword(password)) {
+
+                Validator validator = Validator.getInstance();
+                if (!validator.checkUsername(username) || !validator.checkPassword(password)) {
                     return null;
                 }
                 LOGGER.info("Validation by username & password passed");

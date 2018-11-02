@@ -2,6 +2,8 @@ package by.htp.kirova.task2.service.validation;
 
 import org.apache.log4j.Logger;
 
+import java.util.Date;
+
 /**
  * Validates data such as e-mail, name and password, by checking it against
  * predefined patterns. Utility class, therefore final as it's not designed for
@@ -34,7 +36,6 @@ public final class Validator {
     public static Validator getInstance() {
         return instance;
     }
-
 
 
     /**
@@ -117,15 +118,65 @@ public final class Validator {
      * @return {@code true} in case of success and false otherwise.
      */
     public boolean checkDate(String date) {
-        boolean isValid = date!=null && ValidationPattern.DATE.getPattern().matcher(date).matches();
+        boolean isValid = date != null && ValidationPattern.DATE.getPattern().matcher(date).matches();
+        logger.info("Date is valid: " + isValid);
+        return isValid;
+    }
+
+    /**
+     * Checks the checkin/checkout/registration date against date pattern.
+     *
+     * @param date checkin/checkout/registration date in Long
+     * @return {@code true} in case of success and false otherwise.
+     */
+    public boolean checkDateInLong(Long date) {
+        // minus delta 2000 ms. (2 sec.) - bug in java.util.Date method getTime() convertation:
+        // usually delta about plus 1000 ms. (1 sec)
+        Date currentDate = new Date();
+        currentDate.setSeconds(0);
+        currentDate.setMinutes(0);
+        currentDate.setHours(0);
+        long time = currentDate.getTime();
+
+        boolean isValid = date > (time - 2*1000);
         logger.info("Date is valid: " + isValid);
         return isValid;
     }
 
 
-    public boolean checkCapacity(int capacity){
+    /**
+     * Check cost.
+     *
+     * @param cost cost of the room per night/room for few days.
+     * @return {@code true} in case of success and false otherwise.
+     */
+    public boolean checkCost(double cost) {
+        boolean isValid = cost > 0.0;
+        logger.info("Capacity is valid: " + isValid);
+        return isValid;
+    }
+
+    /**
+     * Check room's capacity.
+     *
+     * @param capacity room's capacity.
+     * @return {@code true} in case of success and false otherwise.
+     */
+    public boolean checkCapacity(int capacity) {
         boolean isValid = capacity > 0 && capacity < 6;
-            logger.info("Capacity is valid: " + isValid);
+        logger.info("Capacity is valid: " + isValid);
+        return isValid;
+    }
+
+    /**
+     * Checks the username against user's username pattern.
+     *
+     * @param authority user's username.
+     * @return {@code true} in case of success and false otherwise.
+     */
+    public boolean checkAuthority(String authority) {
+        boolean isValid = authority != null && ValidationPattern.AUTHORITY.getPattern().matcher(authority).matches();
+        logger.info("Authority is valid: " + isValid);
         return isValid;
     }
 

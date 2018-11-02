@@ -60,7 +60,7 @@ public class UserDAOImpl implements BookingDAO<User> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             ps = connection.prepareStatement(SQL_CREATE_USER);
             ps.setString(1, user.getUsername());
@@ -87,7 +87,7 @@ public class UserDAOImpl implements BookingDAO<User> {
             if (cp != null && connection != null && ps!= null) {
                 cp.setAutoCommitTrue(connection);
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -107,7 +107,7 @@ public class UserDAOImpl implements BookingDAO<User> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
@@ -130,7 +130,7 @@ public class UserDAOImpl implements BookingDAO<User> {
         } finally {
             if (cp != null && connection != null) {
                 cp.closeStatement(statement);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -147,7 +147,7 @@ public class UserDAOImpl implements BookingDAO<User> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             ps = connection.prepareStatement(SQL_UPDATE_USER);
             ps.setString(1, user.getEmail());
@@ -174,7 +174,7 @@ public class UserDAOImpl implements BookingDAO<User> {
             if (cp != null && connection != null && ps!= null) {
                 cp.setAutoCommitTrue(connection);
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -191,7 +191,7 @@ public class UserDAOImpl implements BookingDAO<User> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             ps = connection.prepareStatement(SQL_DELETE_USER);
             ps.setString(1, user.getUsername());
@@ -204,7 +204,7 @@ public class UserDAOImpl implements BookingDAO<User> {
         } finally {
             if (cp != null && connection != null && ps!= null){
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 

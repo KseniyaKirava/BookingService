@@ -18,14 +18,14 @@ public interface HelperService {
      * @return List of  avaliable rooms.
      * @throws ServiceException Layer
      */
-    List<String> showAvialiableRooms(Long id) throws ServiceException;
+    List<String> avialiableRooms(Long id) throws ServiceException;
 
     /**
      * Show user's reservations.
      *
-     * @param username unique user's name.
+     * @param where query.
      * @return List of Arraylist user's reservations.
      * @throws ServiceException Layer
      */
-    List<ArrayList<Object>> showAllReservations(String where) throws ServiceException;
+    List<ArrayList<Object>> allReservations(String where) throws ServiceException;
 }

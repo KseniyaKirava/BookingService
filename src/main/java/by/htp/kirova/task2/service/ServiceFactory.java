@@ -41,15 +41,6 @@ public final class ServiceFactory {
 	}
 
 
-	/**
-	 * Implementation of Request Service.
-	 */
-	private final BookingService<Request> requestService = new RequestServiceImpl();
-
-	public BookingService<Request> getRequestService() {
-		return requestService;
-	}
-
 
 	/**
 	 * Implementation of Reservation Service.

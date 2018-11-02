@@ -56,7 +56,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             ps = connection.prepareStatement(SQL_CREATE_ROOM, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, room.getName());
@@ -96,7 +96,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
             if (cp != null && connection != null && ps != null) {
                 cp.setAutoCommitTrue(connection);
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -116,21 +116,21 @@ public class RoomDAOImpl implements BookingDAO<Room> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                list.add(new Room(
-                        resultSet.getLong("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("number"),
-                        resultSet.getInt("capacity"),
-                        resultSet.getDouble("cost"),
-                        resultSet.getBoolean("enabled"),
-                        resultSet.getLong("room_classes_id")
-                        ));
-            }
+//            while (resultSet.next()) {
+//                list.add(new Room(
+//                        resultSet.getLong("id"),
+//                        resultSet.getString("name"),
+//                        resultSet.getString("number"),
+//                        resultSet.getInt("capacity"),
+//                        resultSet.getDouble("cost"),
+//                        resultSet.getBoolean("enabled"),
+//                        resultSet.getLong("room_classes_id")
+//                        ));
+//            }
 
         } catch (ConnectionPoolException | SQLException e) {
             LOGGER.error("ConnectionPoolImpl error: ", e);
@@ -139,7 +139,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
         } finally {
             if (cp != null && connection != null) {
                 cp.closeStatement(statement);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -156,7 +156,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             ps = connection.prepareStatement(SQL_UPDATE_ROOM);
             ps.setString(1, room.getName());
@@ -183,7 +183,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
             if (cp != null && connection != null && ps!= null) {
                 cp.setAutoCommitTrue(connection);
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -200,7 +200,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             ps = connection.prepareStatement(SQL_DELETE_ROOM);
             ps.setLong(1, room.getId());
@@ -214,7 +214,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
         } finally {
             if (cp != null && connection != null && ps!= null){
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 

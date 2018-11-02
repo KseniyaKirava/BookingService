@@ -18,7 +18,7 @@ public interface HelperDAO {
      * @return List of avaliable rooms.
      * @throws DAOException Layer
      */
-    List<String> showAvialiableRooms(Long id) throws DAOException;
+    List<String> avialiableRooms(Long id) throws DAOException;
 
     /**
      * Show user's reservations.
@@ -27,5 +27,5 @@ public interface HelperDAO {
      * @return List of Arraylist user's reservations.
      * @throws DAOException Layer
      */
-    List<ArrayList<Object>> showAllReservations(String username) throws DAOException;
+    List<ArrayList<Object>> allReservations(String username) throws DAOException;
 }

@@ -25,14 +25,14 @@ public class ViewHelperService implements HelperService {
 
 
     @Override
-    public List<String> showAvialiableRooms(Long id) throws ServiceException {
+    public List<String> avialiableRooms(Long id) throws ServiceException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         HelperDAO helperDAO = daoFactory.getHelperDAO();
 
         List<String> result = null;
 
         try {
-            result = helperDAO.showAvialiableRooms(id);
+            result = helperDAO.avialiableRooms(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -42,14 +42,14 @@ public class ViewHelperService implements HelperService {
 
 
     @Override
-    public List<ArrayList<Object>> showAllReservations(String where) throws ServiceException {
+    public List<ArrayList<Object>> allReservations(String where) throws ServiceException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         HelperDAO helperDAO = daoFactory.getHelperDAO();
 
         List<ArrayList<Object>> result = null;
 
         try {
-            result = helperDAO.showAllReservations(where);
+            result = helperDAO.allReservations(where);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

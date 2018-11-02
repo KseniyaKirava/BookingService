@@ -1,10 +1,11 @@
 package by.htp.kirova.task2.dao.daoentity;
 
 
+import by.htp.kirova.task2.dao.BookingDAO;
+import by.htp.kirova.task2.dao.ConnectionPool;
+import by.htp.kirova.task2.dao.DAOException;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolException;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolImpl;
-import by.htp.kirova.task2.dao.DAOException;
-import by.htp.kirova.task2.dao.BookingDAO;
 import by.htp.kirova.task2.entity.Authority;
 import org.apache.log4j.Logger;
 
@@ -25,7 +26,22 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(AuthorityDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(AuthorityDAOImpl.class);
+
+    /**
+     * The unique identification name constant.
+     */
+    private final static String USERNAME = "username";
+
+    /**
+     * The authority constant.
+     */
+    private final static String AUTHORITY = "authority";
+
+    /**
+     * The enabled state constant.
+     */
+    private final static String ENABLED = "enabled";
 
     /**
      * Constant string which represents query to create authority.
@@ -52,7 +68,7 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
 
     @Override
     public boolean create(Authority authority) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
 
@@ -60,7 +76,8 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
+            connection.setAutoCommit(false);
 
             ps = connection.prepareStatement(SQL_CREATE_AUTHORITY);
             ps.setString(1, authority.getAuthority());
@@ -69,21 +86,21 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
 
             result = ps.executeUpdate();
 
-            connection.setAutoCommit(false);
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            if (cp != null) {
+            if (cp != null && connection != null) {
                 cp.rollbackConnection(connection);
             }
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null && ps != null) {
-                cp.setAutoCommitTrue(connection);
+            if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+            }
+            if (cp != null && connection != null) {
+                cp.setAutoCommitTrue(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -93,7 +110,7 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
 
     @Override
     public List<Authority> read(String where) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet;
@@ -104,26 +121,28 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
+
             while (resultSet.next()) {
                 list.add(new Authority(
-                        resultSet.getString("authority"),
-                        resultSet.getString("username"),
-                        resultSet.getBoolean("enabled")
+                        resultSet.getString(AUTHORITY),
+                        resultSet.getString(USERNAME),
+                        resultSet.getBoolean(ENABLED)
                 ));
             }
 
         } catch (ConnectionPoolException | SQLException e) {
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool of SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && statement != null) {
                 cp.closeStatement(statement);
-                cp.returnConnection(connection);
+            }
+            if (cp != null && connection != null) {
+                cp.releaseConnection(connection);
             }
         }
 
@@ -132,7 +151,7 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
 
     @Override
     public boolean update(Authority authority) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
 
@@ -140,7 +159,8 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
+            connection.setAutoCommit(false);
 
             ps = connection.prepareStatement(SQL_UPDATE_AUTHORITY);
             ps.setString(1, authority.getAuthority());
@@ -149,21 +169,21 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
 
             result = ps.executeUpdate();
 
-            connection.setAutoCommit(false);
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            if (cp != null) {
+            if (cp != null && connection != null) {
                 cp.rollbackConnection(connection);
             }
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null && ps!= null) {
-                cp.setAutoCommitTrue(connection);
+            if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+            }
+            if (cp != null && connection != null) {
+                cp.setAutoCommitTrue(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -172,7 +192,7 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
 
     @Override
     public boolean delete(Authority authority) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
 
@@ -180,7 +200,7 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             ps = connection.prepareStatement(SQL_DELETE_AUTHORITY);
             ps.setString(1, authority.getUsername());
@@ -188,13 +208,13 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
             result = ps.executeUpdate();
 
         } catch (ConnectionPoolException | SQLException e) {
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
-
+            throw new DAOException("ConnectionPool or SQL error: ", e);
         } finally {
-            if (cp != null && connection != null && ps!= null){
+            if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+            }
+            if (cp != null && connection != null) {
+                cp.releaseConnection(connection);
             }
         }
 

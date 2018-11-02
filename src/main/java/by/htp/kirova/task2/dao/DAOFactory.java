@@ -40,14 +40,6 @@ public final class DAOFactory {
 
 
 	/**
-	 * Implementation of Request DAO.
-	 */
-	private final BookingDAO<Request> requestDAO = new RequestDAOImpl();
-
-	public BookingDAO<Request> getRequestDAO() {return requestDAO;}
-
-
-	/**
 	 * Implementation of Reservation DAO.
 	 */
 	private final BookingDAO<Reservation> reservationDAO = new ReservationDAOImpl();

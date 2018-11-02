@@ -47,7 +47,7 @@ public class ViewHelperDAO implements HelperDAO {
             "AND res.enabled = true)";
 
     @Override
-    public List<String> showAvialiableRooms(Long id) throws DAOException {
+    public List<String> avialiableRooms(Long id) throws DAOException {
         ConnectionPoolImpl cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
@@ -57,7 +57,7 @@ public class ViewHelperDAO implements HelperDAO {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             ps = connection.prepareStatement(SQL_SHOW_AVIALIABLE_ROOM);
             ps.setLong(1, id);
@@ -89,7 +89,7 @@ public class ViewHelperDAO implements HelperDAO {
         } finally {
             if (cp != null && connection != null) {
                 cp.closePreparedStatement(ps);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 
@@ -98,7 +98,7 @@ public class ViewHelperDAO implements HelperDAO {
 
 
     @Override
-    public List<ArrayList<Object>> showAllReservations(String where) throws DAOException {
+    public List<ArrayList<Object>> allReservations(String where) throws DAOException {
         ConnectionPoolImpl cp = null;
         Connection connection = null;
         Statement statement = null;
@@ -110,7 +110,7 @@ public class ViewHelperDAO implements HelperDAO {
 
         try {
             cp = ConnectionPoolImpl.getInstance();
-            connection = cp.extractConnection();
+            connection = cp.getConnection();
 
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
@@ -136,7 +136,7 @@ public class ViewHelperDAO implements HelperDAO {
         } finally {
             if (cp != null && connection != null) {
                 cp.closeStatement(statement);
-                cp.returnConnection(connection);
+                cp.releaseConnection(connection);
             }
         }
 

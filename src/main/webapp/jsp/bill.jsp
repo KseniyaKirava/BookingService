@@ -17,15 +17,6 @@
                             <a class="nav-link" style="font-size: 12pt; color: #949494;"
                                href="do?command=Profile"><fmt:message key="message.editMyProfile"/></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Addrequest">
-                                <fmt:message key="message.addrequest"/></a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Request">
-                                <fmt:message key="message.myRequest"/></a>
-                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reserve">
@@ -90,7 +81,7 @@
                                                         pattern="dd.MM.YYYY" value="${checkOut}"/>
                                         <td style="font-size:11pt;">${formatted_check_out}</td>
 
-                                        <th scope="row" style="font-size:11pt;">${total_cost}</th>
+                                        <th scope="row" style="font-size:11pt;">${totalCost}</th>
 
                                     </tr>
                                     </tbody>

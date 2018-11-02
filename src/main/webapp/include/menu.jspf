@@ -3,11 +3,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ffffff;"
      xmlns:c="http://java.sun.com/jsf/core" xmlns:fmt="http://java.sun.com/jsf/composite">
-    <a class="navbar-brand" style="font-weight: bold; font-size: 20pt;" href="do?command=Profile">BOOKING.</a>
+    <a class="navbar-brand" style="font-weight: bold; font-size: 20pt;" href="do?command=Profile">
+        <img src="../image/logo.jpg" alt="logo" width="125" border="0"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
 
     <fmt:requestEncoding value="UTF-8"/>
     <c:set var="lang" value="${not empty lang ? lang : pageContext.request.locale}"
@@ -21,32 +23,55 @@
             <li class="nav-item">
                 <a class="nav-link" style="font-size: 12pt;"
                    href="?command=${param.command}&sessionLocale=en-Us">
-                    <fmt:message key="message.lang.en"/>
+                    <img src="../image/eng.png" alt="eng" width="21" height="15" border="0">
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" style="font-size: 12pt;"
-                   href="?command=${param.command}&sessionLocale=ru-Ru" >
-                    <fmt:message key="message.lang.ru"/>
+                   href="?command=${param.command}&sessionLocale=ru-Ru">
+                    <img src="../image/rus.png" alt="rus" width="21" height="15" border="0">
                 </a>
             </li>
-
-            <c:choose>
-                <c:when test="${user==null}">
-                    <li class="nav-item">
-                        <a class="nav-link" style="font-size: 12pt;" href="do?command=Login">
-                            <fmt:message key="message.loginPage"/>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="font-size: 12pt;" href="do?command=SignUp">
-                            <fmt:message key="message.signup"/>
-                        </a>
-                    </li>
-                </c:when>
-            </c:choose>
-
+            <li class="nav-item">
+                <a class="nav-link" style="font-size: 12pt;" href="do?command=Main">
+                    <fmt:message key="message.mainPage"/>
+                </a>
+            </li>
         </ul>
     </div>
+
+    <%--<div class="collapse navbar-collapse justify-content-start" id="navbarNav2">--%>
+        <%--<ul class="navbar-nav">--%>
+            <%--<c:choose>--%>
+                <%--<c:when test="${user==null}">--%>
+                    <%--<li class="nav-item">--%>
+                        <%--<a class="nav-link" style="font-size: 12pt;" href="do?command=Login">--%>
+                            <%--<fmt:message key="message.loginPage"/>--%>
+                        <%--</a>--%>
+                    <%--</li>--%>
+                    <%--<li class="nav-item">--%>
+                        <%--<a class="nav-link" style="font-size: 12pt;" href="do?command=SignUp">--%>
+                            <%--<fmt:message key="message.signup"/>--%>
+                        <%--</a>--%>
+                    <%--</li>--%>
+                <%--</c:when>--%>
+                <%--<c:when test="${user!=null && users.username == 'admin'}">--%>
+                    <%--<li class="nav-item">--%>
+                        <%--<a class="nav-link" style="font-size: 12pt;" href="do?command=Admin">--%>
+                            <%--<fmt:message key="message.admin"/>--%>
+                        <%--</a>--%>
+                    <%--</li>--%>
+                <%--</c:when>--%>
+                <%--<c:when test="${user!=null && users.username != 'admin'}">--%>
+                    <%--<li class="nav-item">--%>
+                        <%--<a class="nav-link" style="font-size: 12pt;" href="do?command=Profile">--%>
+                            <%--<fmt:message key="message.profile"/>--%>
+                        <%--</a>--%>
+                    <%--</li>--%>
+                <%--</c:when>--%>
+            <%--</c:choose>--%>
+
+        <%--</ul>--%>
+    <%--</div>--%>
 </nav>
 

@@ -15,7 +15,7 @@
 
             <div class="creditCardForm">
                 <div class="heading">
-                    <h1 style="font-size: 12pt"><fmt:message key="message.summary"/>${total_cost}
+                    <h1 style="font-size: 12pt"><fmt:message key="message.summary"/>${totalCost}
                         <fmt:message key="message.currency"/></h1></div>
                 <div class="payment">
                     <form>

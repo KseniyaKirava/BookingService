@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `kirova`.`reservations` (
   `reservationDate` BIGINT(20) NOT NULL,
   `checkinDate` BIGINT(20) NOT NULL,
   `checkoutDate` BIGINT(20) NOT NULL,
-  `total_cost` DOUBLE NOT NULL,
+  `totalCost` DOUBLE NOT NULL,
   `enabled` TINYINT(1) NOT NULL,
   `requestsId` BIGINT(20) NOT NULL,
   `requestsUsersUsername` VARCHAR(50) NOT NULL,
@@ -265,10 +265,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `kirova`;
-INSERT INTO `kirova`.`reservations` (`id`, `reservationDate`, `checkinDate`, `checkoutDate`, `total_cost`, `enabled`, `requestsId`, `requestsUsersUsername`, `roomsId`, `roomsRoomClassesId`) VALUES (1, 1539118800000, 1539118800000, 1539550800000, 500.00, true, 2, 'jdoe', 1, 1);
-INSERT INTO `kirova`.`reservations` (`id`, `reservationDate`, `checkinDate`, `checkoutDate`, `total_cost`, `enabled`, `requestsId`, `requestsUsersUsername`, `roomsId`, `roomsRoomClassesId`) VALUES (2, 1539723600000, 1539723600000, 1540155600000, 300.00, true, 3, 'vasia', 7, 1);
-INSERT INTO `kirova`.`reservations` (`id`, `reservationDate`, `checkinDate`, `checkoutDate`, `total_cost`, `enabled`, `requestsId`, `requestsUsersUsername`, `roomsId`, `roomsRoomClassesId`) VALUES (3, 1540069200000, 1540069200000, 1540674000000, 490.00, true, 4, 'jsmith', 4, 2);
-INSERT INTO `kirova`.`reservations` (`id`, `reservationDate`, `checkinDate`, `checkoutDate`, `total_cost`, `enabled`, `requestsId`, `requestsUsersUsername`, `roomsId`, `roomsRoomClassesId`) VALUES (4, 1539550800000, 1539550800000, 1539723600000, 130.00, true, 5, 'jsmith', 6, 1);
+INSERT INTO `kirova`.`reservations` (`id`, `reservationDate`, `checkinDate`, `checkoutDate`, `totalCost`, `enabled`, `requestsId`, `requestsUsersUsername`, `roomsId`, `roomsRoomClassesId`) VALUES (1, 1539118800000, 1539118800000, 1539550800000, 500.00, true, 2, 'jdoe', 1, 1);
+INSERT INTO `kirova`.`reservations` (`id`, `reservationDate`, `checkinDate`, `checkoutDate`, `totalCost`, `enabled`, `requestsId`, `requestsUsersUsername`, `roomsId`, `roomsRoomClassesId`) VALUES (2, 1539723600000, 1539723600000, 1540155600000, 300.00, true, 3, 'vasia', 7, 1);
+INSERT INTO `kirova`.`reservations` (`id`, `reservationDate`, `checkinDate`, `checkoutDate`, `totalCost`, `enabled`, `requestsId`, `requestsUsersUsername`, `roomsId`, `roomsRoomClassesId`) VALUES (3, 1540069200000, 1540069200000, 1540674000000, 490.00, true, 4, 'jsmith', 4, 2);
+INSERT INTO `kirova`.`reservations` (`id`, `reservationDate`, `checkinDate`, `checkoutDate`, `totalCost`, `enabled`, `requestsId`, `requestsUsersUsername`, `roomsId`, `roomsRoomClassesId`) VALUES (4, 1539550800000, 1539550800000, 1539723600000, 130.00, true, 5, 'jsmith', 6, 1);
 
 COMMIT;
 

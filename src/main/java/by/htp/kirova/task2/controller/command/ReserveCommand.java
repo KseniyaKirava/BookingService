@@ -40,7 +40,7 @@ public class ReserveCommand extends Command{
                 List<ArrayList<Object>> reservations;
 
                 try {
-                    reservations = helperService.showAllReservations("\'" + username + "\' ORDER BY res.reservation_date");
+                    reservations = helperService.allReservations("\'" + username + "\' ORDER BY res.reservation_date");
                     request.getSession().setAttribute("size", reservations.size());
                     String strStart = request.getParameter("start");
                     int startReq = 0;
@@ -48,11 +48,10 @@ public class ReserveCommand extends Command{
                         startReq = Integer.parseInt(strStart);
                     }
                     String where = String.format(" LIMIT %d, 10", startReq);
-                    reservations = helperService.showAllReservations("\'" + username + "\' ORDER BY res.reservation_date" + where);
+                    reservations = helperService.allReservations("\'" + username + "\' ORDER BY res.reservation_date" + where);
                     request.getSession().setAttribute("reservations", reservations);
                 } catch (ServiceException e) {
-                    LOGGER.error("Reservations read error");
-                    throw new CommandException(e);
+                    throw new CommandException("Reservations read error", e);
                 }
 
             }

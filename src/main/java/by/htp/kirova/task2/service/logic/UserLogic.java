@@ -1,4 +1,4 @@
-package by.htp.kirova.task2.logic;
+package by.htp.kirova.task2.service.logic;
 
 import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.controller.command.CommandException;

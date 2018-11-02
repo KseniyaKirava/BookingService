@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="form-group mb-2">
                                     <input id="password" class="form-control input-md" name="password"
-                                           minlength="5" maxlength="200" pattern="[\w\d]{5,200}"
+                                           minlength="5" maxlength="200" pattern="[\w]{5,200}"
                                            value="${users.password}" type="password" required="" style="font-size: 11pt;"/>
                                 </div>
 
