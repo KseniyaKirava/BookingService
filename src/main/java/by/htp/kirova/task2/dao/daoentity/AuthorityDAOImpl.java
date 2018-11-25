@@ -72,8 +72,6 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
         Connection connection = null;
         PreparedStatement ps = null;
 
-        int result;
-
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
@@ -84,7 +82,11 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
             ps.setString(2, authority.getUsername());
             ps.setBoolean(3, authority.isEnabled());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
+
+            if (result <= 0) {
+                return false;
+            }
 
             connection.commit();
 
@@ -104,7 +106,7 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
             }
         }
 
-        return result == 1;
+        return true;
 
     }
 
@@ -155,8 +157,6 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
         Connection connection = null;
         PreparedStatement ps = null;
 
-        int result;
-
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
@@ -167,7 +167,11 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
             ps.setBoolean(2, authority.isEnabled());
             ps.setString(3, authority.getUsername());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
+
+            if (result <= 0) {
+                return false;
+            }
 
             connection.commit();
 
@@ -187,7 +191,7 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
             }
         }
 
-        return result == 1;
+        return true;
     }
 
     @Override
@@ -196,8 +200,6 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
         Connection connection = null;
         PreparedStatement ps = null;
 
-        int result;
-
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
@@ -205,7 +207,11 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
             ps = connection.prepareStatement(SQL_DELETE_AUTHORITY);
             ps.setString(1, authority.getUsername());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
+
+            if (result <= 0) {
+                return false;
+            }
 
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException("ConnectionPool or SQL error: ", e);
@@ -218,7 +224,7 @@ public class AuthorityDAOImpl implements BookingDAO<Authority> {
             }
         }
 
-        return result == 1;
+        return true;
     }
 
 }

@@ -51,6 +51,7 @@ public class LoginCommand extends Command {
 
                 Validator validator = Validator.getInstance();
                 if (!validator.checkUsername(username) || !validator.checkPassword(password)) {
+                    LOGGER.info("Validation by username & password failed");
                     return null;
                 }
                 LOGGER.info("Validation by username & password passed");
@@ -59,21 +60,20 @@ public class LoginCommand extends Command {
                 try {
                     user = UserLogic.checkLogin(username, password);
                 } catch (CommandException e) {
-                    LOGGER.error("Check login error", e);
+                    LOGGER.error("Check login & password error", e);
                 }
 
                 if (user != null) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("user", user);
-                    session.setMaxInactiveInterval(60);
+                    request.getSession().setAttribute("user", user);
+                    request.getSession().setMaxInactiveInterval(60);
                     LOGGER.info("Session for user " + username + " successfully created");
                     if (username.equals("admin")) {
                         return CommandType.ADMIN.getCurrentCommand();
                     }
                     return CommandType.PROFILE.getCurrentCommand();
                 } else {
-                    request.getSession().setAttribute("errorLoginCommand", MessageManager.getProperty("message.loginerror"));
-                    return CommandType.LOGIN.getCurrentCommand();
+                    request.setAttribute("errorLoginCommand", MessageManager.getProperty("message.loginerror"));
+                    return null;
                 }
             }
 

@@ -63,6 +63,10 @@ public class Reservation implements Serializable {
      */
     private long roomsRoomClassesId;
 
+    /**
+     * The assessment of room for current reservation.
+     */
+    private byte assessment;
 
     /**
      * Empty constructor for Reservation entity class.
@@ -75,7 +79,7 @@ public class Reservation implements Serializable {
      * as parameters.
      */
     public Reservation(long id, long reservationDate, long checkinDate, long checkoutDate, double totalCost,
-                       boolean enabled, String usersUsername, long roomsId, long roomsRoomClassesId) {
+                       boolean enabled, String usersUsername, long roomsId, long roomsRoomClassesId, byte assessment) {
         this.id = id;
         this.reservationDate = reservationDate;
         this.checkinDate = checkinDate;
@@ -85,6 +89,7 @@ public class Reservation implements Serializable {
         this.usersUsername = usersUsername;
         this.roomsId = roomsId;
         this.roomsRoomClassesId = roomsRoomClassesId;
+        this.assessment = assessment;
     }
 
 
@@ -124,6 +129,9 @@ public class Reservation implements Serializable {
         return roomsRoomClassesId;
     }
 
+    public byte getAssessment() {
+        return assessment;
+    }
 
 
 
@@ -163,6 +171,11 @@ public class Reservation implements Serializable {
         this.roomsRoomClassesId = roomsRoomClassesId;
     }
 
+    public void setAssessment(byte assessment) {
+        this.assessment = assessment;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -185,8 +198,10 @@ public class Reservation implements Serializable {
                 enabled == that.enabled &&
                 roomsId == that.roomsId &&
                 roomsRoomClassesId == that.roomsRoomClassesId &&
+                assessment == that.assessment &&
                 Objects.equals(usersUsername, that.usersUsername);
     }
+
 
     @Override
     public int hashCode() {
@@ -201,6 +216,7 @@ public class Reservation implements Serializable {
         result = result * 31 + (usersUsername == null ? 0 : usersUsername.hashCode()) * result;
         result = (int) (result * 31 + result * roomsId);
         result = (int) (result * 31 + result * roomsRoomClassesId);
+        result = result * 31 + result * assessment;
 
         return result;
     }
@@ -217,6 +233,7 @@ public class Reservation implements Serializable {
                 ", usersUsername='" + usersUsername + '\'' +
                 ", roomsId=" + roomsId +
                 ", roomsRoomClassesId=" + roomsRoomClassesId +
+                ", assessment=" + assessment +
                 '}';
     }
 }

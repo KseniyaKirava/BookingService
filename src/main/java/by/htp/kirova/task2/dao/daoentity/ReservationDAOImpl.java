@@ -72,13 +72,17 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
      */
     private final static String ROOM_CLASS_ID = "rooms_room_classes_id";
 
+    /**
+     * The assesment of the from for current reservation constant.
+     */
+    private final static String ASSESSMENT = "assessment";
 
     /**
      * Constant string which represents query to create reservation.
      */
     private static final String SQL_CREATE_RESERVATION = "INSERT INTO reservations(reservation_date, " +
             "checkin_date, checkout_date, total_cost, enabled, users_username, rooms_id, " +
-            "rooms_room_classes_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            "rooms_room_classes_id, assessment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     /**
      * Constant string which represents query to select all reservations.
@@ -90,7 +94,7 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
      */
     private static final String SQL_UPDATE_RESERVATION = "UPDATE reservations SET reservation_date= ?," +
             "checkin_date= ?,checkout_date= ?,total_cost= ?, enabled= ?, users_username= ?, " +
-            "rooms_id= ?, rooms_room_classes_id= ?  WHERE id= ?";
+            "rooms_id= ?, rooms_room_classes_id= ?, assessment= ?  WHERE id= ?";
 
     /**
      * Constant string which represents query to delete reservation.
@@ -103,8 +107,6 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
         ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
-
-        int result;
 
         try {
             cp = ConnectionPoolImpl.getInstance();
@@ -120,9 +122,10 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
             ps.setString(6, reservation.getUsersUsername());
             ps.setLong(7, reservation.getRoomsId());
             ps.setLong(8, reservation.getRoomsRoomClassesId());
+            ps.setByte(9, reservation.getAssessment());
 
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
 
             if (result <= 0) {
                 return false;
@@ -183,7 +186,8 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
                         resultSet.getBoolean(ENABLED),
                         resultSet.getString(USERNAME),
                         resultSet.getLong(ROOMS_ID),
-                        resultSet.getLong(ROOM_CLASS_ID)
+                        resultSet.getLong(ROOM_CLASS_ID),
+                        resultSet.getByte(ASSESSMENT)
                 ));
             }
 
@@ -208,8 +212,6 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
         Connection connection = null;
         PreparedStatement ps = null;
 
-        int result;
-
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
@@ -224,9 +226,14 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
             ps.setString(6, reservation.getUsersUsername());
             ps.setLong(7, reservation.getRoomsId());
             ps.setLong(8, reservation.getRoomsRoomClassesId());
-            ps.setLong(9, reservation.getId());
+            ps.setByte(9, reservation.getAssessment());
+            ps.setLong(10, reservation.getId());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
+
+            if (result <= 0) {
+                return false;
+            }
 
             connection.commit();
 
@@ -246,7 +253,7 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
             }
         }
 
-        return result == 1;
+        return true;
     }
 
     @Override
@@ -255,8 +262,6 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
         Connection connection = null;
         PreparedStatement ps = null;
 
-        int result;
-
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
@@ -264,7 +269,11 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
             ps = connection.prepareStatement(SQL_DELETE_RESERVATION);
             ps.setLong(1, reservation.getId());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
+
+            if (result <= 0) {
+                return false;
+            }
 
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException("ConnectionPool or SQL error: ", e);
@@ -278,7 +287,7 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
             }
         }
 
-        return result == 1;
+        return true;
     }
 
 }

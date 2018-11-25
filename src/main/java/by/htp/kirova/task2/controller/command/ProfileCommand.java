@@ -1,6 +1,7 @@
 package by.htp.kirova.task2.controller.command;
 
 
+import by.htp.kirova.task2.controller.MessageManager;
 import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.service.logic.UserLogic;
 import by.htp.kirova.task2.service.BookingService;
@@ -45,17 +46,17 @@ public class ProfileCommand extends Command {
     /**
      * The user's first name constant.
      */
-    private final static String FIRST_NAME = "first_name";
+    private final static String FIRST_NAME = "firstName";
 
     /**
      * The user's last name constant.
      */
-    private final static String LAST_NAME = "last_name";
+    private final static String LAST_NAME = "lastName";
 
     /**
      * The user's middle name constant.
      */
-    private final static String MIDDLE_NAME = "middle_name";
+    private final static String MIDDLE_NAME = "middleName";
 
 
     @Override
@@ -82,26 +83,28 @@ public class ProfileCommand extends Command {
                 if (request.getParameter("saveinfo") != null) {
                     String email = request.getParameter(EMAIL);
                     String password = request.getParameter(PASSWORD);
-                    String first_name = request.getParameter(FIRST_NAME);
-                    String last_name = request.getParameter(LAST_NAME);
-                    String middle_name = request.getParameter(MIDDLE_NAME);
+                    String firstName = request.getParameter(FIRST_NAME);
+                    String lastName = request.getParameter(LAST_NAME);
+                    String middleName = request.getParameter(MIDDLE_NAME);
                     boolean passwordIsUpdated = !password.equals(currentPassword);
 
                     Validator validator = Validator.getInstance();
+
                     if (passwordIsUpdated && !validator.checkPassword(password)) {
                         return null;
                     }
-                    if (!validator.checkEmail(email) || !validator.checkName(first_name) ||
-                            !validator.checkName(last_name) || !validator.checkMiddleName(middle_name)) {
+                    if (!validator.checkEmail(email) || !validator.checkName(firstName) ||
+                            !validator.checkName(lastName) || !validator.checkMiddleName(middleName)) {
+                        request.setAttribute("errorData", MessageManager.getProperty("message.incorrectData"));
                         return null;
                     }
                     if (passwordIsUpdated) {
                         user.setPassword(UserLogic.getHashPassword(password));
                     }
                     user.setEmail(email);
-                    user.setFirstName(first_name);
-                    user.setLastName(last_name);
-                    user.setMiddleName(middle_name);
+                    user.setFirstName(firstName);
+                    user.setLastName(lastName);
+                    user.setMiddleName(middleName);
 
                     boolean isUpdate;
                     try {
@@ -113,7 +116,7 @@ public class ProfileCommand extends Command {
                     if (isUpdate) {
                         LOGGER.info("Data from form successfully saved");
                     }
-                    return CommandType.PROFILE.getCurrentCommand();
+                    return CommandType.PROFILE.command;
                 }
                 if (request.getParameter("logout") != null) {
                     request.getSession().invalidate();

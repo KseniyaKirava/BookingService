@@ -50,6 +50,12 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label class="col-md-12 control-label" style="color: green; font-size: 12pt;">
+                            ${wordUser}${currentUser}${isDisabled}${isUpdated}
+                        </label>
+                    </div>
+
                     <c:forEach items="${users}" var="users">
                         <div class="row">
                             <form class="form-inline user-${users.username}" action="do?command=Admin" method=POST>
@@ -87,11 +93,6 @@
                                            maxlength="15" pattern="[[A-Za-zА-Яа-яЁё.-]+]{0,15}"
                                            value="${users.middleName}" title="" style="font-size: 11pt;"/>
                                 </div>
-                                <div class="form-group mb-2">
-                                    <input id="residence_country" class="form-control input-md" name="enabled"
-                                           value="${users.enabled}" title="" required="" style="font-size: 11pt;"/>
-                                </div>
-
 
                                 <div class="form-group mb-1">
                                     <button id="Update" name="Update" class="btn btn-white" style="font-size: 10pt;">

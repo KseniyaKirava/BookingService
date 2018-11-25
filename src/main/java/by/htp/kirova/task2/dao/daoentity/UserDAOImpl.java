@@ -1,6 +1,7 @@
 package by.htp.kirova.task2.dao.daoentity;
 
 
+import by.htp.kirova.task2.dao.ConnectionPool;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolException;
 import by.htp.kirova.task2.dao.DAOException;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolImpl;
@@ -27,6 +28,44 @@ public class UserDAOImpl implements BookingDAO<User> {
      */
     private static final Logger LOGGER = Logger.getLogger(UserDAOImpl.class);
 
+
+    /**
+     * The unique identification name constant.
+     */
+    private final static String USERNAME = "username";
+
+    /**
+     * The email constant.
+     */
+    private final static String EMAIL = "email";
+
+    /**
+     * The password constant.
+     */
+    private final static String PASSWORD = "password";
+
+    /**
+     * The first name constant.
+     */
+    private final static String FIRST_NAME = "first_name";
+
+    /**
+     * The last name constant.
+     */
+    private final static String LAST_NAME = "last_name";
+
+    /**
+     * The middle name constant.
+     */
+    private final static String MIDDLE_NAME = "middle_name";
+
+    /**
+     * The enabled state constant.
+     */
+    private final static String ENABLED = "enabled";
+
+
+
     /**
      * Constant string which represents query to create user.
      */
@@ -52,15 +91,14 @@ public class UserDAOImpl implements BookingDAO<User> {
 
     @Override
     public boolean create(User user) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
-
-        int result;
 
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
+            connection.setAutoCommit(false);
 
             ps = connection.prepareStatement(SQL_CREATE_USER);
             ps.setString(1, user.getUsername());
@@ -71,32 +109,36 @@ public class UserDAOImpl implements BookingDAO<User> {
             ps.setString(6, user.getMiddleName());
             ps.setBoolean(7, user.isEnabled());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
 
-            connection.setAutoCommit(false);
+            if (result <= 0) {
+                return false;
+            }
+
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            if (cp != null) {
+            if (cp != null && connection != null) {
                 cp.rollbackConnection(connection);
             }
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null && ps!= null) {
-                cp.setAutoCommitTrue(connection);
+            if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+            }
+            if (cp != null && connection != null) {
+                cp.setAutoCommitTrue(connection);
                 cp.releaseConnection(connection);
             }
         }
 
-        return result == 1;
+        return true;
     }
 
     @Override
     public List<User> read(String where) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet;
@@ -113,23 +155,24 @@ public class UserDAOImpl implements BookingDAO<User> {
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 list.add(new User(
-                        resultSet.getString("username"),
-                        resultSet.getString("email"),
-                        resultSet.getString("password"),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name"),
-                        resultSet.getString("middle_name"),
-                        resultSet.getBoolean("enabled")
+                        resultSet.getString(USERNAME),
+                        resultSet.getString(EMAIL),
+                        resultSet.getString(PASSWORD),
+                        resultSet.getString(FIRST_NAME),
+                        resultSet.getString(LAST_NAME),
+                        resultSet.getString(MIDDLE_NAME),
+                        resultSet.getBoolean(ENABLED)
                 ));
             }
 
         } catch (ConnectionPoolException | SQLException e) {
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && statement != null) {
                 cp.closeStatement(statement);
+            }
+            if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
             }
         }
@@ -139,15 +182,14 @@ public class UserDAOImpl implements BookingDAO<User> {
 
     @Override
     public boolean update(User user) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
-
-        int result;
 
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
+            connection.setAutoCommit(false);
 
             ps = connection.prepareStatement(SQL_UPDATE_USER);
             ps.setString(1, user.getEmail());
@@ -158,36 +200,38 @@ public class UserDAOImpl implements BookingDAO<User> {
             ps.setBoolean(6, user.isEnabled());
             ps.setString(7, user.getUsername());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
 
-            connection.setAutoCommit(false);
+            if (result <= 0) {
+                return false;
+            }
+
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            if (cp != null) {
+            if (cp != null && connection != null) {
                 cp.rollbackConnection(connection);
             }
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null && ps!= null) {
-                cp.setAutoCommitTrue(connection);
+            if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+            }
+            if (cp != null && connection != null) {
+                cp.setAutoCommitTrue(connection);
                 cp.releaseConnection(connection);
             }
         }
 
-        return result == 1;
+        return true;
     }
 
     @Override
     public boolean delete(User user) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
-
-        int result;
 
         try {
             cp = ConnectionPoolImpl.getInstance();
@@ -196,19 +240,25 @@ public class UserDAOImpl implements BookingDAO<User> {
             ps = connection.prepareStatement(SQL_DELETE_USER);
             ps.setString(1, user.getUsername());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
+
+            if (result <= 0) {
+                return false;
+            }
 
         } catch (ConnectionPoolException | SQLException e) {
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
+
         } finally {
-            if (cp != null && connection != null && ps!= null){
+            if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+            }
+            if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
             }
         }
 
-        return result == 1;
+        return true;
     }
 
 }

@@ -58,7 +58,13 @@
                     </div>
 
 
-                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-12 control-label" style="color: red; font-size: 12pt;">
+                            ${errorData}
+                        </label>
+                    </div>
+
+
                     <div class="row justify-content-left align-items-start">
 
                         <div class="col-md-6">

@@ -33,7 +33,7 @@ public class RoomClassDAOImpl implements BookingDAO<RoomClass> {
     private final static String ID = "id";
 
     /**
-     * The name of facility constant.
+     * The name of class of the room constant.
      */
     private final static String NAME = "name";
 
@@ -160,8 +160,6 @@ public class RoomClassDAOImpl implements BookingDAO<RoomClass> {
         Connection connection = null;
         PreparedStatement ps = null;
 
-        int result;
-
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
@@ -172,7 +170,11 @@ public class RoomClassDAOImpl implements BookingDAO<RoomClass> {
             ps.setBoolean(2, roomClass.isEnabled());
             ps.setLong(3, roomClass.getId());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
+
+            if (result <= 0) {
+                return false;
+            }
 
             connection.commit();
 
@@ -192,7 +194,7 @@ public class RoomClassDAOImpl implements BookingDAO<RoomClass> {
             }
         }
 
-        return result == 1;
+        return true;
     }
 
     @Override
@@ -201,8 +203,6 @@ public class RoomClassDAOImpl implements BookingDAO<RoomClass> {
         Connection connection = null;
         PreparedStatement ps = null;
 
-        int result;
-
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
@@ -210,7 +210,11 @@ public class RoomClassDAOImpl implements BookingDAO<RoomClass> {
             ps = connection.prepareStatement(SQL_DELETE_ROOM_CLASS);
             ps.setLong(1, roomClass.getId());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
+
+            if (result <= 0) {
+                return false;
+            }
 
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException("ConnectionPool or SQL error: ", e);
@@ -224,7 +228,6 @@ public class RoomClassDAOImpl implements BookingDAO<RoomClass> {
             }
         }
 
-        return result == 1;
+        return true;
     }
-
 }

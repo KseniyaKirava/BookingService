@@ -70,8 +70,6 @@ public class FacilityDAOImpl implements BookingDAO<Facility> {
         Connection connection = null;
         PreparedStatement ps = null;
 
-        int result;
-
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
@@ -81,7 +79,7 @@ public class FacilityDAOImpl implements BookingDAO<Facility> {
             ps.setString(1, facility.getName());
             ps.setBoolean(2, facility.isEnabled());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
 
             if (result <= 0) {
                 return false;
@@ -163,8 +161,6 @@ public class FacilityDAOImpl implements BookingDAO<Facility> {
         Connection connection = null;
         PreparedStatement ps = null;
 
-        int result;
-
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
@@ -175,7 +171,11 @@ public class FacilityDAOImpl implements BookingDAO<Facility> {
             ps.setBoolean(2, facility.isEnabled());
             ps.setLong(3, facility.getId());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
+
+            if (result <= 0) {
+                return false;
+            }
 
             connection.commit();
 
@@ -195,7 +195,7 @@ public class FacilityDAOImpl implements BookingDAO<Facility> {
             }
         }
 
-        return result == 1;
+        return true;
     }
 
     @Override
@@ -204,8 +204,6 @@ public class FacilityDAOImpl implements BookingDAO<Facility> {
         Connection connection = null;
         PreparedStatement ps = null;
 
-        int result;
-
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
@@ -213,7 +211,11 @@ public class FacilityDAOImpl implements BookingDAO<Facility> {
             ps = connection.prepareStatement(SQL_DELETE_FACILITY);
             ps.setLong(1, facility.getId());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
+
+            if (result <= 0) {
+                return false;
+            }
 
         } catch (ConnectionPoolException | SQLException e) {
             throw new DAOException("ConnectionPool or SQL error: ", e);
@@ -227,7 +229,7 @@ public class FacilityDAOImpl implements BookingDAO<Facility> {
             }
         }
 
-        return result == 1;
+        return true;
     }
 
 }

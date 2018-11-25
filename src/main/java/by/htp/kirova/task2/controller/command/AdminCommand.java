@@ -1,5 +1,6 @@
 package by.htp.kirova.task2.controller.command;
 
+import by.htp.kirova.task2.controller.MessageManager;
 import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
@@ -37,17 +38,17 @@ public class AdminCommand extends Command {
     /**
      * The user's first name constant.
      */
-    private final static String FIRST_NAME = "first_name";
+    private final static String FIRST_NAME = "firstName";
 
     /**
      * The user's last name constant.
      */
-    private final static String LAST_NAME = "last_name";
+    private final static String LAST_NAME = "lastName";
 
     /**
      * The user's middle name constant.
      */
-    private final static String MIDDLE_NAME = "middle_name";
+    private final static String MIDDLE_NAME = "middleName";
 
 
 
@@ -73,13 +74,18 @@ public class AdminCommand extends Command {
             String username1 = request.getParameter(USERNAME);
             String email = request.getParameter(EMAIL);
             String password = request.getParameter(PASSWORD);
-            String first_name = request.getParameter(FIRST_NAME);
-            String last_name = request.getParameter(LAST_NAME);
-            String middle_name = request.getParameter(MIDDLE_NAME);
+            String firstName = request.getParameter(FIRST_NAME);
+            String lastName = request.getParameter(LAST_NAME);
+            String middleName = request.getParameter(MIDDLE_NAME);
 
 
             if (request.getParameter("Update") != null) {
-                User editUser = new User(username1, email, password, first_name, last_name, middle_name, true);
+
+
+                //todo проверки
+
+
+                User editUser = new User(username1, email, password, firstName, lastName, middleName, true);
                 boolean isUpdate;
                 try {
                     isUpdate = userService.update(editUser);
@@ -88,10 +94,13 @@ public class AdminCommand extends Command {
                     throw new CommandException(e);
                 }
                 if (isUpdate) {
+                    request.setAttribute("wordUser", MessageManager.getProperty("message.wordUser"));
+                    request.setAttribute("currentUser", username1);
+                    request.setAttribute("isUpdated", MessageManager.getProperty("message.isUpdated"));
                     LOGGER.info("User successfully updated");
                 }
             } else if (request.getParameter("Delete") != null) {
-                User editUser = new User(username1, email, password, first_name, last_name, middle_name, false);
+                User editUser = new User(username1, email, password, firstName, lastName, middleName, false);
                 boolean isDelete;
                 try {
                     isDelete = userService.update(editUser);
@@ -100,6 +109,9 @@ public class AdminCommand extends Command {
                     throw new CommandException(e);
                 }
                 if (isDelete) {
+                    request.setAttribute("wordUser", MessageManager.getProperty("message.wordUser"));
+                    request.setAttribute("currentUser", username1);
+                    request.setAttribute("isDisabled", MessageManager.getProperty("message.isDisabled"));
                     LOGGER.info("User successfully marked deleted");
                 }
             }

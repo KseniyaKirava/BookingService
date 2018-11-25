@@ -40,21 +40,21 @@
         </ul>
     </div>
 
-    <%--<div class="collapse navbar-collapse justify-content-start" id="navbarNav2">--%>
-        <%--<ul class="navbar-nav">--%>
-            <%--<c:choose>--%>
-                <%--<c:when test="${user==null}">--%>
-                    <%--<li class="nav-item">--%>
-                        <%--<a class="nav-link" style="font-size: 12pt;" href="do?command=Login">--%>
-                            <%--<fmt:message key="message.loginPage"/>--%>
-                        <%--</a>--%>
-                    <%--</li>--%>
-                    <%--<li class="nav-item">--%>
-                        <%--<a class="nav-link" style="font-size: 12pt;" href="do?command=SignUp">--%>
-                            <%--<fmt:message key="message.signup"/>--%>
-                        <%--</a>--%>
-                    <%--</li>--%>
-                <%--</c:when>--%>
+    <div class="collapse navbar-collapse justify-content-start" id="navbarNav2">
+        <ul class="navbar-nav">
+            <c:choose>
+                <c:when test="${user==null}">
+                    <li class="nav-item">
+                        <a class="nav-link" style="font-size: 12pt;" href="do?command=Login">
+                            <fmt:message key="message.loginPage"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="font-size: 12pt;" href="do?command=SignUp">
+                            <fmt:message key="message.signup"/>
+                        </a>
+                    </li>
+                </c:when>
                 <%--<c:when test="${user!=null && users.username == 'admin'}">--%>
                     <%--<li class="nav-item">--%>
                         <%--<a class="nav-link" style="font-size: 12pt;" href="do?command=Admin">--%>
@@ -62,16 +62,16 @@
                         <%--</a>--%>
                     <%--</li>--%>
                 <%--</c:when>--%>
-                <%--<c:when test="${user!=null && users.username != 'admin'}">--%>
-                    <%--<li class="nav-item">--%>
-                        <%--<a class="nav-link" style="font-size: 12pt;" href="do?command=Profile">--%>
-                            <%--<fmt:message key="message.profile"/>--%>
-                        <%--</a>--%>
-                    <%--</li>--%>
-                <%--</c:when>--%>
-            <%--</c:choose>--%>
+                <c:when test="${user!=null}">
+                    <li class="nav-item">
+                        <a class="nav-link" style="font-size: 12pt;" href="do?command=Profile">
+                            <fmt:message key="message.profile"/>
+                        </a>
+                    </li>
+                </c:when>
+            </c:choose>
 
-        <%--</ul>--%>
-    <%--</div>--%>
+        </ul>
+    </div>
 </nav>
 

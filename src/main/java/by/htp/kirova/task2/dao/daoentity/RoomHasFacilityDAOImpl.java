@@ -2,6 +2,7 @@ package by.htp.kirova.task2.dao.daoentity;
 
 
 import by.htp.kirova.task2.dao.BookingDAO;
+import by.htp.kirova.task2.dao.ConnectionPool;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolException;
 import by.htp.kirova.task2.dao.DAOException;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolImpl;
@@ -26,6 +27,27 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
     private static final Logger LOGGER = Logger.getLogger(RoomHasFacilityDAOImpl.class);
+
+
+    /**
+     * The unique identification number of room constant.
+     */
+    private final static String ROOMS_ID = "rooms_id";
+
+    /**
+     * The unique identification number of facility constant.
+     */
+    private final static String FACILITIES_ID = "facilities_id";
+
+    /**
+     * The count of facility.
+     */
+    private final static String COUNT = "count";
+
+    /**
+     * The enabled state constant.
+     */
+    private final static String ENABLED = "enabled";
 
     /**
      * Constant string which represents query to create relations between facility and room.
@@ -53,15 +75,14 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
 
     @Override
     public boolean create(RoomHasFacility roomHasFacility) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
-
-        int result;
 
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
+            connection.setAutoCommit(false);
 
             ps = connection.prepareStatement(SQL_CREATE_RHF);
             ps.setLong(1, roomHasFacility.getRoomsId());
@@ -69,32 +90,36 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
             ps.setInt(3, roomHasFacility.getCount());
             ps.setBoolean(4, roomHasFacility.isEnabled());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
 
-            connection.setAutoCommit(false);
+            if (result <= 0) {
+                return false;
+            }
+
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            if (cp != null) {
+            if (cp != null && connection != null) {
                 cp.rollbackConnection(connection);
             }
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null && ps != null) {
-                cp.setAutoCommitTrue(connection);
+            if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+            }
+            if (cp != null && connection != null) {
+                cp.setAutoCommitTrue(connection);
                 cp.releaseConnection(connection);
             }
         }
 
-        return result == 1;
+        return true;
     }
 
     @Override
     public List<RoomHasFacility> read(String where) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet;
@@ -109,22 +134,24 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
 
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
+
             while (resultSet.next()) {
                 list.add(new RoomHasFacility(
-                        resultSet.getLong("rooms_id"),
-                        resultSet.getLong("facilities_id"),
-                        resultSet.getInt("count"),
-                        resultSet.getBoolean("enabled")
+                        resultSet.getLong(ROOMS_ID),
+                        resultSet.getLong(FACILITIES_ID),
+                        resultSet.getInt(COUNT),
+                        resultSet.getBoolean(ENABLED)
                 ));
             }
 
         } catch (ConnectionPoolException | SQLException e) {
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && statement != null) {
                 cp.closeStatement(statement);
+            }
+            if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
             }
         }
@@ -134,15 +161,14 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
 
     @Override
     public boolean update(RoomHasFacility roomHasFacility) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
-
-        int result;
 
         try {
             cp = ConnectionPoolImpl.getInstance();
             connection = cp.getConnection();
+            connection.setAutoCommit(false);
 
             ps = connection.prepareStatement(SQL_UPDATE_RHF);
             ps.setInt(1, roomHasFacility.getCount());
@@ -150,36 +176,38 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
             ps.setLong(3, roomHasFacility.getRoomsId());
             ps.setLong(4, roomHasFacility.getFacilitiesId());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
 
-            connection.setAutoCommit(false);
+            if (result <= 0) {
+                return false;
+            }
+
             connection.commit();
 
         } catch (ConnectionPoolException | SQLException e) {
-            if (cp != null) {
+            if (cp != null && connection != null) {
                 cp.rollbackConnection(connection);
             }
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null && ps != null) {
-                cp.setAutoCommitTrue(connection);
+            if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+            }
+            if (cp != null && connection != null) {
+                cp.setAutoCommitTrue(connection);
                 cp.releaseConnection(connection);
             }
         }
 
-        return result == 1;
+        return true;
     }
 
     @Override
     public boolean delete(RoomHasFacility roomHasFacility) throws DAOException {
-        ConnectionPoolImpl cp = null;
+        ConnectionPool cp = null;
         Connection connection = null;
         PreparedStatement ps = null;
-
-        int result;
 
         try {
             cp = ConnectionPoolImpl.getInstance();
@@ -189,20 +217,25 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
             ps.setLong(1, roomHasFacility.getRoomsId());
             ps.setLong(2, roomHasFacility.getFacilitiesId());
 
-            result = ps.executeUpdate();
+            int result = ps.executeUpdate();
+
+            if (result <= 0) {
+                return false;
+            }
 
         } catch (ConnectionPoolException | SQLException e) {
-            LOGGER.error("ConnectionPoolImpl error: ", e);
-            throw new DAOException("ConnectionPoolImpl error: ", e);
+            throw new DAOException("ConnectionPool or SQL error: ", e);
 
         } finally {
-            if (cp != null && connection != null && ps != null) {
+            if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+            }
+            if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
             }
         }
 
-        return result == 1;
+        return true;
     }
 
 }
