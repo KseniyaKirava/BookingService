@@ -1,7 +1,11 @@
 package by.htp.kirova.task2.controller.command;
 
+import by.htp.kirova.task2.entity.Authority;
 import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.controller.MessageManager;
+import by.htp.kirova.task2.service.BookingService;
+import by.htp.kirova.task2.service.ServiceException;
+import by.htp.kirova.task2.service.ServiceFactory;
 import by.htp.kirova.task2.service.logic.UserLogic;
 import by.htp.kirova.task2.service.validation.Validator;
 import by.htp.kirova.task2.util.Util;
@@ -10,6 +14,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Abstract class implementation for a
@@ -38,11 +43,12 @@ public class LoginCommand extends Command {
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) {
         User user = Util.getUserFromSession(request);
+        String userRole= (String) request.getAttribute("role");
         if (user != null) {
-            if (user.getUsername().equals("admin")) {
+            if (userRole.equals("admin")) {
                 return CommandType.ADMIN.getCurrentCommand();
             }
-            return CommandType.PROFILE.getCurrentCommand();
+            return CommandType.MAIN.getCurrentCommand();
         }
         if (request.getMethod().equalsIgnoreCase("post")) {
             if (request.getParameter("loginbutton") != null) {
@@ -67,7 +73,26 @@ public class LoginCommand extends Command {
                     request.getSession().setAttribute("user", user);
                     request.getSession().setMaxInactiveInterval(60);
                     LOGGER.info("Session for user " + username + " successfully created");
-                    if (username.equals("admin")) {
+
+                    ServiceFactory serviceFactory = ServiceFactory.getInstance();
+                    BookingService<Authority> authorityService = serviceFactory.getAuthorityService();
+
+                    String role = "user";
+
+                    try {
+                        List<Authority> authorities = authorityService.read("WHERE username like '" + username + "'");
+                        for (Authority authority: authorities) {
+                            if (authority.getAuthority().equals("admin")) {
+                                role = authority.getAuthority();
+                            }
+                        }
+                    } catch (ServiceException e) {
+                        //todo
+                    }
+
+                    request.getSession().setAttribute("role", role);
+
+                    if (role.equals("admin")) {
                         return CommandType.ADMIN.getCurrentCommand();
                     }
                     return CommandType.PROFILE.getCurrentCommand();

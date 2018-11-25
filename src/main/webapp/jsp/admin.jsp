@@ -16,6 +16,11 @@
                 <div class="col-md-2">
                     <ul class="nav navbar-nav nav-pills nav-stacked">
 
+                        <li class="active nav-item">
+                            <a class="nav-link" style="font-size: 12pt; color: #949494;"
+                               href="do?command=Profile"><fmt:message key="message.editMyProfile"/></a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">
                                 <fmt:message key="message.users"/></a>
@@ -36,10 +41,9 @@
 
                 </div>
 
-
                 <div class="col-md-10">
-                    <div class="row justify-content-left align-items-start">
-                        <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6 text-left">
                             <div class="form-group">
                                 <div class="col-md-auto">
                                     <legend>

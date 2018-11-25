@@ -6,26 +6,19 @@
 <div class="container">
     <%@ include file="../include/menu.jspf" %>
 
-    <form class="form-horizontal" method="post" command="do?command=AddRequest">
+    <form class="form-horizontal" method="post" command="do?command=Main">
 
         <fieldset>
 
             <br>
 
-            <div class="row justify-content-center align-items-end">
+            <div class="row justify-content-left align-items-end">
 
                 <div class="form-group">
                     <label class="col-md-12 control-label" style="color: red; font-size: 12pt;">
                         ${messageReservationNotFound}${incorrectData}
                     </label>
                 </div>
-
-                <div class="form-group">
-                    <label class="col-md-12 control-label" style="color: red; font-size: 12pt;">
-                        <%--<fmt:message key="message.textMainPage"/>--%>
-                    </label>
-                </div>
-
 
                 <div class="col-md-3">
                     <div class="form-group">
