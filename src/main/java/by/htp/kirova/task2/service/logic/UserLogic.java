@@ -12,7 +12,7 @@ import java.util.List;
 public class UserLogic {
 
 //    public static void main(String[] args) {
-//        String pass = getHashPassword("admin");
+//        String pass = getHashPassword("45d45d");
 //        System.out.println(pass);
 //
 //    }

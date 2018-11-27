@@ -41,7 +41,7 @@ public class LoginCommand extends Command {
     private final static String PASSWORD = "password";
 
     @Override
-    public Command execute(HttpServletRequest request, HttpServletResponse response) {
+    public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = Util.getUserFromSession(request);
         String userRole= (String) request.getAttribute("role");
         if (user != null) {
@@ -71,6 +71,7 @@ public class LoginCommand extends Command {
 
                 if (user != null) {
                     request.getSession().setAttribute("user", user);
+                    request.getSession().setAttribute("username", user.getUsername());
                     request.getSession().setMaxInactiveInterval(60);
                     LOGGER.info("Session for user " + username + " successfully created");
 
@@ -82,12 +83,18 @@ public class LoginCommand extends Command {
                     try {
                         List<Authority> authorities = authorityService.read("WHERE username like '" + username + "'");
                         for (Authority authority: authorities) {
-                            if (authority.getAuthority().equals("admin")) {
+                            String currentAuthority = authority.getAuthority();
+                            if (currentAuthority.equals("manager")) {
+                                if (role.equals("user")){
+                                    role = currentAuthority;
+                                }
+                            }
+                            if (currentAuthority.equals("admin")) {
                                 role = authority.getAuthority();
                             }
                         }
                     } catch (ServiceException e) {
-                        //todo
+                        throw new CommandException("Authorities reading error", e);
                     }
 
                     request.getSession().setAttribute("role", role);

@@ -14,17 +14,17 @@
 
             <div class="row justify-content-left align-items-start">
                 <div class="col-md-2">
-                    <ul class="nav navbar-nav nav-pills nav-stacked">
+                    <%--<ul class="nav navbar-nav nav-pills nav-stacked">--%>
 
-                        <li class="active nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;"
-                               href="do?command=Profile"><fmt:message key="message.editMyProfile"/></a>
-                        </li>
+                        <%--<li class="active nav-item">--%>
+                            <%--<a class="nav-link" style="font-size: 12pt; color: #949494;"--%>
+                               <%--href="do?command=Profile"><fmt:message key="message.editMyProfile"/></a>--%>
+                        <%--</li>--%>
 
-                        <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">
-                                <fmt:message key="message.users"/></a>
-                        </li>
+                        <%--<li class="nav-item">--%>
+                            <%--<a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">--%>
+                                <%--<fmt:message key="message.users"/></a>--%>
+                        <%--</li>--%>
 
                         <%--<li class="nav-item">--%>
                             <%--<a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">--%>
@@ -37,7 +37,9 @@
                         <%--</li>--%>
 
 
-                    </ul>
+                    <%--</ul>--%>
+
+
 
                 </div>
 
