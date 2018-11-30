@@ -76,9 +76,21 @@ public final class Validator {
     }
 
     /**
-     * Checks the name against entity's name pattern.
+     * Checks the name against room class name pattern.
      *
-     * @param entityName entity name.
+     * @param roomClassName room class name.
+     * @return {@code true} in case of success and false otherwise.
+     */
+    public boolean checkRoomClassName(String roomClassName) {
+        boolean isValid = roomClassName != null && ValidationPattern.ROOM_CLASS_NAME.getPattern().matcher(roomClassName).matches();
+        logger.info("User name is valid: " + isValid);
+        return isValid;
+    }
+
+    /**
+     * Checks the name against room's name pattern.
+     *
+     * @param entityName room name.
      * @return {@code true} in case of success and false otherwise.
      */
     public boolean checkEntityName(String entityName) {
@@ -86,6 +98,7 @@ public final class Validator {
         logger.info("User name is valid: " + isValid);
         return isValid;
     }
+
 
     /**
      * Checks the e-mail against user's e-mail pattern.
@@ -153,6 +166,18 @@ public final class Validator {
     public boolean checkCost(double cost) {
         boolean isValid = cost > 0.0;
         logger.info("Capacity is valid: " + isValid);
+        return isValid;
+    }
+
+    /**
+     * Check count.
+     *
+     * @param count cost of the room per night/room for few days.
+     * @return {@code true} in case of success and false otherwise.
+     */
+    public boolean checkCount(double count) {
+        boolean isValid = count > 0 && count < 10;
+        logger.info("Count is valid: " + isValid);
         return isValid;
     }
 

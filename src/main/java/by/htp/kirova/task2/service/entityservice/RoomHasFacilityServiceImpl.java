@@ -6,6 +6,7 @@ import by.htp.kirova.task2.dao.BookingDAO;
 import by.htp.kirova.task2.entity.RoomHasFacility;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
+import by.htp.kirova.task2.service.validation.Validator;
 
 import java.util.List;
 
@@ -23,12 +24,19 @@ public class RoomHasFacilityServiceImpl implements BookingService<RoomHasFacilit
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<RoomHasFacility> roomHasFacilityDAO = daoFactory.getRoomHasFacilityDAO();
 
+        Validator validator = Validator.getInstance();
+
+        if (!validator.checkCount(roomHasFacility.getCount()) ||
+                !roomHasFacility.isEnabled()) {
+            return false;
+        }
+
         boolean result;
 
         try {
             result = roomHasFacilityDAO.create(roomHasFacility);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the create request correctly: ", e);
         }
 
         return result;
@@ -40,12 +48,14 @@ public class RoomHasFacilityServiceImpl implements BookingService<RoomHasFacilit
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<RoomHasFacility> roomHasFacilityDAO = daoFactory.getRoomHasFacilityDAO();
 
+        //no validation for internal queries
+
         List<RoomHasFacility> list;
 
         try {
             list = roomHasFacilityDAO.read(where);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the update request correctly: ", e);
         }
 
         return list;
@@ -57,12 +67,18 @@ public class RoomHasFacilityServiceImpl implements BookingService<RoomHasFacilit
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<RoomHasFacility> roomHasFacilityDAO = daoFactory.getRoomHasFacilityDAO();
 
+        Validator validator = Validator.getInstance();
+
+        if (!validator.checkCount(roomHasFacility.getCount())) {
+            return false;
+        }
+
         boolean result;
 
         try {
             result = roomHasFacilityDAO.update(roomHasFacility);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the update request correctly: ", e);
         }
 
         return result;
@@ -70,6 +86,10 @@ public class RoomHasFacilityServiceImpl implements BookingService<RoomHasFacilit
 
     @Override
     public boolean delete(RoomHasFacility roomHasFacility) throws ServiceException {
+
+        // Method is not used.
+        // UPDATE is used to remove objects from the database with flag enabled = false.
+
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<RoomHasFacility> roomHasFacilityDAO = daoFactory.getRoomHasFacilityDAO();
 

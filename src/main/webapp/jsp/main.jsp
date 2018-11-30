@@ -97,13 +97,13 @@
                         <div class="col-md-auto">
                             <select data-style="btn-dark" id="roomClass" name="roomClass" type="text"
                                     class="form-control input-md">
-                                <option selected value="standard" style="font-size: 16px;">
+                                <option selected value="стандартный" style="font-size: 16px;">
                                     <fmt:message key="message.roomStandard"/>
                                 </option>
-                                <option value="luxe" style="font-size: 16px;">
+                                <option value="люкс" style="font-size: 16px;">
                                     <fmt:message key="message.roomLuxe"/>
                                 </option>
-                                <option value="president" style="font-size: 16px;">
+                                <option value="президентский" style="font-size: 16px;">
                                     <fmt:message key="message.roomPresident"/>
                                 </option>
                             </select>

@@ -26,14 +26,16 @@ public class RoomClassServiceImpl implements BookingService<RoomClass> {
         BookingDAO<RoomClass> roomClassDAO = daoFactory.getRoomClassDAO();
         Validator validator = Validator.getInstance();
 
-//        if (!validator.)
+        if (!validator.checkRoomClassName(roomClass.getName()) || !roomClass.isEnabled()) {
+            return false;
+        }
 
         boolean result;
 
         try {
             result = roomClassDAO.create(roomClass);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the create request correctly: ", e);
         }
 
         return result;
@@ -46,12 +48,14 @@ public class RoomClassServiceImpl implements BookingService<RoomClass> {
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<RoomClass> roomClassDAO = daoFactory.getRoomClassDAO();
 
+        //no validation for internal queries
+
         List<RoomClass> list;
 
         try {
             list = roomClassDAO.read(where);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the create request correctly: ", e);
         }
 
         return list;
@@ -62,12 +66,18 @@ public class RoomClassServiceImpl implements BookingService<RoomClass> {
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<RoomClass> roomClassDAO = daoFactory.getRoomClassDAO();
 
+        Validator validator = Validator.getInstance();
+
+        if (!validator.checkRoomClassName(roomClass.getName())) {
+            return false;
+        }
+
         boolean result;
 
         try {
             result = roomClassDAO.update(roomClass);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the create request correctly: ", e);
         }
 
         return result;
@@ -76,6 +86,10 @@ public class RoomClassServiceImpl implements BookingService<RoomClass> {
 
     @Override
     public boolean delete(RoomClass roomClass) throws ServiceException {
+
+        // Method is not used.
+        // UPDATE is used to remove objects from the database with flag enabled = false.
+
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<RoomClass> roomClassDAO = daoFactory.getRoomClassDAO();
 
@@ -84,7 +98,7 @@ public class RoomClassServiceImpl implements BookingService<RoomClass> {
         try {
             result = roomClassDAO.delete(roomClass);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the create request correctly: ", e);
         }
 
         return result;

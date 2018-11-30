@@ -22,6 +22,7 @@ public class FacilityServiceImpl implements BookingService<Facility> {
     public boolean create(Facility facility) throws ServiceException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<Facility> facilityDAO = daoFactory.getFacilityDAO();
+
         Validator validator = Validator.getInstance();
 
         if (!validator.checkEntityName(facility.getName()) ||
