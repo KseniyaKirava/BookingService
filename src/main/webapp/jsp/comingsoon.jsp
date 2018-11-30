@@ -12,12 +12,23 @@
         <br>
         <br>
         <br>
+
+        <div class="row justify-content-center align-items-start">
+            <p style="color: black; height: 20px; font-weight: bold"><fmt:message key="message.comingsoon"/></p>
+        </div>
+
         <br>
 
         <div class="row justify-content-center align-items-start">
-            <p style="color: black; height: 100px;"><fmt:message key="message.comingsoon"/></p>
+            <img src="../image/comingsoon.png" alt="coming soon" width="250" border="0">
         </div>
+
+        <br>
+        <br>
+        <br>
+
     </form>
+
 
 
 </div>

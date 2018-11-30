@@ -30,12 +30,12 @@
                         <div class="col-md-6 text-right">
                             <div class="form-group">
                                 <div class="col-md-auto">
-                                    <button id="logout" name="logout" class="btn btn-white" style="font-size: 14px;">
-                                        <fmt:message key="message.logout"/>
-                                    </button>
                                     <button id="deletemyaccount" name="deletemyaccount"
-                                            class="btn btn-dark" style="font-size: 14px;">
+                                            class="btn btn-white" style="font-size: 14px;">
                                         <fmt:message key="message.deleteAccount"/>
+                                    </button>
+                                    <button id="logout" name="logout" class="btn btn-dark" style="font-size: 14px;">
+                                        <fmt:message key="message.logout"/>
                                     </button>
                                 </div>
                             </div>

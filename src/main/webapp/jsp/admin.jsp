@@ -77,14 +77,14 @@
                                     </div>
 
                                     <div class="form-group mb-1">
-                                        <button id="Update" name="Update" class="btn btn-white"
+                                        <button id="Update" name="Update" class="btn btn-dark"
                                                 style="font-size: 14px;">
                                             <fmt:message key="message.save"/>
                                         </button>
                                     </div>
 
                                     <div class="form-group mb-1">
-                                        <button id="Delete" name="Delete" class="btn btn-dark"
+                                        <button id="Delete" name="Delete" class="btn btn-white"
                                                 style="font-size: 14px;">
                                             <fmt:message key="message.delete"/>
                                         </button>

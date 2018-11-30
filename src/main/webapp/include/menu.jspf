@@ -58,7 +58,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                           style="font-size: 12pt;"><img src="../image/user.png" alt="logo" width="25" border="0";>&nbsp;&nbsp;&nbsp;${username}
+                           style="font-size: 12pt; color: white"><img src="../image/user.png" alt="logo" width="25" border="0";>&nbsp;&nbsp;&nbsp;${username}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <c:if test="${role=='admin'}">
