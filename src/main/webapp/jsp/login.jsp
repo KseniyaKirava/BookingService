@@ -13,21 +13,23 @@
     <form class="form-horizontal" method="post" command="do?command=Login">
         <fieldset>
 
+            <br>
+
             <div class="form-group">
-                <label class="col-md-12 control-label" style="color: red; font-size: 12pt;">
+                <label class="col-md-12 control-label" style="color: red; font-size: 16px;">
                     ${errorLoginCommand}
                 </label>
             </div>
 
             <div class="form-group">
 
-                <label class="col-md-4 control-label" for="username" style="font-size: 11pt;">
+                <label class="col-md-4 control-label" for="username" style="font-size: 16px;">
                     <fmt:message key="message.login"/>
                 </label>
                 <div class="col-md-4">
                     <input id="username" value="vasia" name="username" type="text" placeholder="login"
                            minlength="4" maxlength="15" pattern="[[A-Za-z._-]+]{4,15}"
-                           class="form-control input-md" required="" style="font-size: 11pt;">
+                           class="form-control input-md" required="" style="font-size: 16px;">
                 </div>
             </div>
 
@@ -39,8 +41,8 @@
                 <div class="col-md-4">
                     <input id="password" value="123456" name="password" type="password" placeholder="password"
                            minlength="5" maxlength="15" pattern="[\w]{5,15}"
-                           class="form-control input-md" required="" style="font-size: 11pt;">
-                    <span class="help-block" style="font-size: 9pt; color: #949494;">
+                           class="form-control input-md" required="" style="font-size: 16px;">
+                    <span class="help-block" style="font-size:  12px; color: #949494;">
                         <fmt:message key="message.passwordDescription"/>
                     </span>
                 </div>
@@ -50,7 +52,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="loginbutton"></label>
                 <div class="col-md-4">
-                    <button id="loginbutton" name="loginbutton" class="btn btn-primary" style="font-size: 10pt;">
+                    <button id="loginbutton" name="loginbutton" class="btn btn-dark" style="font-size: 14px;">
                         <fmt:message key="message.submit"/>
                     </button>
                 </div>
@@ -61,5 +63,14 @@
 
 </div>
 </body>
+<footer>
+    <div class="container">
+        <div class="row justify-content-left align-items-start">
+            <div class="col-md-12">
+                <%@ include file="../include/footer.jspf" %>
+            </div>
+        </div>
+    </div>
+</footer>
 </html>
 

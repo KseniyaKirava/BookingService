@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--<nav class="navbar navbar-expand-lg navbar-dark bg-primary">--%>
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ffffff;">
+<div class="card text-center">
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
 
     <fmt:requestEncoding value="UTF-8"/>
     <c:set var="lang" value="${not empty lang ? lang : pageContext.request.locale}"
@@ -10,20 +11,20 @@
     <fmt:setLocale value="${lang}"/>
     <fmt:setBundle basename="message"/>
 
-    <a class="navbar-brand" style="font-weight: bold; font-size: 20pt;" href="do?command=Main">
-        <img src="../image/logo.jpg" alt="logo" width="100" border="0" style="vertical-align: bottom">
+    <a class="navbar-brand" href="do?command=Main">
+        <img src="../image/logo.png" alt="logo" width="125" border="0";>
     </a>
 
     <div class="collapse navbar-collapse justify-content-start" id="navbarText">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" style="font-size: 12pt;" href="do?command=Main">
+                <a class="nav-link" style="font-size: 16px; color: white;" href="do?command=Main">
                     <fmt:message key="message.mainPage"/>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" style="font-size: 12pt;" href="do?command=About">
-                    <fmt:message key="message.mainPage"/>
+                <a class="nav-link" style="font-size: 16px; color: white;" href="do?command=About">
+                    <fmt:message key="message.about"/>
                 </a>
             </li>
         </ul>
@@ -31,28 +32,24 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarText">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" style="font-size: 12pt;"
-                   href="?command=${param.command}&sessionLocale=en-Us">
-                    <img src="../image/eng.png" alt="eng" width="20" height="14" border="0"
-                         style="vertical-align: bottom">
+                <a class="nav-link" href="?command=${param.command}&sessionLocale=ru-Ru">
+                    &nbsp;<img src="../image/rus.png" alt="rus" width="20" height="13" border="0" style="align-items: start ">
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" style="font-size: 12pt;"
-                   href="?command=${param.command}&sessionLocale=ru-Ru">
-                    <img src="../image/rus.png" alt="rus" width="20" height="14" border="0"
-                         style="vertical-align: bottom">
+                <a class="nav-link" href="?command=${param.command}&sessionLocale=en-Us">
+                    <img src="../image/eng.png" alt="eng" width="20" height="13" border="0" style="align-items: start">&nbsp;
                 </a>
             </li>
             <c:choose>
                 <c:when test="${user==null}">
                     <li class="nav-item">
-                        <a class="nav-link" style="font-size: 12pt;" href="do?command=Login">
+                        <a class="nav-link" style="font-size: 16px; color: white;" href="do?command=Login">
                             <fmt:message key="message.loginPage"/>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="font-size: 12pt;" href="do?command=SignUp">
+                        <a class="nav-link" style="font-size: 16px; color: white;" href="do?command=SignUp">
                             <fmt:message key="message.signup"/>
                         </a>
                     </li>
@@ -61,41 +58,40 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                           style="font-size: 12pt;">
-                            <fmt:message key="message.loggedAs"/>${username}
+                           style="font-size: 12pt;"><img src="../image/user.png" alt="logo" width="25" border="0";>&nbsp;&nbsp;&nbsp;${username}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <c:if test="${role=='admin'}">
-                                <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">
+                                <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=Profile">
                                     <fmt:message key="message.profile"/>
                                 </a>
-                                <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">
+                                <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=Admin">
                                     <fmt:message key="message.users"/>
                                 </a>
-                                <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">
+                                <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=ComingSoon">
                                     <fmt:message key="message.requests"/>
                                 </a>
-                                <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">
+                                <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=ComingSoon">
                                     <fmt:message key="message.rooms"/>
                                 </a>
-                                <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">
+                                <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=ComingSoon">
                                     <fmt:message key="message.reservations"/>
                                 </a>
-                                <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Admin">
+                                <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=ComingSoon">
                                     <fmt:message key="message.facilities"/>
                                 </a>
                             </c:if>
                             <c:if test="${role=='user'}">
-                                <a class="nav-link" style="font-size: 12pt; color: #949494;"
+                                <a class="nav-link" style="font-size: 16px; color: black;"
                                    href="do?command=Profile">
                                     <fmt:message key="message.profile"/>
                                 </a>
-                                <a class="nav-link" style="font-size: 12pt; color: #949494;"
+                                <a class="nav-link" style="font-size: 16px; color: black;"
                                    href="do?command=Reserve">
                                     <fmt:message key="message.myBills"/></a>
                             </c:if>
                             <c:if test="${role=='manager'}">
-                                <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Profile">
+                                <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=Profile">
                                     <fmt:message key="message.profile"/>
                                 </a>
                             </c:if>
@@ -106,4 +102,4 @@
         </ul>
     </div>
 </nav>
-
+</div>

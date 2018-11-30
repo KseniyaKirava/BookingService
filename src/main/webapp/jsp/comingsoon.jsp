@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <html>
 <%@ include file="../include/head.jspf" %>
@@ -6,13 +7,18 @@
 <div class="container">
     <%@ include file="../include/menu.jspf" %>
 
-    Request from ${pageContext.errorData.requestURI} is failed
-    <br/>
-    Servlet name or type: ${pageContext.errorData.servletName}
-    <br/>
-    Status code: ${pageContext.errorData.statusCode}
-    <br/>
-    Exception: ${pageContext.errorData.throwable}
+    <form class="form-horizontal" method="post" command="do?command=ComingSoon">
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div class="row justify-content-center align-items-start">
+            <p style="color: black; height: 100px;"><fmt:message key="message.comingsoon"/></p>
+        </div>
+    </form>
+
 
 </div>
 </body>
@@ -26,6 +32,7 @@
     </div>
 </footer>
 </html>
+
 
 
 

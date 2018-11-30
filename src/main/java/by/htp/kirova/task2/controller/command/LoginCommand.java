@@ -72,7 +72,7 @@ public class LoginCommand extends Command {
                 if (user != null) {
                     request.getSession().setAttribute("user", user);
                     request.getSession().setAttribute("username", user.getUsername());
-                    request.getSession().setMaxInactiveInterval(60);
+                    request.getSession().setMaxInactiveInterval(120);
                     LOGGER.info("Session for user " + username + " successfully created");
 
                     ServiceFactory serviceFactory = ServiceFactory.getInstance();

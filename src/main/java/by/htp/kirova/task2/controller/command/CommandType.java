@@ -82,6 +82,11 @@ public enum CommandType {
         {
             this.command = new PaymentCommand();
         }
+    },
+    COMINGSOON {
+        {
+            this.command = new ComingSoonCommand();
+        }
     };
 
     Command command;

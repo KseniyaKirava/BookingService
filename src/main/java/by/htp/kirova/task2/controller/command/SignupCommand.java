@@ -45,17 +45,17 @@ public class SignupCommand extends Command {
     /**
      * The user's first name constant.
      */
-    private final static String FIRST_NAME = "first_name";
+    private final static String FIRST_NAME = "firstName";
 
     /**
      * The user's last name constant.
      */
-    private final static String LAST_NAME = "last_name";
+    private final static String LAST_NAME = "lastName";
 
     /**
      * The user's middle name constant.
      */
-    private final static String MIDDLE_NAME = "middle_name";
+    private final static String MIDDLE_NAME = "middleName";
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse resp) throws CommandException {
@@ -72,27 +72,27 @@ public class SignupCommand extends Command {
             String username = request.getParameter(USERNAME);
             String email = request.getParameter(EMAIL);
             String password = request.getParameter(PASSWORD);
-            String first_name = request.getParameter(FIRST_NAME);
-            String last_name = request.getParameter(LAST_NAME);
-            String middle_name = request.getParameter(MIDDLE_NAME);
+            String firstName = request.getParameter(FIRST_NAME);
+            String lastName = request.getParameter(LAST_NAME);
+            String middleName = request.getParameter(MIDDLE_NAME);
 
             Validator validator = Validator.getInstance();
             if (!validator.checkUsername(username) || !validator.checkEmail(email) ||
                     !validator.checkPassword(password) || !validator.checkPassword(password) ||
-                    !validator.checkName(first_name) || !validator.checkName(last_name) ||
-                    !validator.checkMiddleName(middle_name)) {
-                request.getSession().setAttribute("username", "");
-                request.getSession().setAttribute("email", email);
-                request.getSession().setAttribute("password", "");
-                request.getSession().setAttribute("first_name", first_name);
-                request.getSession().setAttribute("last_name", last_name);
-                request.getSession().setAttribute("middle_name", middle_name);
+                    !validator.checkName(firstName) || !validator.checkName(lastName) ||
+                    !validator.checkMiddleName(middleName)) {
+                request.setAttribute(USERNAME, "");
+                request.setAttribute(EMAIL, email);
+                request.setAttribute(PASSWORD, "");
+                request.setAttribute(FIRST_NAME, firstName);
+                request.setAttribute(LAST_NAME, lastName);
+                request.setAttribute(MIDDLE_NAME, middleName);
                 request.setAttribute("errorSignUpCommand", MessageManager.getProperty("message.incorrectData"));
                 return null;
             } else {
                 if (UserLogic.isUsernameUnique(username)) {
                     String hashPassword = UserLogic.getHashPassword(password);
-                    user = new User(username, email, hashPassword, first_name, last_name, middle_name, true);
+                    user = new User(username, email, hashPassword, firstName, lastName, middleName, true);
                     Authority authority = new Authority("user", username, true);
                     ServiceFactory serviceFactory = ServiceFactory.getInstance();
                     boolean isCreateUser;
@@ -101,7 +101,6 @@ public class SignupCommand extends Command {
                         isCreateUser = serviceFactory.getUserService().create(user);
                         isCreateAuthority = serviceFactory.getAuthorityService().create(authority);
                     } catch (ServiceException e) {
-                        LOGGER.info("Creating user failed", e);
                         throw new CommandException("Creating user failed", e);
                     }
                     if (isCreateUser && isCreateAuthority) {
@@ -110,12 +109,12 @@ public class SignupCommand extends Command {
                     }
 
                 }
-                request.getSession().setAttribute("username", "");
-                request.getSession().setAttribute("email", email);
-                request.getSession().setAttribute("password", "");
-                request.getSession().setAttribute("first_name", first_name);
-                request.getSession().setAttribute("last_name", last_name);
-                request.getSession().setAttribute("middle_name", middle_name);
+                request.getSession().setAttribute(USERNAME, "");
+                request.getSession().setAttribute(EMAIL, email);
+                request.getSession().setAttribute(PASSWORD, "");
+                request.getSession().setAttribute(FIRST_NAME, firstName);
+                request.getSession().setAttribute(LAST_NAME, lastName);
+                request.getSession().setAttribute(MIDDLE_NAME, middleName);
                 request.setAttribute("errorUsernameDuplicate", MessageManager.getProperty("message.usernameDuplicate"));
             }
 

@@ -1,0 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<nav class="navbar navbar-expand-lg sticky-bottom navbar-dark bg-dark">
+    <div class="collapse navbar-collapse justify-content-center align-items-center">
+        <p style="font-size: 12px; color: white;">Copyright © 2018 Librium Design. All rights reserved.</p>
+    </div>
+</nav>
+

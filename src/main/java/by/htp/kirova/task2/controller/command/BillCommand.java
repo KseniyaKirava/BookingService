@@ -49,8 +49,8 @@ public class BillCommand extends Command {
                 return CommandType.RESERVE.getCurrentCommand();
             }
             if (request.getParameter("pay") != null) {
-                double total_cost = reservation.getTotalCost();
-                request.getSession().setAttribute("total_cost", total_cost);
+                double totalCost = reservation.getTotalCost();
+                request.getSession().setAttribute("totalCost", totalCost);
                 return CommandType.PAYMENT.getCurrentCommand();
             }
 

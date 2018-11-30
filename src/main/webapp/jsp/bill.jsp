@@ -11,24 +11,8 @@
     <form class="form-horizontal" method="post" command="do?command=Bill">
         <fieldset>
             <div class="row justify-content-left align-items-start">
-                <div class="col-md-2">
-                    <ul class="nav navbar-nav nav-pills nav-stacked">
-                        <li class="active nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;"
-                               href="do?command=Profile"><fmt:message key="message.editMyProfile"/></a>
-                        </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" style="font-size: 12pt; color: #949494;" href="do?command=Reserve">
-                                <fmt:message key="message.myBills"/></a>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <!-- Text input-->
                     <div class="row justify-content-left align-items-start">
                         <div class="col-md-12">
@@ -61,25 +45,25 @@
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td style="font-size:11pt;">${room_name}</td>
-                                        <td style="font-size:11pt;">${room_number}</td>
+                                        <td style="font-size:11pt;">${roomName}</td>
+                                        <td style="font-size:11pt;">${roomNumber}</td>
                                         <td style="font-size:11pt;">${capacity}</td>
 
 
                                         <jsp:useBean id="checkIn" class="java.util.Date"/>
                                         <jsp:setProperty name="checkIn" property="time"
-                                                         value="${check_in}"/>
-                                        <fmt:formatDate var="formatted_check_in"
+                                                         value="${checkIn}"/>
+                                        <fmt:formatDate var="formattedCheckIn"
                                                         pattern="dd.MM.YYYY" value="${checkIn}"/>
-                                        <td style="font-size:11pt;">${formatted_check_in}</td>
+                                        <td style="font-size:11pt;">${formattedCheckIn}</td>
 
 
                                         <jsp:useBean id="checkOut" class="java.util.Date"/>
                                         <jsp:setProperty name="checkOut" property="time"
-                                                         value="${check_out}"/>
-                                        <fmt:formatDate var="formatted_check_out"
+                                                         value="${checkOut}"/>
+                                        <fmt:formatDate var="formattedCheckOut"
                                                         pattern="dd.MM.YYYY" value="${checkOut}"/>
-                                        <td style="font-size:11pt;">${formatted_check_out}</td>
+                                        <td style="font-size:11pt;">${formattedCheckOut}</td>
 
                                         <th scope="row" style="font-size:11pt;">${totalCost}</th>
 
@@ -95,10 +79,10 @@
                     <div class="col-md-12 text-left">
                         <div class="form-group">
                             <div class="col-md-auto">
-                                <button id="pay" name="pay" class="btn btn-white" style="font-size: 10pt;">
+                                <button id="pay" name="pay" class="btn btn-white" style="font-size: 14px;">
                                     <fmt:message key="message.pay"/>
                                 </button>
-                                <button id="cancel" name="cancel" class="btn btn-primary" style="font-size: 10pt;">
+                                <button id="cancel" name="cancel" class="btn btn-dark" style="font-size: 14px;">
                                     <fmt:message key="message.cancel"/>
                                 </button>
                             </div>
@@ -115,6 +99,15 @@
     </form>
 </div>
 </body>
+<footer>
+    <div class="container">
+        <div class="row justify-content-left align-items-start">
+            <div class="col-md-12">
+                <%@ include file="../include/footer.jspf" %>
+            </div>
+        </div>
+    </div>
+</footer>
 </html>
 
 
