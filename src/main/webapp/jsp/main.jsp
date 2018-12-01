@@ -23,7 +23,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="col-md-auto control-label" for="roomCapacity" style="font-size: 16px;">
-                            <fmt:message key="message.roomcapacity"/>
+                            <fmt:message key="message.roomCapacity"/>
                         </label>
                         <div class="col-md-auto">
                             <input id="roomCapacity" value="${roomCapacity}" name="roomCapacity"

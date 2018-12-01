@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -104,7 +103,7 @@ public class LoginCommand extends Command {
                     }
                     return CommandType.PROFILE.getCurrentCommand();
                 } else {
-                    request.setAttribute("errorLoginCommand", MessageManager.getProperty("message.loginerror"));
+                    request.setAttribute("errorLoginCommand", MessageManager.getProperty("message.loginError"));
                     return null;
                 }
             }

@@ -30,7 +30,8 @@
                         <div class="col-md-6 text-right">
                             <div class="form-group">
                                 <div class="col-md-auto">
-                                    <button id="deletemyaccount" name="deletemyaccount"
+                                    <button data-toggle-id="delete-account" name="delete-account" type="button"
+                                            data-toggle="modal" data-target="#exampleModalCenter"
                                             class="btn btn-white" style="font-size: 14px;">
                                         <fmt:message key="message.deleteAccount"/>
                                     </button>
@@ -42,11 +43,31 @@
                         </div>
                     </div>
 
-
-                    <div class="form-group">
-                        <label class="col-md-12 control-label" style="color: red; font-size: 16px;">
-                            ${errorData}
-                        </label>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle"><fmt:message key="message.deleteAccountHeader"/></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><fmt:message key="message.areYouSure"/></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="deletemyaccount" name="deletemyaccount"
+                                            class="btn btn-white" style="font-size: 14px;">
+                                        <fmt:message key="message.deleteAccount"/>
+                                    </button>
+                                    <button id="cancel-delete" name="cancel-delete" data-dismiss="modal"
+                                            class="btn btn-dark" style="font-size: 14px;">
+                                        <fmt:message key="message.cancel"/>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
 

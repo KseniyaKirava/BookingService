@@ -14,7 +14,7 @@
         <br>
 
         <div class="row justify-content-center align-items-start">
-            <p style="color: black; height: 20px; font-weight: bold"><fmt:message key="message.comingsoon"/></p>
+            <p style="color: black; height: 20px; font-weight: bold"><fmt:message key="message.comingSoon"/></p>
         </div>
 
         <br>
