@@ -71,7 +71,7 @@ public final class Validator {
     public boolean checkMiddleName(String middleName) {
         boolean isValid = middleName == null || middleName.equals("") || ValidationPattern.MIDDLE_NAME.getPattern().
                 matcher(middleName).matches();
-        logger.info("User name is valid: " + isValid);
+        logger.info("User middle name is valid: " + isValid);
         return isValid;
     }
 
@@ -83,7 +83,19 @@ public final class Validator {
      */
     public boolean checkRoomClassName(String roomClassName) {
         boolean isValid = roomClassName != null && ValidationPattern.ROOM_CLASS_NAME.getPattern().matcher(roomClassName).matches();
-        logger.info("User name is valid: " + isValid);
+        logger.info("Room class name is valid: " + isValid);
+        return isValid;
+    }
+
+    /**
+     * Checks the number against room number pattern.
+     *
+     * @param roomNumber room number.
+     * @return {@code true} in case of success and false otherwise.
+     */
+    public boolean checkRoomNumber(String roomNumber) {
+        boolean isValid = roomNumber != null && ValidationPattern.ROOM_NUMBER.getPattern().matcher(roomNumber).matches();
+        logger.info("Room number is valid: " + isValid);
         return isValid;
     }
 
@@ -95,7 +107,7 @@ public final class Validator {
      */
     public boolean checkEntityName(String entityName) {
         boolean isValid = entityName != null && ValidationPattern.ENTITY_NAME.getPattern().matcher(entityName).matches();
-        logger.info("User name is valid: " + isValid);
+        logger.info("Entity name is valid: " + isValid);
         return isValid;
     }
 
@@ -152,7 +164,7 @@ public final class Validator {
         long time = currentDate.getTime();
 
         boolean isValid = date > (time - 2*1000);
-        logger.info("Date is valid: " + isValid);
+        logger.info("Date in long format is valid: " + isValid);
         return isValid;
     }
 
@@ -165,7 +177,7 @@ public final class Validator {
      */
     public boolean checkCost(double cost) {
         boolean isValid = cost > 0.0;
-        logger.info("Capacity is valid: " + isValid);
+        logger.info("Cost is valid: " + isValid);
         return isValid;
     }
 

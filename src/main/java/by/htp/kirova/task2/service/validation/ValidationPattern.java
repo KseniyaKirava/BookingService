@@ -37,9 +37,14 @@ enum ValidationPattern {
     ENTITY_NAME("[[A-Za-zА-Яа-яЁё\\d -]+]{1,50}"),
 
     /**
-     * Room name pattern.
+     * Room class name pattern.
      */
     ROOM_CLASS_NAME("[[A-Za-zА-Яа-яЁё\\d -]+]{1,15}"),
+
+    /**
+     * Room number pattern.
+     */
+    ROOM_NUMBER("[[\\w]+]{1,15}"),
 
     /**
      * E-mail pattern.

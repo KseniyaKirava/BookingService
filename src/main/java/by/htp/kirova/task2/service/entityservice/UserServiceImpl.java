@@ -6,6 +6,7 @@ import by.htp.kirova.task2.dao.DAOFactory;
 import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
+import by.htp.kirova.task2.service.validation.Validator;
 
 import java.util.List;
 
@@ -22,12 +23,24 @@ public class UserServiceImpl implements BookingService<User> {
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<User> userDAO = daoFactory.getUserDAO();
 
+        Validator validator = Validator.getInstance();
+
+        if (!validator.checkUsername(user.getUsername()) ||
+                !validator.checkEmail(user.getEmail()) ||
+                !validator.checkPassword(user.getPassword()) ||
+                !validator.checkName(user.getFirstName()) ||
+                !validator.checkName(user.getLastName()) ||
+                !validator.checkMiddleName(user.getMiddleName()) ||
+                !user.isEnabled()) {
+            return false;
+        }
+
         boolean result;
 
         try {
             result = userDAO.create(user);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the update request correctly: ", e);
         }
 
         return result;
@@ -39,12 +52,14 @@ public class UserServiceImpl implements BookingService<User> {
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<User> userDAO = daoFactory.getUserDAO();
 
+        //no validation for internal queries
+
         List<User> list;
 
         try {
             list = userDAO.read(where);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the update request correctly: ", e);
         }
 
         return list;
@@ -55,12 +70,22 @@ public class UserServiceImpl implements BookingService<User> {
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<User> userDAO = daoFactory.getUserDAO();
 
+        Validator validator = Validator.getInstance();
+
+        if (!validator.checkUsername(user.getUsername()) ||
+                !validator.checkEmail(user.getEmail()) ||
+                !validator.checkName(user.getFirstName()) ||
+                !validator.checkName(user.getLastName()) ||
+                !validator.checkMiddleName(user.getMiddleName())) {
+            return false;
+        }
+
         boolean result;
 
         try {
             result = userDAO.update(user);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the update request correctly: ", e);
         }
 
         return result;
@@ -68,6 +93,10 @@ public class UserServiceImpl implements BookingService<User> {
 
     @Override
     public boolean delete(User user) throws ServiceException {
+
+        // Method is not used.
+        // UPDATE is used to remove objects from the database with flag enabled = false.
+
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<User> userDAO = daoFactory.getUserDAO();
 
@@ -76,7 +105,7 @@ public class UserServiceImpl implements BookingService<User> {
         try {
             result = userDAO.delete(user);
         } catch (DAOException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Can't process the update request correctly: ", e);
         }
 
         return result;
