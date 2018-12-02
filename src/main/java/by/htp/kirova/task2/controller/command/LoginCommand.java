@@ -6,9 +6,8 @@ import by.htp.kirova.task2.controller.MessageManager;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.ServiceFactory;
-import by.htp.kirova.task2.service.logic.UserLogic;
 import by.htp.kirova.task2.service.validation.Validator;
-import by.htp.kirova.task2.util.Util;
+import by.htp.kirova.task2.service.util.Util;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +62,7 @@ public class LoginCommand extends Command {
 
                 user = null;
                 try {
-                    user = UserLogic.checkLogin(username, password);
+                    user = Util.checkLogin(username, password);
                 } catch (CommandException e) {
                     LOGGER.error("Check login & password error", e);
                 }

@@ -6,8 +6,8 @@ import by.htp.kirova.task2.dao.DAOFactory;
 import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
-import by.htp.kirova.task2.service.logic.UserLogic;
 import by.htp.kirova.task2.service.validation.Validator;
+import by.htp.kirova.task2.service.util.Util;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class UserServiceImpl implements BookingService<User> {
             return false;
         }
 
-        String hashPassword = UserLogic.getHashPassword(user.getPassword());
+        String hashPassword = Util.getHashPassword(user.getPassword());
         user.setPassword(hashPassword);
 
         boolean result;

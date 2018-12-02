@@ -2,7 +2,7 @@ package by.htp.kirova.task2.controller.command;
 
 
 import by.htp.kirova.task2.entity.User;
-import by.htp.kirova.task2.util.Util;
+import by.htp.kirova.task2.service.util.Util;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;

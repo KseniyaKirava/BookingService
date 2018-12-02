@@ -3,11 +3,9 @@ package by.htp.kirova.task2.controller.command;
 import by.htp.kirova.task2.controller.MessageManager;
 import by.htp.kirova.task2.entity.Authority;
 import by.htp.kirova.task2.entity.User;
-import by.htp.kirova.task2.service.logic.UserLogic;
+import by.htp.kirova.task2.service.util.Util;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.ServiceFactory;
-import by.htp.kirova.task2.service.validation.Validator;
-import by.htp.kirova.task2.util.Util;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,7 +75,7 @@ public class SignupCommand extends Command {
             String middleName = request.getParameter(MIDDLE_NAME);
 
 
-            if (UserLogic.isUsernameUnique(username)) {
+            if (Util.isUsernameUnique(username)) {
 
                 user = new User(username, email, password, firstName, lastName, middleName, true);
 

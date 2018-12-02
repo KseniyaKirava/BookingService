@@ -4,7 +4,7 @@ import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolException;
 import by.htp.kirova.task2.dao.DAOException;
 import by.htp.kirova.task2.dao.HelperDAO;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolImpl;
-import by.htp.kirova.task2.util.DateConverter;
+import by.htp.kirova.task2.service.util.DateConverter;
 import org.apache.log4j.Logger;
 
 import java.sql.*;

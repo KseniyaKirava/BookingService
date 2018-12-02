@@ -1,4 +1,4 @@
-package by.htp.kirova.task2.util;
+package by.htp.kirova.task2.service.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
