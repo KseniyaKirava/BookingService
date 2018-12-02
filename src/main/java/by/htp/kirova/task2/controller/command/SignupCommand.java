@@ -76,48 +76,48 @@ public class SignupCommand extends Command {
             String lastName = request.getParameter(LAST_NAME);
             String middleName = request.getParameter(MIDDLE_NAME);
 
-            Validator validator = Validator.getInstance();
-            if (!validator.checkUsername(username) || !validator.checkEmail(email) ||
-                    !validator.checkPassword(password) || !validator.checkPassword(password) ||
-                    !validator.checkName(firstName) || !validator.checkName(lastName) ||
-                    !validator.checkMiddleName(middleName)) {
-                request.setAttribute(USERNAME, "");
-                request.setAttribute(EMAIL, email);
-                request.setAttribute(PASSWORD, "");
-                request.setAttribute(FIRST_NAME, firstName);
-                request.setAttribute(LAST_NAME, lastName);
-                request.setAttribute(MIDDLE_NAME, middleName);
-                request.setAttribute("errorSignUpCommand", MessageManager.getProperty("message.incorrectData"));
-                return null;
-            } else {
-                if (UserLogic.isUsernameUnique(username)) {
-                    String hashPassword = UserLogic.getHashPassword(password);
-                    user = new User(username, email, hashPassword, firstName, lastName, middleName, true);
-                    Authority authority = new Authority("user", username, true);
-                    ServiceFactory serviceFactory = ServiceFactory.getInstance();
-                    boolean isCreateUser;
-                    boolean isCreateAuthority;
-                    try {
-                        isCreateUser = serviceFactory.getUserService().create(user);
+
+            if (UserLogic.isUsernameUnique(username)) {
+
+                user = new User(username, email, password, firstName, lastName, middleName, true);
+
+                ServiceFactory serviceFactory = ServiceFactory.getInstance();
+
+                boolean isCreateUser;
+                boolean isCreateAuthority = false;
+
+                try {
+                    isCreateUser = serviceFactory.getUserService().create(user);
+                    if (isCreateUser) {
+                        Authority authority = new Authority("user", username, true);
                         isCreateAuthority = serviceFactory.getAuthorityService().create(authority);
-                    } catch (ServiceException e) {
-                        throw new CommandException("Creating user failed", e);
                     }
-                    if (isCreateUser && isCreateAuthority) {
-                        LOGGER.info("User and authority successfully created");
-                        return CommandType.LOGIN.getCurrentCommand();
-                    }
-
+                } catch (ServiceException e) {
+                    throw new CommandException("Creating user failed", e);
                 }
-                request.getSession().setAttribute(USERNAME, "");
-                request.getSession().setAttribute(EMAIL, email);
-                request.getSession().setAttribute(PASSWORD, "");
-                request.getSession().setAttribute(FIRST_NAME, firstName);
-                request.getSession().setAttribute(LAST_NAME, lastName);
-                request.getSession().setAttribute(MIDDLE_NAME, middleName);
-                request.setAttribute("errorUsernameDuplicate", MessageManager.getProperty("message.usernameDuplicate"));
-            }
 
+                if (isCreateUser && isCreateAuthority) {
+                    LOGGER.info("User and authority successfully created");
+                    return CommandType.LOGIN.getCurrentCommand();
+                } else {
+                    request.setAttribute(USERNAME, "");
+                    request.setAttribute(EMAIL, email);
+                    request.setAttribute(PASSWORD, "");
+                    request.setAttribute(FIRST_NAME, firstName);
+                    request.setAttribute(LAST_NAME, lastName);
+                    request.setAttribute(MIDDLE_NAME, middleName);
+                    request.setAttribute("errorSignUpCommand", MessageManager.getProperty("message.incorrectData"));
+                    return null;
+                }
+
+            }
+            request.setAttribute(USERNAME, "");
+            request.setAttribute(EMAIL, email);
+            request.setAttribute(PASSWORD, "");
+            request.setAttribute(FIRST_NAME, firstName);
+            request.setAttribute(LAST_NAME, lastName);
+            request.setAttribute(MIDDLE_NAME, middleName);
+            request.setAttribute("errorUsernameDuplicate", MessageManager.getProperty("message.usernameDuplicate"));
         }
 
         return null;

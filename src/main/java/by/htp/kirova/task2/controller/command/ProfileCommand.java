@@ -98,6 +98,7 @@ public class ProfileCommand extends Command {
                     if (passwordIsUpdated) {
                         user.setPassword(UserLogic.getHashPassword(password));
                     }
+
                     user.setEmail(email);
                     user.setFirstName(firstName);
                     user.setLastName(lastName);
