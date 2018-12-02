@@ -91,13 +91,10 @@ public class ProfileCommand extends Command {
                     Validator validator = Validator.getInstance();
 
                     if (passwordIsUpdated && !validator.checkPassword(password)) {
-                        return null;
-                    }
-                    if (!validator.checkEmail(email) || !validator.checkName(firstName) ||
-                            !validator.checkName(lastName) || !validator.checkMiddleName(middleName)) {
                         request.setAttribute("errorData", MessageManager.getProperty("message.incorrectData"));
                         return null;
                     }
+
                     if (passwordIsUpdated) {
                         user.setPassword(UserLogic.getHashPassword(password));
                     }
@@ -109,13 +106,16 @@ public class ProfileCommand extends Command {
                     boolean isUpdate;
                     try {
                         isUpdate = userService.update(user);
+                        if (isUpdate) {
+                            LOGGER.info("Data from form successfully saved");
+                        } else {
+                            LOGGER.info("Data from form not saved, cause: incorrect data");
+                            request.setAttribute("errorData", MessageManager.getProperty("message.incorrectData"));
+                        }
                     } catch (ServiceException e) {
-                        LOGGER.info("Updating user failed", e);
-                        throw new CommandException("Updating user failed", e);
+                        throw new CommandException("Updating user ending with exception", e);
                     }
-                    if (isUpdate) {
-                        LOGGER.info("Data from form successfully saved");
-                    }
+
                     return CommandType.PROFILE.command;
                 }
                 if (request.getParameter("logout") != null) {
@@ -123,16 +123,16 @@ public class ProfileCommand extends Command {
                     return CommandType.LOGIN.getCurrentCommand();
                 }
                 if (request.getParameter("deletemyaccount") != null) {
-                        user.setEnabled(false);
-                        try {
-                            userService.update(user);
-                        } catch (ServiceException e) {
-                            LOGGER.info("Deleting user failed", e);
-                            throw new CommandException("Deleting user failed", e);
-                        }
-                        request.getSession().invalidate();
-                        LOGGER.info("User successfully deleted");
-                        return CommandType.LOGIN.getCurrentCommand();
+                    user.setEnabled(false);
+                    try {
+                        userService.update(user);
+                    } catch (ServiceException e) {
+                        LOGGER.info("Deleting user failed", e);
+                        throw new CommandException("Deleting user failed", e);
+                    }
+                    request.getSession().invalidate();
+                    LOGGER.info("User successfully deleted");
+                    return CommandType.LOGIN.getCurrentCommand();
 
                 }
 
