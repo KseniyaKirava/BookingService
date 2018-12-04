@@ -63,7 +63,7 @@ public class ProfileCommand extends Command {
         User user = UserService.getUserFromSession(request);
         if (user == null) {
             return CommandType.LOGIN.getCurrentCommand();
-        } else {
+        }
 
             ServiceFactory serviceFactory = ServiceFactory.getInstance();
             BookingService<User> userService = serviceFactory.getUserService();
@@ -77,7 +77,6 @@ public class ProfileCommand extends Command {
 
             if (request.getMethod().equalsIgnoreCase("post")) {
                 if (request.getParameter("saveinfo") != null) {
-                    String username = request.getParameter(USERNAME);
                     String email = request.getParameter(EMAIL);
                     String password = request.getParameter(PASSWORD);
                     String firstName = request.getParameter(FIRST_NAME);
@@ -86,9 +85,7 @@ public class ProfileCommand extends Command {
 
                     Validator validator = Validator.getInstance();
 
-                    if (password.isEmpty()) {
-                        password = user.getPassword();
-                    } else {
+                    if (!password.isEmpty()) {
                         if (!validator.checkPassword(password)) {
                             request.setAttribute("errorData", MessageManager.getProperty("message.incorrectData"));
                             return null;
@@ -124,7 +121,7 @@ public class ProfileCommand extends Command {
                         return null;
                     }
 
-                    return CommandType.PROFILE.command;
+                    return CommandType.PROFILE.getCurrentCommand();
 
                 }
                 if (request.getParameter("logout") != null) {
@@ -157,7 +154,6 @@ public class ProfileCommand extends Command {
 
             }
 
-        }
         return null;
 
     }

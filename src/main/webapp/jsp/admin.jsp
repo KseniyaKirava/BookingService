@@ -57,7 +57,7 @@
                     <div class="col-md-12">
                         <div class="row justify-content-left align-items-start">
                             <c:forEach items="${users}" var="users">
-                                <form class="form-inline user-${users.username}">
+                                <form class="form-inline user-${users.username}" action="do?command=Admin" method=POST>
                                     <div class="form-group mb-1">
                                         <input id="username" class="form-control input-md" readonly name="username"
                                                value="${users.username}" title="" style="font-size: 16px;"/>
@@ -70,8 +70,8 @@
                                     </div>
                                     <div class="form-group mb-1">
                                         <input id="password" class="form-control input-md" name="password"
-                                               <%--maxlength="15" pattern="[\w]{0,15}" placeholder=""--%>
-                                               value="${users.password}" type="password" required=""
+                                               maxlength="15" pattern="[\w]{0,15}" placeholder=""
+                                               value="${users.password}" type="password"
                                                style="font-size: 16px;"/>
                                     </div>
 
