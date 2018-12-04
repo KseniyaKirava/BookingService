@@ -14,7 +14,7 @@ enum ValidationPattern {
     /**
      * User's full name pattern.
      */
-    USERNAME("[[A-Za-z._-]+]{4,15}"),
+    USERNAME("[A-Za-z._-]{4,15}"),
 
     /**
      * User's password pattern.
@@ -24,27 +24,27 @@ enum ValidationPattern {
     /**
      * User's first name/last name pattern.
      */
-    NAME("[[A-Za-zА-Яа-яЁё-]+]{2,15}"),
+    NAME("[A-Za-zА-Яа-яЁё-]{2,15}"),
 
     /**
      * User's middle name pattern.
      */
-    MIDDLE_NAME("[[A-Za-zА-Яа-яЁё.-]+]{1,15}"),
+    MIDDLE_NAME("[A-Za-zА-Яа-яЁё-]{0,15}"),
 
     /**
      * Room name pattern.
      */
-    ENTITY_NAME("[[A-Za-zА-Яа-яЁё\\d -]+]{1,50}"),
+    ENTITY_NAME("[A-Za-zА-Яа-яЁё\\d -]{1,50}"),
 
     /**
      * Room class name pattern.
      */
-    ROOM_CLASS_NAME("[[A-Za-zА-Яа-яЁё\\d -]+]{1,15}"),
+    ROOM_CLASS_NAME("[A-Za-zА-Яа-яЁё\\d -]{1,15}"),
 
     /**
      * Room number pattern.
      */
-    ROOM_NUMBER("[[\\w]+]{1,15}"),
+    ROOM_NUMBER("[\\w]{1,15}"),
 
     /**
      * E-mail pattern.

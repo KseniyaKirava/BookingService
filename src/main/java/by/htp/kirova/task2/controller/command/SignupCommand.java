@@ -3,7 +3,7 @@ package by.htp.kirova.task2.controller.command;
 import by.htp.kirova.task2.controller.MessageManager;
 import by.htp.kirova.task2.entity.Authority;
 import by.htp.kirova.task2.entity.User;
-import by.htp.kirova.task2.service.util.Util;
+import by.htp.kirova.task2.service.util.UserService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.ServiceFactory;
 import org.apache.log4j.Logger;
@@ -57,7 +57,7 @@ public class SignupCommand extends Command {
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse resp) throws CommandException {
-        User user = Util.getUserFromSession(request);
+        User user = UserService.getUserFromSession(request);
         if (user != null) {
             if (user.getUsername().equals("admin")) {
                 return CommandType.ADMIN.getCurrentCommand();
@@ -75,7 +75,7 @@ public class SignupCommand extends Command {
             String middleName = request.getParameter(MIDDLE_NAME);
 
 
-            if (Util.isUsernameUnique(username)) {
+            if (UserService.isUsernameUnique(username)) {
 
                 user = new User(username, email, password, firstName, lastName, middleName, true);
 

@@ -6,8 +6,8 @@ import by.htp.kirova.task2.controller.MessageManager;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.ServiceFactory;
+import by.htp.kirova.task2.service.util.UserService;
 import by.htp.kirova.task2.service.validation.Validator;
-import by.htp.kirova.task2.service.util.Util;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +40,7 @@ public class LoginCommand extends Command {
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        User user = Util.getUserFromSession(request);
+        User user = UserService.getUserFromSession(request);
         String userRole= (String) request.getAttribute("role");
         if (user != null) {
             if (userRole.equals("admin")) {
@@ -62,7 +62,7 @@ public class LoginCommand extends Command {
 
                 user = null;
                 try {
-                    user = Util.checkLogin(username, password);
+                    user = UserService.checkLogin(username, password);
                 } catch (CommandException e) {
                     LOGGER.error("Check login & password error", e);
                 }

@@ -15,11 +15,15 @@
 
             <br>
 
-            <div class="form-group">
-                <label class="col-md-12 control-label" style="color: red; font-size: 16px;">
-                    ${errorLoginCommand}
-                </label>
-            </div>
+            <c:if test="${errorLoginCommand != null}">
+                <div class="form-group">
+                    <div class="alert alert-danger" role="alert">
+                        <label class="col-md-12 control-label" style="font-size: 16px;">
+                                ${errorLoginCommand}
+                        </label>
+                    </div>
+                </div>
+            </c:if>
 
             <div class="form-group">
 
@@ -28,7 +32,7 @@
                 </label>
                 <div class="col-md-4">
                     <input id="username" value="vasia" name="username" type="text" placeholder="login"
-                           minlength="4" maxlength="15" pattern="[[A-Za-z._-]+]{4,15}"
+                           maxlength="15" pattern="[A-Za-z._-]{4,15}"
                            class="form-control input-md" required="" style="font-size: 16px;">
                 </div>
             </div>
@@ -40,8 +44,15 @@
                 </label>
                 <div class="col-md-4">
                     <input id="password" value="123456" name="password" type="password" placeholder="password"
-                           minlength="5" maxlength="15" pattern="[\w]{5,15}"
+                           maxlength="15" pattern="[\w]{0,15}"
                            class="form-control input-md" required="" style="font-size: 16px;">
+                    <input onchange="if ($('#password').get(0).type=='password')
+                                                            $('#password').get(0).type='text';
+                                                     else $('#password').get(0).type='password';"
+                           name="check-box" type="checkbox" value="false">
+                    <fmt:message key="message.showPassword"/>
+
+                    <br>
                     <span class="help-block" style="font-size:  12px; color: #949494;">
                         <fmt:message key="message.passwordDescription"/>
                     </span>

@@ -4,7 +4,7 @@ import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolException;
 import by.htp.kirova.task2.dao.DAOException;
 import by.htp.kirova.task2.dao.HelperDAO;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolImpl;
-import by.htp.kirova.task2.service.util.DateConverter;
+import by.htp.kirova.task2.service.util.DateService;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -70,8 +70,8 @@ public class ViewHelperDAO implements HelperDAO {
                 if (currentCost < minCost) {
                     room = new ArrayList<>();
                     room.add(String.valueOf(resultSet.getInt("req.room_capacity")));
-                    room.add(DateConverter.convertDateToString(resultSet.getLong("req.checkin_date")));
-                    room.add(DateConverter.convertDateToString(resultSet.getLong("req.checkout_date")));
+                    room.add(DateService.convertDateToString(resultSet.getLong("req.checkin_date")));
+                    room.add(DateService.convertDateToString(resultSet.getLong("req.checkout_date")));
                     room.add(resultSet.getString("req.room_class"));
                     room.add(String.valueOf(resultSet.getInt("rooms.id")));
                     room.add(resultSet.getString("rooms.name"));

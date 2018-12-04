@@ -9,9 +9,10 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Util {
+public class UserService {
 
 
 //    public static void main(String[] args) {
@@ -20,9 +21,20 @@ public class Util {
 //
 //    }
 
+    /**
+     * Constant string which represents query to check login.
+     */
+    private static final String SQL_CHECK_LOGIN = "WHERE username='%s' AND password='%s' AND enabled=true LIMIT 0,1";
+
+    /**
+     * Constant string which represents query to check login.
+     */
+    private static final String SQL_GET_USER_BY_USERNAME = "WHERE username='%s' LIMIT 0,1";
+
+
     public static User checkLogin(String username, String password) throws CommandException {
         String hashPassword = getHashPassword(password);
-        String where = String.format("WHERE username='%s' AND password='%s' AND enabled=true LIMIT 0,1", username, hashPassword);
+        String where = String.format(SQL_CHECK_LOGIN, username, hashPassword);
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         User user = null;
@@ -42,21 +54,43 @@ public class Util {
 
     public static String getHashPassword(String password) {
         String salt = "rand"; // в реальных проектах происходит генерация разной соли для каждого случая
-        String hashpass = DigestUtils.sha256Hex(password + salt);
-        return hashpass;
+        return DigestUtils.sha256Hex(password + salt);
     }
 
+
+    public static User getUserByUsername(String username) {
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        BookingService<User> userService = serviceFactory.getUserService();
+
+        String where = String.format(SQL_GET_USER_BY_USERNAME, username);
+
+        User user = null;
+
+        try {
+            List<User> users = userService.read(where);
+            if (users.size() > 0) {
+                user = users.get(0);
+            }
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 
     public static boolean isUsernameUnique(String username) {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookingService<User> userService = serviceFactory.getUserService();
-        List<User> list = null;
+
+        String where = String.format(SQL_GET_USER_BY_USERNAME, username);
+
+        List<User> list = new ArrayList<>();
+
         try {
-            list = userService.read("WHERE username like '" + username + "'");
+            list = userService.read(where);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-        return list.isEmpty() || list == null;
+        return list.isEmpty();
     }
 
 

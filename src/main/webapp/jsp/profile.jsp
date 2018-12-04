@@ -43,12 +43,32 @@
                         </div>
                     </div>
 
+
+                    <c:if test="${errorData != null}">
+                        <div class="form-group">
+                            <div class="alert alert-danger" role="alert">
+                                <label class="col-md-12 control-label" style="font-size: 16px;">
+                                        ${errorData}
+                                </label>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${changeData != null}">
+                        <div class="form-group">
+                            <label class="col-md-12 control-label" style="color: red; font-size: 16px;">
+                                    ${changeData}
+                            </label>
+                        </div>
+                    </c:if>
+
                     <!-- Modal -->
-                    <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+                    <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog"
+                         aria-labelledby="ModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="ModalLongTitle"><fmt:message key="message.deleteAccountHeader"/></h5>
+                                    <h5 class="modal-title" id="ModalLongTitle"><fmt:message
+                                            key="message.deleteAccountHeader"/></h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -57,7 +77,7 @@
                                     <p><fmt:message key="message.areYouSure"/></p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button id="deletemyaccount" name="deletemyaccount"
+                                    <button id="deleteMyAccount" name="deleteMyAccount"
                                             class="btn btn-white" style="font-size: 14px;">
                                         <fmt:message key="message.deleteAccount"/>
                                     </button>
@@ -80,7 +100,6 @@
                                 </label>
                                 <div class="col-md-auto">
                                     <input id="username" value="${username}" name="username"
-                                           minlength="4" maxlength="15" pattern="[[A-Za-z._-]+]{4,15}"
                                            style="font-size: 16px;" type="text" class="form-control input-md"
                                            required="" readonly/>
 
@@ -112,10 +131,17 @@
                                 </label>
                                 <div class="col-md-auto">
                                     <input id="password" value="${password}" name="password" type="password"
-                                           minlength="5" pattern="[\w]{5,200}" placeholder="password"
-                                           class="form-control input-md" required="" style="font-size: 16px;"/>
+                                           maxlength="15" pattern="[\w]{0,15}" placeholder=""
+                                           class="form-control input-md" style="font-size: 16px;"/>
+                                    <input onchange="if ($('#password').get(0).type=='password')
+                                                            $('#password').get(0).type='text';
+                                                     else $('#password').get(0).type='password';"
+                                           name="check-box" type="checkbox" value="false">
+                                    <fmt:message key="message.showPassword"/>
+
+                                    <br>
                                     <span class="help-block" style="font-size: 12px; color: #949494;">
-                                        <fmt:message key="message.passwordDescription"/>
+                                         <fmt:message key="message.passwordDescription"/>
                                     </span>
                                 </div>
                             </div>
@@ -131,7 +157,7 @@
                                 </label>
                                 <div class="col-md-auto">
                                     <input id="firstName" value="${firstName}" name="firstName" type="text"
-                                           minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
+                                           maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{2,15}"
                                            placeholder="first name" class="form-control input-md" required=""
                                            style="font-size: 16px;"/>
 
@@ -149,7 +175,7 @@
                                 </label>
                                 <div class="col-md-auto">
                                     <input id="lastName" value="${lastName}" name="lastName" type="text"
-                                           minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
+                                           maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{2,15}"
                                            placeholder="last name" class="form-control input-md" required=""
                                            style="font-size: 16px;"/>
 
@@ -167,7 +193,7 @@
                                 </label>
                                 <div class="col-md-auto">
                                     <input id="middleName" value="${middleName}" name="middleName" type="text"
-                                           maxlength="15" pattern="[[A-Za-zА-Яа-яЁё.-]+]{0,15}"
+                                           maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{0,15}"
                                            placeholder="" class="form-control input-md" style="font-size: 16px;"/>
 
                                 </div>

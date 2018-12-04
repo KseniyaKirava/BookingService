@@ -7,7 +7,7 @@ import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.validation.Validator;
-import by.htp.kirova.task2.service.util.Util;
+import by.htp.kirova.task2.service.util.UserService;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class UserServiceImpl implements BookingService<User> {
             return false;
         }
 
-        String hashPassword = Util.getHashPassword(user.getPassword());
+        String hashPassword = UserService.getHashPassword(user.getPassword());
         user.setPassword(hashPassword);
 
         boolean result;

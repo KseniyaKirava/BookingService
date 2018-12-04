@@ -2,7 +2,7 @@ package by.htp.kirova.task2.controller.command;
 
 
 import by.htp.kirova.task2.entity.User;
-import by.htp.kirova.task2.service.util.Util;
+import by.htp.kirova.task2.service.util.UserService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +44,7 @@ public class MainCommand extends Command {
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        User user = Util.getUserFromSession(request);
+        User user = UserService.getUserFromSession(request);
 
             request.getSession().setAttribute("messageReservationNotFound", request.getSession().getAttribute("messageReservationNotFound"));
 //
@@ -72,8 +72,8 @@ public class MainCommand extends Command {
 //                    long checkin = 0;
 //                    long checkout = 0;
 //                    try {
-//                        checkin = DateConverter.convertDateToMiliseconds(checkinDate);
-//                        checkout = DateConverter.convertDateToMiliseconds(checkoutDate);
+//                        checkin = DateService.convertDateToMiliseconds(checkinDate);
+//                        checkout = DateService.convertDateToMiliseconds(checkoutDate);
 //                    } catch (ParseException e) {
 //                        logger.error("Date parse with error");
 //                    }
@@ -99,7 +99,7 @@ public class MainCommand extends Command {
 //                                throw new CommandException("Operation to get accessible rooms failed", e);
 //                            }
 //                            if (!rooms.isEmpty()) {
-//                                long reservation_date = DateConverter.getCurrentDateInMiliseconds();
+//                                long reservation_date = DateService.getCurrentDateInMiliseconds();
 //                                long checkin_date = 0;
 //                                long checkout_date = 0;
 //                                double cost = 0.0;
@@ -109,8 +109,8 @@ public class MainCommand extends Command {
 //                                String room_name = null;
 //                                String room_number = null;
 //                                try {
-//                                    checkin_date = DateConverter.convertDateToMiliseconds((String) rooms.get(1));
-//                                    checkout_date = DateConverter.convertDateToMiliseconds((String) rooms.get(2));
+//                                    checkin_date = DateService.convertDateToMiliseconds((String) rooms.get(1));
+//                                    checkout_date = DateService.convertDateToMiliseconds((String) rooms.get(2));
 //                                    cost = Double.valueOf((String) rooms.get(7));
 //                                    capacity = Integer.parseInt((String) rooms.get(0));
 //                                    rooms_id = Integer.parseInt((String) rooms.get(4));
@@ -120,7 +120,7 @@ public class MainCommand extends Command {
 //                                } catch (ParseException e) {
 //                                    logger.error("Вata parsing ended with an error");
 //                                }
-//                                double total_cost = Util.getTotalCost(checkin_date, checkout_date, cost);
+//                                double total_cost = UserService.getTotalCost(checkin_date, checkout_date, cost);
 //                                Reservation reservation = new Reservation(0, reservation_date, checkin_date, checkout_date,
 //                                        total_cost, true, requests_Id, username, rooms_id, room_class);
 //

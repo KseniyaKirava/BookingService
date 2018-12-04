@@ -12,7 +12,7 @@ import java.util.Locale;
  * @author Kseniya Kirava
  * @since Sep 24, 2018
  */
-public class DateConverter {
+public class DateService {
 
     /**
      * Сonverts String Date to milliseconds for storage in the database

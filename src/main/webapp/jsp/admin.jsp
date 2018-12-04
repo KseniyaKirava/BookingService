@@ -28,11 +28,31 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-12 control-label" style="color: green; font-size: 16px;">
-                            ${wordUser}${currentUser}${isDisabled}${isUpdated}
-                        </label>
-                    </div>
+                    <c:if test="${wordUser != null && currentUser != null && (isDisabled != null || isUpdated != null)}">
+                        <div class="form-group">
+                            <div class="alert alert-success" role="alert">
+                                <label class="col-md-12 control-label" style="font-size: 16px;">
+                                        ${wordUser}${currentUser}${isDisabled}${isUpdated}
+                                </label>
+                            </div>
+                        </div>
+                    </c:if>
+
+                    <%--<div class="form-group">--%>
+                    <%--<label class="col-md-12 control-label" style="color: green; font-size: 16px;">--%>
+                    <%--${wordUser}${currentUser}${isDisabled}${isUpdated}--%>
+                    <%--</label>--%>
+                    <%--</div>--%>
+
+                    <c:if test="${errorData != null}">
+                        <div class="form-group">
+                            <div class="alert alert-danger" role="alert">
+                                <label class="col-md-12 control-label" style="font-size: 16px;">
+                                        ${errorData}
+                                </label>
+                            </div>
+                        </div>
+                    </c:if>
 
                     <div class="col-md-12">
                         <div class="row justify-content-left align-items-start">
@@ -40,7 +60,6 @@
                                 <form class="form-inline user-${users.username}">
                                     <div class="form-group mb-1">
                                         <input id="username" class="form-control input-md" readonly name="username"
-                                               minlength="4" maxlength="15" pattern="[[A-Za-z._-]+]{4,15}"
                                                value="${users.username}" title="" style="font-size: 16px;"/>
                                     </div>
                                     <div class="form-group mb-2">
@@ -51,28 +70,28 @@
                                     </div>
                                     <div class="form-group mb-1">
                                         <input id="password" class="form-control input-md" name="password"
-                                               minlength="5" maxlength="200" pattern="[\w]{5,200}"
+                                               <%--maxlength="15" pattern="[\w]{0,15}" placeholder=""--%>
                                                value="${users.password}" type="password" required=""
                                                style="font-size: 16px;"/>
                                     </div>
 
                                     <div class="form-group mb-2">
                                         <input id="firstName" class="form-control input-md" name="firstName"
-                                               minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
+                                               maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{2,15}"
                                                value="${users.firstName}" title="" required=""
                                                style="font-size: 16px;"/>
                                     </div>
 
                                     <div class="form-group mb-2">
                                         <input id="lastName" class="form-control input-md" name="lastName"
-                                               minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
+                                               maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{2,15}"
                                                value="${users.lastName}" title="" required=""
                                                style="font-size: 16px;"/>
                                     </div>
 
                                     <div class="form-group mb-2">
                                         <input id="middleName" class="form-control input-md" name="middleName"
-                                               maxlength="15" pattern="[[A-Za-zА-Яа-яЁё.-]+]{0,15}"
+                                               maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{0,15}"
                                                value="${users.middleName}" title="" style="font-size: 16px;"/>
                                     </div>
 

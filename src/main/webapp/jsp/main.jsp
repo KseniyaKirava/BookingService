@@ -14,11 +14,23 @@
 
             <div class="row justify-content-left align-items-end">
 
-                <div class="form-group">
-                    <label class="col-md-12 control-label" style="color: red; font-size: 16px;">
-                        ${messageReservationNotFound}${incorrectData}
-                    </label>
-                </div>
+
+                <c:if test="${messageReservationNotFound != null || incorrectData != null}">
+                    <div class="form-group">
+                        <div class="alert alert-danger" role="alert">
+                            <label class="col-md-12 control-label" style="font-size: 16px;">
+                                    ${messageReservationNotFound}${incorrectData}
+                            </label>
+                        </div>
+                    </div>
+                </c:if>
+
+
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-md-12 control-label" style="color: red; font-size: 16px;">--%>
+                        <%--${messageReservationNotFound}${incorrectData}--%>
+                    <%--</label>--%>
+                <%--</div>--%>
 
                 <div class="col-md-3">
                     <div class="form-group">

@@ -4,7 +4,7 @@ import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.service.HelperService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.ServiceFactory;
-import by.htp.kirova.task2.service.util.Util;
+import by.htp.kirova.task2.service.util.UserService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +29,7 @@ public class ReserveCommand extends Command{
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-            User user = Util.getUserFromSession(request);
+            User user = UserService.getUserFromSession(request);
             if (user == null) {
                 return CommandType.LOGIN.getCurrentCommand();
             } else {

@@ -58,8 +58,8 @@
                             </select>
                         </div>
                         <div class="form-group" id="credit_cards">
-                            <img src="http://bootstraptema.ru/snippets/form/2017/visa.jpg" id="visa">
-                            <img src="http://bootstraptema.ru/snippets/form/2017/mastercard.jpg" id="mastercard">
+                            <img src="../image/visa.jpg" id="visa">
+                            <img src="../image/mastercard.jpg" id="mastercard">
                         </div>
                         <div class="form-group" id="pay-now">
                             <button type="submit" class="btn btn-primary" id="confirm-purchase"

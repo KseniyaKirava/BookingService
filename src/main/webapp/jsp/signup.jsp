@@ -27,11 +27,16 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-md-12 control-label" style="color: red; font-size: 16px;">
-                    ${errorSignUpCommand}${errorUsernameDuplicate}
-                </label>
-            </div>
+
+            <c:if test="${errorSignUpCommand != null || errorUsernameDuplicate != null}">
+                <div class="form-group">
+                    <div class="alert alert-danger" role="alert">
+                        <label class="col-md-12 control-label" style="font-size: 16px;">
+                                ${errorSignUpCommand}${errorUsernameDuplicate}
+                        </label>
+                    </div>
+                </div>
+            </c:if>
 
 
             <div class="row justify-content-left align-items-start">
@@ -43,8 +48,9 @@
                             <fmt:message key="message.login"/>
                         </label>
                         <div class="col-md-auto">
-                            <input id="username" value="${username}" name="username" type="text" minlength="4"
-                                   maxlength="15" pattern="[[A-Za-z._-]+]{4,15}" style="font-size: 16px;"
+                            <input id="username" value="${username}" name="username" type="text"
+                                   maxlength="15" pattern="[A-Za-z._-]{4,15}"
+                                   style="font-size: 16px;"
                                    class="form-control input-md" required=""/>
                         </div>
                     </div>
@@ -57,8 +63,8 @@
                             <fmt:message key="message.email"/>
                         </label>
                         <div class="col-md-auto">
-                            <input id="email" value="${email}" name="email" type="email" minlength="6"
-                                   maxlength="50" pattern="([\w\.\w]+)@(\w+\.)([a-z]{2,4})"
+                            <input id="email" value="${email}" name="email" type="email"
+                                   minlength="6" maxlength="50" pattern="([\w\.\w]+)@(\w+\.)([a-z]{2,4})"
                                    style="font-size: 16px;" class="form-control input-md" required=""/>
 
                         </div>
@@ -75,13 +81,19 @@
                         </label>
                         <div class="col-md-auto">
                             <input id="password" value="${password}" name="password" type="password"
-                                   minlength="5"
-                                   maxlength="15"
-                                   pattern="[\w]{5,15}" style="font-size: 16px;"
+                                   maxlength="15" pattern="[\w]{0,15}"
+                                   style="font-size: 16px;"
                                    class="form-control input-md" required=""/>
-                            <span class="help-block" style="font-size: 12px; color: #949494;">
-                                <fmt:message key="message.passwordDescription"/> (A-Za-z0-9)
-                            </span>
+                            <input onchange="if ($('#password').get(0).type=='password')
+                                                            $('#password').get(0).type='text';
+                                                     else $('#password').get(0).type='password';"
+                                   name="check-box" type="checkbox" value="false">
+                            <fmt:message key="message.showPassword"/>
+
+                            <br>
+                            <span class="help-block" style="font-size:  12px; color: #949494;">
+                        <fmt:message key="message.passwordDescription"/>
+                    </span>
                         </div>
                     </div>
                 </div>
@@ -93,7 +105,7 @@
                         </label>
                         <div class="col-md-auto">
                             <input id="firstName" value="${firstName}" name="firstName" type="text"
-                                   minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
+                                   maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{2,15}"
                                    class="form-control input-md" required="" style="font-size: 16px;"/>
 
                         </div>
@@ -110,7 +122,7 @@
                         </label>
                         <div class="col-md-auto">
                             <input id="lastName" value="${lastName}" name="lastName" type="text"
-                                   minlength="2" maxlength="15" pattern="[[A-Za-zА-Яа-яЁё-]+]{2,15}"
+                                   maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{2,15}"
                                    class="form-control input-md" required="" style="font-size: 16px;"/>
 
                         </div>
@@ -124,8 +136,7 @@
                         </label>
                         <div class="col-md-auto">
                             <input id="middleName" value="${middleName}" name="middleName" type="text"
-                                   maxlength="15"
-                                   pattern="[[A-Za-zА-Яа-яЁё.-]+]{0,15}" style="font-size: 16px;"
+                                   maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{0,15}" style="font-size: 16px;"
                                    class="form-control input-md"/>
 
                         </div>
