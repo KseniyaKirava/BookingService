@@ -147,9 +147,8 @@
 
             <!-- Button -->
             <div class="form-group">
-                <label class="col-md-4 control-label" for="singupbutton"></label>
-                <div class="col-md-4">
-                    <button id="singupbutton" name="singupbutton" class="btn btn-dark"
+                <div class="col-md-auto text-right">
+                    <button id="singupButton" name="singupButton" class="btn btn-dark"
                             style="font-size: 14px;">
                         <fmt:message key="message.save"/>
                     </button>
