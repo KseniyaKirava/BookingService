@@ -128,6 +128,10 @@
                             <div class="form-group">
                                 <label class="col-md-auto control-label" for="password" style="font-size: 16px;">
                                     <fmt:message key="message.password"/>
+                                    <button id="info" name="info" class="btn btn-link" data-toggle="tooltip"
+                                            data-placement="top" title="<fmt:message key="message.passwordDescription"/>">
+                                        <img src="../image/info.png" height="14" border="0"/>
+                                    </button>
                                 </label>
                                 <div class="col-md-auto">
                                     <input id="password" value="${password}" name="password" type="password"
@@ -138,11 +142,6 @@
                                                      else $('#password').get(0).type='password';"
                                            name="check-box" type="checkbox" value="false">
                                     <fmt:message key="message.showPassword"/>
-
-                                    <br>
-                                    <span class="help-block" style="font-size: 12px; color: #949494;">
-                                         <fmt:message key="message.passwordDescription"/>
-                                    </span>
                                 </div>
                             </div>
                         </div>

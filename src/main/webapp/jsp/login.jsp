@@ -49,13 +49,8 @@
                     <input onchange="if ($('#password').get(0).type=='password')
                                                             $('#password').get(0).type='text';
                                                      else $('#password').get(0).type='password';"
-                           name="check-box" type="checkbox" value="false">
+                           name="check-box" type="checkbox" value="false" style="font-size: 12px;">
                     <fmt:message key="message.showPassword"/>
-
-                    <br>
-                    <span class="help-block" style="font-size:  12px; color: #949494;">
-                        <fmt:message key="message.passwordDescription"/>
-                    </span>
                 </div>
             </div>
 

@@ -71,7 +71,7 @@ public class AdminCommand extends Command {
             if (strStart != null) {
                 startReq = Integer.parseInt(strStart);
             }
-            String where = String.format(" LIMIT %d, 5", startReq);
+            String where = String.format(" LIMIT %d, 10", startReq);
             users = userService.read("WHERE enabled = true" + where);
 
             for (User currentUserInArray : users) {

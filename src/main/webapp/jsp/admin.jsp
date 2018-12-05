@@ -8,7 +8,7 @@
 <div class="container">
     <%@ include file="../include/menu.jspf" %>
 
-    <form class="form-horizontal" method="post" command="do?command=Admin">
+    <%--<form class="form-horizontal" method="post" command="do?command=Admin">--%>
 
         <fieldset>
 
@@ -54,77 +54,115 @@
                         </div>
                     </c:if>
 
-                    <div class="col-md-12">
-                        <div class="row justify-content-left align-items-start">
-                            <c:forEach items="${users}" var="users">
-                                <form class="form-inline user-${users.username}" action="do?command=Admin" method=POST>
-                                    <div class="form-group mb-1">
-                                        <input id="username" class="form-control input-md" readonly name="username"
-                                               value="${users.username}" title="" style="font-size: 16px;"/>
+                    <div class="container">
+                        <!--HEADER-->
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="row" >
+                                    <div class="col-lg-4 text-left" style="font-size: 16px; font-weight: bold">
+                                        <fmt:message key="message.login"/>
                                     </div>
-                                    <div class="form-group mb-2">
-                                        <input id="email" class="form-control input-md" name="email" maxlength="50"
-                                               pattern="([\w\.\w]+)@(\w+\.)([a-z]{2,4})" minlength="6"
-                                               value="${users.email}" title="" required=""
-                                               style="font-size: 16px;"/>
+                                    <div class="col-lg-5 text-left" style="font-size: 16px; font-weight: bold">
+                                        <fmt:message key="message.email"/>
                                     </div>
-                                    <div class="form-group mb-1">
-                                        <input id="password" class="form-control input-md" name="password"
-                                               maxlength="15" pattern="[\w]{0,15}" placeholder=""
-                                               value="${users.password}" type="password"
-                                               style="font-size: 16px;"/>
+                                    <div class="col-lg-3 text-left" style="font-size: 16px; font-weight: bold">
+                                        <fmt:message key="message.password"/>
                                     </div>
-
-                                    <div class="form-group mb-2">
-                                        <input id="firstName" class="form-control input-md" name="firstName"
-                                               maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{2,15}"
-                                               value="${users.firstName}" title="" required=""
-                                               style="font-size: 16px;"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="row" >
+                                    <div class="col-lg-4 text-left" style="font-size: 16px; font-weight: bold">
+                                        <fmt:message key="message.firstName"/>
                                     </div>
-
-                                    <div class="form-group mb-2">
-                                        <input id="lastName" class="form-control input-md" name="lastName"
-                                               maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{2,15}"
-                                               value="${users.lastName}" title="" required=""
-                                               style="font-size: 16px;"/>
+                                    <div class="col-lg-4 text-left" style="font-size: 16px; font-weight: bold">
+                                        <fmt:message key="message.lastName"/>
                                     </div>
-
-                                    <div class="form-group mb-2">
-                                        <input id="middleName" class="form-control input-md" name="middleName"
-                                               maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{0,15}"
-                                               value="${users.middleName}" title="" style="font-size: 16px;"/>
+                                    <div class="col-lg-4 text-left" style="font-size: 16px; font-weight: bold">
+                                        <fmt:message key="message.middleName"/>
                                     </div>
-
-                                    <div class="form-group mb-1">
-                                        <button id="Update" name="Update" class="btn btn-dark"
-                                                style="font-size: 14px;">
-                                            <fmt:message key="message.save"/>
-                                        </button>
-                                    </div>
-
-                                    <div class="form-group mb-1">
-                                        <button id="Delete" name="Delete" class="btn btn-white"
-                                                style="font-size: 14px;">
-                                            <fmt:message key="message.delete"/>
-                                        </button>
-                                    </div>
-
-                                </form>
-
-
-                            </c:forEach>
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <div class="row" >
+                                    <div class="col-lg-12 text-center"></div>
+                                </div>
+                            </div>
                         </div>
+
+                        <c:forEach items="${users}" var="users">
+                            <form class="user-${users.username}" action="do?command=Admin" method=POST>
+                                <div class="row" >
+                                    <div class="col-lg-6">
+                                        <div class="row" >
+                                            <div class="col-lg-4">
+                                                <input id="username" class="form-control" readonly name="username"
+                                                       value="${users.username}" title="" style="font-size: 15px;"/>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <input id="email" class="form-control" name="email" maxlength="50"
+                                                       pattern="([\w\.\w]+)@(\w+\.)([a-z]{2,4})" minlength="6"
+                                                       value="${users.email}" title="" required=""
+                                                       style="font-size: 15px;"/>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <input id="password" class="form-control" name="password"
+                                                       maxlength="15" pattern="[\w]{0,15}" placeholder=""
+                                                       value="${users.password}" type="password"
+                                                       style="font-size: 15px;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="row" >
+                                            <div class="col-lg-4">
+                                                <input id="firstName" class="form-control " name="firstName"
+                                                       maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{2,15}"
+                                                       value="${users.firstName}" title="" required=""
+                                                       style="font-size: 15px;"/>
+                                            </div>
+                                            <div class="col-lg-4" >
+                                                <input id="lastName" class="form-control" name="lastName"
+                                                       maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{2,15}"
+                                                       value="${users.lastName}" title="" required=""
+                                                       style="font-size: 15px;"/>
+                                            </div>
+                                            <div class="col-lg-4" >
+                                                <input id="middleName" class="form-control" name="middleName"
+                                                       maxlength="15" pattern="[A-Za-zА-Яа-яЁё-]{0,15}"
+                                                       value="${users.middleName}" title="" style="font-size: 15px;"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-1">
+                                        <div class="row ">
+                                            <div class="col-lg-6">
+                                                <button id="Update" name="Update" class="btn btn-link">
+                                                    <img src="../image/save.png" height="22" border="0" align="left"/>
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <button id="Delete" name="Delete" class="btn btn-link">
+                                                    <img src="../image/bin.png" height="23" border="0" align="left"/>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </c:forEach>
                     </div>
                     <hr>
                     <div class="row">
-                        <mytag:paginator count="${size}" step="5" urlprefix="?command=Admin&start="/>
+                        <mytag:paginator count="${size}" step="10" urlprefix="?command=Admin&start="/>
                     </div>
 
                 </div>
 
             </div>
         </fieldset>
-    </form>
+    <%--</form>--%>
 </div>
 </body>
 <footer>
