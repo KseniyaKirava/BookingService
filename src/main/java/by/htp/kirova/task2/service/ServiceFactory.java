@@ -41,7 +41,6 @@ public final class ServiceFactory {
 	}
 
 
-
 	/**
 	 * Implementation of Reservation Service.
 	 */
@@ -98,4 +97,15 @@ public final class ServiceFactory {
 	private final HelperService helperService = new ViewHelperService();
 
 	public HelperService getHelperService(){ return helperService; }
+
+
+	/**
+	 * Implementation of Reserve by User Service.
+	 */
+	private final BookingService<ReserveByUser> reserveByUserService = new ReserveByUserServiceImpl();
+
+	public BookingService<ReserveByUser> getReserveByUserService() {
+		return reserveByUserService;
+	}
+
 }

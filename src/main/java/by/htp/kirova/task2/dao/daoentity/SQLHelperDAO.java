@@ -17,12 +17,12 @@ import java.util.List;
  * @author Kseniya Kirava
  * @since Oct 16, 2018
  */
-public class ViewHelperDAO implements HelperDAO {
+public class SQLHelperDAO implements HelperDAO {
 
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(ViewHelperDAO.class);
+    private static final Logger LOGGER = Logger.getLogger(SQLHelperDAO.class);
 
     /**
      * Constant string which represents query to create request.

@@ -56,7 +56,7 @@ public class UserServiceImpl implements BookingService<User> {
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<User> userDAO = daoFactory.getUserDAO();
 
-        //no validation for internal queries
+        //no validation for internal queries from DB
 
         List<User> list;
 

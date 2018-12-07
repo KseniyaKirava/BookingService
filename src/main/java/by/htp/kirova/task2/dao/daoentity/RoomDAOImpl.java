@@ -67,7 +67,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
     /**
      * The unique identification number constant.
      */
-    private final static String ROOM_CLASSES_ID = "room_classes_id";
+    private final static String ROOM_CLASSES_ID = "roomClassesId";
 
 
     /**
@@ -155,7 +155,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
 
         String sql = SQL_SELECT_FROM_ROOMS + where;
 
-        List<Room> list = new ArrayList<>();
+        List<Room> rooms = new ArrayList<>();
 
         try {
             cp = ConnectionPoolImpl.getInstance();
@@ -165,7 +165,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
             resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                list.add(new Room(
+                rooms.add(new Room(
                         resultSet.getLong(ID),
                         resultSet.getString(NAME),
                         resultSet.getString(NUMBER),
@@ -189,7 +189,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
             }
         }
 
-        return list;
+        return rooms;
     }
 
     @Override

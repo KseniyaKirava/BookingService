@@ -13,7 +13,7 @@
     <form class="form-horizontal" method="get" command="do?command=Request">
         <fieldset>
 
-
+            <br>
 
             <div class="row justify-content-left align-items-start">
                 <div class="col-md-12">
@@ -38,15 +38,16 @@
                                 <table class="table">
                                     <thead class="thead-default">
                                     <tr>
-                                        <th style="font-size:16px;">ID</th>
-                                        <th style="font-size:16px;"><fmt:message key="message.reservationDateTable"/></th>
-                                        <th style="font-size:16px;"><fmt:message key="message.checkinDateTable"/></th>
-                                        <th style="font-size:16px;"><fmt:message key="message.checkoutDateTable"/></th>
-                                        <th style="font-size:16px;"><fmt:message key="message.roomName"/></th>
-                                        <th style="font-size:16px;"><fmt:message key="message.roomNumber"/></th>
-                                        <th style="font-size:16px;"><fmt:message key="message.capacity"/></th>
-                                        <th style="font-size:16px;"><fmt:message key="message.roomClassTable"/></th>
-                                        <th style="font-size:16px;"><fmt:message key="message.totalCost"/>,
+                                        <th style="font-size:14px;">ID</th>
+                                        <th style="font-size:14px;"><fmt:message
+                                                key="message.reservationDateTable"/></th>
+                                        <th style="font-size:14px;"><fmt:message key="message.checkinDateTable"/></th>
+                                        <th style="font-size:14px;"><fmt:message key="message.checkoutDateTable"/></th>
+                                        <th style="font-size:14px;"><fmt:message key="message.roomName"/></th>
+                                        <th style="font-size:14px;"><fmt:message key="message.roomNumber"/></th>
+                                        <th style="font-size:14px;"><fmt:message key="message.capacity"/></th>
+                                        <th style="font-size:14px;"><fmt:message key="message.roomClassTable"/></th>
+                                        <th style="font-size:14px;"><fmt:message key="message.totalCost"/>,
                                             <fmt:message key="message.currency"/></th>
 
                                     </tr>
@@ -54,34 +55,72 @@
                                     <c:forEach items="${reservations}" var="row">
                                         <tbody>
                                         <tr>
-                                            <th scope="row" style="font-size:16px;">${row[0]}</th>
+                                            <th scope="row" style="font-size:14px;">${row.reservationId}</th>
 
                                             <jsp:useBean id="reservationDate" class="java.util.Date"/>
                                             <jsp:setProperty name="reservationDate" property="time"
-                                                             value="${row[1]}"/>
-                                            <fmt:formatDate var="formattedReservationDate"
-                                                            pattern="dd.MM.YYYY" value="${reservationDate}"/>
-                                            <td style="font-size:16px;">${formattedReservationDate}</td>
+                                                             value="${row.reservationDate}"/>
+                                            <td style="font-size:14px;">
+                                                <fmt:formatDate pattern="dd.MM.YYYY" value="${reservationDate}"/>
+                                            </td>
 
-                                            <jsp:useBean id="checkInDate" class="java.util.Date"/>
-                                            <jsp:setProperty name="checkInDate" property="time"
-                                                             value="${row[2]}"/>
-                                            <fmt:formatDate var="formattedCheckInDate"
-                                                            pattern="dd.MM.YYYY" value="${checkInDate}"/>
-                                            <td style="font-size:16px;">${formattedCheckInDate}</td>
+                                            <jsp:useBean id="checkinDate" class="java.util.Date"/>
+                                            <jsp:setProperty name="checkinDate" property="time"
+                                                             value="${row.checkinDate}"/>
+                                            <td style="font-size:14px;">
+                                                <fmt:formatDate pattern="dd.MM.YYYY" value="${checkinDate}"/>
+                                            </td>
 
-                                            <jsp:useBean id="checkOutDate" class="java.util.Date"/>
-                                            <jsp:setProperty name="checkOutDate" property="time"
-                                                             value="${row[3]}"/>
-                                            <fmt:formatDate var="formattedCheckOutDate"
-                                                            pattern="dd.MM.YYYY" value="${checkOutDate}"/>
-                                            <td style="font-size:16px;">${formattedCheckOutDate}</td>
+                                            <jsp:useBean id="checkoutDate" class="java.util.Date"/>
+                                            <jsp:setProperty name="checkoutDate" property="time"
+                                                             value="${row.checkoutDate}"/>
+                                            <td style="font-size:14px;">
+                                                <fmt:formatDate pattern="dd.MM.YYYY" value="${checkoutDate}"/>
+                                            </td>
 
-                                            <td style="font-size:16px;">${row[4]}</td>
-                                            <td style="font-size:16px;">${row[5]}</td>
-                                            <td style="font-size:16px;">${row[6]}</td>
-                                            <td style="font-size:16px;">${row[7]}</td>
-                                            <td style="font-size:16px;">${row[8]}</td>
+                                            <td style="font-size:14px;">
+                                                <c:if test="${row.roomName == 'двухместный номер с террасой'}">
+                                                    <fmt:message key="message.roomId1"/>
+                                                </c:if>
+                                                <c:if test="${row.roomName == 'двухместный номер с видом на океан'}">
+                                                    <fmt:message key="message.roomId2"/>
+                                                </c:if>
+                                                <c:if test="${row.roomName == 'одноместный номер'}">
+                                                    <fmt:message key="message.roomId3"/>
+                                                </c:if>
+                                                <c:if test="${row.roomName == 'двухместный номер с 2 кроватями'}">
+                                                    <fmt:message key="message.roomId4"/>
+                                                </c:if>
+                                                <c:if test="${row.roomName == 'четырехместный номер'}">
+                                                    <fmt:message key="message.roomId5"/>
+                                                </c:if>
+                                                <c:if test="${row.roomName == 'двухместный номер с диваном'}">
+                                                    <fmt:message key="message.roomId6"/>
+                                                </c:if>
+                                                <c:if test="${row.roomName == 'одноместный номер'}">
+                                                    <fmt:message key="message.roomId7"/>
+                                                </c:if>
+                                                <c:if test="${row.roomName == 'президентский номер с видом на океан'}">
+                                                    <fmt:message key="message.roomId8"/>
+                                                </c:if>
+                                            </td>
+
+                                            <td style="font-size:14px;">${row.roomNumber}</td>
+                                            <td style="font-size:14px;">${row.roomCapacity}</td>
+
+                                            <td style="font-size:14px;">
+                                                <c:if test="${row.roomClassName == 'люкс'}">
+                                                    <fmt:message key="message.roomLuxe"/>
+                                                </c:if>
+                                                <c:if test="${row.roomClassName == 'стандартный'}">
+                                                    <fmt:message key="message.roomStandard"/>
+                                                </c:if>
+                                                <c:if test="${row.roomClassName == 'президентский'}">
+                                                    <fmt:message key="message.roomPresident"/>
+                                                </c:if>
+                                            </td>
+
+                                            <td style="font-size:14px;">${row.totalCost}</td>
 
                                         </tr>
                                         </tbody>
@@ -91,7 +130,7 @@
 
                                 <hr>
                                 <div class="row">
-                                    <mytag:paginator count="${size}" step="10" urlprefix="?command=Reserve&start="/>
+                                    <mytag:paginator count="${size}" step="${rowPerPage}" urlprefix="?command=Reserve&start="/>
                                 </div>
                             </form>
                         </div>

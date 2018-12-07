@@ -51,7 +51,7 @@ public class RoomServiceImpl implements BookingService<Room> {
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<Room> roomDAO = daoFactory.getRoomDAO();
 
-        //no validation for internal queries
+        //no validation for internal queries from DB
 
         List<Room> list;
 

@@ -33,7 +33,7 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="?command=${param.command}&sessionLocale=ru-Ru">
-                    &nbsp;<img src="../image/rus.png" alt="rus" width="20" height="13" border="0" style="align-items: start ">
+                    &nbsp;<img src="../image/rus.png" alt="rus" width="20" height="13" border="0" style="align-items: start">
                 </a>
             </li>
             <li class="nav-item">

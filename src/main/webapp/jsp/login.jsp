@@ -56,9 +56,9 @@
 
             <!-- Button -->
             <div class="form-group">
-                <label class="col-md-4 control-label" for="loginbutton"></label>
+                <label class="col-md-4 control-label" for="loginButton"></label>
                 <div class="col-md-4">
-                    <button id="loginbutton" name="loginbutton" class="btn btn-dark" style="font-size: 14px;">
+                    <button id="loginButton" name="loginButton" class="btn btn-dark" style="font-size: 14px;">
                         <fmt:message key="message.submit"/>
                     </button>
                 </div>

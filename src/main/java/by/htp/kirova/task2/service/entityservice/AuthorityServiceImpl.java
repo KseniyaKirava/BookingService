@@ -46,7 +46,7 @@ public class AuthorityServiceImpl implements BookingService<Authority> {
         DAOFactory daoFactory = DAOFactory.getInstance();
         BookingDAO<Authority> authorityDAO = daoFactory.getAuthorityDAO();
 
-        //no validation for internal queries
+        //no validation for internal queries from DB
 
         List<Authority> list;
 

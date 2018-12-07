@@ -24,17 +24,17 @@ public class UserService {
     /**
      * Constant string which represents query to check login.
      */
-    private static final String SQL_CHECK_LOGIN = "WHERE username='%s' AND password='%s' AND enabled=true LIMIT 0,1";
+    private static final String CHECK_LOGIN_WHERE_QUERY = "WHERE username='%s' AND password='%s' AND enabled=true LIMIT 0,1";
 
     /**
      * Constant string which represents query to check login.
      */
-    private static final String SQL_GET_USER_BY_USERNAME = "WHERE username='%s' LIMIT 0,1";
+    private static final String USER_BY_USERNAME_WHERE_QUERY = "WHERE username='%s' LIMIT 0,1";
 
 
     public static User checkLogin(String username, String password) throws CommandException {
         String hashPassword = getHashPassword(password);
-        String where = String.format(SQL_CHECK_LOGIN, username, hashPassword);
+        String where = String.format(CHECK_LOGIN_WHERE_QUERY, username, hashPassword);
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         User user = null;
@@ -62,7 +62,7 @@ public class UserService {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookingService<User> userService = serviceFactory.getUserService();
 
-        String where = String.format(SQL_GET_USER_BY_USERNAME, username);
+        String where = String.format(USER_BY_USERNAME_WHERE_QUERY, username);
 
         User user = null;
 
@@ -81,7 +81,7 @@ public class UserService {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookingService<User> userService = serviceFactory.getUserService();
 
-        String where = String.format(SQL_GET_USER_BY_USERNAME, username);
+        String where = String.format(USER_BY_USERNAME_WHERE_QUERY, username);
 
         List<User> list = new ArrayList<>();
 

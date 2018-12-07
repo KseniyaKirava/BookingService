@@ -50,6 +50,16 @@ public class AdminCommand extends Command {
      */
     private final static String MIDDLE_NAME = "middleName";
 
+    /**
+     * The SQL 'where' query constant.
+     */
+    private static final String USERS_WHERE_QUERY = "WHERE enabled = true";
+
+    /**
+     * The SQL 'limit' query for view constant.
+     */
+    private static final String USERS_LIMIT_QUERY = " LIMIT %d, %d";
+
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -63,16 +73,25 @@ public class AdminCommand extends Command {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookingService<User> userService = serviceFactory.getUserService();
 
+
         try {
-            List<User> users = userService.read("WHERE enabled = true");
+            List<User> users = userService.read(USERS_WHERE_QUERY);
+
             request.setAttribute("size", users.size());
             String strStart = request.getParameter("start");
+
             int startReq = 0;
             if (strStart != null) {
                 startReq = Integer.parseInt(strStart);
             }
-            String where = String.format(" LIMIT %d, 10", startReq);
-            users = userService.read("WHERE enabled = true" + where);
+
+            int rowPerPage = 10;
+            request.setAttribute("rowPerPage", rowPerPage);
+
+            String limit = String.format(USERS_LIMIT_QUERY, startReq, rowPerPage);
+            String limitedUsersListQuery = USERS_WHERE_QUERY + limit;
+
+            users = userService.read(limitedUsersListQuery);
 
             for (User currentUserInArray : users) {
                 currentUserInArray.setPassword("");

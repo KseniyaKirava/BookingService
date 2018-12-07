@@ -29,6 +29,16 @@ public class LoginCommand extends Command {
     private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
 
     /**
+     * The user for session attribute constant.
+     */
+    private final static String USER = "user";
+
+    /**
+     * The user's role for session attribute constant.
+     */
+    private final static String ROLE = "role";
+
+    /**
      * The unique identification name constant.
      */
     private final static String USERNAME = "username";
@@ -38,10 +48,12 @@ public class LoginCommand extends Command {
      */
     private final static String PASSWORD = "password";
 
+    //todo SQL query constant
+
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = UserService.getUserFromSession(request);
-        String userRole= (String) request.getAttribute("role");
+        String userRole= (String) request.getAttribute(ROLE);
         if (user != null) {
             if (userRole.equals("admin")) {
                 return CommandType.ADMIN.getCurrentCommand();
@@ -49,7 +61,7 @@ public class LoginCommand extends Command {
             return CommandType.MAIN.getCurrentCommand();
         }
         if (request.getMethod().equalsIgnoreCase("post")) {
-            if (request.getParameter("loginbutton") != null) {
+            if (request.getParameter("loginButton") != null) {
                 String username = request.getParameter(USERNAME);
                 String password = request.getParameter(PASSWORD);
 
@@ -68,15 +80,15 @@ public class LoginCommand extends Command {
                 }
 
                 if (user != null) {
-                    request.getSession().setAttribute("user", user);
-                    request.getSession().setAttribute("username", user.getUsername());
+                    request.getSession().setAttribute(USER, user);
+                    request.getSession().setAttribute(USERNAME, user.getUsername());
                     request.getSession().setMaxInactiveInterval(120);
                     LOGGER.info("Session for user " + username + " successfully created");
 
                     ServiceFactory serviceFactory = ServiceFactory.getInstance();
                     BookingService<Authority> authorityService = serviceFactory.getAuthorityService();
 
-                    String role = "user";
+                    String role = USER;
 
                     try {
                         List<Authority> authorities = authorityService.read("WHERE username like '" + username + "'");
@@ -95,7 +107,7 @@ public class LoginCommand extends Command {
                         throw new CommandException("Authorities reading error", e);
                     }
 
-                    request.getSession().setAttribute("role", role);
+                    request.getSession().setAttribute(ROLE, role);
 
                     if (role.equals("admin")) {
                         return CommandType.ADMIN.getCurrentCommand();
