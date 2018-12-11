@@ -71,11 +71,9 @@ public class ReservationServiceImpl implements BookingService<Reservation> {
         BookingDAO<Reservation> reservationDAO = daoFactory.getReservationDAO();
         Validator validator = Validator.getInstance();
 
-        if (!validator.checkDateInLong(reservation.getReservationDate()) ||
-                !validator.checkDateInLong(reservation.getCheckinDate()) ||
-                !validator.checkDateInLong(reservation.getCheckoutDate()) ||
-                !validator.checkCost(reservation.getTotalCost()) ||
+        if (!validator.checkCost(reservation.getTotalCost()) ||
                 !validator.checkUsername(reservation.getUsersUsername()) ||
+                !validator.checkAssessment(reservation.getAssessment()) ||
                 !(reservation.getRoomsId() > 0) || !(reservation.getRoomsRoomClassesId() > 0)) {
             return false;
         }

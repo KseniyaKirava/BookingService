@@ -181,10 +181,24 @@ public final class Validator {
         return isValid;
     }
 
+
+    /**
+     * Check room's assessment.
+     *
+     * @param assessment room by user.
+     * @return {@code true} in case of success and false otherwise.
+     */
+    public boolean checkAssessment(byte assessment) {
+        boolean isValid = assessment >= 1 && assessment <=5;
+        logger.info("Cost is valid: " + isValid);
+        return isValid;
+    }
+
+
     /**
      * Check count.
      *
-     * @param count cost of the room per night/room for few days.
+     * @param count of facility.
      * @return {@code true} in case of success and false otherwise.
      */
     public boolean checkCount(double count) {

@@ -41,11 +41,11 @@ public class UserService {
 
         try {
             List<User> users = serviceFactory.getUserService().read(where);
-            if (users.size() > 0) {
+            if (!users.isEmpty()) {
                 user = users.get(0);
             }
         } catch (ServiceException e) {
-            throw new CommandException("", e);
+            throw new CommandException("Reading user's data failed", e);
         }
 
         return user;
@@ -58,7 +58,7 @@ public class UserService {
     }
 
 
-    public static User getUserByUsername(String username) {
+    public static User getUserByUsername(String username) throws CommandException {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookingService<User> userService = serviceFactory.getUserService();
 
@@ -68,16 +68,17 @@ public class UserService {
 
         try {
             List<User> users = userService.read(where);
-            if (users.size() > 0) {
+            if (!users.isEmpty()) {
                 user = users.get(0);
             }
         } catch (ServiceException e) {
-            e.printStackTrace();
+            throw new CommandException("Reading user's data failed", e);
         }
+
         return user;
     }
 
-    public static boolean isUsernameUnique(String username) {
+    public static boolean isUsernameUnique(String username) throws CommandException {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookingService<User> userService = serviceFactory.getUserService();
 
@@ -88,7 +89,7 @@ public class UserService {
         try {
             list = userService.read(where);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            throw new CommandException("Reading user's data failed", e);
         }
         return list.isEmpty();
     }
