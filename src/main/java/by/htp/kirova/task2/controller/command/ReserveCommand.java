@@ -7,6 +7,7 @@ import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.ServiceFactory;
+import by.htp.kirova.task2.service.util.DateService;
 import by.htp.kirova.task2.service.util.UserService;
 import org.apache.log4j.Logger;
 
@@ -37,6 +38,12 @@ public class ReserveCommand extends Command {
      * The room assessment constant.
      */
     private final static String ASSESSMENT = "assessment";
+
+
+    /**
+     * The checkout date constant.
+     */
+    private final static String CHECKOUT_DATE = "checkoutDate";
 
     /**
      * The SQL 'where' query constant.
@@ -100,6 +107,9 @@ public class ReserveCommand extends Command {
 
             String reservationId = request.getParameter(RESERVATION_ID);
             String currentAssessment = request.getParameter(ASSESSMENT);
+            String checkoutDate = request.getParameter(CHECKOUT_DATE);
+
+            boolean dateBeforeCurrentDate = DateService.isDateBeforeCurrentDate(Long.parseLong(checkoutDate));
 
             byte assessment;
 
@@ -125,6 +135,10 @@ public class ReserveCommand extends Command {
             }
 
             if (request.getParameter("rate") != null) {
+                if (!dateBeforeCurrentDate) {
+                    request.setAttribute("tooEarly", MessageManager.getProperty("message.tooEarly"));
+                    return null;
+                }
 
                 if (assessment != 0 && reservation != null) {
                     try {

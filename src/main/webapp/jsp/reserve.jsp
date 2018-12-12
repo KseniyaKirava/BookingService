@@ -38,6 +38,15 @@
                         </div>
                     </div>
                 </c:if>
+                <c:if test="${tooEarly != null}">
+                    <div class="form-group">
+                        <div class="alert alert-warning" role="alert">
+                            <label class="col-md-12 control-label" style="font-size: 16px;">
+                                    ${tooEarly}
+                            </label>
+                        </div>
+                    </div>
+                </c:if>
 
 
                 <div class="row justify-content-left align-items-start">
@@ -93,6 +102,10 @@
                                             <fmt:formatDate pattern="dd.MM.YYYY" value="${checkoutDate}"/>
                                         </td>
 
+                                        <input id="checkoutDate" name="checkoutDate" type="hidden"
+                                               value="${row.checkoutDate}"
+                                               class="form-control input-md" style="font-size: 14px;">
+
                                         <td style="font-size:14px;">
                                             <c:if test="${row.roomName == 'двухместный номер с террасой'}">
                                                 <fmt:message key="message.roomId1"/>
@@ -138,9 +151,17 @@
                                         <td style="font-size:14px;">${row.totalCost}</td>
 
                                         <td style="font-size:14px;">
-                                            <input id="assessment" name="assessment" type="number"
-                                                   value="${row.assessment}" min="1" max="5"
-                                                   class="form-control input-md" style="font-size: 14px;">
+                                            <c:if test="${row.assessment == 0}">
+                                                <input id="assessment" name="assessment" type="number"
+                                                       value="" min="1" max="5"
+                                                       class="form-control input-md" style="font-size: 14px;">
+                                            </c:if>
+                                            <c:if test="${row.assessment != 0}">
+                                                <input id="assessment" name="assessment" type="number"
+                                                       value="${row.assessment}" min="1" max="5"
+                                                       class="form-control input-md" style="font-size: 14px;">
+                                            </c:if>
+
                                         </td>
 
                                         <td style="font-size:14px;">

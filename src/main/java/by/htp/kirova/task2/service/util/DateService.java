@@ -52,4 +52,18 @@ public class DateService {
         return date.getTime();
     }
 
+
+    /**
+     * Allows to find out the current date is more or less than the specified date plus 3 days
+
+     * @return boolean {@code true} if date before current date and {@code false} otherwise.
+     */
+    public static boolean isDateBeforeCurrentDate(long date){
+        if (date == 0) {
+            return false;
+        }
+        Long currentDateInMiliseconds = getCurrentDateInMiliseconds();
+        return currentDateInMiliseconds > (date + 3*(24*60*60*1000));
+    }
+
 }
