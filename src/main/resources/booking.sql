@@ -95,15 +95,14 @@ CREATE TABLE IF NOT EXISTS `kirova`.`reservations` (
   `enabled` TINYINT(1) NOT NULL,
   `users_username` VARCHAR(50) NOT NULL,
   `rooms_id` BIGINT(20) NOT NULL,
-  `rooms_room_classes_id` BIGINT(20) NOT NULL,
   `assessment` TINYINT(1) NULL,
-  PRIMARY KEY (`id`, `users_username`, `rooms_id`, `rooms_room_classes_id`),
+  PRIMARY KEY (`id`, `users_username`, `rooms_id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `fk_reservations_rooms1_idx` (`rooms_id` ASC, `rooms_room_classes_id` ASC),
+  INDEX `fk_reservations_rooms1_idx` (`rooms_id` ASC),
   INDEX `fk_reservations_users1_idx` (`users_username` ASC),
   CONSTRAINT `fk_reservations_rooms1`
-    FOREIGN KEY (`rooms_id` , `rooms_room_classes_id`)
-    REFERENCES `kirova`.`rooms` (`id` , `room_classes_id`)
+    FOREIGN KEY (`rooms_id`)
+    REFERENCES `kirova`.`rooms` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_reservations_users1`
@@ -231,11 +230,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `kirova`;
-INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enabled`, `users_username`, `rooms_id`, `rooms_room_classes_id`, `assessment`) VALUES (1, 1539118800000, 1539118800000, 1539550800000, 500.00, true, 'vasia', 1, 1, 5);
-INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enabled`, `users_username`, `rooms_id`, `rooms_room_classes_id`, `assessment`) VALUES (2, 1539723600000, 1539723600000, 1540155600000, 300.00, true, 'gromov', 7, 1, 5);
-INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enabled`, `users_username`, `rooms_id`, `rooms_room_classes_id`, `assessment`) VALUES (3, 1540069200000, 1540069200000, 1540674000000, 490.00, true, 'jdoe', 4, 2, 4);
-INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enabled`, `users_username`, `rooms_id`, `rooms_room_classes_id`, `assessment`) VALUES (4, 1539550800000, 1539550800000, 1539723600000, 130.00, true, 'vasia', 6, 1, 3);
-INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enabled`, `users_username`, `rooms_id`, `rooms_room_classes_id`, `assessment`) VALUES (5, 1544562000000, 1552338000000, 1553202000000, 2000, true, 'vasia', 8, 3, NULL);
+INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enabled`, `users_username`, `rooms_id`, `assessment`) VALUES (1, 1539118800000, 1539118800000, 1539550800000, 500.00, true, 'vasia', 1, 5);
+INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enabled`, `users_username`, `rooms_id`, `assessment`) VALUES (2, 1539723600000, 1539723600000, 1540155600000, 300.00, true, 'gromov', 7, 5);
+INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enabled`, `users_username`, `rooms_id`, `assessment`) VALUES (3, 1540069200000, 1540069200000, 1540674000000, 490.00, true, 'jdoe', 4, 4);
+INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enabled`, `users_username`, `rooms_id`, `assessment`) VALUES (4, 1539550800000, 1539550800000, 1539723600000, 130.00, true, 'vasia', 6, 3);
+INSERT INTO `kirova`.`reservations` (`id`, `reservation_date`, `checkin_date`, `checkout_date`, `total_cost`, `enabled`, `users_username`, `rooms_id`, `assessment`) VALUES (5, 1544562000000, 1552338000000, 1553202000000, 2000, true, 'vasia', 8, NULL);
 
 COMMIT;
 

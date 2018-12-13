@@ -59,11 +59,6 @@ public class Reservation implements Serializable {
     private long roomsId;
 
     /**
-     * The unique identification number of room class.
-     */
-    private long roomsRoomClassesId;
-
-    /**
      * The assessment of room for current reservation.
      */
     private byte assessment;
@@ -79,7 +74,7 @@ public class Reservation implements Serializable {
      * as parameters.
      */
     public Reservation(long id, long reservationDate, long checkinDate, long checkoutDate, double totalCost,
-                       boolean enabled, String usersUsername, long roomsId, long roomsRoomClassesId, byte assessment) {
+                       boolean enabled, String usersUsername, long roomsId, byte assessment) {
         this.id = id;
         this.reservationDate = reservationDate;
         this.checkinDate = checkinDate;
@@ -88,7 +83,6 @@ public class Reservation implements Serializable {
         this.enabled = enabled;
         this.usersUsername = usersUsername;
         this.roomsId = roomsId;
-        this.roomsRoomClassesId = roomsRoomClassesId;
         this.assessment = assessment;
     }
 
@@ -123,10 +117,6 @@ public class Reservation implements Serializable {
 
     public long getRoomsId() {
         return roomsId;
-    }
-
-    public long getRoomsRoomClassesId() {
-        return roomsRoomClassesId;
     }
 
     public byte getAssessment() {
@@ -167,10 +157,6 @@ public class Reservation implements Serializable {
         this.roomsId = roomsId;
     }
 
-    public void setRoomsRoomClassesId(long roomsRoomClassesId) {
-        this.roomsRoomClassesId = roomsRoomClassesId;
-    }
-
     public void setAssessment(byte assessment) {
         this.assessment = assessment;
     }
@@ -197,7 +183,6 @@ public class Reservation implements Serializable {
                 Double.compare(that.totalCost, totalCost) == 0 &&
                 enabled == that.enabled &&
                 roomsId == that.roomsId &&
-                roomsRoomClassesId == that.roomsRoomClassesId &&
                 assessment == that.assessment &&
                 Objects.equals(usersUsername, that.usersUsername);
     }
@@ -215,7 +200,6 @@ public class Reservation implements Serializable {
         result = result * 31 + (enabled ? 0 : 1) * result;
         result = result * 31 + (usersUsername == null ? 0 : usersUsername.hashCode()) * result;
         result = (int) (result * 31 + result * roomsId);
-        result = (int) (result * 31 + result * roomsRoomClassesId);
         result = result * 31 + result * assessment;
 
         return result;
@@ -232,7 +216,6 @@ public class Reservation implements Serializable {
                 ", enabled=" + enabled +
                 ", usersUsername='" + usersUsername + '\'' +
                 ", roomsId=" + roomsId +
-                ", roomsRoomClassesId=" + roomsRoomClassesId +
                 ", assessment=" + assessment +
                 '}';
     }

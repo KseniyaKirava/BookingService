@@ -63,8 +63,7 @@
                         </div>
                         <div class="form-group" id="pay-now">
                             <button type="submit" class="btn btn-primary" id="confirm-purchase"
-                                    style="font-size: 14px;">
-                                <fmt:message key="message.confirm"/>
+                                    style="font-size: 14px;"><fmt:message key="message.confirm"/>
                             </button>
                         </div>
                     </form>

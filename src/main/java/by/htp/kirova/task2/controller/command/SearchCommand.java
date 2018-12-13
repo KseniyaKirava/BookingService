@@ -36,26 +36,26 @@ public class SearchCommand extends Command {
     /**
      * The room capacity (person).
      */
-    private static final String ROOM_CAPACITY = "roomCapacity";
+    private static final String ROOM_CAPACITY_TEMP = "roomCapacityTemp";
 
     /**
      * Check in Date.
      */
-    private static final String CHECKIN_DATE = "checkinDate";
+    private static final String CHECKIN_DATE_TEMP = "checkinDateTemp";
 
     /**
      * Check out Date.
      */
-    private static final String CHECKOUT_DATE = "checkoutDate";
+    private static final String CHECKOUT_DATE_TEMP = "checkoutDateTemp";
 
     /**
      * Class of te room.
      */
-    private static final String ROOM_CLASS_ID = "roomClassId";
+    private static final String ROOM_CLASS_ID_TEMP = "roomClassIdTemp";
 
 
-    private static final String ROOMS_WHERE_QUERY = "JOIN room_classes as rc " +
-            "WHERE rooms.capacity >= %d AND rc.id = %d AND rooms.enabled = true " +
+    private static final String ROOMS_WHERE_QUERY = "WHERE rooms.capacity >= %d AND " +
+            "rooms.room_classes_id = %d AND rooms.enabled = true " +
             "AND rooms.id NOT IN (SELECT res.rooms_id FROM reservations as res WHERE " +
             "(%d >= res.checkin_date AND res.checkout_date >= %d) AND res.enabled = true) ORDER BY rooms.cost";
 
@@ -74,11 +74,10 @@ public class SearchCommand extends Command {
         }
 
 
-
-        long roomClassId = (Long) request.getSession().getAttribute(ROOM_CLASS_ID);
-        int roomCapacity = (int) request.getSession().getAttribute(ROOM_CAPACITY);
-        long checkinDate = (long) request.getSession().getAttribute(CHECKIN_DATE);
-        long checkoutDate = (long) request.getSession().getAttribute(CHECKOUT_DATE);
+        long roomClassId = (Long) request.getSession().getAttribute(ROOM_CLASS_ID_TEMP);
+        int roomCapacity = (int) request.getSession().getAttribute(ROOM_CAPACITY_TEMP);
+        long checkinDate = (long) request.getSession().getAttribute(CHECKIN_DATE_TEMP);
+        long checkoutDate = (long) request.getSession().getAttribute(CHECKOUT_DATE_TEMP);
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookingService<Room> roomService = serviceFactory.getRoomService();
@@ -105,11 +104,16 @@ public class SearchCommand extends Command {
 
             rooms = roomService.read(limitedRoomsListQuery);
 
+            if (rooms.isEmpty()) {
+                request.setAttribute("messageReservationNotFound", MessageManager.getProperty("message.reservationNotFound"));
+                return null;
+            }
+
             request.setAttribute("rooms", rooms);
+
         } catch (ServiceException e) {
             throw new CommandException("Reading user's data failed", e);
         }
-
 
         if (request.getMethod().equalsIgnoreCase("post")) {
 
@@ -127,7 +131,7 @@ public class SearchCommand extends Command {
                 boolean enabled = true;
 
                 Reservation reservation = new Reservation(0, reservationDate, checkinDate, checkoutDate, totalCost,
-                        enabled, username, roomId, roomClassId, assessment);
+                        enabled, username, roomId, assessment);
 
                 boolean isCreated = false;
                 try {

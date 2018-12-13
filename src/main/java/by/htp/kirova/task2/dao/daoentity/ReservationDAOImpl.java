@@ -68,11 +68,6 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
     private final static String ROOMS_ID = "rooms_id";
 
     /**
-     * The enabled state constant.
-     */
-    private final static String ROOM_CLASS_ID = "rooms_room_classes_id";
-
-    /**
      * The assesment of the from for current reservation constant.
      */
     private final static String ASSESSMENT = "assessment";
@@ -82,7 +77,7 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
      */
     private static final String SQL_CREATE_RESERVATION = "INSERT INTO reservations(reservation_date, " +
             "checkin_date, checkout_date, total_cost, enabled, users_username, rooms_id, " +
-            "rooms_room_classes_id, assessment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "assessment) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     /**
      * Constant string which represents query to select all reservations.
@@ -94,7 +89,7 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
      */
     private static final String SQL_UPDATE_RESERVATION = "UPDATE reservations SET reservation_date= ?," +
             "checkin_date= ?,checkout_date= ?,total_cost= ?, enabled= ?, users_username= ?, " +
-            "rooms_id= ?, rooms_room_classes_id= ?, assessment= ?  WHERE id= ?";
+            "rooms_id= ?, assessment= ?  WHERE id= ?";
 
     /**
      * Constant string which represents query to delete reservation.
@@ -121,8 +116,7 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
             ps.setBoolean(5, reservation.isEnabled());
             ps.setString(6, reservation.getUsersUsername());
             ps.setLong(7, reservation.getRoomsId());
-            ps.setLong(8, reservation.getRoomsRoomClassesId());
-            ps.setByte(9, reservation.getAssessment());
+            ps.setByte(8, reservation.getAssessment());
 
 
             int result = ps.executeUpdate();
@@ -186,7 +180,6 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
                         resultSet.getBoolean(ENABLED),
                         resultSet.getString(USERNAME),
                         resultSet.getLong(ROOMS_ID),
-                        resultSet.getLong(ROOM_CLASS_ID),
                         resultSet.getByte(ASSESSMENT)
                 ));
             }
@@ -225,9 +218,8 @@ public class ReservationDAOImpl implements BookingDAO<Reservation> {
             ps.setBoolean(5, reservation.isEnabled());
             ps.setString(6, reservation.getUsersUsername());
             ps.setLong(7, reservation.getRoomsId());
-            ps.setLong(8, reservation.getRoomsRoomClassesId());
-            ps.setByte(9, reservation.getAssessment());
-            ps.setLong(10, reservation.getId());
+            ps.setByte(8, reservation.getAssessment());
+            ps.setLong(9, reservation.getId());
 
             int result = ps.executeUpdate();
 

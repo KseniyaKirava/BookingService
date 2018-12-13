@@ -52,6 +52,25 @@ public class MainCommand extends Command {
      */
     private static final String ROOM_CLASS_ID = "roomClassId";
 
+    /**
+     * The room capacity (person).
+     */
+    private static final String ROOM_CAPACITY_TEMP = "roomCapacityTemp";
+
+    /**
+     * Check in Date.
+     */
+    private static final String CHECKIN_DATE_TEMP = "checkinDateTemp";
+
+    /**
+     * Check out Date.
+     */
+    private static final String CHECKOUT_DATE_TEMP = "checkoutDateTemp";
+
+    /**
+     * Class of te room.
+     */
+    private static final String ROOM_CLASS_ID_TEMP = "roomClassIdTemp";
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -94,10 +113,10 @@ public class MainCommand extends Command {
                     return null;
                 }
 
-                    request.getSession().setAttribute(ROOM_CLASS_ID, roomClassId);
-                    request.getSession().setAttribute(ROOM_CAPACITY, roomCapacity);
-                    request.getSession().setAttribute(CHECKIN_DATE, checkinDate);
-                    request.getSession().setAttribute(CHECKOUT_DATE, checkoutDate);
+                    request.getSession().setAttribute(ROOM_CLASS_ID_TEMP, roomClassId);
+                    request.getSession().setAttribute(ROOM_CAPACITY_TEMP, roomCapacity);
+                    request.getSession().setAttribute(CHECKIN_DATE_TEMP, checkinDate);
+                    request.getSession().setAttribute(CHECKOUT_DATE_TEMP, checkoutDate);
 
                     return CommandType.SEARCH.getCurrentCommand();
             }

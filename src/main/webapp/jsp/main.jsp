@@ -9,9 +9,7 @@
     <form class="form-horizontal" method="post" command="do?command=Main">
 
         <fieldset>
-
             <br>
-
 
             <c:if test="${errorSearchCommand != null}">
                 <div class="form-group">
@@ -128,7 +126,6 @@
                 </div>
             </div>
 
-            <br>
             <br>
 
         </fieldset>
