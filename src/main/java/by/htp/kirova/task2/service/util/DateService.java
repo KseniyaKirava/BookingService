@@ -36,7 +36,7 @@ public class DateService {
      * @param miliseconds date in miliseconds
      * @return date in String format dd.MM.yyyy
      */
-    public static String convertDateToString(Long miliseconds){
+    public static String convertDateToString(long miliseconds) {
         SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         Date date = new Date(miliseconds);
         return df.format(date);
@@ -44,10 +44,10 @@ public class DateService {
 
     /**
      * Create current Date in milliseconds.
-
+     *
      * @return date in date in miliseconds.
      */
-    public static Long getCurrentDateInMiliseconds(){
+    public static Long getCurrentDateInMiliseconds() {
         Date date = new Date();
         return date.getTime();
     }
@@ -55,15 +55,16 @@ public class DateService {
 
     /**
      * Allows to find out the current date is more or less than the specified date plus 3 days
-
+     *
      * @return boolean {@code true} if date before current date and {@code false} otherwise.
      */
-    public static boolean isDateBeforeCurrentDate(long date){
+    public static boolean isDateBeforeCurrentDate(long date) {
         if (date == 0) {
             return false;
         }
-        Long currentDateInMiliseconds = getCurrentDateInMiliseconds();
-        return currentDateInMiliseconds > (date + 3*(24*60*60*1000));
+        long currentDateInMiliseconds = getCurrentDateInMiliseconds();
+        return currentDateInMiliseconds >= (date + 3 * (24 * 60 * 60 * 1000));
     }
+
 
 }

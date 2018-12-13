@@ -170,6 +170,27 @@ public final class Validator {
 
 
     /**
+     * Checks the checkin and checkout date together.
+     * User can not enter the hotel in hindsight, and
+     * the date of departure can not precede the date of entry.
+     *
+     * @param checkinDate checkin date in Long
+     * @param checkoutDate checkout date in Long
+     * @return {@code true} in case of success and false otherwise.
+     */
+    public boolean checkCheckinCheckoutDate(Long checkinDate, Long checkoutDate) {
+        if (checkinDate == 0 || checkoutDate == 0) {
+            return false;
+        }
+        Date currentDate = new Date();
+        int daysCount = currentDate.getDay();
+        int checkInDays = (int) (checkinDate / (1000 * 24 * 60 * 60));
+
+        return (checkInDays - daysCount >= 0) && (checkoutDate - checkinDate > 0);
+    }
+
+
+    /**
      * Check cost.
      *
      * @param cost cost of the room per night/room for few days.

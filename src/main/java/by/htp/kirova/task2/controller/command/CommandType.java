@@ -46,7 +46,7 @@ public enum CommandType {
     /**
      * Command to show user's reservations.
      */
-    BILL {
+    SEARCH {
         {
             this.command = new SearchCommand();
         }

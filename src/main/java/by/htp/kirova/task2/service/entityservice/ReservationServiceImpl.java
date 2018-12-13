@@ -27,10 +27,12 @@ public class ReservationServiceImpl implements BookingService<Reservation> {
 
         if (!validator.checkDateInLong(reservation.getReservationDate()) ||
                 !validator.checkDateInLong(reservation.getCheckinDate()) ||
+                !validator.checkCheckinCheckoutDate(reservation.getCheckinDate(), reservation.getCheckoutDate()) ||
                 !validator.checkDateInLong(reservation.getCheckoutDate()) ||
                 !validator.checkCost(reservation.getTotalCost()) || !reservation.isEnabled() ||
                 !validator.checkUsername(reservation.getUsersUsername()) ||
-                !(reservation.getRoomsId() > 0) || !(reservation.getRoomsRoomClassesId() > 0)) {
+                !(reservation.getRoomsId() > 0) ||
+                !(reservation.getRoomsRoomClassesId() > 0)) {
             return false;
         }
 

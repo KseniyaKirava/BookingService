@@ -19,18 +19,18 @@
                         <div class="form-group owner">
                             <label for="owner" style="font-size: 16px"><fmt:message key="message.owner"/></label>
                             <input type="text" class="form-control" style="font-size: 16px" id="owner"
-                                   placeholder="IVAN IVANOV"/>
+                                   placeholder="IVAN IVANOV" value="IVAN IVANOV"/>
                         </div>
                         <div class="form-group CVV">
                             <label for="cvv" style="font-size: 16px">CVV</label>
                             <input type="text" class="form-control" style="font-size: 16px" id="cvv"
-                                   placeholder="000"/>
+                                   placeholder="000" value="123"/>
                         </div>
                         <div class="form-group" id="card-number-field">
                             <label for="cardNumber" style="font-size: 16px"><fmt:message
                                     key="message.cardNumber"/></label>
                             <input type="text" class="form-control" style="font-size: 16px" id="cardNumber"
-                                   placeholder="0000 0000 0000 0000"/>
+                                   placeholder="0000 0000 0000 0000" value="1589 6889 8987 8979"/>
                         </div>
                         <div class="form-group" id="expiration-date">
                             <label style="font-size: 16px"><fmt:message key="message.expirationDate"/></label>

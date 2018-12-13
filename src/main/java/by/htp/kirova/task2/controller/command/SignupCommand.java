@@ -80,8 +80,9 @@ public class SignupCommand extends Command {
 
 
             if (UserService.isUsernameUnique(username)) {
+                boolean enabled = true;
 
-                user = new User(username, email, password, firstName, lastName, middleName, true);
+                user = new User(username, email, password, firstName, lastName, middleName, enabled);
 
                 ServiceFactory serviceFactory = ServiceFactory.getInstance();
 
@@ -91,7 +92,7 @@ public class SignupCommand extends Command {
                 try {
                     isCreateUser = serviceFactory.getUserService().create(user);
                     if (isCreateUser) {
-                        Authority authority = new Authority("user", username, true);
+                        Authority authority = new Authority("user", username, enabled);
                         isCreateAuthority = serviceFactory.getAuthorityService().create(authority);
                     }
                 } catch (ServiceException e) {

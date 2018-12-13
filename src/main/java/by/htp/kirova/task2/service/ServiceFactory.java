@@ -92,14 +92,6 @@ public final class ServiceFactory {
 
 
 	/**
-	 * Implementation of View Helper Service.
-	 */
-	private final HelperService helperService = new ViewHelperService();
-
-	public HelperService getHelperService(){ return helperService; }
-
-
-	/**
 	 * Implementation of Reserve by User Service.
 	 */
 	private final BookingService<ReserveByUser> reserveByUserService = new ReserveByUserServiceImpl();

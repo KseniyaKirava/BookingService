@@ -18,7 +18,7 @@ public class AdminCommand extends Command {
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(AdminCommand.class);
+    private static final Logger logger = Logger.getLogger(AdminCommand.class);
 
     /**
      * The unique identification name constant.
@@ -150,9 +150,9 @@ public class AdminCommand extends Command {
                     request.setAttribute("wordUser", MessageManager.getProperty("message.wordUser"));
                     request.setAttribute("currentUser", username);
                     request.setAttribute("isUpdated", MessageManager.getProperty("message.isUpdated"));
-                    LOGGER.info("User successfully updated");
+                    logger.debug("User successfully updated");
                 } else {
-                    LOGGER.info("Data from form not saved");
+                    logger.debug("Data from form not saved");
                     request.setAttribute("errorData", MessageManager.getProperty("message.incorrectData"));
                     return null;
                 }
@@ -179,9 +179,9 @@ public class AdminCommand extends Command {
                     request.setAttribute("wordUser", MessageManager.getProperty("message.wordUser"));
                     request.setAttribute("currentUser", username);
                     request.setAttribute("isDisabled", MessageManager.getProperty("message.isDisabled"));
-                    LOGGER.info("User successfully marked deleted");
+                    logger.debug("User successfully marked deleted");
                 } else {
-                    LOGGER.info("User not deleted");
+                    logger.debug("User not deleted");
                     return null;
                 }
 

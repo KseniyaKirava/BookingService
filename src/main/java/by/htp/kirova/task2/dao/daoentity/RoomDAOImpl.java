@@ -67,7 +67,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
     /**
      * The unique identification number constant.
      */
-    private final static String ROOM_CLASSES_ID = "roomClassesId";
+    private final static String ROOM_CLASSES_ID = "room_classes_id";
 
 
     /**

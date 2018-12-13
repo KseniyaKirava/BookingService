@@ -40,7 +40,7 @@
                 </c:if>
                 <c:if test="${tooEarly != null}">
                     <div class="form-group">
-                        <div class="alert alert-warning" role="alert">
+                        <div class="alert alert-info" role="alert">
                             <label class="col-md-12 control-label" style="font-size: 16px;">
                                     ${tooEarly}
                             </label>

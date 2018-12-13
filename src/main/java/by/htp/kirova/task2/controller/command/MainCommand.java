@@ -1,12 +1,22 @@
 package by.htp.kirova.task2.controller.command;
 
 
+import by.htp.kirova.task2.controller.MessageManager;
+import by.htp.kirova.task2.entity.Reservation;
+import by.htp.kirova.task2.entity.Room;
 import by.htp.kirova.task2.entity.User;
+import by.htp.kirova.task2.service.BookingService;
+import by.htp.kirova.task2.service.ServiceException;
+import by.htp.kirova.task2.service.ServiceFactory;
+import by.htp.kirova.task2.service.util.DateService;
+import by.htp.kirova.task2.service.util.ReservationService;
 import by.htp.kirova.task2.service.util.UserService;
+import by.htp.kirova.task2.service.validation.Validator;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.util.List;
 
 /**
  * Abstract class implementation for a
@@ -25,138 +35,81 @@ public class MainCommand extends Command {
     /**
      * The room capacity (person).
      */
-    private static final String ROOM_CAPACITY = "room_capacity";
+    private static final String ROOM_CAPACITY = "roomCapacity";
 
     /**
      * Check in Date.
      */
-    private static final String CHECKIN_DATE = "checkin_date";
+    private static final String CHECKIN_DATE = "checkinDate";
 
     /**
      * Check out Date.
      */
-    private static final String CHECKOUT_DATE = "checkout_date";
+    private static final String CHECKOUT_DATE = "checkoutDate";
 
     /**
      * Class of te room.
      */
-    private static final String ROOM_CLASS = "room_class";
+    private static final String ROOM_CLASS_ID = "roomClassId";
+
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = UserService.getUserFromSession(request);
+        String username = null;
+        if (user != null) {
+            username = (String) request.getSession().getAttribute("username");
+        }
 
-            request.getSession().setAttribute("messageReservationNotFound", request.getSession().getAttribute("messageReservationNotFound"));
-//
-//            String username = user.getUsername();
-//            Validator validator = Validator.getInstance();
-//            ServiceFactory serviceFactory = ServiceFactory.getInstance();
-//            BookingService<Request> requestService = serviceFactory.getRequestService();
-//            BookingService<Reservation> reservationService = serviceFactory.getReservationService();
-//
-//
-//            if (request.getMethod().equalsIgnoreCase("post")) {
-//                if (request.getParameter("saveinfo") != null) {
-//                    int room_capacity = Integer.parseInt(request.getParameter(ROOM_CAPACITY));
-//                    String checkinDate = request.getParameter(CHECKIN_DATE);
-//                    String checkoutDate = request.getParameter(CHECKOUT_DATE);
-//                    String roomClass = request.getParameter(ROOM_CLASS);
-//
-//
-//                    if (!validator.checkCapacity(room_capacity) || !validator.checkDate(checkinDate) ||
-//                            !validator.checkDate(checkoutDate)) {
-//                        request.getSession().setAttribute("incorrectData", MessageManager.getProperty("message.incorrectData"));
-//                        return null;
-//                    }
-//
-//                    long checkin = 0;
-//                    long checkout = 0;
-//                    try {
-//                        checkin = DateService.convertDateToMiliseconds(checkinDate);
-//                        checkout = DateService.convertDateToMiliseconds(checkoutDate);
-//                    } catch (ParseException e) {
-//                        logger.error("Date parse with error");
-//                    }
-//
-//                    Date currentDate = new Date();
-//                    int currentDays = currentDate.getDay();
-//                    int checkInDays = (int) (checkin / (1000 * 24 * 60 * 60));
-//                    if ((checkInDays - currentDays >= 0) && (checkout - checkin > 0)) {
-//                        Request requestEntity = new Request(0, room_capacity, checkin, checkout, roomClass,
-//                                true, user.getUsername());
-//                        boolean isCreate;
-//                        try {
-//                            isCreate = requestService.create(requestEntity);
-//                        } catch (ServiceException e) {
-//                            throw new CommandException("Creating requests is failed", e);
-//                        }
-//                        if (isCreate) {
-//                            long requests_Id = requestEntity.getId();
-//                            List rooms;
-//                            try {
-//                                rooms = serviceFactory.getHelperService().avialiableRooms(requests_Id);
-//                            } catch (ServiceException e) {
-//                                throw new CommandException("Operation to get accessible rooms failed", e);
-//                            }
-//                            if (!rooms.isEmpty()) {
-//                                long reservation_date = DateService.getCurrentDateInMiliseconds();
-//                                long checkin_date = 0;
-//                                long checkout_date = 0;
-//                                double cost = 0.0;
-//                                int capacity = 0;
-//                                int rooms_id = 0;
-//                                int room_class = 0;
-//                                String room_name = null;
-//                                String room_number = null;
-//                                try {
-//                                    checkin_date = DateService.convertDateToMiliseconds((String) rooms.get(1));
-//                                    checkout_date = DateService.convertDateToMiliseconds((String) rooms.get(2));
-//                                    cost = Double.valueOf((String) rooms.get(7));
-//                                    capacity = Integer.parseInt((String) rooms.get(0));
-//                                    rooms_id = Integer.parseInt((String) rooms.get(4));
-//                                    room_class = Integer.parseInt((String) rooms.get(8));
-//                                    room_name = (String) rooms.get(5);
-//                                    room_number = (String) rooms.get(6);
-//                                } catch (ParseException e) {
-//                                    logger.error("Вata parsing ended with an error");
-//                                }
-//                                double total_cost = UserService.getTotalCost(checkin_date, checkout_date, cost);
-//                                Reservation reservation = new Reservation(0, reservation_date, checkin_date, checkout_date,
-//                                        total_cost, true, requests_Id, username, rooms_id, room_class);
-//
-//                                boolean isCreated = false;
-//                                try {
-//                                    isCreated = reservationService.create(reservation);
-//                                } catch (ServiceException e) {
-//                                    throw new CommandException("Creating user failed", e);
-//                                }
-//
-//                                if (isCreated) {
-//                                    logger.info("Reservation successfully created");
-//
-//                                    request.getSession().setAttribute("room_name", room_name);
-//                                    request.getSession().setAttribute("room_number", room_number);
-//                                    request.getSession().setAttribute("capacity", capacity);
-//                                    request.getSession().setAttribute("check_in", checkin_date);
-//                                    request.getSession().setAttribute("check_out", checkout_date);
-//                                    request.getSession().setAttribute("total_cost", total_cost);
-//                                    request.getSession().setAttribute("reservation", reservation);
-//
-//                                    return CommandType.BILL.getCurrentCommand();
-//                                }
-//                            }
-//
-//                            request.getSession().setAttribute("messageReservationNotFound", MessageManager.getProperty("message.reservationNotFound"));
-//                        }
-//                    }
-//                }
+        Validator validator = Validator.getInstance();
 
-//            }
-            return null;
+        String roomCapacityString = request.getParameter(ROOM_CAPACITY);
+        String checkin = request.getParameter(CHECKIN_DATE);
+        String checkout = request.getParameter(CHECKOUT_DATE);
+        String roomClassIdString = request.getParameter(ROOM_CLASS_ID);
+
+
+        if (request.getMethod().equalsIgnoreCase("post")) {
+
+            if (request.getParameter("search") != null) {
+
+                long checkinDate = 0;
+                long checkoutDate = 0;
+                long roomClassId = 0;
+                int roomCapacity = 0;
+
+                try {
+                    checkinDate = DateService.convertDateToMiliseconds(checkin);
+                    checkoutDate = DateService.convertDateToMiliseconds(checkout);
+                    roomCapacity = Integer.parseInt(roomCapacityString);
+                    roomClassId = Long.parseLong(roomClassIdString);
+                } catch (ParseException e) {
+                    logger.error("Date parsing ended with error");
+                }
+
+                if (!validator.checkCapacity(roomCapacity) ||
+                        !validator.checkCheckinCheckoutDate(checkinDate, checkoutDate) ||
+                        !(roomClassId > 0)) {
+                    request.setAttribute("errorSearchCommand", MessageManager.getProperty("message.incorrectData"));
+                    return null;
+                }
+
+                    request.getSession().setAttribute(ROOM_CLASS_ID, roomClassId);
+                    request.getSession().setAttribute(ROOM_CAPACITY, roomCapacity);
+                    request.getSession().setAttribute(CHECKIN_DATE, checkinDate);
+                    request.getSession().setAttribute(CHECKOUT_DATE, checkoutDate);
+
+                    return CommandType.SEARCH.getCurrentCommand();
+            }
 
         }
+        return null;
     }
-//}
+
+}
+
+
+
 
 
 

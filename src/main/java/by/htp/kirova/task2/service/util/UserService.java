@@ -104,11 +104,4 @@ public class UserService {
         return null;
     }
 
-
-    public static double getTotalCost(long checkin, long checkout, double cost) {
-        int daysCount = (int) ((checkout - checkin) / (1000 * 60 * 60 * 24));
-        double totalCost = daysCount * cost;
-        return totalCost;
-    }
-
 }

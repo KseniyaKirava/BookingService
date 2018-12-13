@@ -80,14 +80,6 @@ public final class DAOFactory {
 
 
 	/**
-	 * Implementation of View Helper DAO.
-	 */
-	private final HelperDAO helperDAO = new SQLHelperDAO();
-
-	public HelperDAO getHelperDAO(){ return helperDAO; }
-
-
-	/**
 	 * Implementation of Reserve by User DAO.
 	 */
 	private final BookingDAO<ReserveByUser> reserveByUserDAO = new ReserveByUserDAOImpl();
