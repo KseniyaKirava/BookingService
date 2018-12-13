@@ -136,7 +136,7 @@ public class ReserveCommand extends Command {
 
             if (request.getParameter("rate") != null) {
                 if (!dateBeforeCurrentDate) {
-                    request.setAttribute("tooEarly", MessageManager.getProperty("message.tooEarly"));
+                    request.setAttribute("tooEarly", MessageManager.getProperty("message.tooEarlyForAssessment"));
                     return null;
                 }
 

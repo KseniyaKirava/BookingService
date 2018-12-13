@@ -48,7 +48,7 @@ public enum CommandType {
      */
     BILL {
         {
-            this.command = new BillCommand();
+            this.command = new SearchCommand();
         }
     },
     /**

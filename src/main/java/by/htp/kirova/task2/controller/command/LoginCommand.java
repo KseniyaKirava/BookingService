@@ -53,12 +53,15 @@ public class LoginCommand extends Command {
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = UserService.getUserFromSession(request);
-        String userRole= (String) request.getAttribute(ROLE);
         if (user != null) {
-            if (userRole.equals("admin")) {
+            if (!request.getParameter("role").equals("user")) {
+                return CommandType.PROFILE.getCurrentCommand();
+            } else if (!request.getParameter("role").equals("admin")) {
                 return CommandType.ADMIN.getCurrentCommand();
             }
-            return CommandType.MAIN.getCurrentCommand();
+//            else if (!request.getParameter("role").equals("manager")) {
+//                return CommandType.MANAGER.getCurrentCommand();
+//            }
         }
         if (request.getMethod().equalsIgnoreCase("post")) {
             if (request.getParameter("loginButton") != null) {
@@ -92,10 +95,10 @@ public class LoginCommand extends Command {
 
                     try {
                         List<Authority> authorities = authorityService.read("WHERE username like '" + username + "'");
-                        for (Authority authority: authorities) {
+                        for (Authority authority : authorities) {
                             String currentAuthority = authority.getAuthority();
                             if (currentAuthority.equals("manager")) {
-                                if (role.equals("user")){
+                                if (role.equals("user")) {
                                     role = currentAuthority;
                                 }
                             }

@@ -66,9 +66,12 @@ public class AdminCommand extends Command {
         User user = UserService.getUserFromSession(request);
         if (user == null) {
             return CommandType.LOGIN.getCurrentCommand();
-        } else if (!user.getUsername().equals("admin")) {
+        } else if (!request.getParameter("role").equals("user")) {
             return CommandType.PROFILE.getCurrentCommand();
         }
+//        else if (!request.getParameter("role").equals("user")) {
+//            return CommandType.MANAGER.getCurrentCommand();
+//        }
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookingService<User> userService = serviceFactory.getUserService();

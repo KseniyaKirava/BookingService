@@ -66,10 +66,6 @@
                                     style="font-size: 14px;">
                                 <fmt:message key="message.confirm"/>
                             </button>
-                            <button type="submit" class="btn btn-primary" id="cancel-purchase"
-                                    style="font-size: 14px;">
-                                <fmt:message key="message.cancel"/>
-                            </button>
                         </div>
                     </form>
                 </div>
