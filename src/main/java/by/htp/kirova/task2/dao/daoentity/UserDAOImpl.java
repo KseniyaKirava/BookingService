@@ -8,7 +8,6 @@ import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolImpl;
 import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.dao.BookingDAO;
 import org.apache.log4j.Logger;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class UserDAOImpl implements BookingDAO<User> {
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(UserDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
 
 
     /**
@@ -126,10 +125,13 @@ public class UserDAOImpl implements BookingDAO<User> {
         } finally {
             if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+                logger.debug("Prepared statement closed");
             }
             if (cp != null && connection != null) {
                 cp.setAutoCommitTrue(connection);
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
+
             }
         }
 
@@ -171,9 +173,11 @@ public class UserDAOImpl implements BookingDAO<User> {
         } finally {
             if (cp != null && statement != null) {
                 cp.closeStatement(statement);
+                logger.debug("Statement and resultset closed");
             }
             if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 
@@ -217,10 +221,12 @@ public class UserDAOImpl implements BookingDAO<User> {
         } finally {
             if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+                logger.debug("Prepared statement closed");
             }
             if (cp != null && connection != null) {
                 cp.setAutoCommitTrue(connection);
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 
@@ -252,9 +258,11 @@ public class UserDAOImpl implements BookingDAO<User> {
         } finally {
             if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+                logger.debug("Prepared statement closed");
             }
             if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 

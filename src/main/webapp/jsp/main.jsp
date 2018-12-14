@@ -32,7 +32,7 @@
                         <div class="col-md-auto">
                             <input id="roomCapacity" value="${roomCapacity}" name="roomCapacity"
                                    type="number" min="1" max="5" class="form-control input-md"
-                                   required="" placeholder="2" style="font-size: 16px;"/>
+                                   required="" placeholder="" style="font-size: 16px;"/>
 
                         </div>
                     </div>

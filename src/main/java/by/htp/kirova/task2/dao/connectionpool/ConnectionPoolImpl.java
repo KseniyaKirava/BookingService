@@ -2,7 +2,6 @@ package by.htp.kirova.task2.dao.connectionpool;
 
 import by.htp.kirova.task2.dao.ConnectionPool;
 import org.apache.log4j.Logger;
-
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
@@ -23,7 +22,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(ConnectionPoolImpl.class);
+    private static final Logger logger = Logger.getLogger(ConnectionPoolImpl.class);
 
 
     /**
@@ -79,10 +78,10 @@ public final class ConnectionPoolImpl implements ConnectionPool {
             this.poolSize = Integer.parseInt(DBResourceManager.getProperty(DBParameter.DB_POOL_SIZE));
         } catch (NumberFormatException e) {
             poolSize = 5;
-            LOGGER.error("Unexpected error of predefined data: ", e);
+            logger.error("Unexpected error of predefined data: ", e);
         }
 
-        LOGGER.info("Connection pool constructor completed successfully");
+        logger.debug("Connection pool constructor completed successfully");
     }
 
 
@@ -121,13 +120,11 @@ public final class ConnectionPoolImpl implements ConnectionPool {
                 availableConnections.put(pooledConnection);
             }
         } catch (ClassNotFoundException e) {
-            LOGGER.error("Can't find database driver class: ", e);
             throw new ConnectionPoolException("Can't find database driver class: ", e);
         } catch (InterruptedException | SQLException e) {
-            LOGGER.error("SQLException in ConnectionPoolImpl: ", e);
             throw new ConnectionPoolException("SQLException in ConnectionPoolImpl: ", e);
         }
-        LOGGER.info(String.format("Connection pool for %d connections has been created successfully", poolSize));
+        logger.debug(String.format("Connection pool for %d connections has been created successfully", poolSize));
     }
 
 
@@ -138,7 +135,6 @@ public final class ConnectionPoolImpl implements ConnectionPool {
             connection = availableConnections.take();
             usingConnections.put(connection);
         } catch (InterruptedException e) {
-            LOGGER.error("Error connecting to the data source: ", e);
             throw new ConnectionPoolException("Error connecting to the data source: ", e);
         }
         return connection;
@@ -150,7 +146,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
             closeConnectionsQueue(usingConnections);
             closeConnectionsQueue(availableConnections);
         } catch (SQLException e) {
-            LOGGER.error("Error closing the connections.", e);
+            logger.error("Error closing the connections.", e);
         }
     }
 
@@ -159,7 +155,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
         try {
             connection.close();
         } catch (SQLException e) {
-            LOGGER.error("Connection isn't return to the pool. ", e);
+            logger.error("Connection isn't return to the pool. ", e);
         }
     }
 
@@ -186,7 +182,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
         try {
             st.close();
         } catch (SQLException e) {
-            LOGGER.error("Statement & ResultSe aren't closed. ", e);
+            logger.error("Statement & ResultSe aren't closed. ", e);
         }
     }
 
@@ -195,7 +191,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
         try {
             ps.close();
         } catch (SQLException e) {
-            LOGGER.error("Prepared statement & ResultSe aren't closed. ", e);
+            logger.error("Prepared statement & ResultSe aren't closed. ", e);
         }
     }
 
@@ -205,7 +201,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
         try {
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            LOGGER.error("Connection set autocommit  \"true\" operation error: ", e);
+            logger.error("Connection set autocommit  \"true\" operation error: ", e);
         }
     }
 
@@ -215,7 +211,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
             connection.setAutoCommit(false);
             connection.rollback();
         } catch (SQLException z) {
-            LOGGER.error("Connection rollback operation error: ", z);
+            logger.error("Connection rollback operation error: ", z);
         }
     }
 
@@ -254,18 +250,15 @@ public final class ConnectionPoolImpl implements ConnectionPool {
         @Override
         public void close() throws SQLException {
             if (connection.isClosed()) {
-                LOGGER.error("Attempting to close closed connection.");
                 throw new SQLException("Attempting to close closed connection.");
             }
             if (connection.isReadOnly()) {
                 connection.setReadOnly(false);
             }
             if (!usingConnections.remove(this)) {
-                LOGGER.error("Error deleting connection from the using connections pool.");
                 throw new SQLException("Error deleting connection from the using connections pool.");
             }
             if (!availableConnections.offer(this)) {
-                LOGGER.error("Error allocating connection in the pool.");
                 throw new SQLException("Error allocating connection in the pool.");
             }
         }

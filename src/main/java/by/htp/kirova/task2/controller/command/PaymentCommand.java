@@ -15,6 +15,18 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PaymentCommand extends Command {
 
+    /**
+     * The request method post constant.
+     */
+    private final static String POST = "post";
+
+    /**
+     * The attribute name.
+     */
+    private final static String TOTAL_COST = "totalCost";
+
+    //todo разбить на методы
+
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) {
         User user = UserService.getUserFromSession(request);
@@ -28,9 +40,9 @@ public class PaymentCommand extends Command {
 //        }
 
         else {
-            request.setAttribute("totalCost", request.getSession().getAttribute("totalCost"));
+            request.setAttribute(TOTAL_COST, request.getSession().getAttribute(TOTAL_COST));
 
-            if (request.getMethod().equalsIgnoreCase("post")) {
+            if (request.getMethod().equalsIgnoreCase(POST)) {
                 return CommandType.RESERVE.getCurrentCommand();
             }
         }

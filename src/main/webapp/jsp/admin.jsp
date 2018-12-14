@@ -28,21 +28,16 @@
                     </div>
                 </div>
 
-                <c:if test="${wordUser != null && currentUser != null && (isDisabled != null || isUpdated != null)}">
-                    <div class="form-group">
-                        <div class="alert alert-success" role="alert">
-                            <label class="col-md-12 control-label" style="font-size: 16px;">
-                                    ${wordUser}${currentUser}${isDisabled}${isUpdated}
-                            </label>
-                        </div>
-                    </div>
-                </c:if>
+                <%--<c:if test="${wordUser != null && currentUser != null && (isDisabled != null || isUpdated != null)}">--%>
+                    <%--<div class="form-group">--%>
+                        <%--<div class="alert alert-success" role="alert">--%>
+                            <%--<label class="col-md-12 control-label" style="font-size: 16px;">--%>
+                                    <%--${wordUser}${currentUser}${isDisabled}${isUpdated}--%>
+                            <%--</label>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</c:if>--%>
 
-                <%--<div class="form-group">--%>
-                <%--<label class="col-md-12 control-label" style="color: green; font-size: 16px;">--%>
-                <%--${wordUser}${currentUser}${isDisabled}${isUpdated}--%>
-                <%--</label>--%>
-                <%--</div>--%>
 
                 <c:if test="${errorData != null}">
                     <div class="form-group">

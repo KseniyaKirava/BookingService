@@ -6,6 +6,8 @@ import by.htp.kirova.task2.dao.DAOException;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolException;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolImpl;
 import by.htp.kirova.task2.entity.ReserveByUser;
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +24,10 @@ import java.util.List;
  */
 public class ReserveByUserDAOImpl implements BookingDAO<ReserveByUser> {
 
+    /**
+     * Instance of {@code org.apache.log4j.Logger} is used for logging.
+     */
+    private static final Logger logger = Logger.getLogger(ReserveByUserDAOImpl.class);
 
     /**
      * The unique identification number of reservation constant from DB.
@@ -124,9 +130,13 @@ public class ReserveByUserDAOImpl implements BookingDAO<ReserveByUser> {
             throw new DAOException("ConnectionPoolImpl error: ", e);
 
         } finally {
-            if (cp != null && connection != null) {
+            if (cp != null && statement != null) {
                 cp.closeStatement(statement);
+                logger.debug("Statement and resultset closed");
+            }
+            if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 

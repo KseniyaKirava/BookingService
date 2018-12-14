@@ -2,21 +2,14 @@ package by.htp.kirova.task2.controller.command;
 
 
 import by.htp.kirova.task2.controller.MessageManager;
-import by.htp.kirova.task2.entity.Reservation;
-import by.htp.kirova.task2.entity.Room;
 import by.htp.kirova.task2.entity.User;
-import by.htp.kirova.task2.service.BookingService;
-import by.htp.kirova.task2.service.ServiceException;
-import by.htp.kirova.task2.service.ServiceFactory;
 import by.htp.kirova.task2.service.util.DateService;
-import by.htp.kirova.task2.service.util.ReservationService;
 import by.htp.kirova.task2.service.util.UserService;
 import by.htp.kirova.task2.service.validation.Validator;
 import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
-import java.util.List;
 
 /**
  * Abstract class implementation for a
@@ -72,12 +65,39 @@ public class MainCommand extends Command {
      */
     private static final String ROOM_CLASS_ID_TEMP = "roomClassIdTemp";
 
+    /**
+     * The request method post constant.
+     */
+    private final static String POST = "post";
+
+    /**
+     * The username constant.
+     */
+    private final static String USERNAME = "username";
+
+    /**
+     * The name of button constant.
+     */
+    private final static String SEARCH_BUTTON = "search";
+
+    /**
+     * The request attribute message name for attribute 'error with login or password'.
+     */
+    private final static String MESSAGE_INCORRECT_DATA = "message.incorrectData";
+
+    /**
+     * The request attribute for message 'error search command'.
+     */
+    private final static String ERROR_SEARCH_COMMAND = "errorSearchCommand";
+
+    //todo разбить на методы
+
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = UserService.getUserFromSession(request);
         String username = null;
         if (user != null) {
-            username = (String) request.getSession().getAttribute("username");
+            username = (String) request.getSession().getAttribute(USERNAME);
         }
 
         Validator validator = Validator.getInstance();
@@ -88,9 +108,9 @@ public class MainCommand extends Command {
         String roomClassIdString = request.getParameter(ROOM_CLASS_ID);
 
 
-        if (request.getMethod().equalsIgnoreCase("post")) {
+        if (request.getMethod().equalsIgnoreCase(POST)) {
 
-            if (request.getParameter("search") != null) {
+            if (request.getParameter(SEARCH_BUTTON) != null) {
 
                 long checkinDate = 0;
                 long checkoutDate = 0;
@@ -109,7 +129,9 @@ public class MainCommand extends Command {
                 if (!validator.checkCapacity(roomCapacity) ||
                         !validator.checkCheckinCheckoutDate(checkinDate, checkoutDate) ||
                         !(roomClassId > 0)) {
-                    request.setAttribute("errorSearchCommand", MessageManager.getProperty("message.incorrectData"));
+                    String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), MESSAGE_INCORRECT_DATA);
+                    request.setAttribute(ERROR_SEARCH_COMMAND, messageIncorrectData);
+                    logger.debug("Data validation failed");
                     return null;
                 }
 

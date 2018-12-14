@@ -60,6 +60,7 @@ public class AdminCommand extends Command {
      */
     private static final String USERS_LIMIT_QUERY = " LIMIT %d, %d";
 
+//todo разбить на методы
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -125,7 +126,9 @@ public class AdminCommand extends Command {
                     currentUser.setPassword(currentPassword);
                 } else {
                     if (!validator.checkPassword(password)) {
-                        request.setAttribute("errorData", MessageManager.getProperty("message.incorrectData"));
+                        String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.incorrectData");
+                        request.setAttribute("errorData", messageIncorrectData);
+                        logger.debug("Data validation failed");
                         return null;
                     } else {
                         currentUser.setPassword(UserService.getHashPassword(password));
@@ -146,14 +149,10 @@ public class AdminCommand extends Command {
                     throw new CommandException("Updating current user ending with exception", e);
                 }
 
-                if (isUpdate) {
-                    request.setAttribute("wordUser", MessageManager.getProperty("message.wordUser"));
-                    request.setAttribute("currentUser", username);
-                    request.setAttribute("isUpdated", MessageManager.getProperty("message.isUpdated"));
-                    logger.debug("User successfully updated");
-                } else {
+                if (!isUpdate) {
+                    String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.incorrectData");
+                    request.setAttribute("errorData", messageIncorrectData);
                     logger.debug("Data from form not saved");
-                    request.setAttribute("errorData", MessageManager.getProperty("message.incorrectData"));
                     return null;
                 }
 
@@ -176,9 +175,6 @@ public class AdminCommand extends Command {
                         request.getSession().invalidate();
                         return CommandType.LOGIN.getCurrentCommand();
                     }
-                    request.setAttribute("wordUser", MessageManager.getProperty("message.wordUser"));
-                    request.setAttribute("currentUser", username);
-                    request.setAttribute("isDisabled", MessageManager.getProperty("message.isDisabled"));
                     logger.debug("User successfully marked deleted");
                 } else {
                     logger.debug("User not deleted");

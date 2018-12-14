@@ -1,5 +1,6 @@
 package by.htp.kirova.task2.service.util;
 
+import org.apache.log4j.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,6 +14,11 @@ import java.util.Locale;
  * @since Sep 24, 2018
  */
 public class DateService {
+
+    /**
+     * Instance of {@code org.apache.log4j.Logger} is used for logging.
+     */
+    private static final Logger logger = Logger.getLogger(DateService.class);
 
     /**
      * Сonverts String Date to milliseconds for storage in the database
@@ -60,6 +66,7 @@ public class DateService {
      */
     public static boolean isDateBeforeCurrentDate(long date) {
         if (date == 0) {
+            logger.debug("Date data is empty");
             return false;
         }
         long currentDateInMiliseconds = getCurrentDateInMiliseconds();

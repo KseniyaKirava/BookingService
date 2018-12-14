@@ -26,7 +26,7 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(RoomHasFacilityDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(RoomHasFacilityDAOImpl.class);
 
 
     /**
@@ -107,10 +107,12 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
         } finally {
             if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+                logger.debug("Prepared statement closed");
             }
             if (cp != null && connection != null) {
                 cp.setAutoCommitTrue(connection);
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 
@@ -150,9 +152,11 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
         } finally {
             if (cp != null && statement != null) {
                 cp.closeStatement(statement);
+                logger.debug("Statement and resultset closed");
             }
             if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 
@@ -193,10 +197,12 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
         } finally {
             if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+                logger.debug("Prepared statement closed");
             }
             if (cp != null && connection != null) {
                 cp.setAutoCommitTrue(connection);
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 
@@ -229,9 +235,11 @@ public class RoomHasFacilityDAOImpl implements BookingDAO<RoomHasFacility> {
         } finally {
             if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+                logger.debug("Prepared statement closed");
             }
             if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 

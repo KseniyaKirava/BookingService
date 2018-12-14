@@ -8,16 +8,23 @@ import by.htp.kirova.task2.entity.Room;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.validation.Validator;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
 /**
- * Contains methods which provide application logic to work with room.
+ * Contains methods which provide application to work with room.
  *
  * @author Kseniya Kirava
  * @since Sep 24, 2018
  */
 public class RoomServiceImpl implements BookingService<Room> {
+
+    /**
+     * Instance of {@code org.apache.log4j.Logger} is used for logging.
+     */
+    private static final Logger logger = Logger.getLogger(RoomServiceImpl.class);
+
 
     @Override
     public boolean create(Room room) throws ServiceException {
@@ -31,6 +38,7 @@ public class RoomServiceImpl implements BookingService<Room> {
                 !validator.checkCapacity(room.getCapacity()) ||
                 !validator.checkCost(room.getCost()) ||
                 !room.isEnabled()) {
+            logger.debug("Validation of room data ended with error");
             return false;
         }
 
@@ -76,6 +84,7 @@ public class RoomServiceImpl implements BookingService<Room> {
                 !validator.checkRoomNumber(room.getNumber()) ||
                 !validator.checkCapacity(room.getCapacity()) ||
                 !validator.checkCost(room.getCost())) {
+            logger.debug("Validation of room data ended with error");
             return false;
         }
 

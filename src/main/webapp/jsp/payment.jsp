@@ -5,7 +5,15 @@
 <html>
 <%@ include file="../include/head.jspf" %>
 <body>
+
+
+<fmt:requestEncoding value="UTF-8"/>
+<c:set var="lang" value="${not empty lang ? lang : pageContext.request.locale.toLanguageTag()}"
+       scope="session"/>
+<fmt:setLocale value="${lang}"/>
 <fmt:setBundle basename="message"/>
+
+
 <form class="form-horizontal" method="post" command="do?command=Payment">
     <div class="container">
         <div class="row">

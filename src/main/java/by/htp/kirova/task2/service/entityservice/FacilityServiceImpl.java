@@ -7,16 +7,22 @@ import by.htp.kirova.task2.entity.Facility;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.validation.Validator;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
 /**
- * Contains methods which provide application logic to work with facilities.
+ * Contains methods which provide application to work with facilities.
  *
  * @author Kseniya Kirava
  * @since Sep 24, 2018
  */
 public class FacilityServiceImpl implements BookingService<Facility> {
+
+    /**
+     * Instance of {@code org.apache.log4j.Logger} is used for logging.
+     */
+    private static final Logger logger = Logger.getLogger(FacilityServiceImpl.class);
 
     @Override
     public boolean create(Facility facility) throws ServiceException {
@@ -27,6 +33,7 @@ public class FacilityServiceImpl implements BookingService<Facility> {
 
         if (!validator.checkEntityName(facility.getName()) ||
                 !facility.isEnabled()) {
+            logger.debug("Validation of facility data ended with error");
             return false;
         }
 
@@ -67,6 +74,7 @@ public class FacilityServiceImpl implements BookingService<Facility> {
         Validator validator = Validator.getInstance();
 
         if (!validator.checkEntityName(facility.getName())) {
+            logger.debug("Validation of facility data ended with error");
             return false;
         }
 

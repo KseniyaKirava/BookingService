@@ -7,7 +7,6 @@ import by.htp.kirova.task2.entity.RoomClass;
 import by.htp.kirova.task2.dao.DAOException;
 import by.htp.kirova.task2.dao.BookingDAO;
 import org.apache.log4j.Logger;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,11 +101,14 @@ public class RoomClassDAOImpl implements BookingDAO<RoomClass> {
         } finally {
             if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+                logger.debug("Prepared statement closed");
             }
             if (cp != null && connection != null) {
                 cp.setAutoCommitTrue(connection);
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
+
         }
 
         return true;
@@ -145,9 +147,11 @@ public class RoomClassDAOImpl implements BookingDAO<RoomClass> {
         } finally {
             if (cp != null && statement != null) {
                 cp.closeStatement(statement);
+                logger.debug("Statement and resultset closed");
             }
             if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 
@@ -187,10 +191,12 @@ public class RoomClassDAOImpl implements BookingDAO<RoomClass> {
         } finally {
             if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+                logger.debug("Prepared statement closed");
             }
             if (cp != null && connection != null) {
                 cp.setAutoCommitTrue(connection);
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 
@@ -222,9 +228,11 @@ public class RoomClassDAOImpl implements BookingDAO<RoomClass> {
         } finally {
             if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+                logger.debug("Prepared statement closed");
             }
             if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 

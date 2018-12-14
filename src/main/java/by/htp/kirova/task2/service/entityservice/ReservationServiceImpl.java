@@ -8,16 +8,21 @@ import by.htp.kirova.task2.entity.Reservation;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.validation.Validator;
-
+import org.apache.log4j.Logger;
 import java.util.List;
 
 /**
- * Contains methods which provide application logic to work with reservations.
+ * Contains methods which provide application to work with reservations.
  *
  * @author Kseniya Kirava
  * @since Sep 24, 2018
  */
 public class ReservationServiceImpl implements BookingService<Reservation> {
+
+    /**
+     * Instance of {@code org.apache.log4j.Logger} is used for logging.
+     */
+    private static final Logger logger = Logger.getLogger(ReservationServiceImpl.class);
 
     @Override
     public boolean create(Reservation reservation) throws ServiceException {
@@ -32,6 +37,7 @@ public class ReservationServiceImpl implements BookingService<Reservation> {
                 !validator.checkCost(reservation.getTotalCost()) || !reservation.isEnabled() ||
                 !validator.checkUsername(reservation.getUsersUsername()) ||
                 !(reservation.getRoomsId() > 0)) {
+            logger.debug("Validation of reservation data ended with error");
             return false;
         }
 
@@ -76,6 +82,7 @@ public class ReservationServiceImpl implements BookingService<Reservation> {
                 !validator.checkUsername(reservation.getUsersUsername()) ||
                 !validator.checkAssessment(reservation.getAssessment()) ||
                 !(reservation.getRoomsId() > 0)) {
+            logger.debug("Validation of reservation data ended with error");
             return false;
         }
 

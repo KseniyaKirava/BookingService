@@ -7,17 +7,22 @@ import by.htp.kirova.task2.entity.RoomClass;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.validation.Validator;
-
+import org.apache.log4j.Logger;
 import java.util.List;
 
 
 /**
- * Contains methods which provide application logic to work with room class.
+ * Contains methods which provide application to work with room class.
  *
  * @author Kseniya Kirava
  * @since Sep 24, 2018
  */
 public class RoomClassServiceImpl implements BookingService<RoomClass> {
+
+    /**
+     * Instance of {@code org.apache.log4j.Logger} is used for logging.
+     */
+    private static final Logger logger = Logger.getLogger(RoomClassServiceImpl.class);
 
 
     @Override
@@ -27,6 +32,7 @@ public class RoomClassServiceImpl implements BookingService<RoomClass> {
         Validator validator = Validator.getInstance();
 
         if (!validator.checkRoomClassName(roomClass.getName()) || !roomClass.isEnabled()) {
+            logger.debug("Validation of room's class data ended with error");
             return false;
         }
 
@@ -69,6 +75,7 @@ public class RoomClassServiceImpl implements BookingService<RoomClass> {
         Validator validator = Validator.getInstance();
 
         if (!validator.checkRoomClassName(roomClass.getName())) {
+            logger.debug("Validation of room's class data ended with error");
             return false;
         }
 

@@ -27,7 +27,7 @@ public class ReserveCommand extends Command {
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(ReserveCommand.class);
+    private static final Logger logger = Logger.getLogger(ReserveCommand.class);
 
     /**
      * The reservation unique identification number constant.
@@ -45,6 +45,12 @@ public class ReserveCommand extends Command {
      */
     private final static String CHECKOUT_DATE = "checkoutDate";
 
+
+    /**
+     * The session attribute language constant.
+     */
+    private final static String LANG = "lang";
+
     /**
      * The SQL 'where' query constant.
      */
@@ -60,6 +66,7 @@ public class ReserveCommand extends Command {
      */
     private static final String CURRENT_RESERVATIONS_QUERY = "WHERE id='%s'";
 
+//todo разбить на методы + убрать magic words
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -121,7 +128,9 @@ public class ReserveCommand extends Command {
             if (currentAssessment != null && currentAssessment.length() == 1) {
                 assessment = Byte.parseByte(currentAssessment);
             } else {
-                request.setAttribute("errorData", MessageManager.getProperty("message.incorrectData"));
+                String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.incorrectData");
+                request.setAttribute("errorData", messageIncorrectData);
+                logger.debug("Data validation failed");
                 return null;
             }
 
@@ -141,7 +150,9 @@ public class ReserveCommand extends Command {
 
             if (request.getParameter("rate") != null) {
                 if (!dateBeforeCurrentDate) {
-                    request.setAttribute("tooEarly", MessageManager.getProperty("message.tooEarlyForAssessment"));
+                    String tooEarlyForAssessment = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.tooEarlyForAssessment");
+                    request.setAttribute("tooEarly", tooEarlyForAssessment);
+                    logger.debug("Date is incorrect");
                     return null;
                 }
 

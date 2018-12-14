@@ -136,10 +136,12 @@ public class RoomDAOImpl implements BookingDAO<Room> {
         } finally {
             if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+                logger.debug("Prepared statement closed");
             }
             if (cp != null && connection != null) {
                 cp.setAutoCommitTrue(connection);
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 
@@ -183,9 +185,11 @@ public class RoomDAOImpl implements BookingDAO<Room> {
         } finally {
             if (cp != null && statement != null) {
                 cp.closeStatement(statement);
+                logger.debug("Statement and resultset closed");
             }
             if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 
@@ -230,10 +234,12 @@ public class RoomDAOImpl implements BookingDAO<Room> {
         } finally {
             if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+                logger.debug("Prepared statement closed");
             }
             if (cp != null && connection != null) {
                 cp.setAutoCommitTrue(connection);
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 
@@ -265,9 +271,11 @@ public class RoomDAOImpl implements BookingDAO<Room> {
         } finally {
             if (cp != null && ps != null) {
                 cp.closePreparedStatement(ps);
+                logger.debug("Prepared statement closed");
             }
             if (cp != null && connection != null) {
                 cp.releaseConnection(connection);
+                logger.debug("Connection released");
             }
         }
 

@@ -1,5 +1,7 @@
 package by.htp.kirova.task2.controller;
 
+import javax.servlet.http.HttpSession;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -10,25 +12,34 @@ import java.util.ResourceBundle;
  */
 public class MessageManager {
 
-    /**
-     * Resource bundle constant for message.properties.
-     */
-    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("message");
+    private static final String resourceName = "message";
 
     /**
-     * The private constructor by default because this class is not intended
-     * to create an instance of the class or inheritance.
+     * The session attribute language constant.
      */
-    private MessageManager() {
+    private final static String LANG = "lang";
+
+    public static ResourceBundle getSessionResourceBundle(HttpSession session) {
+        String lang = session.getAttribute(LANG).toString();
+        Locale locale = Locale.forLanguageTag(lang);
+        return ResourceBundle.getBundle(resourceName, locale);
     }
 
-    /**
-     * Returns a key value from a message.properties file
-     *
-     * @param key by which the value is searched
-     * @return java.lang.String value by key on message.properties file
-     */
-    public static String getProperty(String key) {
-        return resourceBundle.getString(key);
+    public static String getMessageInSessionLanguage(HttpSession session, String messageKey) {
+        ResourceBundle resourceBundle = getSessionResourceBundle(session);
+        return resourceBundle.getString(messageKey);
     }
+
+//    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("message");
+//
+//    private MessageManager(Locale locale) {
+//        resourceBundle = ResourceBundle.getBundle("message", locale);
+//    }
+//
+//    public String getString(String key) {
+//        return resourceBundle.getString(key);
+//    }
 }
+
+
+

@@ -2,7 +2,6 @@ package by.htp.kirova.task2.controller.command;
 
 
 import by.htp.kirova.task2.controller.ConfigurationManager;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +12,16 @@ import javax.servlet.http.HttpServletResponse;
  * @since Oct 14, 2018
  */
 public abstract class Command {
+
+    /**
+     * The command constant for regex.
+     */
+    private final static String COMMAND = "Command";
+
+    /**
+     * The path constant for property.
+     */
+    private final static String PATH = "path.page.";
 
     /**
      * Abstract class returning a command.
@@ -26,7 +35,7 @@ public abstract class Command {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName().replaceFirst("Command", "");
+        return this.getClass().getSimpleName().replaceFirst(COMMAND, "");
     }
 
     /**
@@ -35,6 +44,6 @@ public abstract class Command {
      * @return name of jsp.
      */
     public String getJsp() {
-        return ConfigurationManager.getProperty("path.page." + this.toString().toLowerCase());
+        return ConfigurationManager.getProperty(PATH + this.toString().toLowerCase());
     }
 }

@@ -8,16 +8,22 @@ import by.htp.kirova.task2.entity.Authority;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.validation.Validator;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
 /**
- * Contains methods which provide application logic to work with authorities.
+ * Contains methods which provide application to work with authorities.
  *
  * @author Kseniya Kirava
  * @since Sep 24, 2018
  */
 public class AuthorityServiceImpl implements BookingService<Authority> {
+
+    /**
+     * Instance of {@code org.apache.log4j.Logger} is used for logging.
+     */
+    private static final Logger logger = Logger.getLogger(AuthorityServiceImpl.class);
 
     @Override
     public boolean create(Authority authority) throws ServiceException {
@@ -27,6 +33,7 @@ public class AuthorityServiceImpl implements BookingService<Authority> {
 
         if (!validator.checkAuthority(authority.getAuthority()) ||
                 !validator.checkUsername(authority.getUsername()) || !authority.isEnabled()) {
+            logger.debug("Validation of authority data ended with error");
             return false;
         }
 
@@ -67,6 +74,7 @@ public class AuthorityServiceImpl implements BookingService<Authority> {
 
         if (!validator.checkAuthority(authority.getAuthority()) ||
                 !validator.checkUsername(authority.getUsername())) {
+            logger.debug("Validation of authority data ended with error");
             return false;
         }
 

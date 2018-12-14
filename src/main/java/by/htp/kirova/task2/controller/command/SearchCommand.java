@@ -10,9 +10,9 @@ import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.ServiceFactory;
 import by.htp.kirova.task2.service.util.DateService;
 import by.htp.kirova.task2.service.util.ReservationService;
+import by.htp.kirova.task2.service.util.RoomService;
 import by.htp.kirova.task2.service.util.UserService;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -53,6 +53,12 @@ public class SearchCommand extends Command {
 
 
     /**
+     * The session attribute language constant.
+     */
+    private final static String LANG = "lang";
+
+
+    /**
      * The SQL 'where' query for view constant.
      */
     private static final String ROOMS_WHERE_QUERY = "WHERE rooms.capacity >= %d AND " +
@@ -70,6 +76,8 @@ public class SearchCommand extends Command {
      * The SQL 'where' query for rating constant.
      */
     private static final String RATING_WHERE_QUERY = " WHERE rooms_id = %d";
+
+    //todo разбить на методы + убрать magic words
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -108,34 +116,12 @@ public class SearchCommand extends Command {
             String limit = String.format(ROOMS_LIMIT_QUERY, startReq, rowPerPage);
             String limitedRoomsListQuery = sql + limit;
 
-            rooms = roomService.read(limitedRoomsListQuery);
-
-            for (Room room : rooms) {
-                String sqlForRating = String.format(RATING_WHERE_QUERY, room.getId());
-                List<Reservation> reservations = reservationService.read(sqlForRating);
-                int count = 0;
-                int sum = 0;
-
-                for (Reservation res: reservations) {
-                    if (res.getAssessment() != 0) {
-                        count++;
-                        sum += res.getAssessment();
-                    }
-                }
-
-                if (count != 0 && sum != 0) {
-                    double avg = sum / (count * 1.0) + sum % count;
-                    room.setAverageAssessment(avg);
-
-                    count = 0;
-                    sum = 0;
-                }
-
-            }
-
+            rooms = RoomService.getAverageMarksOfSelectedRooms(roomService.read(limitedRoomsListQuery));
 
             if (rooms.isEmpty()) {
-                request.setAttribute("messageReservationNotFound", MessageManager.getProperty("message.reservationNotFound"));
+                String reservationNotFound = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.reservationNotFound");
+                request.setAttribute("messageReservationNotFound", reservationNotFound);
+                logger.debug("");
                 return null;
             }
 
@@ -171,7 +157,9 @@ public class SearchCommand extends Command {
                 }
 
                 if (!isCreated) {
-                    request.setAttribute("messageReservationNotFound", MessageManager.getProperty("message.reservationNotFound"));
+                    String reservationNotFound = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.reservationNotFound");
+                    request.setAttribute("messageReservationNotFound", reservationNotFound);
+                    logger.debug("");
                     return null;
                 }
 

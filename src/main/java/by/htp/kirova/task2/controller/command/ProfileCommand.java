@@ -3,15 +3,16 @@ package by.htp.kirova.task2.controller.command;
 
 import by.htp.kirova.task2.controller.MessageManager;
 import by.htp.kirova.task2.entity.User;
-import by.htp.kirova.task2.service.util.UserService;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.ServiceFactory;
+import by.htp.kirova.task2.service.util.UserService;
 import by.htp.kirova.task2.service.validation.Validator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
 
 /**
  * Abstract class implementation for a
@@ -25,7 +26,7 @@ public class ProfileCommand extends Command {
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(ProfileCommand.class);
+    private static final Logger logger = Logger.getLogger(ProfileCommand.class);
 
     /**
      * The unique identification name constant.
@@ -57,6 +58,7 @@ public class ProfileCommand extends Command {
      */
     private final static String MIDDLE_NAME = "middleName";
 
+    //todo разбить на методы + убрать magic words
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -87,7 +89,9 @@ public class ProfileCommand extends Command {
 
                     if (!password.isEmpty()) {
                         if (!validator.checkPassword(password)) {
-                            request.setAttribute("errorData", MessageManager.getProperty("message.incorrectData"));
+                            String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.incorrectData");
+                            request.setAttribute("errorData", messageIncorrectData);
+                            logger.debug("Data validation failed");
                             return null;
                         } else {
                             user.setPassword(UserService.getHashPassword(password));
@@ -108,7 +112,7 @@ public class ProfileCommand extends Command {
                     }
 
                     if (isUpdate) {
-                        LOGGER.info("User successfully updated");
+                        logger.debug("User successfully updated");
                     } else {
                         request.setAttribute(USERNAME, user.getUsername());
                         request.setAttribute(EMAIL, user.getEmail());
@@ -116,8 +120,10 @@ public class ProfileCommand extends Command {
                         request.setAttribute(FIRST_NAME, user.getFirstName());
                         request.setAttribute(LAST_NAME, user.getLastName());
                         request.setAttribute(MIDDLE_NAME, user.getMiddleName());
-                        request.setAttribute("errorData", MessageManager.getProperty("message.incorrectData"));
-                        LOGGER.info("Data from form not saved");
+
+                        String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.incorrectData");
+                        request.setAttribute("errorData", messageIncorrectData);
+                        logger.debug("Data from form not saved");
                         return null;
                     }
 
@@ -136,18 +142,17 @@ public class ProfileCommand extends Command {
                     try {
                         isDelete = userService.update(user);
                     } catch (ServiceException e) {
-                        LOGGER.info("Deleting user failed", e);
                         throw new CommandException("Deleting user failed", e);
                     }
 
                     if (isDelete) {
                         request.getSession().invalidate();
-                        LOGGER.info("User successfully deleted");
+                        logger.debug("User successfully deleted");
 
                         return CommandType.LOGIN.getCurrentCommand();
 
                     } else {
-                        LOGGER.info("User not deleted");
+                        logger.debug("User not deleted");
                     }
 
                 }
