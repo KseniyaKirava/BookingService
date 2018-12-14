@@ -11,9 +11,15 @@ import java.util.ResourceBundle;
 public class ConfigurationManager {
 
     /**
+     * The resource name constant.
+     */
+    private final static String CONFIG = "config";
+
+
+    /**
      * Resource bundle constant for config.properties.
      */
-    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(CONFIG);
 
     /**
      * The private constructor by default because this class is not intended
