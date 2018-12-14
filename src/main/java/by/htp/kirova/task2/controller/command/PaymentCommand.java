@@ -20,7 +20,14 @@ public class PaymentCommand extends Command {
         User user = UserService.getUserFromSession(request);
         if (user == null) {
             return CommandType.LOGIN.getCurrentCommand();
-        } else {
+        } else if (request.getSession().getAttribute("role").equals("admin")) {
+            return CommandType.ADMIN.getCurrentCommand();
+        }
+//        else if (request.getSession().getAttribute("role").equals("manager")) {
+//            return CommandType.MANAGER.getCurrentCommand();
+//        }
+
+        else {
             request.setAttribute("totalCost", request.getSession().getAttribute("totalCost"));
 
             if (request.getMethod().equalsIgnoreCase("post")) {

@@ -66,10 +66,10 @@ public class AdminCommand extends Command {
         User user = UserService.getUserFromSession(request);
         if (user == null) {
             return CommandType.LOGIN.getCurrentCommand();
-        } else if (!request.getParameter("role").equals("user")) {
+        } else if (request.getSession().getAttribute("role").equals("user")) {
             return CommandType.PROFILE.getCurrentCommand();
         }
-//        else if (!request.getParameter("role").equals("user")) {
+//        else if (request.getSession().getAttribute("role").equals("manager")) {
 //            return CommandType.MANAGER.getCurrentCommand();
 //        }
 

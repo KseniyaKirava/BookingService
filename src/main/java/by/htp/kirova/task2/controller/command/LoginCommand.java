@@ -54,12 +54,12 @@ public class LoginCommand extends Command {
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = UserService.getUserFromSession(request);
         if (user != null) {
-            if (!request.getParameter("role").equals("user")) {
+            if (request.getSession().getAttribute("role").equals("user")) {
                 return CommandType.PROFILE.getCurrentCommand();
-            } else if (!request.getParameter("role").equals("admin")) {
+            } else if (request.getSession().getAttribute("role").equals("admin")) {
                 return CommandType.ADMIN.getCurrentCommand();
             }
-//            else if (!request.getParameter("role").equals("manager")) {
+//            else if (request.getSession().getAttribute("role").equals("manager")) {
 //                return CommandType.MANAGER.getCurrentCommand();
 //            }
         }

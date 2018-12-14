@@ -66,7 +66,12 @@ public class ReserveCommand extends Command {
         User user = UserService.getUserFromSession(request);
         if (user == null) {
             return CommandType.LOGIN.getCurrentCommand();
+        } else if (request.getSession().getAttribute("role").equals("admin")) {
+            return CommandType.ADMIN.getCurrentCommand();
         }
+//        else if (request.getSession().getAttribute("role").equals("manager")) {
+//            return CommandType.MANAGER.getCurrentCommand();
+//        }
 
         String username = user.getUsername();
 
@@ -114,7 +119,7 @@ public class ReserveCommand extends Command {
             byte assessment;
 
             if (currentAssessment != null && currentAssessment.length() == 1) {
-                assessment= Byte.parseByte(currentAssessment);
+                assessment = Byte.parseByte(currentAssessment);
             } else {
                 request.setAttribute("errorData", MessageManager.getProperty("message.incorrectData"));
                 return null;
