@@ -12,7 +12,7 @@
     <fmt:setBundle basename="message"/>
 
     <a class="navbar-brand" href="do?command=Main">
-        <img src="../image/logo.png" alt="logo" width="125" border="0";>
+        <img src="../image/menu/logo.png" alt="logo" width="125" border="0" ;>
     </a>
 
     <div class="collapse navbar-collapse justify-content-start" id="navbarText">
@@ -33,12 +33,12 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" href="?command=${param.command}&sessionLocale=ru-Ru">
-                    &nbsp;<img src="../image/rus.png" alt="rus" width="20" height="13" border="0" style="align-items: start">
+                    &nbsp;<img src="../image/lang/rus.png" alt="rus" width="20" height="13" border="0" style="align-items: start">
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="?command=${param.command}&sessionLocale=en-Us">
-                    <img src="../image/eng.png" alt="eng" width="20" height="13" border="0" style="align-items: start">&nbsp;
+                    <img src="../image/lang/eng.png" alt="eng" width="20" height="13" border="0" style="align-items: start">&nbsp;
                 </a>
             </li>
             <c:choose>
@@ -58,7 +58,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                           style="font-size: 12pt; color: white"><img src="../image/user.png" alt="logo" width="25" border="0";>&nbsp;&nbsp;&nbsp;${username}
+                           style="font-size: 12pt; color: white"><img src="../image/menu/user.png" alt="logo" width="25" border="0" ;>&nbsp;&nbsp;&nbsp;${username}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <c:if test="${role=='admin'}">

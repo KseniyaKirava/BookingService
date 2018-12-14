@@ -44,11 +44,6 @@ public class Room implements Serializable {
     private double cost;
 
     /**
-     * Cost of stay per day.
-     */
-    private byte[] photo;
-
-    /**
      * Access to the Room: available or deleted.
      */
     private boolean enabled;
@@ -57,6 +52,11 @@ public class Room implements Serializable {
      * The unique identification number of room class.
      */
     private long roomClassesId;
+
+    /**
+     * The average assessment marks of room.
+     */
+    private double averageAssessment;
 
 
     /**
@@ -70,16 +70,18 @@ public class Room implements Serializable {
      * Constructor with all fields of the Room class
      * as parameters.
      */
-    public Room(long id, String name, String number, int capacity, double cost, byte[] photo, boolean enabled, long roomClassesId) {
+    public Room(long id, String name, String number, int capacity, double cost, boolean enabled,
+                long roomClassesId, double averageAssessment) {
         this.id = id;
         this.name = name;
         this.number = number;
         this.capacity = capacity;
         this.cost = cost;
-        this.photo = photo;
         this.enabled = enabled;
         this.roomClassesId = roomClassesId;
+        this.averageAssessment = averageAssessment;
     }
+
 
     public long getId() {
         return id;
@@ -101,16 +103,16 @@ public class Room implements Serializable {
         return cost;
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
     public boolean isEnabled() {
         return enabled;
     }
 
     public long getRoomClassesId() {
         return roomClassesId;
+    }
+
+    public double getAverageAssessment() {
+        return averageAssessment;
     }
 
 
@@ -134,10 +136,6 @@ public class Room implements Serializable {
         this.cost = cost;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
-
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
@@ -146,29 +144,27 @@ public class Room implements Serializable {
         this.roomClassesId = roomClassesId;
     }
 
+    public void setAverageAssessment(double averageAssessment) {
+        this.averageAssessment = averageAssessment;
+    }
+
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null) {
-            return false;
-        }
-        if (this.getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-
         return id == room.id &&
                 capacity == room.capacity &&
                 Double.compare(room.cost, cost) == 0 &&
                 enabled == room.enabled &&
                 roomClassesId == room.roomClassesId &&
+                Double.compare(room.averageAssessment, averageAssessment) == 0 &&
                 Objects.equals(name, room.name) &&
-                Objects.equals(number, room.number) &&
-                Arrays.equals(photo, room.photo);
+                Objects.equals(number, room.number);
     }
+
+
 
     @Override
     public int hashCode() {
@@ -179,11 +175,12 @@ public class Room implements Serializable {
         result = result * 31 + (number == null ? 0 : number.hashCode()) * result;
         result = result * 31 + result * capacity;
         result = (int) (result * 31 + result * cost);
-        result = 31 * result + Arrays.hashCode(photo);
         result = result * 31 + (enabled ? 0 : 1) * result;
         result = (int) (result * 31 + result * roomClassesId);
+        result = (int) (result * 31 + result * averageAssessment);
         return result;
     }
+
 
     @Override
     public String toString() {
@@ -193,9 +190,9 @@ public class Room implements Serializable {
                 ", number='" + number + '\'' +
                 ", capacity=" + capacity +
                 ", cost=" + cost +
-                ", photo=" + Arrays.toString(photo) +
                 ", enabled=" + enabled +
                 ", roomClassesId=" + roomClassesId +
+                ", averageAssessment=" + averageAssessment +
                 '}';
     }
 }

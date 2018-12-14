@@ -26,7 +26,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(RoomDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(RoomDAOImpl.class);
 
 
     /**
@@ -55,11 +55,6 @@ public class RoomDAOImpl implements BookingDAO<Room> {
     private final static String COST = "cost";
 
     /**
-     * The photo of room constant.
-     */
-    private final static String PHOTO = "photo";
-
-    /**
      * The enabled state constant.
      */
     private final static String ENABLED = "enabled";
@@ -69,12 +64,17 @@ public class RoomDAOImpl implements BookingDAO<Room> {
      */
     private final static String ROOM_CLASSES_ID = "room_classes_id";
 
+    /**
+     * The average assessment mark constant.
+     */
+    private final static String AVERAGE_ASSESSMENT = "average_assessment";
+
 
     /**
      * Constant string which represents query to create room.
      */
     private static final String SQL_CREATE_ROOM = "INSERT INTO rooms(name, number, capacity, cost, " +
-            "photo, enabled, room_classes_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            "enabled, room_classes_id, average_assessment) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     /**
      * Constant string which represents query to select all rooms.
@@ -85,7 +85,7 @@ public class RoomDAOImpl implements BookingDAO<Room> {
      * Constant string which represents query to update room.
      */
     private static final String SQL_UPDATE_ROOM = "UPDATE rooms SET name= ?, number= ?, capacity= ?," +
-            "cost= ?, photo= ?, enabled= ?, room_classes_id= ? WHERE id= ?";
+            "cost= ?, enabled= ?, room_classes_id= ?, average_assessment=? WHERE id= ?";
 
     /**
      * Constant string which represents query to delete room.
@@ -108,9 +108,9 @@ public class RoomDAOImpl implements BookingDAO<Room> {
             ps.setString(2, room.getNumber());
             ps.setInt(3, room.getCapacity());
             ps.setDouble(4, room.getCost());
-            ps.setBytes(5, room.getPhoto());
-            ps.setBoolean(6, room.isEnabled());
-            ps.setLong(7, room.getRoomClassesId());
+            ps.setBoolean(5, room.isEnabled());
+            ps.setLong(6, room.getRoomClassesId());
+            ps.setDouble(7, room.getAverageAssessment());
 
             int result = ps.executeUpdate();
 
@@ -171,9 +171,9 @@ public class RoomDAOImpl implements BookingDAO<Room> {
                         resultSet.getString(NUMBER),
                         resultSet.getInt(CAPACITY),
                         resultSet.getDouble(COST),
-                        resultSet.getBytes(PHOTO),
                         resultSet.getBoolean(ENABLED),
-                        resultSet.getLong(ROOM_CLASSES_ID)
+                        resultSet.getLong(ROOM_CLASSES_ID),
+                        resultSet.getDouble(AVERAGE_ASSESSMENT)
                         ));
             }
 
@@ -208,9 +208,9 @@ public class RoomDAOImpl implements BookingDAO<Room> {
             ps.setString(2, room.getNumber());
             ps.setInt(3, room.getCapacity());
             ps.setDouble(4, room.getCost());
-            ps.setBytes(5, room.getPhoto());
-            ps.setBoolean(6, room.isEnabled());
-            ps.setLong(7, room.getRoomClassesId());
+            ps.setBoolean(5, room.isEnabled());
+            ps.setLong(6, room.getRoomClassesId());
+            ps.setDouble(7, room.getAverageAssessment());
             ps.setLong(8, room.getId());
 
             int result = ps.executeUpdate();

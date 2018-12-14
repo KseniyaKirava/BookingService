@@ -142,13 +142,13 @@
                 </ol>
                 <div class="carousel-inner" role="listbox">
                     <div class="carousel-item active">
-                        <img src="../image/k1.jpg" alt="First slide">
+                        <img src="../image/slider/k1.jpg" alt="First slide">
                     </div>
                     <div class="carousel-item">
-                        <img src="../image/k2.jpg" alt="Second slide">
+                        <img src="../image/slider/k2.jpg" alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                        <img src="../image/k3.jpg" alt="Third slide">
+                        <img src="../image/slider/k3.jpg" alt="Third slide">
                     </div>
                 </div>
                 <a class="left carousel-control" href="#carousel-example-generic" role="button"

@@ -139,12 +139,12 @@
                                     <div class="row ">
                                         <div class="col-lg-6">
                                             <button id="Update" name="Update" class="btn btn-link">
-                                                <img src="../image/save.png" height="22" border="0" align="bottom"/>
+                                                <img src="../image/admin/save.png" height="22" border="0" align="bottom"/>
                                             </button>
                                         </div>
                                         <div class="col-lg-6">
                                             <button id="Delete" name="Delete" class="btn btn-link">
-                                                <img src="../image/bin.png" height="23" border="0" align="bottom"/>
+                                                <img src="../image/admin/bin.png" height="23" border="0" align="bottom"/>
                                             </button>
                                         </div>
                                     </div>
