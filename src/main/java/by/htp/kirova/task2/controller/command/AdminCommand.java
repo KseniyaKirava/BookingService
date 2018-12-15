@@ -76,7 +76,7 @@ public class AdminCommand extends Command {
     private final static String POST = "post";
 
     /**
-     * The message 'error data' attribute constant.
+     * The message 'error data' attribute name constant.
      */
     private final static String ERROR_DATA = "errorData";
 

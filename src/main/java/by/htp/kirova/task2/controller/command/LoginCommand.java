@@ -70,11 +70,10 @@ public class LoginCommand extends Command {
      */
     private final static String MESSAGE_LOGIN_ERROR = "message.loginError";
 
-
     /**
      * The message 'error with login or password' attribute name constant.
      */
-    private final static String ERROR_LOGIN_COMMAND = "errorLoginCommand";
+    private final static String ERROR_LOGIN = "errorLoginCommand";
 
     //todo разбить на методы
 
@@ -108,7 +107,7 @@ public class LoginCommand extends Command {
                     request.getSession().setAttribute(USER, user);
                     request.getSession().setAttribute(USERNAME, username);
                     request.getSession().setMaxInactiveInterval(120);
-                    logger.debug("Session for user " + username + " successfully created");
+                    logger.debug(String.format("Session for user '%s' successfully created", username));
 
                     String role = AuthorityService.getUserAuthority(username);
 
@@ -120,7 +119,7 @@ public class LoginCommand extends Command {
                     return CommandType.PROFILE.getCurrentCommand();
                 } else {
                     String errorLoginMessage = MessageManager.getMessageInSessionLanguage(request.getSession(),MESSAGE_LOGIN_ERROR);
-                    request.setAttribute(ERROR_LOGIN_COMMAND, errorLoginMessage);
+                    request.setAttribute(ERROR_LOGIN, errorLoginMessage);
                     return null;
                 }
             }
