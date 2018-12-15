@@ -56,7 +56,7 @@ public class LoginCommand extends Command {
     private final static String PASSWORD = "password";
 
     /**
-     * The request method post constant.
+     * The request method 'post' constant.
      */
     private final static String POST = "post";
 
@@ -66,12 +66,13 @@ public class LoginCommand extends Command {
     private final static String LOGIN_BUTTON = "loginButton";
 
     /**
-     * The request attribute message name for attribute 'error with login or password'.
+     * The message 'error with login or password' constant.
      */
     private final static String MESSAGE_LOGIN_ERROR = "message.loginError";
 
+
     /**
-     * The request attribute for message 'error with login or password'.
+     * The message 'error with login or password' attribute name constant.
      */
     private final static String ERROR_LOGIN_COMMAND = "errorLoginCommand";
 

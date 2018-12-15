@@ -8,7 +8,6 @@ import by.htp.kirova.task2.service.ServiceFactory;
 import by.htp.kirova.task2.service.util.UserService;
 import by.htp.kirova.task2.service.validation.Validator;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -51,6 +50,55 @@ public class AdminCommand extends Command {
     private final static String MIDDLE_NAME = "middleName";
 
     /**
+     * The size of array attribute constant for paginator.
+     */
+    private final static String SIZE = "size";
+
+    /**
+     * The start position attribute constant for paginator.
+     */
+    private final static String START = "start";
+
+    /**
+     * The count of rows per page attribute constant for paginator.
+     */
+    private final static String ROW_PER_PAGE = "rowPerPage";
+
+
+    /**
+     * The array of users attribute constant.
+     */
+    private final static String USERS = "users";
+
+    /**
+     * The request method 'post' constant.
+     */
+    private final static String POST = "post";
+
+    /**
+     * The message 'error data' attribute constant.
+     */
+    private final static String ERROR_DATA = "errorData";
+
+
+    /**
+     * The message 'incorrect data' constant.
+     */
+    private final static String MESSAGE_INCORRECT_DATA = "message.incorrectData";
+
+
+    /**
+     * The name of button constant.
+     */
+    private final static String UPDATE_BUTTON = "Update";
+
+    /**
+     * The name of button constant.
+     */
+    private final static String DELETE_BUTTON = "Delete";
+
+
+    /**
      * The SQL 'where' query constant.
      */
     private static final String USERS_WHERE_QUERY = "WHERE enabled = true";
@@ -81,8 +129,8 @@ public class AdminCommand extends Command {
         try {
             List<User> users = userService.read(USERS_WHERE_QUERY);
 
-            request.setAttribute("size", users.size());
-            String strStart = request.getParameter("start");
+            request.setAttribute(SIZE, users.size());
+            String strStart = request.getParameter(START);
 
             int startReq = 0;
             if (strStart != null) {
@@ -90,7 +138,7 @@ public class AdminCommand extends Command {
             }
 
             int rowPerPage = 10;
-            request.setAttribute("rowPerPage", rowPerPage);
+            request.setAttribute(ROW_PER_PAGE, rowPerPage);
 
             String limit = String.format(USERS_LIMIT_QUERY, startReq, rowPerPage);
             String limitedUsersListQuery = USERS_WHERE_QUERY + limit;
@@ -101,12 +149,12 @@ public class AdminCommand extends Command {
                 currentUserInArray.setPassword("");
             }
 
-            request.setAttribute("users", users);
+            request.setAttribute(USERS, users);
         } catch (ServiceException e) {
-            throw new CommandException("Reading user's data failed", e);
+            throw new CommandException("Reading users data failed", e);
         }
 
-        if (request.getMethod().equalsIgnoreCase("post")) {
+        if (request.getMethod().equalsIgnoreCase(POST)) {
 
             String username = request.getParameter(USERNAME);
             String email = request.getParameter(EMAIL);
@@ -117,7 +165,7 @@ public class AdminCommand extends Command {
 
             User currentUser = UserService.getUserByUsername(username);
 
-            if (request.getParameter("Update") != null) {
+            if (request.getParameter(UPDATE_BUTTON) != null) {
 
                 Validator validator = Validator.getInstance();
 
@@ -126,8 +174,9 @@ public class AdminCommand extends Command {
                     currentUser.setPassword(currentPassword);
                 } else {
                     if (!validator.checkPassword(password)) {
-                        String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.incorrectData");
-                        request.setAttribute("errorData", messageIncorrectData);
+                        String messageIncorrectData =
+                                MessageManager.getMessageInSessionLanguage(request.getSession(), MESSAGE_INCORRECT_DATA);
+                        request.setAttribute(ERROR_DATA, messageIncorrectData);
                         logger.debug("Data validation failed");
                         return null;
                     } else {
@@ -150,8 +199,9 @@ public class AdminCommand extends Command {
                 }
 
                 if (!isUpdate) {
-                    String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.incorrectData");
-                    request.setAttribute("errorData", messageIncorrectData);
+                    String messageIncorrectData =
+                            MessageManager.getMessageInSessionLanguage(request.getSession(), MESSAGE_INCORRECT_DATA);
+                    request.setAttribute(ERROR_DATA, messageIncorrectData);
                     logger.debug("Data from form not saved");
                     return null;
                 }
@@ -159,7 +209,7 @@ public class AdminCommand extends Command {
                 return CommandType.ADMIN.getCurrentCommand();
             }
 
-            if (request.getParameter("Delete") != null) {
+            if (request.getParameter(DELETE_BUTTON) != null) {
 
                 currentUser.setEnabled(false);
 
@@ -175,9 +225,9 @@ public class AdminCommand extends Command {
                         request.getSession().invalidate();
                         return CommandType.LOGIN.getCurrentCommand();
                     }
-                    logger.debug("User successfully marked deleted");
+                    logger.debug(String.format("User '%s' successfully marked deleted", currentUser.getUsername()));
                 } else {
-                    logger.debug("User not deleted");
+                    logger.debug(String.format("User '%s' not deleted", currentUser.getUsername()));
                     return null;
                 }
 
