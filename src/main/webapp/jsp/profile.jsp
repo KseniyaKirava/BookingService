@@ -204,7 +204,7 @@
                     <!-- Button (Double) -->
                     <div class="form-group">
                         <div class="col-md-auto text-right">
-                            <button id="saveinfo" name="saveinfo" class="btn btn-dark" style="font-size: 14px;">
+                            <button id="save" name="save" class="btn btn-dark" style="font-size: 14px;">
                                 <fmt:message key="message.save"/>
                             </button>
                         </div>

@@ -80,16 +80,6 @@ public class MainCommand extends Command {
      */
     private final static String SEARCH_BUTTON = "search";
 
-    /**
-     * The request attribute message name for attribute 'error with login or password'.
-     */
-    private final static String MESSAGE_INCORRECT_DATA = "message.incorrectData";
-
-    /**
-     * The request attribute for message 'error search command'.
-     */
-    private final static String ERROR_SEARCH_COMMAND = "errorSearchCommand";
-
     //todo разбить на методы
 
     @Override
@@ -129,8 +119,9 @@ public class MainCommand extends Command {
                 if (!validator.checkCapacity(roomCapacity) ||
                         !validator.checkCheckinCheckoutDate(checkinDate, checkoutDate) ||
                         !(roomClassId > 0)) {
-                    String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), MESSAGE_INCORRECT_DATA);
-                    request.setAttribute(ERROR_SEARCH_COMMAND, messageIncorrectData);
+                    String messageIncorrectData =
+                            MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_INCORRECT_DATA);
+                    request.setAttribute(MessageConstant.ERROR_SEARCH, messageIncorrectData);
                     logger.debug("Data validation failed");
                     return null;
                 }

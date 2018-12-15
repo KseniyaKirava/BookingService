@@ -7,9 +7,6 @@ import by.htp.kirova.task2.service.util.UserService;
 import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * Abstract class implementation for a

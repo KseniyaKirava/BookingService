@@ -80,12 +80,10 @@ public class AdminCommand extends Command {
      */
     private final static String ERROR_DATA = "errorData";
 
-
     /**
      * The message 'incorrect data' constant.
      */
     private final static String MESSAGE_INCORRECT_DATA = "message.incorrectData";
-
 
     /**
      * The name of button constant.

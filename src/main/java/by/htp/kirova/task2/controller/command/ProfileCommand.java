@@ -58,7 +58,38 @@ public class ProfileCommand extends Command {
      */
     private final static String MIDDLE_NAME = "middleName";
 
-    //todo разбить на методы + убрать magic words
+    /**
+     * The request method post constant.
+     */
+    private final static String POST = "post";
+
+    /**
+     * The name of button constant.
+     */
+    private final static String SAVE_BUTTON = "save";
+
+    /**
+     * The name of button constant.
+     */
+    private final static String LOGOUT_BUTTON = "logout";
+
+    /**
+     * The name of button constant.
+     */
+    private final static String DELETE_ACCOUNT_BUTTON = "deleteMyAccount";
+
+    /**
+     * The message 'error data' attribute name constant.
+     */
+    private final static String ERROR_DATA = "errorData";
+
+    /**
+     * The message 'incorrect data' constant.
+     */
+    private final static String MESSAGE_INCORRECT_DATA = "message.incorrectData";
+
+
+    //todo разбить на методы
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -77,8 +108,8 @@ public class ProfileCommand extends Command {
             request.setAttribute(LAST_NAME, user.getLastName());
             request.setAttribute(MIDDLE_NAME, user.getMiddleName());
 
-            if (request.getMethod().equalsIgnoreCase("post")) {
-                if (request.getParameter("saveinfo") != null) {
+            if (request.getMethod().equalsIgnoreCase(POST)) {
+                if (request.getParameter(SAVE_BUTTON) != null) {
                     String email = request.getParameter(EMAIL);
                     String password = request.getParameter(PASSWORD);
                     String firstName = request.getParameter(FIRST_NAME);
@@ -89,8 +120,9 @@ public class ProfileCommand extends Command {
 
                     if (!password.isEmpty()) {
                         if (!validator.checkPassword(password)) {
-                            String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.incorrectData");
-                            request.setAttribute("errorData", messageIncorrectData);
+                            String messageIncorrectData =
+                                    MessageManager.getMessageInSessionLanguage(request.getSession(), MESSAGE_INCORRECT_DATA);
+                            request.setAttribute(ERROR_DATA, messageIncorrectData);
                             logger.debug("Data validation failed");
                             return null;
                         } else {
@@ -121,8 +153,9 @@ public class ProfileCommand extends Command {
                         request.setAttribute(LAST_NAME, user.getLastName());
                         request.setAttribute(MIDDLE_NAME, user.getMiddleName());
 
-                        String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.incorrectData");
-                        request.setAttribute("errorData", messageIncorrectData);
+                        String messageIncorrectData =
+                                MessageManager.getMessageInSessionLanguage(request.getSession(), MESSAGE_INCORRECT_DATA);
+                        request.setAttribute(ERROR_DATA, messageIncorrectData);
                         logger.debug("Data from form not saved");
                         return null;
                     }
@@ -130,11 +163,11 @@ public class ProfileCommand extends Command {
                     return CommandType.PROFILE.getCurrentCommand();
 
                 }
-                if (request.getParameter("logout") != null) {
+                if (request.getParameter(LOGOUT_BUTTON) != null) {
                     request.getSession().invalidate();
                     return CommandType.LOGIN.getCurrentCommand();
                 }
-                if (request.getParameter("deleteMyAccount") != null) {
+                if (request.getParameter(DELETE_ACCOUNT_BUTTON) != null) {
                     user.setEnabled(false);
 
                     boolean isDelete;
