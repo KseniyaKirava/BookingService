@@ -76,16 +76,6 @@ public class AdminCommand extends Command {
     private final static String POST = "post";
 
     /**
-     * The message 'error data' attribute name constant.
-     */
-    private final static String ERROR_DATA = "errorData";
-
-    /**
-     * The message 'incorrect data' constant.
-     */
-    private final static String MESSAGE_INCORRECT_DATA = "message.incorrectData";
-
-    /**
      * The name of button constant.
      */
     private final static String UPDATE_BUTTON = "Update";
@@ -173,8 +163,8 @@ public class AdminCommand extends Command {
                 } else {
                     if (!validator.checkPassword(password)) {
                         String messageIncorrectData =
-                                MessageManager.getMessageInSessionLanguage(request.getSession(), MESSAGE_INCORRECT_DATA);
-                        request.setAttribute(ERROR_DATA, messageIncorrectData);
+                                MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_INCORRECT_DATA);
+                        request.setAttribute(MessageConstant.ERROR_DATA, messageIncorrectData);
                         logger.debug("Data validation failed");
                         return null;
                     } else {
@@ -198,8 +188,8 @@ public class AdminCommand extends Command {
 
                 if (!isUpdate) {
                     String messageIncorrectData =
-                            MessageManager.getMessageInSessionLanguage(request.getSession(), MESSAGE_INCORRECT_DATA);
-                    request.setAttribute(ERROR_DATA, messageIncorrectData);
+                            MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_INCORRECT_DATA);
+                    request.setAttribute(MessageConstant.ERROR_DATA, messageIncorrectData);
                     logger.debug("Data from form not saved");
                     return null;
                 }

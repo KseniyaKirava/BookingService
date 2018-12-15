@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Locale;
 
 /**
  * Abstract class implementation for a
@@ -78,16 +77,6 @@ public class ProfileCommand extends Command {
      */
     private final static String DELETE_ACCOUNT_BUTTON = "deleteMyAccount";
 
-    /**
-     * The message 'error data' attribute name constant.
-     */
-    private final static String ERROR_DATA = "errorData";
-
-    /**
-     * The message 'incorrect data' constant.
-     */
-    private final static String MESSAGE_INCORRECT_DATA = "message.incorrectData";
-
 
     //todo разбить на методы
 
@@ -121,8 +110,8 @@ public class ProfileCommand extends Command {
                     if (!password.isEmpty()) {
                         if (!validator.checkPassword(password)) {
                             String messageIncorrectData =
-                                    MessageManager.getMessageInSessionLanguage(request.getSession(), MESSAGE_INCORRECT_DATA);
-                            request.setAttribute(ERROR_DATA, messageIncorrectData);
+                                    MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_INCORRECT_DATA);
+                            request.setAttribute(MessageConstant.ERROR_DATA, messageIncorrectData);
                             logger.debug("Data validation failed");
                             return null;
                         } else {
@@ -154,8 +143,8 @@ public class ProfileCommand extends Command {
                         request.setAttribute(MIDDLE_NAME, user.getMiddleName());
 
                         String messageIncorrectData =
-                                MessageManager.getMessageInSessionLanguage(request.getSession(), MESSAGE_INCORRECT_DATA);
-                        request.setAttribute(ERROR_DATA, messageIncorrectData);
+                                MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_INCORRECT_DATA);
+                        request.setAttribute(MessageConstant.ERROR_DATA, messageIncorrectData);
                         logger.debug("Data from form not saved");
                         return null;
                     }

@@ -62,15 +62,9 @@ public class LoginCommand extends Command {
      */
     private final static String LOGIN_BUTTON = "loginButton";
 
-    /**
-     * The message 'error with login or password' constant.
-     */
-    private final static String MESSAGE_LOGIN_ERROR = "message.loginError";
 
-    /**
-     * The message 'error with login or password' attribute name constant.
-     */
-    private final static String ERROR_LOGIN = "errorLoginCommand";
+
+
 
     //todo разбить на методы
 
@@ -115,8 +109,8 @@ public class LoginCommand extends Command {
                     }
                     return CommandType.PROFILE.getCurrentCommand();
                 } else {
-                    String errorLoginMessage = MessageManager.getMessageInSessionLanguage(request.getSession(),MESSAGE_LOGIN_ERROR);
-                    request.setAttribute(ERROR_LOGIN, errorLoginMessage);
+                    String errorLoginMessage = MessageManager.getMessageInSessionLanguage(request.getSession(),MessageConstant.MESSAGE_LOGIN_ERROR);
+                    request.setAttribute(MessageConstant.ERROR_LOGIN, errorLoginMessage);
                     return null;
                 }
             }
