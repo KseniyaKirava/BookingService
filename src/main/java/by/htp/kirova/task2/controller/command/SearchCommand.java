@@ -32,6 +32,26 @@ public class SearchCommand extends Command {
     private static final Logger logger = Logger.getLogger(SearchCommand.class);
 
     /**
+     * The unique identification name constant.
+     */
+    private final static String USERNAME = "username";
+
+    /**
+     * The unique identification number constant.
+     */
+    private final static String ID = "id";
+
+    /**
+     * The cost of room constant.
+     */
+    private final static String COST = "cost";
+
+    /**
+     * The total cost for rent room constant.
+     */
+    private final static String TOTAL_COST = "totalCost";
+
+    /**
      * The room capacity (person).
      */
     private static final String ROOM_CAPACITY_TEMP = "roomCapacityTemp";
@@ -51,12 +71,35 @@ public class SearchCommand extends Command {
      */
     private static final String ROOM_CLASS_ID_TEMP = "roomClassIdTemp";
 
+    /**
+     * The size of array attribute constant for paginator.
+     */
+    private final static String SIZE = "size";
 
     /**
-     * The session attribute language constant.
+     * The start position attribute constant for paginator.
      */
-    private final static String LANG = "lang";
+    private final static String START = "start";
 
+    /**
+     * The count of rows per page attribute constant for paginator.
+     */
+    private final static String ROW_PER_PAGE = "rowPerPage";
+
+    /**
+     * The array of rooms attribute constant.
+     */
+    private final static String ROOMS = "rooms";
+
+    /**
+     * The request method 'post' constant.
+     */
+    private final static String POST = "post";
+
+    /**
+     * The name of button constant.
+     */
+    private final static String BOOKING_BUTTON = "booking";
 
     /**
      * The SQL 'where' query for view constant.
@@ -66,25 +109,19 @@ public class SearchCommand extends Command {
             "AND rooms.id NOT IN (SELECT res.rooms_id FROM reservations as res WHERE " +
             "(%d >= res.checkin_date AND res.checkout_date >= %d) AND res.enabled = true) ORDER BY rooms.cost";
 
-
     /**
      * The SQL 'limit' query for view constant.
      */
     private static final String ROOMS_LIMIT_QUERY = " LIMIT %d, %d";
 
-    /**
-     * The SQL 'where' query for rating constant.
-     */
-    private static final String RATING_WHERE_QUERY = " WHERE rooms_id = %d";
-
-    //todo разбить на методы + убрать magic words
+    //todo разбить на методы
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = UserService.getUserFromSession(request);
         String username = null;
         if (user != null) {
-            username = (String) request.getSession().getAttribute("username");
+            username = (String) request.getSession().getAttribute(USERNAME);
         }
 
 
@@ -102,8 +139,8 @@ public class SearchCommand extends Command {
             String sql = String.format(ROOMS_WHERE_QUERY, roomCapacity, roomClassId, checkoutDate, checkinDate);
             List<Room> rooms = roomService.read(sql);
 
-            request.setAttribute("size", rooms.size());
-            String strStart = request.getParameter("start");
+            request.setAttribute(SIZE, rooms.size());
+            String strStart = request.getParameter(START);
 
             int startReq = 0;
             if (strStart != null) {
@@ -111,7 +148,7 @@ public class SearchCommand extends Command {
             }
 
             int rowPerPage = 5;
-            request.setAttribute("rowPerPage", rowPerPage);
+            request.setAttribute(ROW_PER_PAGE, rowPerPage);
 
             String limit = String.format(ROOMS_LIMIT_QUERY, startReq, rowPerPage);
             String limitedRoomsListQuery = sql + limit;
@@ -119,37 +156,38 @@ public class SearchCommand extends Command {
             rooms = RoomService.getAverageMarksOfSelectedRooms(roomService.read(limitedRoomsListQuery));
 
             if (rooms.isEmpty()) {
-                String reservationNotFound = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.reservationNotFound");
-                request.setAttribute("messageReservationNotFound", reservationNotFound);
+                String reservationNotFound =
+                        MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_RESERVATION_NOT_FOUND);
+                request.setAttribute(MessageConstant.RESERVATION_NOT_FOUND, reservationNotFound);
                 logger.debug("");
                 return null;
             }
 
-            request.setAttribute("rooms", rooms);
+            request.setAttribute(ROOMS, rooms);
 
         } catch (ServiceException e) {
             throw new CommandException("Reading user's data failed", e);
         }
 
-        if (request.getMethod().equalsIgnoreCase("post")) {
+        if (request.getMethod().equalsIgnoreCase(POST)) {
 
-            if (request.getParameter("booking") != null) {
+            if (request.getParameter(BOOKING_BUTTON) != null) {
 
                 if (username == null) {
                     return CommandType.LOGIN.getCurrentCommand();
                 }
 
                 long reservationDate = DateService.getCurrentDateInMiliseconds();
-                double cost = Double.valueOf(request.getParameter("cost"));
+                double cost = Double.valueOf(request.getParameter(COST));
                 double totalCost = ReservationService.getTotalCost(checkinDate, checkoutDate, cost);
-                long roomId = Long.parseLong(request.getParameter("id"));
+                long roomId = Long.parseLong(request.getParameter(ID));
                 byte assessment = 0;
                 boolean enabled = true;
 
                 Reservation reservation = new Reservation(0, reservationDate, checkinDate, checkoutDate, totalCost,
                         enabled, username, roomId, assessment);
 
-                boolean isCreated = false;
+                boolean isCreated;
                 try {
                     isCreated = reservationService.create(reservation);
                 } catch (ServiceException e) {
@@ -157,13 +195,14 @@ public class SearchCommand extends Command {
                 }
 
                 if (!isCreated) {
-                    String reservationNotFound = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.reservationNotFound");
-                    request.setAttribute("messageReservationNotFound", reservationNotFound);
+                    String reservationNotFound =
+                            MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_RESERVATION_NOT_FOUND);
+                    request.setAttribute(MessageConstant.RESERVATION_NOT_FOUND, reservationNotFound);
                     logger.debug("");
                     return null;
                 }
 
-                request.getSession().setAttribute("totalCost", totalCost);
+                request.getSession().setAttribute(TOTAL_COST, totalCost);
                 return CommandType.PAYMENT.getCurrentCommand();
             }
 

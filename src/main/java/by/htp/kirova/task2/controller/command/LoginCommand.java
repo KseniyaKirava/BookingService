@@ -60,11 +60,7 @@ public class LoginCommand extends Command {
     /**
      * The name of button constant.
      */
-    private final static String LOGIN_BUTTON = "loginButton";
-
-
-
-
+    private final static String LOGIN_BUTTON = "login";
 
     //todo разбить на методы
 

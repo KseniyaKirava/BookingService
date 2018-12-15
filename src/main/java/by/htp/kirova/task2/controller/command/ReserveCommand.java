@@ -39,17 +39,40 @@ public class ReserveCommand extends Command {
      */
     private final static String ASSESSMENT = "assessment";
 
-
     /**
      * The checkout date constant.
      */
     private final static String CHECKOUT_DATE = "checkoutDate";
 
+    /**
+     * The size of array attribute constant for paginator.
+     */
+    private final static String SIZE = "size";
 
     /**
-     * The session attribute language constant.
+     * The start position attribute constant for paginator.
      */
-    private final static String LANG = "lang";
+    private final static String START = "start";
+
+    /**
+     * The count of rows per page attribute constant for paginator.
+     */
+    private final static String ROW_PER_PAGE = "rowPerPage";
+
+    /**
+     * The request method post constant.
+     */
+    private final static String POST = "post";
+
+    /**
+     * The array of reservations attribute constant.
+     */
+    private final static String RESERVATIONS = "reservations";
+
+    /**
+     * The name of button constant.
+     */
+    private final static String RATE_BUTTON = "rate";
 
     /**
      * The SQL 'where' query constant.
@@ -66,7 +89,7 @@ public class ReserveCommand extends Command {
      */
     private static final String CURRENT_RESERVATIONS_QUERY = "WHERE id='%s'";
 
-//todo разбить на методы + убрать magic words
+//todo разбить на методы
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -93,8 +116,8 @@ public class ReserveCommand extends Command {
 
             reservations = reserveByUserService.read(where);
 
-            request.setAttribute("size", reservations.size());
-            String strStart = request.getParameter("start");
+            request.setAttribute(SIZE, reservations.size());
+            String strStart = request.getParameter(START);
 
             int startReq = 0;
             if (strStart != null) {
@@ -102,20 +125,20 @@ public class ReserveCommand extends Command {
             }
 
             int rowPerPage = 10;
-            request.setAttribute("rowPerPage", rowPerPage);
+            request.setAttribute(ROW_PER_PAGE, rowPerPage);
 
             String limit = String.format(RESERVATIONS_BY_USER_LIMIT_QUERY, startReq, rowPerPage);
             String limitedReservationListQuery = where + limit;
 
             reservations = reserveByUserService.read(limitedReservationListQuery);
 
-            request.setAttribute("reservations", reservations);
+            request.setAttribute(RESERVATIONS, reservations);
 
         } catch (ServiceException e) {
             throw new CommandException("Reservations read error", e);
         }
 
-        if (request.getMethod().equalsIgnoreCase("post")) {
+        if (request.getMethod().equalsIgnoreCase(POST)) {
 
             String reservationId = request.getParameter(RESERVATION_ID);
             String currentAssessment = request.getParameter(ASSESSMENT);
@@ -128,8 +151,9 @@ public class ReserveCommand extends Command {
             if (currentAssessment != null && currentAssessment.length() == 1) {
                 assessment = Byte.parseByte(currentAssessment);
             } else {
-                String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.incorrectData");
-                request.setAttribute("errorData", messageIncorrectData);
+                String messageIncorrectData =
+                        MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_INCORRECT_DATA);
+                request.setAttribute(MessageConstant.ERROR_DATA, messageIncorrectData);
                 logger.debug("Data validation failed");
                 return null;
             }
@@ -148,10 +172,11 @@ public class ReserveCommand extends Command {
                 throw new CommandException("Reading reservation data failed", e);
             }
 
-            if (request.getParameter("rate") != null) {
+            if (request.getParameter(RATE_BUTTON) != null) {
                 if (!dateBeforeCurrentDate) {
-                    String tooEarlyForAssessment = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.tooEarlyForAssessment");
-                    request.setAttribute("tooEarly", tooEarlyForAssessment);
+                    String tooEarlyForAssessment =
+                            MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_TOO_EARLY);
+                    request.setAttribute(MessageConstant.TOO_EARLY, tooEarlyForAssessment);
                     logger.debug("Date is incorrect");
                     return null;
                 }

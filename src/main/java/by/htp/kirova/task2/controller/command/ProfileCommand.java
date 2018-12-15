@@ -9,7 +9,6 @@ import by.htp.kirova.task2.service.ServiceFactory;
 import by.htp.kirova.task2.service.util.UserService;
 import by.htp.kirova.task2.service.validation.Validator;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -63,6 +62,12 @@ public class ProfileCommand extends Command {
     private final static String POST = "post";
 
     /**
+     * The empty String constant.
+     */
+    private final static String EMPTY = "";
+
+
+    /**
      * The name of button constant.
      */
     private final static String SAVE_BUTTON = "save";
@@ -75,7 +80,7 @@ public class ProfileCommand extends Command {
     /**
      * The name of button constant.
      */
-    private final static String DELETE_ACCOUNT_BUTTON = "deleteMyAccount";
+    private final static String DELETE_ACCOUNT_BUTTON = "deleteAccount";
 
 
     //todo разбить на методы
@@ -137,7 +142,7 @@ public class ProfileCommand extends Command {
                     } else {
                         request.setAttribute(USERNAME, user.getUsername());
                         request.setAttribute(EMAIL, user.getEmail());
-                        request.setAttribute(PASSWORD, "");
+                        request.setAttribute(PASSWORD, EMPTY);
                         request.setAttribute(FIRST_NAME, user.getFirstName());
                         request.setAttribute(LAST_NAME, user.getLastName());
                         request.setAttribute(MIDDLE_NAME, user.getMiddleName());

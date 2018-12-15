@@ -64,7 +64,6 @@ public class AdminCommand extends Command {
      */
     private final static String ROW_PER_PAGE = "rowPerPage";
 
-
     /**
      * The array of users attribute constant.
      */
@@ -78,12 +77,12 @@ public class AdminCommand extends Command {
     /**
      * The name of button constant.
      */
-    private final static String UPDATE_BUTTON = "Update";
+    private final static String UPDATE_BUTTON = "update";
 
     /**
      * The name of button constant.
      */
-    private final static String DELETE_BUTTON = "Delete";
+    private final static String DELETE_BUTTON = "delete";
 
 
     /**

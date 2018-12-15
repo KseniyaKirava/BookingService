@@ -15,11 +15,11 @@
 
             <br>
 
-            <c:if test="${errorLoginCommand != null}">
+            <c:if test="${errorLogin != null}">
                 <div class="form-group">
                     <div class="alert alert-danger" role="alert">
                         <label class="col-md-12 control-label" style="font-size: 16px;">
-                                ${errorLoginCommand}
+                                ${errorLogin}
                         </label>
                     </div>
                 </div>
@@ -56,9 +56,9 @@
 
             <!-- Button -->
             <div class="form-group">
-                <label class="col-md-4 control-label" for="loginButton"></label>
+                <label class="col-md-4 control-label" for="login"></label>
                 <div class="col-md-4">
-                    <button id="loginButton" name="loginButton" class="btn btn-dark" style="font-size: 14px;">
+                    <button id="login" name="login" class="btn btn-dark" style="font-size: 14px;">
                         <fmt:message key="message.submit"/>
                     </button>
                 </div>

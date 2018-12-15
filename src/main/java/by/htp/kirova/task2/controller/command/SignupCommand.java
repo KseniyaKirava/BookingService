@@ -26,6 +26,11 @@ public class SignupCommand extends Command {
     private static final Logger logger = Logger.getLogger(SignupCommand.class);
 
     /**
+     * The user for session attribute constant.
+     */
+    private final static String USER = "user";
+
+    /**
      * The unique identification name constant.
      */
     private final static String USERNAME = "username";
@@ -55,8 +60,19 @@ public class SignupCommand extends Command {
      */
     private final static String MIDDLE_NAME = "middleName";
 
+    /**
+     * The request method post constant.
+     */
+    private final static String POST = "post";
 
-    //todo разбить на методы + убрать magic words
+    /**
+     * The empty String constant.
+     */
+    private final static String EMPTY = "";
+
+
+
+    //todo разбить на методы
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse resp) throws CommandException {
@@ -73,7 +89,7 @@ public class SignupCommand extends Command {
         }
 
 
-        if (request.getMethod().equalsIgnoreCase("post")) {
+        if (request.getMethod().equalsIgnoreCase(POST)) {
             String username = request.getParameter(USERNAME);
             String email = request.getParameter(EMAIL);
             String password = request.getParameter(PASSWORD);
@@ -95,7 +111,7 @@ public class SignupCommand extends Command {
                 try {
                     isCreateUser = serviceFactory.getUserService().create(user);
                     if (isCreateUser) {
-                        Authority authority = new Authority("user", username, enabled);
+                        Authority authority = new Authority(USER, username, enabled);
                         isCreateAuthority = serviceFactory.getAuthorityService().create(authority);
                     }
                 } catch (ServiceException e) {
@@ -106,28 +122,30 @@ public class SignupCommand extends Command {
                     logger.debug("User and authority successfully created");
                     return CommandType.LOGIN.getCurrentCommand();
                 } else {
-                    request.setAttribute(USERNAME, "");
+                    request.setAttribute(USERNAME, EMPTY);
                     request.setAttribute(EMAIL, email);
-                    request.setAttribute(PASSWORD, "");
+                    request.setAttribute(PASSWORD, EMPTY);
                     request.setAttribute(FIRST_NAME, firstName);
                     request.setAttribute(LAST_NAME, lastName);
                     request.setAttribute(MIDDLE_NAME, middleName);
 
-                    String messageIncorrectData = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.incorrectData");
-                    request.setAttribute("errorSignUpCommand", messageIncorrectData);
+                    String messageIncorrectData =
+                            MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_INCORRECT_DATA);
+                    request.setAttribute(MessageConstant.ERROR_SIGNUP, messageIncorrectData);
                     return null;
                 }
 
             }
-            request.setAttribute(USERNAME, "");
+            request.setAttribute(USERNAME, EMPTY);
             request.setAttribute(EMAIL, email);
-            request.setAttribute(PASSWORD, "");
+            request.setAttribute(PASSWORD, EMPTY);
             request.setAttribute(FIRST_NAME, firstName);
             request.setAttribute(LAST_NAME, lastName);
             request.setAttribute(MIDDLE_NAME, middleName);
 
-            String usernameDuplicate = MessageManager.getMessageInSessionLanguage(request.getSession(), "message.usernameDuplicate");
-            request.setAttribute("errorUsernameDuplicate", usernameDuplicate);
+            String usernameDuplicate =
+                    MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_USERNAME_DUPLICATE);
+            request.setAttribute(MessageConstant.USERNAME_DUPLICATE, usernameDuplicate);
         }
 
         return null;

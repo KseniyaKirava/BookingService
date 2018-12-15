@@ -77,7 +77,7 @@
                                     <p><fmt:message key="message.areYouSure"/></p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button id="deleteMyAccount" name="deleteMyAccount"
+                                    <button id="deleteAccount" name="deleteAccount"
                                             class="btn btn-white" style="font-size: 14px;">
                                         <fmt:message key="message.deleteAccount"/>
                                     </button>

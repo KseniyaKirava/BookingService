@@ -133,12 +133,12 @@
                                 <div class="col-lg-1">
                                     <div class="row ">
                                         <div class="col-lg-6">
-                                            <button id="Update" name="Update" class="btn btn-link">
+                                            <button id="update" name="update" class="btn btn-link">
                                                 <img src="../image/admin/save.png" height="22" border="0" align="bottom"/>
                                             </button>
                                         </div>
                                         <div class="col-lg-6">
-                                            <button id="Delete" name="Delete" class="btn btn-link">
+                                            <button id="delete" name="delete" class="btn btn-link">
                                                 <img src="../image/admin/bin.png" height="23" border="0" align="bottom"/>
                                             </button>
                                         </div>

@@ -23,11 +23,11 @@
         </div>
     </div>
 
-    <c:if test="${messageReservationNotFound != null}">
+    <c:if test="${reservationNotFound != null}">
         <div class="form-group">
             <div class="alert alert-danger" role="alert">
                 <label class="col-md-12 control-label" style="font-size: 16px;">
-                        ${messageReservationNotFound}
+                        ${reservationNotFound}
                 </label>
             </div>
         </div>
