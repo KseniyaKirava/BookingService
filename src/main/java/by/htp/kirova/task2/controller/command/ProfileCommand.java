@@ -66,7 +66,6 @@ public class ProfileCommand extends Command {
      */
     private final static String EMPTY = "";
 
-
     /**
      * The name of button constant.
      */
@@ -97,7 +96,7 @@ public class ProfileCommand extends Command {
 
             request.setAttribute(USERNAME, user.getUsername());
             request.setAttribute(EMAIL, user.getEmail());
-            request.setAttribute(PASSWORD, "");
+            request.setAttribute(PASSWORD, EMPTY);
             request.setAttribute(FIRST_NAME, user.getFirstName());
             request.setAttribute(LAST_NAME, user.getLastName());
             request.setAttribute(MIDDLE_NAME, user.getMiddleName());
