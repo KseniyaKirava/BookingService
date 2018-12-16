@@ -38,15 +38,6 @@
                         </div>
                     </div>
                 </c:if>
-                <c:if test="${errorData != null}">
-                    <div class="form-group">
-                        <div class="alert alert-danger" role="alert">
-                            <label class="col-md-12 control-label" style="font-size: 16px;">
-                                    ${errorData}
-                            </label>
-                        </div>
-                    </div>
-                </c:if>
                 <c:if test="${tooEarly != null}">
                     <div class="form-group">
                         <div class="alert alert-info" role="alert">
