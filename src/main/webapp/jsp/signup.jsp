@@ -44,7 +44,7 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="col-md-auto control-label" for="username" style="font-size: 16px;">
+                        <label class="col-md-auto control-label" for="username" style="font-size: 16px;">*
                             <fmt:message key="message.login"/>
                         </label>
                         <div class="col-md-auto">
@@ -59,7 +59,7 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="col-md-auto control-label" for="email" style="font-size: 16px;">
+                        <label class="col-md-auto control-label" for="email" style="font-size: 16px;">*
                             <fmt:message key="message.email"/>
                         </label>
                         <div class="col-md-auto">
@@ -76,7 +76,7 @@
             <div class="row justify-content-left align-items-start">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="col-md-auto control-label" for="password" style="font-size: 16px;">
+                        <label class="col-md-auto control-label" for="password" style="font-size: 16px;">*
                             <fmt:message key="message.password"/>
                             <button id="info" name="info" class="btn btn-link" data-toggle="tooltip"
                                     data-placement="top" title="<fmt:message key="message.passwordDescription"/>">
@@ -99,7 +99,7 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="col-md-auto control-label" for="firstName" style="font-size: 16px;">
+                        <label class="col-md-auto control-label" for="firstName" style="font-size: 16px;">*
                             <fmt:message key="message.firstName"/>
                         </label>
                         <div class="col-md-auto">
@@ -116,7 +116,7 @@
                 <!-- Text input-->
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="col-md-auto control-label" for="lastName" style="font-size: 16px;">
+                        <label class="col-md-auto control-label" for="lastName" style="font-size: 16px;">*
                             <fmt:message key="message.lastName"/>
                         </label>
                         <div class="col-md-auto">

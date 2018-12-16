@@ -103,7 +103,7 @@
                         </p>
 
                         <p>
-                            <fmt:message key="message.capacity"/>: ${rooms.capacity}
+                            <fmt:message key="message.roomCapacity"/>: ${rooms.capacity}
                         </p>
 
                         <p>

@@ -26,6 +26,7 @@ public enum CommandType {
 
         }
     },
+
     /**
      * Command to show error page.
      */
@@ -35,6 +36,7 @@ public enum CommandType {
 
         }
     },
+
     /**
      * Command to show user's account info.
      */
@@ -43,22 +45,25 @@ public enum CommandType {
             this.command = new ProfileCommand();
         }
     },
+
     /**
-     * Command to show user's reservations.
+     * Command to show search results.
      */
     SEARCH {
         {
             this.command = new SearchCommand();
         }
     },
+
     /**
-     * Command to add query.
+     * Command to show main page.
      */
     MAIN {
         {
             this.command = new MainCommand();
         }
     },
+
     /**
      * Command to show admin page.
      */
@@ -67,6 +72,16 @@ public enum CommandType {
             this.command = new AdminCommand();
         }
     },
+
+    /**
+     * Command to show manager page.
+     */
+    MANAGER {
+        {
+            this.command = new ManagerCommand();
+        }
+    },
+
     /**
      * Command to show user's reserve room page.
      */
@@ -75,6 +90,7 @@ public enum CommandType {
             this.command = new ReserveCommand();
         }
     },
+
     /**
      * Command to show user's reservation payment page.
      */
@@ -83,6 +99,10 @@ public enum CommandType {
             this.command = new PaymentCommand();
         }
     },
+
+    /**
+     * Command to show page under construction.
+     */
     COMINGSOON {
         {
             this.command = new ComingSoonCommand();

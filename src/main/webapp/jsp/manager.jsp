@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <div class="col-md-auto">
                                 <legend style="font-size: 18px;">
-                                    <fmt:message key="message.myBills"/>
+                                    <fmt:message key="message.managerReservations"/>
                                 </legend>
                             </div>
                         </div>
@@ -56,17 +56,16 @@
                             <thead class="thead-default">
                             <tr>
                                 <th style="font-size:14px;">ID</th>
-                                <th style="font-size:14px;"><fmt:message
-                                        key="message.reservationDateTable"/></th>
+                                <th style="font-size:14px;"><fmt:message key="message.firstName"/></th>
+                                <th style="font-size:14px;"><fmt:message key="message.lastName"/></th>
                                 <th style="font-size:14px;"><fmt:message key="message.checkinDateTable"/></th>
                                 <th style="font-size:14px;"><fmt:message key="message.checkoutDateTable"/></th>
+                                <th style="font-size:14px;"><fmt:message key="message.roomClass"/></th>
                                 <th style="font-size:14px;"><fmt:message key="message.roomName"/></th>
                                 <th style="font-size:14px;"><fmt:message key="message.roomNumber"/></th>
                                 <th style="font-size:14px;"><fmt:message key="message.roomCapacity"/></th>
-                                <th style="font-size:14px;"><fmt:message key="message.roomClass"/></th>
                                 <th style="font-size:14px;"><fmt:message key="message.totalCost"/>,
                                     <fmt:message key="message.currency"/></th>
-                                <th style="font-size:14px;"><fmt:message key="message.assessment"/></th>
                                 <th></th>
 
                             </tr>
