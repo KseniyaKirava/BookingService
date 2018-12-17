@@ -97,7 +97,7 @@
                                     <fmt:message key="message.profile"/>
                                 </a>
                                 <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=Manager">
-                                    <fmt:message key="message.managerReservations"/>
+                                    <fmt:message key="message.reservationsFor"/>
                                 </a>
                                 <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=Reserve">
                                     <fmt:message key="message.myBills"/>
