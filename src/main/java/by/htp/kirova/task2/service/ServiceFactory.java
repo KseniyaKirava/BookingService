@@ -100,4 +100,14 @@ public final class ServiceFactory {
 		return reserveByUserService;
 	}
 
+
+	/**
+	 * Implementation of Reserve for Manager Service.
+	 */
+	private final BookingService<ReserveForManager> reserveForManagerService = new ReserveForManagerServiceImpl();
+
+	public BookingService<ReserveForManager> getReserveForManagerService() {
+		return reserveForManagerService;
+	}
+
 }

@@ -132,7 +132,13 @@ public class ReserveCommand extends Command {
 
             reservations = reserveByUserService.read(limitedReservationListQuery);
 
-            request.setAttribute(RESERVATIONS, reservations);
+            if (reservations.isEmpty()) {
+                String reservationNotFound =
+                        MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_RESERVATIONS_NOT_FOUND);
+                request.setAttribute(MessageConstant.RESERVATIONS_NOT_FOUND, reservationNotFound);
+            } else {
+                request.setAttribute(RESERVATIONS, reservations);
+            }
 
         } catch (ServiceException e) {
             throw new CommandException("Reservations read error", e);
@@ -144,7 +150,10 @@ public class ReserveCommand extends Command {
             String currentAssessment = request.getParameter(ASSESSMENT);
             String checkoutDate = request.getParameter(CHECKOUT_DATE);
 
-            boolean dateBeforeCurrentDate = DateService.isDateBeforeCurrentDate(Long.parseLong(checkoutDate));
+            boolean dateBeforeCurrentDate = false;
+
+            dateBeforeCurrentDate = DateService.isDateBeforeCurrentDate(Long.parseLong(checkoutDate));
+
 
             byte assessment;
 

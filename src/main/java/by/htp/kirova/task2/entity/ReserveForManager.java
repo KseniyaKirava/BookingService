@@ -3,18 +3,13 @@ package by.htp.kirova.task2.entity;
 import java.util.Objects;
 
 /**
- * Represents a reserved room by user, providing access to reservation Id, reservation date,
- * check in Date, check out Date, total cost, room name, room number, room class name, assessment fields.
+ * Represents a reservations, providing access to reservation Id, first name, last name, check in Date, check out Date,
+ * room name, room number, room capacity, room class name, total cost fields.
  *
  * @author Kseniya Kirava
  * @since Sept 24, 2018
  */
-public class ReserveByUser {
-
-    /**
-     * The unique serial version identifier.
-     */
-    private static final long serialVersionUID = 1L;
+public class ReserveForManager {
 
     /**
      * The unique identification number of reservation.
@@ -22,9 +17,14 @@ public class ReserveByUser {
     private long reservationId;
 
     /**
-     * The date of reservation.
+     * The user's first name.
      */
-    private long reservationDate;
+    private String firstName;
+
+    /**
+     * The user's last name.
+     */
+    private String lastName;
 
     /**
      * The date of check in.
@@ -35,11 +35,6 @@ public class ReserveByUser {
      * The date of check out.
      */
     private long checkoutDate;
-
-    /**
-     * Total cost of stay.
-     */
-    private double totalCost;
 
     /**
      * The room name.
@@ -62,44 +57,53 @@ public class ReserveByUser {
     private String roomClassName;
 
     /**
-     * The assessment room.
+     * Total cost of stay.
      */
-    private byte assessment;
+    private double totalCost;
+
+
 
 
     /**
-     * Empty constructor for Reserve by user entity class.
+     * Empty constructor for Reserve for manager entity class.
      */
-    public ReserveByUser() {
+    public ReserveForManager() {
     }
 
 
+
+
     /**
-     * Constructor with all fields of the Reserve by user class
+     * Constructor with all fields of the Reserve for manager class
      * as parameters.
      */
-    public ReserveByUser(long reservationId, long reservationDate, long checkinDate, long checkoutDate,
-                         double totalCost, String roomName, String roomNumber, int roomCapacity, String roomClassName,
-                         byte assessment) {
+    public ReserveForManager(long reservationId, String firstName, String lastName, long checkinDate,
+                             long checkoutDate, String roomName, String roomNumber, int roomCapacity,
+                             String roomClassName, double totalCost) {
         this.reservationId = reservationId;
-        this.reservationDate = reservationDate;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.checkinDate = checkinDate;
         this.checkoutDate = checkoutDate;
-        this.totalCost = totalCost;
         this.roomName = roomName;
         this.roomNumber = roomNumber;
         this.roomCapacity = roomCapacity;
         this.roomClassName = roomClassName;
-        this.assessment = assessment;
+        this.totalCost = totalCost;
     }
+
 
 
     public long getReservationId() {
         return reservationId;
     }
 
-    public long getReservationDate() {
-        return reservationDate;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public long getCheckinDate() {
@@ -108,10 +112,6 @@ public class ReserveByUser {
 
     public long getCheckoutDate() {
         return checkoutDate;
-    }
-
-    public double getTotalCost() {
-        return totalCost;
     }
 
     public String getRoomName() {
@@ -130,9 +130,10 @@ public class ReserveByUser {
         return roomClassName;
     }
 
-    public byte getAssessment() {
-        return assessment;
+    public double getTotalCost() {
+        return totalCost;
     }
+
 
 
 
@@ -140,8 +141,12 @@ public class ReserveByUser {
         this.reservationId = reservationId;
     }
 
-    public void setReservationDate(long reservationDate) {
-        this.reservationDate = reservationDate;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setCheckinDate(long checkinDate) {
@@ -150,10 +155,6 @@ public class ReserveByUser {
 
     public void setCheckoutDate(long checkoutDate) {
         this.checkoutDate = checkoutDate;
-    }
-
-    public void setTotalCost(double totalCost) {
-        this.totalCost = totalCost;
     }
 
     public void setRoomName(String roomName) {
@@ -172,8 +173,8 @@ public class ReserveByUser {
         this.roomClassName = roomClassName;
     }
 
-    public void setAssessment(byte assessment) {
-        this.assessment = assessment;
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
 
 
@@ -190,19 +191,22 @@ public class ReserveByUser {
             return false;
         }
 
-        ReserveByUser that = (ReserveByUser) o;
+        ReserveForManager that = (ReserveForManager) o;
 
         return reservationId == that.reservationId &&
-                reservationDate == that.reservationDate &&
                 checkinDate == that.checkinDate &&
                 checkoutDate == that.checkoutDate &&
-                Double.compare(that.totalCost, totalCost) == 0 &&
                 roomCapacity == that.roomCapacity &&
+                Double.compare(that.totalCost, totalCost) == 0 &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
                 Objects.equals(roomName, that.roomName) &&
                 Objects.equals(roomNumber, that.roomNumber) &&
-                Objects.equals(roomClassName, that.roomClassName) &&
-                assessment == that.assessment;
+                Objects.equals(roomClassName, that.roomClassName);
     }
+
+
+
 
 
     @Override
@@ -210,7 +214,8 @@ public class ReserveByUser {
         int result = 1;
 
         result = (int) (result * 31 + result * reservationId);
-        result = (int) (result * 31 + result * reservationDate);
+        result = result * 31 + (firstName == null ? 0 : firstName.hashCode()) * result;
+        result = result * 31 + (lastName == null ? 0 : lastName.hashCode()) * result;
         result = (int) (result * 31 + result * checkinDate);
         result = (int) (result * 31 + result * checkoutDate);
         result = (int) (result * 31 + result * totalCost);
@@ -218,24 +223,28 @@ public class ReserveByUser {
         result = result * 31 + (roomNumber == null ? 0 : roomNumber.hashCode()) * result;
         result = result * 31 + result * roomCapacity;
         result = result * 31 + (roomClassName == null ? 0 : roomClassName.hashCode()) * result;
-        result = result * 31 + result * assessment;
 
         return result;
     }
 
+
+
+
     @Override
     public String toString() {
-        return "ReserveByUser{" +
+        return "ReserveForManager{" +
                 "reservationId=" + reservationId +
-                ", reservationDate=" + reservationDate +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", checkinDate=" + checkinDate +
                 ", checkoutDate=" + checkoutDate +
-                ", totalCost=" + totalCost +
                 ", roomName='" + roomName + '\'' +
                 ", roomNumber='" + roomNumber + '\'' +
                 ", roomCapacity=" + roomCapacity +
                 ", roomClassName='" + roomClassName + '\'' +
-                ", assessment=" + assessment +
+                ", totalCost=" + totalCost +
                 '}';
     }
 }
+
+

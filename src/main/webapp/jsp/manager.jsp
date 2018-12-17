@@ -22,36 +22,27 @@
                         <div class="form-group">
                             <div class="col-md-auto">
                                 <legend style="font-size: 18px;">
-                                    <fmt:message key="message.managerReservations"/>
+                                    <fmt:message key="message.managerReservations"/>:
                                 </legend>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <c:if test="${errorData != null}">
-                    <div class="form-group">
-                        <div class="alert alert-danger" role="alert">
-                            <label class="col-md-12 control-label" style="font-size: 16px;">
-                                    ${errorData}
-                            </label>
-                        </div>
-                    </div>
-                </c:if>
-                <c:if test="${tooEarly != null}">
-                    <div class="form-group">
-                        <div class="alert alert-info" role="alert">
-                            <label class="col-md-12 control-label" style="font-size: 16px;">
-                                    ${tooEarly}
-                            </label>
-                        </div>
-                    </div>
-                </c:if>
-
-
                 <div class="row justify-content-left align-items-start">
                     <div class="col-md-12">
 
+                        <c:if test="${reservationNotFound != null}">
+                            <div class="form-group">
+                                <div class="alert alert-danger" role="alert">
+                                    <label class="col-md-12 control-label" style="font-size: 16px;">
+                                            ${reservationNotFound}
+                                    </label>
+                                </div>
+                            </div>
+                        </c:if>
+
+                        <c:if test="${reservations != null}">
                         <table class="table">
                             <thead class="thead-default">
                             <tr>
@@ -71,21 +62,13 @@
                             </tr>
                             </thead>
                             <c:forEach items="${reservations}" var="row">
-                                <form class="form-inline" action="do?command=Reserve" method=POST>
+                                <form class="form-inline" action="do?command=Manager" method=GET>
                                     <tbody>
                                     <tr>
-                                        <input id="reservationId" name="reservationId" type="hidden"
-                                               value="${row.reservationId}"
-                                               class="form-control input-md" style="font-size: 14px;">
 
                                         <th scope="row" style="font-size:14px;">${row.reservationId}</th>
-
-                                        <jsp:useBean id="reservationDate" class="java.util.Date"/>
-                                        <jsp:setProperty name="reservationDate" property="time"
-                                                         value="${row.reservationDate}"/>
-                                        <td style="font-size:14px;">
-                                            <fmt:formatDate pattern="dd.MM.YYYY" value="${reservationDate}"/>
-                                        </td>
+                                        <th scope="row" style="font-size:14px;">${row.firstName}</th>
+                                        <th scope="row" style="font-size:14px;">${row.lastName}</th>
 
                                         <jsp:useBean id="checkinDate" class="java.util.Date"/>
                                         <jsp:setProperty name="checkinDate" property="time"
@@ -101,9 +84,17 @@
                                             <fmt:formatDate pattern="dd.MM.YYYY" value="${checkoutDate}"/>
                                         </td>
 
-                                        <input id="checkoutDate" name="checkoutDate" type="hidden"
-                                               value="${row.checkoutDate}"
-                                               class="form-control input-md" style="font-size: 14px;">
+                                        <td style="font-size:14px;">
+                                            <c:if test="${row.roomClassName == 'люкс'}">
+                                                <fmt:message key="message.roomLuxe"/>
+                                            </c:if>
+                                            <c:if test="${row.roomClassName == 'стандартный'}">
+                                                <fmt:message key="message.roomStandard"/>
+                                            </c:if>
+                                            <c:if test="${row.roomClassName == 'президентский'}">
+                                                <fmt:message key="message.roomPresident"/>
+                                            </c:if>
+                                        </td>
 
                                         <td style="font-size:14px;">
                                             <c:if test="${row.roomName == 'двухместный номер с террасой'}">
@@ -134,40 +125,7 @@
 
                                         <td style="font-size:14px;">${row.roomNumber}</td>
                                         <td style="font-size:14px;">${row.roomCapacity}</td>
-
-                                        <td style="font-size:14px;">
-                                            <c:if test="${row.roomClassName == 'люкс'}">
-                                                <fmt:message key="message.roomLuxe"/>
-                                            </c:if>
-                                            <c:if test="${row.roomClassName == 'стандартный'}">
-                                                <fmt:message key="message.roomStandard"/>
-                                            </c:if>
-                                            <c:if test="${row.roomClassName == 'президентский'}">
-                                                <fmt:message key="message.roomPresident"/>
-                                            </c:if>
-                                        </td>
-
                                         <td style="font-size:14px;">${row.totalCost}</td>
-
-                                        <td style="font-size:14px;">
-                                            <c:if test="${row.assessment == 0}">
-                                                <input id="assessment" name="assessment" type="number"
-                                                       value="" min="1" max="5"
-                                                       class="form-control input-md" style="font-size: 14px;">
-                                            </c:if>
-                                            <c:if test="${row.assessment != 0}">
-                                                <input id="assessment" name="assessment" type="number"
-                                                       value="${row.assessment}" min="1" max="5"
-                                                       class="form-control input-md" style="font-size: 14px;">
-                                            </c:if>
-
-                                        </td>
-
-                                        <td style="font-size:14px;">
-                                            <button id="rate" name="rate" class="btn btn-dark" style="font-size: 14px;">
-                                                <fmt:message key="message.rate"/>
-                                            </button>
-                                        </td>
 
                                     </tr>
 
@@ -177,9 +135,6 @@
 
                         </table>
 
-
-
-                        <c:if test="${reservations != null}">
 
                             <hr>
 

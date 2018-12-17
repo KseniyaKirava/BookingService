@@ -68,6 +68,9 @@
                                 <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=Admin">
                                     <fmt:message key="message.users"/>
                                 </a>
+                                <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=Reserve">
+                                    <fmt:message key="message.myBills"/>
+                                </a>
                                 <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=ComingSoon">
                                     <fmt:message key="message.requests"/>
                                 </a>
@@ -86,14 +89,19 @@
                                     <fmt:message key="message.profile"/>
                                 </a>
                                 <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=Reserve">
-                                    <fmt:message key="message.myBills"/></a>
+                                    <fmt:message key="message.myBills"/>
+                                </a>
                             </c:if>
                             <c:if test="${role=='manager'}">
                                 <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=Profile">
                                     <fmt:message key="message.profile"/>
                                 </a>
                                 <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=Manager">
-                                    <fmt:message key="message.managerReservations"/></a>
+                                    <fmt:message key="message.managerReservations"/>
+                                </a>
+                                <a class="nav-link" style="font-size: 16px; color: black;" href="do?command=Reserve">
+                                    <fmt:message key="message.myBills"/>
+                                </a>
                             </c:if>
                         </div>
                     </li>

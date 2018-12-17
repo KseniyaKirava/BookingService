@@ -30,15 +30,6 @@ public class MessageManager {
         return resourceBundle.getString(messageKey);
     }
 
-//    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("message");
-//
-//    private MessageManager(Locale locale) {
-//        resourceBundle = ResourceBundle.getBundle("message", locale);
-//    }
-//
-//    public String getString(String key) {
-//        return resourceBundle.getString(key);
-//    }
 }
 
 

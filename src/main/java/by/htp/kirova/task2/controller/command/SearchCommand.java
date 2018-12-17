@@ -157,8 +157,8 @@ public class SearchCommand extends Command {
 
             if (rooms.isEmpty()) {
                 String reservationNotFound =
-                        MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_RESERVATION_NOT_FOUND);
-                request.setAttribute(MessageConstant.RESERVATION_NOT_FOUND, reservationNotFound);
+                        MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_SEARCH_RESULTS);
+                request.setAttribute(MessageConstant.SEARCH_RESULTS, reservationNotFound);
                 logger.debug("");
                 return null;
             }
@@ -196,8 +196,8 @@ public class SearchCommand extends Command {
 
                 if (!isCreated) {
                     String reservationNotFound =
-                            MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_RESERVATION_NOT_FOUND);
-                    request.setAttribute(MessageConstant.RESERVATION_NOT_FOUND, reservationNotFound);
+                            MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_SEARCH_RESULTS);
+                    request.setAttribute(MessageConstant.SEARCH_RESULTS, reservationNotFound);
                     logger.debug("");
                     return null;
                 }

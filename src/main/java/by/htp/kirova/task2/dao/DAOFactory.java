@@ -85,4 +85,12 @@ public final class DAOFactory {
 	private final BookingDAO<ReserveByUser> reserveByUserDAO = new ReserveByUserDAOImpl();
 
 	public BookingDAO<ReserveByUser> getReserveByUserDAO() {return reserveByUserDAO;}
+
+
+	/**
+	 * Implementation of Reserve for Manager DAO.
+	 */
+	private final BookingDAO<ReserveForManager> reserveForManagerDAO = new ReserveForManagerDAOImpl();
+
+	public BookingDAO<ReserveForManager> getReserveForManagerDAO() {return reserveForManagerDAO;}
 }

@@ -40,12 +40,22 @@ final class MessageConstant {
     /**
      * The message 'reservation not found' constant.
      */
-    final static String MESSAGE_RESERVATION_NOT_FOUND = "message.reservationNotFound";
+    final static String MESSAGE_RESERVATIONS_NOT_FOUND = "message.reservationNotFound";
 
     /**
      * The message 'error data' attribute name constant.
      */
-    final static String RESERVATION_NOT_FOUND = "reservationNotFound";
+    final static String RESERVATIONS_NOT_FOUND = "reservationNotFound";
+
+    /**
+     * The message 'reservation not found' constant.
+     */
+    final static String MESSAGE_SEARCH_RESULTS = "message.reservationsSearchResults";
+
+    /**
+     * The message 'error data' attribute name constant.
+     */
+    final static String SEARCH_RESULTS = "reservationsSearchResults";
 
     /**
      * The message 'error signup' attribute name constant.
