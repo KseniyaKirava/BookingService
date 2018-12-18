@@ -5,7 +5,6 @@ import by.htp.kirova.task2.controller.command.ActionFactory;
 import by.htp.kirova.task2.controller.command.Command;
 import by.htp.kirova.task2.controller.command.CommandType;
 import org.apache.log4j.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,7 +23,7 @@ public class Controller extends HttpServlet {
     /**
      * Instance of {@code org.apache.log4j.Logger} is used for logging.
      */
-    private static final Logger LOGGER = Logger.getLogger(Controller.class);
+    private static final Logger logger = Logger.getLogger(Controller.class);
 
     /**
      * The unique serial version identifier.
@@ -74,14 +73,14 @@ public class Controller extends HttpServlet {
             Command next = command.execute(request, response);
             if (next == null) {
                 viewPage = command.getJsp();
-                LOGGER.info("Forward to " + viewPage);
+                logger.debug("Forward to " + viewPage);
                 getServletContext().getRequestDispatcher(viewPage).forward(request, response);
             } else {
-                LOGGER.info("Send redirect to " + next.toString() + " page");
+                logger.debug("Send redirect to " + next.toString() + " page");
                 response.sendRedirect("do?command=" + next.toString());
             }
         } catch (Exception e) {
-            LOGGER.error("Process request failed", e);
+            logger.error("Process request failed", e);
             getServletContext().getRequestDispatcher(CommandType.ERROR.getCurrentCommand().getJsp()).forward(request, response);
 
         }

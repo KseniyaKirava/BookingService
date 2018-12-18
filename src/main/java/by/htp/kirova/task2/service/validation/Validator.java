@@ -1,5 +1,6 @@
 package by.htp.kirova.task2.service.validation;
 
+import by.htp.kirova.task2.service.util.DateService;
 import org.apache.log4j.Logger;
 
 import java.util.Date;
@@ -157,13 +158,12 @@ public final class Validator {
     public boolean checkDateInLong(Long date) {
         // minus delta 2000 ms. (2 sec.) - bug in java.util.Date method getTime() convertation:
         // usually delta about plus 1000 ms. (1 sec)
-        Date currentDate = new Date();
-        currentDate.setSeconds(0);
-        currentDate.setMinutes(0);
-        currentDate.setHours(0);
-        long time = currentDate.getTime();
-
-        boolean isValid = date > (time - 2*1000);
+        if (date == 0) {
+            logger.debug("Date in long format is valid: false");
+            return false;
+        }
+        Long currentDateInMiliseconds = DateService.getCurrentDateInMiliseconds();
+        boolean isValid = date >= currentDateInMiliseconds;
         logger.debug("Date in long format is valid: " + isValid);
         return isValid;
     }
@@ -179,15 +179,17 @@ public final class Validator {
      * @return {@code true} in case of success and false otherwise.
      */
     public boolean checkCheckinCheckoutDate(Long checkinDate, Long checkoutDate) {
-        if (checkinDate == 0 || checkoutDate == 0) {
-            logger.debug("Checkin data and checkout data are empty");
+        if (!checkDateInLong(checkinDate) || !checkDateInLong(checkoutDate)) {
+            logger.debug("Checkin and/or checkput date is valid: false");
             return false;
         }
         Date currentDate = new Date();
         int daysCount = currentDate.getDay();
         int checkInDays = (int) (checkinDate / (1000 * 24 * 60 * 60));
+        boolean isValid = (checkInDays - daysCount >= 0) && (checkoutDate - checkinDate > 0);
 
-        return (checkInDays - daysCount >= 0) && (checkoutDate - checkinDate > 0);
+        logger.debug("Checkin and checkput dates is valid: " + isValid);
+        return isValid;
     }
 
 
