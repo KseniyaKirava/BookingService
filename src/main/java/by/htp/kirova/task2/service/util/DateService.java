@@ -55,13 +55,11 @@ public class DateService {
      */
     public static Long getCurrentDateInMiliseconds() {
         Date date = new Date();
-        String sDate = convertDateToString(date.getTime());
-        Long currentDate = null;
-        try {
-            currentDate = convertDateToMiliseconds(sDate);
-        } catch (ParseException e) {
-            logger.debug("Parse Date in String Exception", e);
-        }
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        long currentDate = date.getTime()/1000;
+        currentDate *= 1000;
         return currentDate;
     }
 
