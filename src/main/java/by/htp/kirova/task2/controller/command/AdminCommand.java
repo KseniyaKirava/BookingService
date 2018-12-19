@@ -95,19 +95,8 @@ public class AdminCommand extends Command {
      */
     private static final String USERS_LIMIT_QUERY = " LIMIT %d, %d";
 
-//todo разбить на методы
-
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-//        User user = UserService.getUserFromSession(request);
-//        if (user == null) {
-//            return CommandType.LOGIN.getCurrentCommand();
-//        } else if (request.getSession().getAttribute("role").equals("user")) {
-//            return CommandType.PROFILE.getCurrentCommand();
-//        }
-//      else if (request.getSession().getAttribute("role").equals("manager")) {
-//          return CommandType.MANAGER.getCurrentCommand();
-//      }
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookingService<User> userService = serviceFactory.getUserService();

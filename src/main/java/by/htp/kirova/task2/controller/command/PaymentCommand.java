@@ -24,17 +24,6 @@ public class PaymentCommand extends Command {
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) {
-//        User user = UserService.getUserFromSession(request);
-//        if (user == null) {
-//            return CommandType.LOGIN.getCurrentCommand();
-//        } else if (request.getSession().getAttribute("role").equals("admin")) {
-//            return CommandType.ADMIN.getCurrentCommand();
-//        }
-//        else if (request.getSession().getAttribute("role").equals("manager")) {
-//            return CommandType.MANAGER.getCurrentCommand();
-//        }
-
-//        else {
         request.setAttribute(TOTAL_COST, request.getSession().getAttribute(TOTAL_COST));
 
         if (request.getMethod().equalsIgnoreCase(POST)) {

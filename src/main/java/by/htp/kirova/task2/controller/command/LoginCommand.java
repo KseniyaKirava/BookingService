@@ -61,18 +61,6 @@ public class LoginCommand extends Command {
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-//        User user = UserService.getUserFromSession(request);
-//
-//        if (user != null) {
-//            if (request.getSession().getAttribute(ROLE).equals(USER)) {
-//                return CommandType.PROFILE.getCurrentCommand();
-//            } else if (request.getSession().getAttribute(ROLE).equals(ADMIN)) {
-//                return CommandType.ADMIN.getCurrentCommand();
-//            }
-//            else if (request.getSession().getAttribute(ROLE).equals(MANAGER)) {
-//                return CommandType.MANAGER.getCurrentCommand();
-//            }
-//        }
         if (request.getMethod().equalsIgnoreCase(POST)) {
             if (request.getParameter(LOGIN_BUTTON) != null) {
                 String username = request.getParameter(USERNAME);

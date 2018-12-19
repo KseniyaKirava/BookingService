@@ -76,19 +76,6 @@ public class SignupCommand extends Command {
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse resp) throws CommandException {
-//        User user = UserService.getUserFromSession(request);
-//        if (user != null) {
-//            if (request.getSession().getAttribute("role").equals("user")) {
-//                return CommandType.PROFILE.getCurrentCommand();
-//            } else if (request.getSession().getAttribute("role").equals("admin")) {
-//                return CommandType.ADMIN.getCurrentCommand();
-//            }
-////            else if (request.getSession().getAttribute("role").equals("manager")) {
-////                return CommandType.MANAGER.getCurrentCommand();
-////            }
-//        }
-
-
         if (request.getMethod().equalsIgnoreCase(POST)) {
             String username = request.getParameter(USERNAME);
             String email = request.getParameter(EMAIL);

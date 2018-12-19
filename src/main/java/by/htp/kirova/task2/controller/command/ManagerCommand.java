@@ -55,19 +55,9 @@ public class ManagerCommand extends Command {
      */
     private static final String RESERVATIONS_FOR_MANAGER_WHERE_QUERY = "%d ORDER BY rooms.number";
 
-//todo разбить на методы
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-//        User user = UserService.getUserFromSession(request);
-//        if (user == null) {
-//            return CommandType.LOGIN.getCurrentCommand();
-//        } else if (request.getSession().getAttribute("role").equals("admin")) {
-//            return CommandType.ADMIN.getCurrentCommand();
-//        }
-//        else if (request.getSession().getAttribute("role").equals("manager")) {
-//            return CommandType.MANAGER.getCurrentCommand();
-//        }
 
         Long currrentDate = DateService.getCurrentDateInMiliseconds();
 

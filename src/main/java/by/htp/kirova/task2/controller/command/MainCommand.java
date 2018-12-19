@@ -78,12 +78,6 @@ public class MainCommand extends Command {
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) {
-//        User user = UserService.getUserFromSession(request);
-//        String username = null;
-//        if (user != null) {
-//            username = (String) request.getSession().getAttribute(USERNAME);
-//        }
-
         Validator validator = Validator.getInstance();
 
         String roomCapacityString = request.getParameter(ROOM_CAPACITY);

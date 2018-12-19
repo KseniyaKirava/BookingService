@@ -95,14 +95,6 @@ public class ReserveCommand extends Command {
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = UserService.getUserFromSession(request);
         if (user != null) {
-//            return CommandType.LOGIN.getCurrentCommand();
-//        } else if (request.getSession().getAttribute("role").equals("admin")) {
-//            return CommandType.ADMIN.getCurrentCommand();
-//        }
-//        else if (request.getSession().getAttribute("role").equals("manager")) {
-//            return CommandType.MANAGER.getCurrentCommand();
-//        }
-
             String username = user.getUsername();
 
             ServiceFactory serviceFactory = ServiceFactory.getInstance();
@@ -150,7 +142,7 @@ public class ReserveCommand extends Command {
                 String currentAssessment = request.getParameter(ASSESSMENT);
                 String checkoutDate = request.getParameter(CHECKOUT_DATE);
 
-                boolean dateBeforeCurrentDate = false;
+                boolean dateBeforeCurrentDate;
 
                 dateBeforeCurrentDate = DateService.isDateBeforeCurrentDate(Long.parseLong(checkoutDate));
 
