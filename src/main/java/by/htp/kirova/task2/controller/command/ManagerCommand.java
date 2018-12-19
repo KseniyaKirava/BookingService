@@ -1,14 +1,11 @@
 package by.htp.kirova.task2.controller.command;
 
 import by.htp.kirova.task2.controller.MessageManager;
-import by.htp.kirova.task2.dao.daoentity.ReserveForManagerDAOImpl;
 import by.htp.kirova.task2.entity.ReserveForManager;
-import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.service.BookingService;
 import by.htp.kirova.task2.service.ServiceException;
 import by.htp.kirova.task2.service.ServiceFactory;
 import by.htp.kirova.task2.service.util.DateService;
-import by.htp.kirova.task2.service.util.UserService;
 import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,12 +59,12 @@ public class ManagerCommand extends Command {
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        User user = UserService.getUserFromSession(request);
-        if (user == null) {
-            return CommandType.LOGIN.getCurrentCommand();
-        } else if (request.getSession().getAttribute("role").equals("admin")) {
-            return CommandType.ADMIN.getCurrentCommand();
-        }
+//        User user = UserService.getUserFromSession(request);
+//        if (user == null) {
+//            return CommandType.LOGIN.getCurrentCommand();
+//        } else if (request.getSession().getAttribute("role").equals("admin")) {
+//            return CommandType.ADMIN.getCurrentCommand();
+//        }
 //        else if (request.getSession().getAttribute("role").equals("manager")) {
 //            return CommandType.MANAGER.getCurrentCommand();
 //        }
@@ -105,6 +102,7 @@ public class ManagerCommand extends Command {
                 String reservationNotFound =
                         MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_RESERVATIONS_NOT_FOUND);
                 request.setAttribute(MessageConstant.RESERVATIONS_NOT_FOUND, reservationNotFound);
+                logger.debug("Reservations list is empty");
             } else {
                 request.setAttribute(RESERVATIONS, reservations);
             }

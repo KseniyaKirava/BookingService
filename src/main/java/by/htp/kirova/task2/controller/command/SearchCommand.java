@@ -124,7 +124,6 @@ public class SearchCommand extends Command {
             username = (String) request.getSession().getAttribute(USERNAME);
         }
 
-
         long roomClassId = (long) request.getSession().getAttribute(ROOM_CLASS_ID_TEMP);
         int roomCapacity = (int) request.getSession().getAttribute(ROOM_CAPACITY_TEMP);
         long checkinDate = (long) request.getSession().getAttribute(CHECKIN_DATE_TEMP);

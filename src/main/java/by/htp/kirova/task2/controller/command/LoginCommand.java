@@ -28,11 +28,6 @@ public class LoginCommand extends Command {
     private final static String USER = "user";
 
     /**
-     * The manager role for session attribute constant.
-     */
-    private final static String MANAGER = "manager";
-
-    /**
      * The admin role for session attribute constant.
      */
     private final static String ADMIN = "admin";
@@ -66,24 +61,24 @@ public class LoginCommand extends Command {
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        User user = UserService.getUserFromSession(request);
-
-        if (user != null) {
-            if (request.getSession().getAttribute(ROLE).equals(USER)) {
-                return CommandType.PROFILE.getCurrentCommand();
-            } else if (request.getSession().getAttribute(ROLE).equals(ADMIN)) {
-                return CommandType.ADMIN.getCurrentCommand();
-            }
+//        User user = UserService.getUserFromSession(request);
+//
+//        if (user != null) {
+//            if (request.getSession().getAttribute(ROLE).equals(USER)) {
+//                return CommandType.PROFILE.getCurrentCommand();
+//            } else if (request.getSession().getAttribute(ROLE).equals(ADMIN)) {
+//                return CommandType.ADMIN.getCurrentCommand();
+//            }
 //            else if (request.getSession().getAttribute(ROLE).equals(MANAGER)) {
 //                return CommandType.MANAGER.getCurrentCommand();
 //            }
-        }
+//        }
         if (request.getMethod().equalsIgnoreCase(POST)) {
             if (request.getParameter(LOGIN_BUTTON) != null) {
                 String username = request.getParameter(USERNAME);
                 String password = request.getParameter(PASSWORD);
 
-                user = null;
+                User user = null;
                 try {
                     user = UserService.checkLoginAndPassword(username, password);
                 } catch (CommandException e) {

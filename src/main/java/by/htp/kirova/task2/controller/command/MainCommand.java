@@ -2,11 +2,10 @@ package by.htp.kirova.task2.controller.command;
 
 
 import by.htp.kirova.task2.controller.MessageManager;
-import by.htp.kirova.task2.entity.User;
 import by.htp.kirova.task2.service.util.DateService;
-import by.htp.kirova.task2.service.util.UserService;
 import by.htp.kirova.task2.service.validation.Validator;
 import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
@@ -71,11 +70,6 @@ public class MainCommand extends Command {
     private final static String POST = "post";
 
     /**
-     * The username constant.
-     */
-    private final static String USERNAME = "username";
-
-    /**
      * The name of button constant.
      */
     private final static String SEARCH_BUTTON = "search";
@@ -83,12 +77,12 @@ public class MainCommand extends Command {
     //todo разбить на методы
 
     @Override
-    public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        User user = UserService.getUserFromSession(request);
-        String username = null;
-        if (user != null) {
-            username = (String) request.getSession().getAttribute(USERNAME);
-        }
+    public Command execute(HttpServletRequest request, HttpServletResponse response) {
+//        User user = UserService.getUserFromSession(request);
+//        String username = null;
+//        if (user != null) {
+//            username = (String) request.getSession().getAttribute(USERNAME);
+//        }
 
         Validator validator = Validator.getInstance();
 

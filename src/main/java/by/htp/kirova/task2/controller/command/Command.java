@@ -46,4 +46,5 @@ public abstract class Command {
     public String getJsp() {
         return ConfigurationManager.getProperty(PATH + this.toString().toLowerCase());
     }
+
 }

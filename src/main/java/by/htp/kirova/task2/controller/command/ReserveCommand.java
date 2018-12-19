@@ -94,116 +94,117 @@ public class ReserveCommand extends Command {
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = UserService.getUserFromSession(request);
-        if (user == null) {
-            return CommandType.LOGIN.getCurrentCommand();
-        } else if (request.getSession().getAttribute("role").equals("admin")) {
-            return CommandType.ADMIN.getCurrentCommand();
-        }
+        if (user != null) {
+//            return CommandType.LOGIN.getCurrentCommand();
+//        } else if (request.getSession().getAttribute("role").equals("admin")) {
+//            return CommandType.ADMIN.getCurrentCommand();
+//        }
 //        else if (request.getSession().getAttribute("role").equals("manager")) {
 //            return CommandType.MANAGER.getCurrentCommand();
 //        }
 
-        String username = user.getUsername();
+            String username = user.getUsername();
 
-        ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        BookingService<ReserveByUser> reserveByUserService = serviceFactory.getReserveByUserService();
+            ServiceFactory serviceFactory = ServiceFactory.getInstance();
+            BookingService<ReserveByUser> reserveByUserService = serviceFactory.getReserveByUserService();
 
-        String where = String.format(RESERVATIONS_BY_USER_WHERE_QUERY, username);
+            String where = String.format(RESERVATIONS_BY_USER_WHERE_QUERY, username);
 
-        List<ReserveByUser> reservations;
+            List<ReserveByUser> reservations;
 
-        try {
-
-            reservations = reserveByUserService.read(where);
-
-            request.setAttribute(SIZE, reservations.size());
-            String strStart = request.getParameter(START);
-
-            int startReq = 0;
-            if (strStart != null) {
-                startReq = Integer.parseInt(strStart);
-            }
-
-            int rowPerPage = 10;
-            request.setAttribute(ROW_PER_PAGE, rowPerPage);
-
-            String limit = String.format(RESERVATIONS_BY_USER_LIMIT_QUERY, startReq, rowPerPage);
-            String limitedReservationListQuery = where + limit;
-
-            reservations = reserveByUserService.read(limitedReservationListQuery);
-
-            if (reservations.isEmpty()) {
-                String reservationNotFound =
-                        MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_RESERVATIONS_NOT_FOUND);
-                request.setAttribute(MessageConstant.RESERVATIONS_NOT_FOUND, reservationNotFound);
-            } else {
-                request.setAttribute(RESERVATIONS, reservations);
-            }
-
-        } catch (ServiceException e) {
-            throw new CommandException("Reservations read error", e);
-        }
-
-        if (request.getMethod().equalsIgnoreCase(POST)) {
-
-            String reservationId = request.getParameter(RESERVATION_ID);
-            String currentAssessment = request.getParameter(ASSESSMENT);
-            String checkoutDate = request.getParameter(CHECKOUT_DATE);
-
-            boolean dateBeforeCurrentDate = false;
-
-            dateBeforeCurrentDate = DateService.isDateBeforeCurrentDate(Long.parseLong(checkoutDate));
-
-
-            byte assessment;
-
-            if (currentAssessment != null && currentAssessment.length() == 1) {
-                assessment = Byte.parseByte(currentAssessment);
-            } else {
-                String messageIncorrectData =
-                        MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_INCORRECT_DATA);
-                request.setAttribute(MessageConstant.ERROR_DATA, messageIncorrectData);
-                logger.debug("Data validation failed");
-                return null;
-            }
-
-            BookingService<Reservation> reservationService = serviceFactory.getReservationService();
-
-            Reservation reservation = null;
-
-            String currentReservationQuery = String.format(CURRENT_RESERVATIONS_QUERY, reservationId);
             try {
-                List<Reservation> reservationsById = reservationService.read(currentReservationQuery);
-                if (!reservationsById.isEmpty()) {
-                    reservation = reservationsById.get(0);
-                }
-            } catch (ServiceException e) {
-                throw new CommandException("Reading reservation data failed", e);
-            }
 
-            if (request.getParameter(RATE_BUTTON) != null) {
-                if (!dateBeforeCurrentDate) {
-                    String tooEarlyForAssessment =
-                            MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_TOO_EARLY);
-                    request.setAttribute(MessageConstant.TOO_EARLY, tooEarlyForAssessment);
-                    logger.debug("Date is incorrect");
-                    return null;
+                reservations = reserveByUserService.read(where);
+
+                request.setAttribute(SIZE, reservations.size());
+                String strStart = request.getParameter(START);
+
+                int startReq = 0;
+                if (strStart != null) {
+                    startReq = Integer.parseInt(strStart);
                 }
 
-                if (assessment != 0 && reservation != null) {
-                    try {
-                        reservation.setAssessment(assessment);
-                        reservationService.update(reservation);
-                    } catch (ServiceException e) {
-                        throw new CommandException("Updating reservation's data failed", e);
-                    }
+                int rowPerPage = 10;
+                request.setAttribute(ROW_PER_PAGE, rowPerPage);
+
+                String limit = String.format(RESERVATIONS_BY_USER_LIMIT_QUERY, startReq, rowPerPage);
+                String limitedReservationListQuery = where + limit;
+
+                reservations = reserveByUserService.read(limitedReservationListQuery);
+
+                if (reservations.isEmpty()) {
+                    String reservationNotFound =
+                            MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_RESERVATIONS_NOT_FOUND);
+                    request.setAttribute(MessageConstant.RESERVATIONS_NOT_FOUND, reservationNotFound);
                 } else {
+                    request.setAttribute(RESERVATIONS, reservations);
+                }
+
+            } catch (ServiceException e) {
+                throw new CommandException("Reservations read error", e);
+            }
+
+            if (request.getMethod().equalsIgnoreCase(POST)) {
+
+                String reservationId = request.getParameter(RESERVATION_ID);
+                String currentAssessment = request.getParameter(ASSESSMENT);
+                String checkoutDate = request.getParameter(CHECKOUT_DATE);
+
+                boolean dateBeforeCurrentDate = false;
+
+                dateBeforeCurrentDate = DateService.isDateBeforeCurrentDate(Long.parseLong(checkoutDate));
+
+
+                byte assessment;
+
+                if (currentAssessment != null && currentAssessment.length() == 1) {
+                    assessment = Byte.parseByte(currentAssessment);
+                } else {
+                    String messageIncorrectData =
+                            MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_INCORRECT_DATA);
+                    request.setAttribute(MessageConstant.ERROR_DATA, messageIncorrectData);
+                    logger.debug("Data validation failed");
                     return null;
                 }
 
-                return CommandType.RESERVE.getCurrentCommand();
-            }
+                BookingService<Reservation> reservationService = serviceFactory.getReservationService();
 
+                Reservation reservation = null;
+
+                String currentReservationQuery = String.format(CURRENT_RESERVATIONS_QUERY, reservationId);
+                try {
+                    List<Reservation> reservationsById = reservationService.read(currentReservationQuery);
+                    if (!reservationsById.isEmpty()) {
+                        reservation = reservationsById.get(0);
+                    }
+                } catch (ServiceException e) {
+                    throw new CommandException("Reading reservation data failed", e);
+                }
+
+                if (request.getParameter(RATE_BUTTON) != null) {
+                    if (!dateBeforeCurrentDate) {
+                        String tooEarlyForAssessment =
+                                MessageManager.getMessageInSessionLanguage(request.getSession(), MessageConstant.MESSAGE_TOO_EARLY);
+                        request.setAttribute(MessageConstant.TOO_EARLY, tooEarlyForAssessment);
+                        logger.debug("Date is incorrect");
+                        return null;
+                    }
+
+                    if (assessment != 0 && reservation != null) {
+                        try {
+                            reservation.setAssessment(assessment);
+                            reservationService.update(reservation);
+                        } catch (ServiceException e) {
+                            throw new CommandException("Updating reservation's data failed", e);
+                        }
+                    } else {
+                        return null;
+                    }
+
+                    return CommandType.RESERVE.getCurrentCommand();
+                }
+
+            }
         }
 
         return null;

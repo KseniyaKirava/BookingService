@@ -115,4 +115,9 @@ public enum CommandType {
         return command;
     }
 
+
+    public String getCommandName(){
+        return this.getCurrentCommand().toString().toLowerCase();
+    }
+
 }

@@ -76,17 +76,17 @@ public class SignupCommand extends Command {
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse resp) throws CommandException {
-        User user = UserService.getUserFromSession(request);
-        if (user != null) {
-            if (request.getSession().getAttribute("role").equals("user")) {
-                return CommandType.PROFILE.getCurrentCommand();
-            } else if (request.getSession().getAttribute("role").equals("admin")) {
-                return CommandType.ADMIN.getCurrentCommand();
-            }
-//            else if (request.getSession().getAttribute("role").equals("manager")) {
-//                return CommandType.MANAGER.getCurrentCommand();
+//        User user = UserService.getUserFromSession(request);
+//        if (user != null) {
+//            if (request.getSession().getAttribute("role").equals("user")) {
+//                return CommandType.PROFILE.getCurrentCommand();
+//            } else if (request.getSession().getAttribute("role").equals("admin")) {
+//                return CommandType.ADMIN.getCurrentCommand();
 //            }
-        }
+////            else if (request.getSession().getAttribute("role").equals("manager")) {
+////                return CommandType.MANAGER.getCurrentCommand();
+////            }
+//        }
 
 
         if (request.getMethod().equalsIgnoreCase(POST)) {
@@ -101,7 +101,7 @@ public class SignupCommand extends Command {
             if (UserService.isUsernameUnique(username)) {
                 boolean enabled = true;
 
-                user = new User(username, email, password, firstName, lastName, middleName, enabled);
+                User user = new User(username, email, password, firstName, lastName, middleName, enabled);
 
                 ServiceFactory serviceFactory = ServiceFactory.getInstance();
 

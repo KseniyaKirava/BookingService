@@ -8,6 +8,7 @@ import by.htp.kirova.task2.service.ServiceFactory;
 import by.htp.kirova.task2.service.util.UserService;
 import by.htp.kirova.task2.service.validation.Validator;
 import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -86,9 +87,7 @@ public class ProfileCommand extends Command {
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = UserService.getUserFromSession(request);
-        if (user == null) {
-            return CommandType.LOGIN.getCurrentCommand();
-        }
+        if (user != null) {
 
             ServiceFactory serviceFactory = ServiceFactory.getInstance();
             BookingService<User> userService = serviceFactory.getUserService();
@@ -179,15 +178,11 @@ public class ProfileCommand extends Command {
                     } else {
                         logger.debug("User not deleted");
                     }
-
                 }
-
             }
-
+        }
         return null;
-
     }
-
 
 }
 
