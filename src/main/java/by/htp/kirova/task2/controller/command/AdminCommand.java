@@ -8,11 +8,17 @@ import by.htp.kirova.task2.service.ServiceFactory;
 import by.htp.kirova.task2.service.util.UserService;
 import by.htp.kirova.task2.service.validation.Validator;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * Implementation for a
+ * particular command type - Admin.
+ *
+ * @author Kseniya Kirava
+ * @since Oct 20, 2018
+ */
 public class AdminCommand extends Command {
 
     /**
@@ -100,7 +106,6 @@ public class AdminCommand extends Command {
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookingService<User> userService = serviceFactory.getUserService();
-
 
         try {
             List<User> users = userService.read(USERS_WHERE_QUERY);

@@ -35,6 +35,10 @@ final class DBParameter {
      */
     static final String DB_POOL_SIZE = "db.poolsize";
 
+    /**
+     * Private default constructor as this class is not designed to be instantiated
+     * or extended.
+     */
     private DBParameter() {
     }
 

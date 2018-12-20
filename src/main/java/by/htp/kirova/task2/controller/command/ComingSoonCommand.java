@@ -4,8 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Abstract class implementation for a
- * particular command type - Payment.
+ * Implementation for a
+ * particular command type - Coming soon.
  *
  * @author Kseniya Kirava
  * @since Oct 20, 2018

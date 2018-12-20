@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Abstract class implementation for a
+ * Implementation for a
  * particular command type - Payment.
  *
  * @author Kseniya Kirava
@@ -29,7 +29,7 @@ public class PaymentCommand extends Command {
         if (request.getMethod().equalsIgnoreCase(POST)) {
             return CommandType.RESERVE.getCurrentCommand();
         }
-//        }
+
         return null;
     }
 }

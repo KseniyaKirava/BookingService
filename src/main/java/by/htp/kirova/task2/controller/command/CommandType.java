@@ -111,12 +111,16 @@ public enum CommandType {
 
     Command command;
 
-    public Command getCurrentCommand(){
+    public Command getCurrentCommand() {
         return command;
     }
 
-
-    public String getCommandName(){
+    /**
+     * Method, which return name of command in lower case.
+     *
+     * @return name of command in lower case.
+     */
+    public String getCommandName() {
         return this.getCurrentCommand().toString().toLowerCase();
     }
 

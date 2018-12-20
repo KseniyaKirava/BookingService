@@ -10,11 +10,15 @@ import java.util.ResourceBundle;
  */
 public class DBResourceManager {
 
+    /**
+     * The resource name constant.
+     */
+    private static final String DB = "db";
 
     /**
      * Resource bundle constant for DataBase.
      */
-    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("db");
+    private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(DB);
 
     /**
      * The private constructor by default because this class is not intended

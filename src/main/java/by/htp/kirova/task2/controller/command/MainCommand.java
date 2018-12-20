@@ -1,21 +1,19 @@
 package by.htp.kirova.task2.controller.command;
 
-
 import by.htp.kirova.task2.controller.MessageManager;
 import by.htp.kirova.task2.service.util.DateService;
 import by.htp.kirova.task2.service.validation.Validator;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 
 /**
- * Abstract class implementation for a
- * particular command type - Profile.
+ * Implementation for a
+ * particular command type - Main.
  *
  * @author Kseniya Kirava
- * @since Oct 14, 2018
+ * @since Oct 20, 2018
  */
 public class MainCommand extends Command {
 
@@ -74,7 +72,6 @@ public class MainCommand extends Command {
      */
     private final static String SEARCH_BUTTON = "search";
 
-    //todo разбить на методы
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) {

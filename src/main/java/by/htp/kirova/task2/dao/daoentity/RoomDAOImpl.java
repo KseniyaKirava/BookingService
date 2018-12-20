@@ -2,10 +2,10 @@ package by.htp.kirova.task2.dao.daoentity;
 
 import by.htp.kirova.task2.dao.BookingDAO;
 import by.htp.kirova.task2.dao.ConnectionPool;
+import by.htp.kirova.task2.dao.DAOException;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolException;
 import by.htp.kirova.task2.dao.connectionpool.ConnectionPoolImpl;
 import by.htp.kirova.task2.entity.Room;
-import by.htp.kirova.task2.dao.DAOException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;

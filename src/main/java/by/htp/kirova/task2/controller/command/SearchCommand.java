@@ -18,11 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Abstract class implementation for a
- * particular command type - Profile.
+ * Implementation for a
+ * particular command type - Search.
  *
  * @author Kseniya Kirava
- * @since Oct 14, 2018
+ * @since Oct 20, 2018
  */
 public class SearchCommand extends Command {
 
@@ -113,8 +113,6 @@ public class SearchCommand extends Command {
      * The SQL 'limit' query for view constant.
      */
     private static final String ROOMS_LIMIT_QUERY = " LIMIT %d, %d";
-
-    //todo разбить на методы
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

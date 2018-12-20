@@ -12,6 +12,9 @@ import java.util.ResourceBundle;
  */
 public class MessageManager {
 
+    /**
+     * Name of resource.
+     */
     private static final String resourceName = "message";
 
     /**
@@ -19,7 +22,7 @@ public class MessageManager {
      */
     private final static String LANG = "lang";
 
-    public static ResourceBundle getSessionResourceBundle(HttpSession session) {
+    private static ResourceBundle getSessionResourceBundle(HttpSession session) {
         String lang = session.getAttribute(LANG).toString();
         Locale locale = Locale.forLanguageTag(lang);
         return ResourceBundle.getBundle(resourceName, locale);

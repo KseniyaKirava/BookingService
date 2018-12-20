@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Abstract class implementation for a
- * particular command type - SignUp.
+ * Implementation for a
+ * particular command type - Signup.
  *
  * @author Kseniya Kirava
  * @since Oct 14, 2018
@@ -70,10 +70,6 @@ public class SignupCommand extends Command {
      */
     private final static String EMPTY = "";
 
-
-
-    //todo разбить на методы
-
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse resp) throws CommandException {
         if (request.getMethod().equalsIgnoreCase(POST)) {
@@ -83,7 +79,6 @@ public class SignupCommand extends Command {
             String firstName = request.getParameter(FIRST_NAME);
             String lastName = request.getParameter(LAST_NAME);
             String middleName = request.getParameter(MIDDLE_NAME);
-
 
             if (UserService.isUsernameUnique(username)) {
                 boolean enabled = true;

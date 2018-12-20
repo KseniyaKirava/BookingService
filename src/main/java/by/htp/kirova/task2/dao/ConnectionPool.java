@@ -12,7 +12,7 @@ public interface ConnectionPool {
      * Extract one of connections from pool.
      *
      * @return available connection from the connection pool.
-     * @throws ConnectionPoolException
+     * @throws ConnectionPoolException exception
      */
     Connection getConnection() throws ConnectionPoolException;
 
@@ -32,6 +32,7 @@ public interface ConnectionPool {
 
     /*
      * And some methods to work with connection:
+     *
      * */
 
 

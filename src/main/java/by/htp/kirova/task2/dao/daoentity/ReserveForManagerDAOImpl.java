@@ -91,7 +91,7 @@ public class ReserveForManagerDAOImpl implements BookingDAO<ReserveForManager> {
 
 
     @Override
-    public boolean create(ReserveForManager entity) throws DAOException {
+    public boolean create(ReserveForManager entity) {
         throw new UnsupportedOperationException();
     }
 
@@ -147,12 +147,12 @@ public class ReserveForManagerDAOImpl implements BookingDAO<ReserveForManager> {
 
 
     @Override
-    public boolean update(ReserveForManager entity) throws DAOException {
+    public boolean update(ReserveForManager entity) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean delete(ReserveForManager entity) throws DAOException {
+    public boolean delete(ReserveForManager entity) {
         throw new UnsupportedOperationException();
     }
 }

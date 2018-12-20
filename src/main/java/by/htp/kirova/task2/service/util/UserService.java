@@ -132,7 +132,7 @@ public class UserService {
 
         String where = String.format(USER_BY_USERNAME_WHERE_QUERY, username);
 
-        List<User> list = new ArrayList<>();
+        List<User> list;
 
         try {
             list = userService.read(where);

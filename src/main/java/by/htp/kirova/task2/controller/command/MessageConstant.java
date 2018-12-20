@@ -1,5 +1,13 @@
 package by.htp.kirova.task2.controller.command;
 
+
+/**
+ * Provides prepared messages which cover most of standard situations. Utility
+ * class, therefore final as it's not designed for instantiation and extension.
+ *
+ * @author Kseniya Kirava
+ * @since Dec 12, 2018
+ */
 final class MessageConstant {
 
     /**
@@ -71,7 +79,6 @@ final class MessageConstant {
      * The message 'error data' attribute name constant.
      */
     final static String USERNAME_DUPLICATE =  "usernameDuplicate";
-
 
 
     /**

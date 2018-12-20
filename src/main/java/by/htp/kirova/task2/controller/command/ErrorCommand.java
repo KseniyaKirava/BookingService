@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Abstract class implementation for a
+ * Implementation for a
  * particular command type - Error.
  *
  * @author Kseniya Kirava

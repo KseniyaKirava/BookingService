@@ -130,7 +130,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
 
     @Override
     public Connection getConnection() throws ConnectionPoolException {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = availableConnections.take();
             usingConnections.put(connection);
@@ -165,7 +165,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
      * turned off.
      *
      * @param queue is queue of connections
-     * @throws SQLException
+     * @throws SQLException exception
      */
     private void closeConnectionsQueue(BlockingQueue<Connection> queue) throws SQLException {
         Connection connection;
@@ -222,7 +222,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
     private class PooledConnection implements Connection {
         private Connection connection;
 
-        public PooledConnection(Connection c) throws SQLException {
+        PooledConnection(Connection c) throws SQLException {
             this.connection = c;
             this.connection.setAutoCommit(true);
         }
@@ -230,9 +230,9 @@ public final class ConnectionPoolImpl implements ConnectionPool {
         /**
          * Closes the Connection.
          *
-         * @throws SQLException
+         * @throws SQLException exception
          */
-        public void reallyClose() throws SQLException {
+        void reallyClose() throws SQLException {
             connection.close();
         }
 
@@ -245,7 +245,7 @@ public final class ConnectionPoolImpl implements ConnectionPool {
         /**
          * Returns the connection to original state.
          *
-         * @throws SQLException
+         * @throws SQLException exception
          */
         @Override
         public void close() throws SQLException {

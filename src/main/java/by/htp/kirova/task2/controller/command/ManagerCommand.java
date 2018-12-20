@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Abstract class implementation for a
- * particular command type - ReserveByUser.
+ * Implementation for a
+ * particular command type - Manager.
  *
  * @author Kseniya Kirava
- * @since Oct 20, 2018
+ * @since Dec 5, 2018
  */
 public class ManagerCommand extends Command {
 

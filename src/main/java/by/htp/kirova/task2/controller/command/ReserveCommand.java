@@ -10,14 +10,13 @@ import by.htp.kirova.task2.service.ServiceFactory;
 import by.htp.kirova.task2.service.util.DateService;
 import by.htp.kirova.task2.service.util.UserService;
 import org.apache.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Abstract class implementation for a
- * particular command type - ReserveByUser.
+ * Implementation for a
+ * particular command type - Reserve.
  *
  * @author Kseniya Kirava
  * @since Oct 20, 2018
@@ -89,7 +88,6 @@ public class ReserveCommand extends Command {
      */
     private static final String CURRENT_RESERVATIONS_QUERY = "WHERE id='%s'";
 
-//todo разбить на методы
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

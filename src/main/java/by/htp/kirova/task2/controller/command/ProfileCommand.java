@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Abstract class implementation for a
+ * Implementation for a
  * particular command type - Profile.
  *
  * @author Kseniya Kirava
@@ -80,9 +80,6 @@ public class ProfileCommand extends Command {
      * The name of button constant.
      */
     private final static String DELETE_ACCOUNT_BUTTON = "deleteAccount";
-
-
-    //todo разбить на методы
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

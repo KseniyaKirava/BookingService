@@ -36,8 +36,7 @@ public class Controller extends HttpServlet {
     private ActionFactory actionFactory;
 
     @Override
-    public void init() throws ServletException {
-
+    public void init() {
         actionFactory = new ActionFactory();
     }
 

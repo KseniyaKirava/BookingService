@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Abstract class implementation for a
+ * Implementation for a
  * particular command type - Login.
  *
  * @author Kseniya Kirava
@@ -57,7 +57,6 @@ public class LoginCommand extends Command {
      */
     private final static String LOGIN_BUTTON = "login";
 
-    //todo разбить на методы
 
     @Override
     public Command execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
