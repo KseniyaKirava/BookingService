@@ -1,2 +1,2 @@
-# ExtraTask02
+#BookingService
 Web application "Online hotel reservation". 
